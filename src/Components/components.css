@@ -1,0 +1,129 @@
+.popup {
+  min-height: 50vh;
+  max-height: 80vh;
+  min-width: 40vw;
+  max-width: 80vw;
+  box-shadow: 0.1vw 0.1vw 0.2vw rgba(0, 0, 0, 0.479);
+}
+
+.popup-title {
+  padding-left: 0.5vw;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-shadow: 0.1vw 0.1vw 0.2vw rgb(0, 0, 0);
+}
+
+.btn-popup-close {
+  outline: 0;
+  padding: 0;
+  height: 100%;
+  width: auto;
+  border: 0;
+  color: #ad4848;
+  background-color: transparent;
+  font-size: 3vh;
+}
+
+.btn-popup-close:hover {
+  color: #942c2c;
+}
+
+.btn-popup-close:active {
+  color: #811e1e;
+}
+
+.popup-content {
+  text-align: justify;
+  overflow-y: hidden;
+}
+
+.popup-content > span {
+  width: 100%;
+  height: 100%;
+}
+
+.popup-content ul {
+  margin-left: auto;
+  margin-right: auto;
+  list-style-type: circle;
+}
+
+.popup-content li {
+  list-style-position: inside;
+}
+
+.brand-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-family: "Oswald", sans-serif;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 6vh;
+  font-size: 0px;
+}
+
+#brand-logo {
+  display: flex;
+  height: 6vh;
+  position: relative;
+  right: 0;
+}
+
+#brand-logo img {
+  height: 100%;
+  width: auto;
+}
+
+#brand-logo button {
+  outline: 0;
+  background-color: #124275;
+  border: 0;
+}
+
+#brand-content {
+  color: whitesmoke;
+  background-color: #456990;
+  width: 0%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: width 900ms cubic-bezier(0.19, 1, 0.22, 1), font-size 300ms cubic-bezier(0.19, 1, 0.22, 1);
+  border-left: 0.5vw solid #06294e;
+  visibility: hidden;
+}
+
+a.brand-link,
+a.brand-link:hover {
+  color: whitesmoke !important;
+  text-decoration: none;
+}
+
+.brand-element {
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: auto;
+  margin: 0 1vw 0 1vw;
+}
+
+#brand-logo-bg {
+  justify-self: flex-start;
+  position: absolute;
+  left: 5vw;
+}
+
+#brand-logo-bg img {
+  height: auto;
+  width: 40%;
+}
