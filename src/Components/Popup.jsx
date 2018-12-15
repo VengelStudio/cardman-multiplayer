@@ -1,19 +1,18 @@
-import React, { Component } from 'react'
-import './components.css'
+import React, { Component } from 'react';
 
 class Popup extends Component {
   constructor(props) {
-    super(props)
-    this.bRadius = '0.5vw'
-    this.roundedBottomStyle = { borderBottomLeftRadius: this.bRadius, borderBottomRightRadius: this.bRadius }
+    super(props);
+    this.bRadius = '0.5vw';
+    this.roundedBottomStyle = { borderBottomLeftRadius: this.bRadius, borderBottomRightRadius: this.bRadius };
     this.roundedTopStyle = {
       borderTopLeftRadius: this.bRadius,
       borderTopRightRadius: this.bRadius
-    }
+    };
     this.popupStyle = {
       ...this.roundedTopStyle,
       ...this.roundedBottomStyle
-    }
+    };
   }
 
   render() {
@@ -29,7 +28,7 @@ class Popup extends Component {
           <span dangerouslySetInnerHTML={{ __html: this.props.title }} />
           <button
             onClick={() => {
-              this.props.onClose(this.props.id)
+              this.props.onClose(this.props.id);
             }}
             className='btn-popup-close'
           >
@@ -41,8 +40,8 @@ class Popup extends Component {
           dangerouslySetInnerHTML={{ __html: this.props.content }}
         />
       </div>
-    )
+    );
   }
 }
 
-export default Popup
+export default Popup;

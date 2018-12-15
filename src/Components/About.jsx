@@ -39,9 +39,11 @@ class About extends Component {
     return (
       <div className='brand-footer'>
         <div style={this.getStyle()} className='brand-content'>
-          <div className='brand-element badge-bg'>
+          <div className='brand-element badge-bg website'>
             <a className='brand-link' href='/'>
-              <b> Vengel Studio</b>
+              <b>
+                VengelStudio<small>.com</small>
+              </b>
             </a>
           </div>
           <div className='brand-element badge-bg'>
@@ -54,7 +56,9 @@ class About extends Component {
               <i className='fas fa-at' />
             </a>
           </div>
-          <div className='brand-element'>{`Created by Vengel Studio. All rights reserved ${this.getYear()}.`}</div>
+          <div className='brand-element'>
+            <small>{`Created by Vengel Studio. All rights reserved ${this.getYear()}.`}</small>
+          </div>
         </div>
         <div className='brand-logo'>
           <button onClick={this.onButtonClick} className='brand-button' />

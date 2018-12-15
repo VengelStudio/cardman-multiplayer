@@ -2,8 +2,8 @@ import React from 'react';
 import Header from './Header/Header';
 import About from './Components/About';
 import 'normalize.css';
-import './style.css';
-import './colors.css';
+import './Styles/styles.css';
+import './Styles/components.css';
 import Popup from './Components/Popup';
 import CardPlaceholder from './Resources/Images/img.jpg';
 

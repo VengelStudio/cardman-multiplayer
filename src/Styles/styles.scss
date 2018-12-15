@@ -1,3 +1,36 @@
+//* Colors
+.bg-dark {
+  background-color: #353535;
+}
+
+.bg-blue {
+  background-color: #28536b;
+}
+
+.bg-lightblue {
+  background-color: #7ea8be;
+}
+
+.bg-khaki {
+  background-color: #bbb193;
+}
+
+.color-dark {
+  color: #ffffff;
+}
+
+.color-light {
+  color: #f6f0ed;
+}
+
+.color-white {
+  color: #fff;
+}
+
+.color-lightblue {
+  color: #7ea8be;
+}
+
 html,
 body,
 #root {
@@ -52,7 +85,7 @@ body,
 }
 
 .text-nunito {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .semi-bold {

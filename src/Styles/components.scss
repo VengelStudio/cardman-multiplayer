@@ -55,6 +55,8 @@
   list-style-position: inside;
 }
 
+$footer-font-size: 2vh;
+
 .brand-footer {
   display: flex;
   flex-direction: row;
@@ -65,13 +67,13 @@
   bottom: 0;
   right: 0;
   width: 100%;
-  height: 6vh;
+  height: 4vh;
   font-size: 0px;
 }
 
 .brand-logo {
   display: flex;
-  height: 6vh;
+  height: 4vh;
   position: relative;
   right: 0;
   background-color: #124275;
@@ -82,7 +84,7 @@
   height: calc(100% - 1.2vh);
   width: auto;
   margin: auto;
-  padding: 0.6vh 0.6vw;
+  padding: 0.3vh 0.3vw;
 }
 
 .brand-logo:hover {
@@ -112,26 +114,57 @@
   transition: width 900ms cubic-bezier(0.19, 1, 0.22, 1), font-size 800ms cubic-bezier(0.1, 1, 0.22, 1);
   border-left: 0.5vw solid #124275;
   margin-left: 0.5vw;
+  padding-right: 4vh; //logo
+  flex-shrink: 0;
   visibility: hidden;
 }
 
+$brand-link-color: whitesmoke;
+$brand-website-color: rgb(255, 211, 92);
+
 a.brand-link,
 a.brand-link:hover {
-  color: whitesmoke !important;
+  color: $brand-link-color;
   text-decoration: none;
+  transition: color 80ms ease-in;
 }
+
+//todo scale down the font if shrinking
+a.brand-link:hover,
+.website a:hover {
+  //!tu nie dziala website
+  color: darken($brand-website-color, 20%);
+}
+
+$badge-bg-color: rgba(0, 0, 0, 0.2);
 
 .brand-element {
   font-weight: 300;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   height: auto;
   width: auto;
-  margin: auto 1vw auto 1vw;
+  margin: 1vh 1vw 1vh 1vw;
+
+  &.website {
+    background-color: rgba($badge-bg-color, 0.4);
+    a {
+      color: $brand-website-color;
+    }
+  }
 }
 
 .badge-bg {
-  padding: 1vmin;
-  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.3vh 0.6vw 0.3vh 0.6vw;
+  background-color: $badge-bg-color;
   border-radius: 1vw;
+}
+
+//! does it work?
+.badge-bg i,
+.badge-bg span,
+.badge-bg svg {
+  display: block;
+  margin: 0;
 }
