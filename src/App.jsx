@@ -1,14 +1,15 @@
-import React from 'react'
-import Header from './Header/Header'
-import About from './Components/About'
-import './style.css'
-import './colors.css'
-import Popup from './Components/Popup'
-import CardPlaceholder from './Resources/Images/img.jpg'
+import React from 'react';
+import Header from './Header/Header';
+import About from './Components/About';
+import 'normalize.css';
+import './style.css';
+import './colors.css';
+import Popup from './Components/Popup';
+import CardPlaceholder from './Resources/Images/img.jpg';
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isGameOpened: false,
       popups: [
@@ -30,15 +31,15 @@ class App extends React.Component {
           id: 0
         }
       ]
-    }
+    };
   }
 
-  onPopupClose = (id) => {
-    let newPopups = this.state.popups.filter((popup) => {
-      return popup.id !== id
-    })
-    this.setState({ popups: newPopups })
-  }
+  onPopupClose = id => {
+    let newPopups = this.state.popups.filter(popup => {
+      return popup.id !== id;
+    });
+    this.setState({ popups: newPopups });
+  };
 
   render() {
     return (
@@ -47,14 +48,14 @@ class App extends React.Component {
           <Header />
         </div>
         <div className='row width-full height-full bg-lightblue'>
-          {this.state.popups.map((x) => {
-            return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.onPopupClose} />
+          {this.state.popups.map(x => {
+            return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.onPopupClose} />;
           })}
         </div>
         <About />
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;

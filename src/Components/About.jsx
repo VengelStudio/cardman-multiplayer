@@ -1,41 +1,68 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Logo from '../Resources/Images/logo-small.png';
 
 class About extends Component {
-  render () {
+  state = {
+    expanded: false,
+    width: '0%',
+    visibility: 'hidden',
+    fontSize: '0'
+  };
+
+  onButtonClick = () => {
+    this.setState(
+      state => ({
+        expanded: !state.expanded
+      }),
+      () => {
+        this.setState({ width: this.state.expanded ? '100%' : '0%' });
+        this.setState({ visibility: this.state.expanded ? 'visible' : 'hidden' });
+        this.setState({ fontSize: this.state.expanded ? '2vh' : '0' });
+      }
+    );
+  };
+
+  getStyle = () => {
+    return {
+      width: this.state.width,
+      visibility: this.state.visibility,
+      fontSize: this.state.fontSize
+    };
+  };
+
+  getYear = () => {
+    let today = new Date();
+    return today.getFullYear();
+  };
+
+  render() {
     return (
       <div className='brand-footer'>
-        <div className='brand-content'>
-          <div className='brand-element' id='brand-logo-bg'>
-            <a className='brand-link' href='#'>
-              <img src='./img/logo-small.png' />
-            </a>
-          </div>
-          <div className='brand-element'>
-            <a className='brand-link' href='#'>
-              <i className='fas fa-globe' />
+        <div style={this.getStyle()} className='brand-content'>
+          <div className='brand-element badge-bg'>
+            <a className='brand-link' href='/'>
               <b> Vengel Studio</b>
             </a>
           </div>
-          <div className='brand-element'>
+          <div className='brand-element badge-bg'>
             <a className='brand-link' href='https://github.com/VengelStudio'>
-              <i class='fab fa-github' /> GitHub
+              <i className='fab fa-github' />
             </a>
           </div>
-          <div className='brand-element'>
-            <a className='brand-link' href='#'>
-              <i className='fas fa-at' /> E-mail
+          <div className='brand-element badge-bg'>
+            <a className='brand-link' href='mailto:vengelstudio@gmail.com'>
+              <i className='fas fa-at' />
             </a>
           </div>
-          <div className='brand-element'>Created by Vengel Studio. All rights reserved 2019.</div>
+          <div className='brand-element'>{`Created by Vengel Studio. All rights reserved ${this.getYear()}.`}</div>
         </div>
-        <div id='brand-logo'>
-          <button id='brand-button'>
-            <img src='./img/logo-small.png' />
-          </button>
+        <div className='brand-logo'>
+          <button onClick={this.onButtonClick} className='brand-button' />
+          <img src={Logo} alt='Logo.' />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default About
+export default About;

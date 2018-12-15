@@ -59,7 +59,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  font-family: "Oswald", sans-serif;
+  font-family: 'Oswald', sans-serif;
   color: white;
   position: absolute;
   bottom: 0;
@@ -69,25 +69,37 @@
   font-size: 0px;
 }
 
-#brand-logo {
+.brand-logo {
   display: flex;
   height: 6vh;
   position: relative;
   right: 0;
-}
-
-#brand-logo img {
-  height: 100%;
-  width: auto;
-}
-
-#brand-logo button {
-  outline: 0;
   background-color: #124275;
+  transition: filter 100ms ease-in-out;
+}
+
+.brand-logo img {
+  height: calc(100% - 1.2vh);
+  width: auto;
+  margin: auto;
+  padding: 0.6vh 0.6vw;
+}
+
+.brand-logo:hover {
+  filter: brightness(110%) contrast(120%);
+}
+
+.brand-logo button {
+  outline: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: 0;
   border: 0;
 }
 
-#brand-content {
+.brand-content {
   color: whitesmoke;
   background-color: #456990;
   width: 0%;
@@ -97,8 +109,9 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  transition: width 900ms cubic-bezier(0.19, 1, 0.22, 1), font-size 300ms cubic-bezier(0.19, 1, 0.22, 1);
-  border-left: 0.5vw solid #06294e;
+  transition: width 900ms cubic-bezier(0.19, 1, 0.22, 1), font-size 800ms cubic-bezier(0.1, 1, 0.22, 1);
+  border-left: 0.5vw solid #124275;
+  margin-left: 0.5vw;
   visibility: hidden;
 }
 
@@ -112,18 +125,13 @@ a.brand-link:hover {
   font-weight: 300;
   display: flex;
   align-items: center;
-  height: 100%;
-  width: auto;
-  margin: 0 1vw 0 1vw;
-}
-
-#brand-logo-bg {
-  justify-self: flex-start;
-  position: absolute;
-  left: 5vw;
-}
-
-#brand-logo-bg img {
   height: auto;
-  width: 40%;
+  width: auto;
+  margin: auto 1vw auto 1vw;
+}
+
+.badge-bg {
+  padding: 1vmin;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 1vw;
 }
