@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from './Header/Header';
 import About from './Components/About';
-import 'normalize.css';
 import './Styles/styles.css';
 import './Styles/components.css';
 import Popup from './Components/Popup';
@@ -24,6 +23,9 @@ class App extends React.Component {
       ]*/
     };
   }
+  gameStartHandler = () => {
+    this.setState({ isGameOpened: true })
+  }
 
   onPopupClose = id => {
     let newPopups = this.state.popups.filter(popup => {
@@ -43,7 +45,7 @@ class App extends React.Component {
             this.state.popups.map(x => {
               return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.onPopupClose} />;
             })}
-          {this.state.isGameOpened ? <Game /> : <Menu />}
+          {this.state.isGameOpened ? <Game /> : <Menu gameStartHandler={this.gameStartHandler} />}
         </div>
         <About />
       </div>
