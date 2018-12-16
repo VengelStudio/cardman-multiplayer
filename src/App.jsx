@@ -13,7 +13,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isGameOpened: false
+      isGameOpened: true
       /*popups: [
         {
           title: 'Welcome to Hangman!',
