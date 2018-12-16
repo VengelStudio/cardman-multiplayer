@@ -129,13 +129,6 @@ a.brand-link:hover {
   transition: color 80ms ease-in;
 }
 
-//todo scale down the font if shrinking
-a.brand-link:hover,
-.website a:hover {
-  //!tu nie dziala website
-  color: darken($brand-website-color, 20%);
-}
-
 $badge-bg-color: rgba(0, 0, 0, 0.2);
 
 .brand-element {
@@ -146,22 +139,13 @@ $badge-bg-color: rgba(0, 0, 0, 0.2);
   height: auto;
   width: auto;
   margin: 1vh 1vw 1vh 1vw;
-
-  &.website {
-    background-color: rgba($badge-bg-color, 0.4);
-    a {
-      color: $brand-website-color;
-    }
-  }
 }
 
 .badge-bg {
   padding: 0.3vh 0.6vw 0.3vh 0.6vw;
-  background-color: $badge-bg-color;
   border-radius: 1vw;
 }
 
-//! does it work?
 .badge-bg i,
 .badge-bg span,
 .badge-bg svg {

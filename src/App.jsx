@@ -7,30 +7,21 @@ import './Styles/components.css';
 import Popup from './Components/Popup';
 import CardPlaceholder from './Resources/Images/img.jpg';
 
+import Game from './Components/Game';
+import Menu from './Components/Menu';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isGameOpened: false,
-      popups: [
+      isGameOpened: false
+      /*popups: [
         {
           title: 'Welcome to Hangman!',
-          content: `
-      <span style={display:block; margin:auto;}><center>The main goal is to guess a randomly generated word.<br>
-      <b>However, it's not a piece of cake as you may think.</b><br>
-      You're competing with other players. Your speed and certainty are what counts.<br><br>
-      <b>Our game features unique playing cards:</b><br><br>
-      <img class="card-placeholder" src=${CardPlaceholder}>
-      <img class="card-placeholder" src=${CardPlaceholder}>
-      <img class="card-placeholder" src=${CardPlaceholder}>
-      <img class="card-placeholder" src=${CardPlaceholder}>
-      <img class="card-placeholder" src=${CardPlaceholder}>
-      <img class="card-placeholder" src=${CardPlaceholder}>
-      </center></span>
-      `,
+          content: ``,
           id: 0
         }
-      ]
+      ]*/
     };
   }
 
@@ -48,9 +39,11 @@ class App extends React.Component {
           <Header />
         </div>
         <div className='row width-full height-full bg-lightblue'>
-          {this.state.popups.map(x => {
-            return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.onPopupClose} />;
-          })}
+          {this.state.popups &&
+            this.state.popups.map(x => {
+              return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.onPopupClose} />;
+            })}
+          {this.state.isGameOpened ? <Game /> : <Menu />}
         </div>
         <About />
       </div>

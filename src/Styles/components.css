@@ -108,10 +108,6 @@ a.brand-link:hover {
   text-decoration: none;
   transition: color 80ms ease-in; }
 
-a.brand-link:hover,
-.website a:hover {
-  color: #f5b300; }
-
 .brand-element {
   font-weight: 300;
   display: flex;
@@ -120,14 +116,9 @@ a.brand-link:hover,
   height: auto;
   width: auto;
   margin: 1vh 1vw 1vh 1vw; }
-  .brand-element.website {
-    background-color: rgba(0, 0, 0, 0.4); }
-    .brand-element.website a {
-      color: #ffd35c; }
 
 .badge-bg {
   padding: 0.3vh 0.6vw 0.3vh 0.6vw;
-  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 1vw; }
 
 .badge-bg i,
