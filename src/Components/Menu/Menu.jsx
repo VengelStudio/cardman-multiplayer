@@ -7,8 +7,12 @@ class Menu extends Component {
     isNicknamePassed: false
   };
   menuStartHandler = inputValue => {
-    this.setState({ isNicknamePassed: true });
-    this.setState({ nickname: inputValue });
+    if (inputValue.length > 1) {
+      this.setState({ isNicknamePassed: true });
+      this.setState({ nickname: inputValue });
+    } else {
+      alert("Your nickname must be longer")
+    }
   };
   render() {
     return (
@@ -29,8 +33,8 @@ class Menu extends Component {
               <button className='border-neon border-neon-lime'>Credits</button>
             </React.Fragment>
           ) : (
-            <WelcomePage menuStartHandler={this.menuStartHandler} />
-          )}
+              <WelcomePage menuStartHandler={this.menuStartHandler} />
+            )}
         </div>
       </React.Fragment>
     );

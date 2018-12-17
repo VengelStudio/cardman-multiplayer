@@ -7,11 +7,17 @@ class WelcomePage extends Component {
     this.inputRef = React.createRef();
   }
   state = {};
+  submitOnEnter = (key) => {
+    if (key.which === 13) {
+      this.clickHandler();
+    }
+  }
   clickHandler = () => {
     //todo check the nickname length (min. 2)
     //todo add a popup
     let inputValue = this.inputRef.current.value;
-    this.props.menuStartHandler(inputValue);
+    console.log(inputValue)
+    this.props.menuStartHandler(inputValue)
   };
   render() {
     return (
@@ -20,8 +26,8 @@ class WelcomePage extends Component {
           <p>Please enter your nickname</p>
         </div>
         <div className='nickname-input'>
-          <input ref={this.inputRef} type='text' className='inputNickname border-neon border-neon-red' />
-          <button className='border-neon border-neon-orange' onClick={this.clickHandler}>
+          <input ref={this.inputRef} type='text' className='inputNickname border-neon border-neon-red' onKeyDown={this.submitOnEnter} />
+          <button className='border-neon border-neon-orange' onClick={this.clickHandler} >
             SUBMIT
           </button>
         </div>
