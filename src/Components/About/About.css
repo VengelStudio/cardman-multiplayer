@@ -1,51 +1,3 @@
-.popup {
-  min-height: 50vh;
-  max-height: 80vh;
-  min-width: 40vw;
-  max-width: 80vw;
-  box-shadow: 0.1vw 0.1vw 0.2vw rgba(0, 0, 0, 0.479); }
-
-.popup-title {
-  padding-left: 0.5vw;
-  width: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  text-shadow: 0.1vw 0.1vw 0.2vw black; }
-
-.btn-popup-close {
-  outline: 0;
-  padding: 0;
-  height: 100%;
-  width: auto;
-  border: 0;
-  color: #ad4848;
-  background-color: transparent;
-  font-size: 3vh; }
-
-.btn-popup-close:hover {
-  color: #942c2c; }
-
-.btn-popup-close:active {
-  color: #811e1e; }
-
-.popup-content {
-  text-align: justify;
-  overflow-y: hidden; }
-
-.popup-content > span {
-  width: 100%;
-  height: 100%; }
-
-.popup-content ul {
-  margin-left: auto;
-  margin-right: auto;
-  list-style-type: circle; }
-
-.popup-content li {
-  list-style-position: inside; }
-
 .brand-footer {
   display: flex;
   flex-direction: row;
@@ -57,7 +9,8 @@
   right: 0;
   width: 100%;
   height: 4vh;
-  font-size: 0px; }
+  font-size: 0px;
+}
 
 .brand-logo {
   display: flex;
@@ -65,16 +18,19 @@
   position: relative;
   right: 0;
   background-color: #124275;
-  transition: filter 100ms ease-in-out; }
+  transition: filter 100ms ease-in-out;
+}
 
 .brand-logo img {
   height: calc(100% - 1.2vh);
   width: auto;
   margin: auto;
-  padding: 0.3vh 0.3vw; }
+  padding: 0.3vh 0.3vw;
+}
 
 .brand-logo:hover {
-  filter: brightness(110%) contrast(120%); }
+  filter: brightness(110%) contrast(120%);
+}
 
 .brand-logo button {
   outline: 0;
@@ -83,7 +39,8 @@
   width: 100%;
   position: absolute;
   background: 0;
-  border: 0; }
+  border: 0;
+}
 
 .brand-content {
   color: whitesmoke;
@@ -100,13 +57,15 @@
   margin-left: 0.5vw;
   padding-right: 4vh;
   flex-shrink: 0;
-  visibility: hidden; }
+  visibility: hidden;
+}
 
 a.brand-link,
 a.brand-link:hover {
   color: whitesmoke;
   text-decoration: none;
-  transition: color 80ms ease-in; }
+  transition: color 80ms ease-in;
+}
 
 .brand-element {
   font-weight: 300;
@@ -115,14 +74,17 @@ a.brand-link:hover {
   align-items: center;
   height: auto;
   width: auto;
-  margin: 1vh 1vw 1vh 1vw; }
+  margin: 1vh 1vw 1vh 1vw;
+}
 
 .badge-bg {
   padding: 0.3vh 0.6vw 0.3vh 0.6vw;
-  border-radius: 1vw; }
+  border-radius: 1vw;
+}
 
 .badge-bg i,
 .badge-bg span,
 .badge-bg svg {
   display: block;
-  margin: 0; }
+  margin: 0;
+}

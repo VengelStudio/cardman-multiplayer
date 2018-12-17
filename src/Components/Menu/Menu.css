@@ -1,0 +1,16 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+.menu > button {
+  margin: 1vh;
+  font-size: 4vw;
+  border-radius: 1vh;
+  padding: 1vh;
+}

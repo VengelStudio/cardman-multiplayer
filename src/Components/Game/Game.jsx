@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import CardPlaceholder from '../Resources/Images/img.jpg';
-import './game.css';
+import CardPlaceholder from '../../Resources/Images/img.jpg';
+import './Game.css';
 
 class Key extends Component {
   state = {
@@ -9,7 +9,7 @@ class Key extends Component {
     }
   };
   clickHandler = () => {
-    this.setState({ style: { backgroundColor: '#DA6B44', textDecoration: 'line-through' } });
+    this.setState({ style: { backgroundColor: '#555', textDecoration: 'none' } });
   };
   render() {
     return (
@@ -55,7 +55,7 @@ class Keyboard extends Component {
 
   render() {
     return (
-      <div className='keyboard'>
+      <div className='keyboard border-neon border-light-translucent'>
         {this.alphabet.map(key => (
           <Key key={this.alphabet.indexOf(key)} letter={key} />
         ))}
@@ -65,11 +65,27 @@ class Keyboard extends Component {
 }
 
 class Card extends Component {
+  getBorder = () => {
+    let classes = 'card border-neon ';
+    switch (this.props.type) {
+      case 1:
+        classes += 'border-neon-lime';
+        break;
+      case -1:
+        classes += 'border-neon-red';
+        break;
+      default:
+        classes += 'border-neon-violet';
+        break;
+    }
+    return classes;
+  };
+
   render() {
     return (
-      <div className='card'>
+      <div className={this.getBorder()}>
         <div className='card-title'>Card</div>
-        <img className='card-image' src={CardPlaceholder} />
+        <img className='card-image border-neon border-light-translucent' src={CardPlaceholder} />
       </div>
     );
   }
@@ -80,9 +96,9 @@ class Cards extends Component {
     return (
       <div className='cards'>
         <div className='cards-title'>{this.props.title ? this.props.title : ''}</div>
-        <Card />
-        <Card />
-        <Card />
+        <Card type={this.props.type} />
+        <Card type={this.props.type} />
+        <Card type={this.props.type} />
       </div>
     );
   }
@@ -98,10 +114,11 @@ class Content extends Component {
         </div>
         <div className='deck-title'>Game deck:</div>
         <div className='deck'>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <Card type={0} />
+          <Card type={0} />
+          <Card type={0} />
+          <Card type={0} />
+          <Card type={0} />
         </div>
       </div>
     );
@@ -113,9 +130,9 @@ class Game extends Component {
   render() {
     return (
       <div className='gameWrapper'>
-        <Cards title='Your cards:' />
+        <Cards type={1} title='Your cards:' />
         <Content />
-        <Cards title='Enemy cards:' />
+        <Cards type={-1} title='Enemy cards:' />
       </div>
     );
   }

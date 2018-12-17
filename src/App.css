@@ -1,4 +1,3 @@
-//* Colors
 .bg-dark {
   background-color: #353535;
 }
@@ -29,6 +28,40 @@
 
 .color-lightblue {
   color: #7ea8be;
+}
+
+.bg-lightgrey {
+  background-color: rgb(24, 24, 24);
+}
+
+.border-neon {
+  outline: 0;
+  font-family: 'Nunito', sans-serif;
+  background-color: #353535;
+  color: whitesmoke;
+  border-width: 0.3vh;
+  border-style: solid;
+  border-radius: 1vh;
+}
+
+.border-neon-orange {
+  border-color: orange;
+}
+
+.border-neon-lime {
+  border-color: rgb(122, 214, 35);
+}
+
+.border-neon-red {
+  border-color: rgb(255, 35, 83);
+}
+
+.border-neon-violet {
+  border-color: slateblue;
+}
+
+.border-light-translucent {
+  border-color: rgba(177, 177, 177, 0.5);
 }
 
 html,
@@ -126,11 +159,4 @@ body,
 
 .border-rounded {
   border-radius: 25%;
-}
-
-.card-placeholder {
-  height: auto;
-  width: 15%;
-  box-shadow: 0.2vw 0.2vw 0.2vw #000;
-  margin: 0 0.1vw 0 0.1vw;
 }

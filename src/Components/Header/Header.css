@@ -1,0 +1,10 @@
+.header {
+  border: 0;
+  border-bottom-width: 0.3vh;
+  border-style: solid;
+  border-color: rgb(122, 214, 35);
+}
+
+.header > div {
+  border: 0;
+}

@@ -1,13 +1,11 @@
 import React from 'react';
-import Header from './Header/Header';
-import About from './Components/About';
-import './Styles/styles.css';
-import './Styles/components.css';
-import Popup from './Components/Popup';
-import CardPlaceholder from './Resources/Images/img.jpg';
+import './App.css';
 
-import Game from './Components/Game';
-import Menu from './Components/Menu';
+import Header from './Components/Header/Header';
+import About from './Components/About/About';
+import Popup from './Components/Popup/Popup';
+import Game from './Components/Game/Game';
+import Menu from './Components/Menu/Menu';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,6 +13,7 @@ class App extends React.Component {
     this.state = {
       isGameOpened: false,
       nickname: null,
+      title: null
       // popups: [
       //   {
       //     title: 'Welcome to Hangman!',
@@ -24,11 +23,11 @@ class App extends React.Component {
       // ]
     };
   }
-  gameStartHandler = (nickname) => {
-    this.setState({ isGameOpened: true })
-    console.log(nickname)
-    this.setState({ nickname: nickname })
-  }
+  gameStartHandler = nickname => {
+    this.setState({ isGameOpened: true });
+    console.log(nickname);
+    this.setState({ nickname: nickname });
+  };
 
   onPopupClose = id => {
     let newPopups = this.state.popups.filter(popup => {
@@ -37,22 +36,22 @@ class App extends React.Component {
     this.setState({ popups: newPopups });
   };
 
-  passNickname = () => {
-
-  }
+  passNickname = () => {};
 
   render() {
     return (
-      <div className='container of-rows width-full height-full text-nunito'>
-        <div className='row width-full semi-bold bg-dark color-lightblue padding-sm height-sm text-lg content-hcenter content-vcenter'>
-          <Header />
-        </div>
-        <div className='row width-full height-full bg-lightblue'>
+      <div className='container of-rows width-full height-full text-nunito '>
+        <Header title={this.state.title} />
+        <div className='row width-full height-full bg-lightgrey'>
           {this.state.popups &&
             this.state.popups.map(x => {
               return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.onPopupClose} />;
             })}
-          {this.state.isGameOpened ? <Game /> : <Menu gameStartHandler={this.gameStartHandler} nickPopup={this.passNickname} />}
+          {this.state.isGameOpened ? (
+            <Game />
+          ) : (
+            <Menu gameStartHandler={this.gameStartHandler} nickPopup={this.passNickname} />
+          )}
         </div>
         <About />
       </div>

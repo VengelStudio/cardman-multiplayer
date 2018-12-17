@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Logo from '../Resources/Images/logo-small.png';
+import Logo from '../../Resources/Images/logo-small.png';
+import './About.css';
 
 class About extends Component {
   state = {
