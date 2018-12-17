@@ -13,14 +13,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isGameOpened: true
-      /*popups: [
-        {
-          title: 'Welcome to Hangman!',
-          content: ``,
-          id: 0
-        }
-      ]*/
+      isGameOpened: false,
+      // popups: [
+      //   {
+      //     title: 'Welcome to Hangman!',
+      //     content: ``,
+      //     id: 0
+      //   }
+      // ]
     };
   }
   gameStartHandler = () => {
@@ -34,6 +34,10 @@ class App extends React.Component {
     this.setState({ popups: newPopups });
   };
 
+  passNickname = () => {
+
+  }
+
   render() {
     return (
       <div className='container of-rows width-full height-full text-nunito'>
@@ -45,7 +49,7 @@ class App extends React.Component {
             this.state.popups.map(x => {
               return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.onPopupClose} />;
             })}
-          {this.state.isGameOpened ? <Game /> : <Menu gameStartHandler={this.gameStartHandler} />}
+          {this.state.isGameOpened ? <Game /> : <Menu gameStartHandler={this.gameStartHandler} nickPopup={this.passNickname} />}
         </div>
         <About />
       </div>

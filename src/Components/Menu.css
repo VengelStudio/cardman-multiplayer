@@ -1,4 +1,22 @@
-.content{
+.menu{
+  display:flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+.menu > button{
+  border:0;
+  margin: 1vh;
+  font-size: 4vw;
+  border-radius: 1vh;
+  padding:1vh;
+  background-color: wheat;
+  font-family: 'Nunito', sans-serif;
+}
+.nickname-input{
   display:flex;
   flex-direction: row;
   position: fixed;
@@ -6,4 +24,47 @@
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
+}
+.nickname-input > button{
+  font-size: 4vw;
+}
+.inputNickname{
+  margin-right: 2vh;
+  border-radius: 1vh;
+  font-size: 4vw;
+}
+.nickname-input > button{
+  border:0;
+  font-size: 4vw;
+  border-radius: 1vh;
+  padding:1vh;
+  font-family: 'Nunito', sans-serif;
+  border-width: 0.3vh;
+  border-style:solid;
+  border-color:orange;
+  background-color: #353535;
+  color:white;
+}
+.infoNickname{
+  border-width: 0.3vh;
+  border-style:solid;
+  border-color:slateblue;
+  border-radius: 1vh;
+  position: fixed;
+  text-align: center;
+  font-size:3vw;
+  margin-top: -20vh;
+  top: 50%;
+  left: 50%;
+  background-color: #353535;
+  color:white;
+  width: 65vw;
+  height: 10vw;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+.infoNickname > span{
+  margin: auto;
+  text-align:center;
+  display:inline-block
 }
