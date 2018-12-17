@@ -4,10 +4,12 @@ import "./NicknameInput"
 import NicknameInput from './NicknameInput';
 
 class Menu extends Component {
-  state = { isNicknamePassed: false };
-  menuStartHandler = () => {
+  state = {
+    isNicknamePassed: false
+  };
+  menuStartHandler = (inputValue) => {
     this.setState({ isNicknamePassed: true })
-    console.log("XD")
+    this.setState({ nickname: inputValue })
   }
   render() {
     return (
@@ -15,7 +17,7 @@ class Menu extends Component {
         {
           this.state.isNicknamePassed ?
             <div className="menu">
-              <button onClick={this.props.gameStartHandler}>Game</button>
+              <button onClick={() => { this.props.gameStartHandler(this.state.nickname) }}>Game</button>
               <button>Help</button>
               <button>Options</button>
               <button>Credits</button>

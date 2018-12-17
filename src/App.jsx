@@ -14,6 +14,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       isGameOpened: false,
+      nickname: null,
       // popups: [
       //   {
       //     title: 'Welcome to Hangman!',
@@ -23,8 +24,10 @@ class App extends React.Component {
       // ]
     };
   }
-  gameStartHandler = () => {
+  gameStartHandler = (nickname) => {
     this.setState({ isGameOpened: true })
+    console.log(nickname)
+    this.setState({ nickname: nickname })
   }
 
   onPopupClose = id => {
