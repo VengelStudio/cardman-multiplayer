@@ -1,9 +1,15 @@
 .popup {
-  min-height: 50vh;
+  z-index: 100;
+  min-height: 20vh;
   max-height: 80vh;
-  min-width: 40vw;
+  min-width: 30vw;
   max-width: 80vw;
   box-shadow: 0.1vw 0.1vw 0.2vw rgba(0, 0, 0, 0.479);
+}
+.popup p{
+  width:100%;
+  text-align: center;
+  font-size: 2vw;
 }
 
 .popup-title {

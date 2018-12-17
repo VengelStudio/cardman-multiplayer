@@ -11,7 +11,9 @@ class Menu extends Component {
       this.setState({ isNicknamePassed: true });
       this.setState({ nickname: inputValue });
     } else {
-      alert("Your nickname must be longer")
+      this.props.addPopup(
+        "<p>Your nickname has to be longer.</p>"
+      )
     }
   };
   render() {

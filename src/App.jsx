@@ -13,15 +13,15 @@ class App extends React.Component {
     this.state = {
       isGameOpened: false,
       nickname: null,
-      title: null
-      // popups: [
-      //   {
-      //     title: 'Welcome to Hangman!',
-      //     content: ``,
-      //     id: 0
-      //   }
-      // ]
+      popups: [],
+      lastPopupId: 0,
     };
+  }
+  addPopup = (content) => {
+    this.setState({ popups: [...this.state.popups, { id: this.state.lastPopupId, content: content }] })
+    this.setState((prevState, props) => {
+      lastPopupId: prevState.lastPopupId++
+    })
   }
   gameStartHandler = nickname => {
     this.setState({ isGameOpened: true });
@@ -36,7 +36,7 @@ class App extends React.Component {
     this.setState({ popups: newPopups });
   };
 
-  passNickname = () => {};
+  passNickname = () => { };
 
   render() {
     return (
@@ -50,8 +50,8 @@ class App extends React.Component {
           {this.state.isGameOpened ? (
             <Game />
           ) : (
-            <Menu gameStartHandler={this.gameStartHandler} nickPopup={this.passNickname} />
-          )}
+              <Menu addPopup={this.addPopup} gameStartHandler={this.gameStartHandler} nickPopup={this.passNickname} />
+            )}
         </div>
         <About />
       </div>

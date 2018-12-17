@@ -13,8 +13,6 @@ class WelcomePage extends Component {
     }
   }
   clickHandler = () => {
-    //todo check the nickname length (min. 2)
-    //todo add a popup
     let inputValue = this.inputRef.current.value;
     console.log(inputValue)
     this.props.menuStartHandler(inputValue)

@@ -4,6 +4,7 @@ import './Popup.css';
 class Popup extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props.id)
     this.bRadius = '0.5vw';
     this.roundedBottomStyle = { borderBottomLeftRadius: this.bRadius, borderBottomRightRadius: this.bRadius };
     this.roundedTopStyle = {
@@ -20,11 +21,11 @@ class Popup extends Component {
     return (
       <div
         style={this.popupStyle}
-        className='container of-rows text-nunito bg-khaki popup center-absolute-both d-block p-absolute popup-upper-round popup-bottom-round'
+        className='border-neon border-neon-red container of-rows text-nunito bg-khaki popup center-absolute-both d-block p-absolute popup-upper-round popup-bottom-round'
       >
         <div
           style={this.roundedTopStyle}
-          className='padding-sm popup-title row width-auto semi-bold text-lg bg-blue color-light text-center'
+          className='padding-sm popup-title row width-auto semi-bold text-lg color-light text-center'
         >
           <span dangerouslySetInnerHTML={{ __html: this.props.title }} />
           <button
