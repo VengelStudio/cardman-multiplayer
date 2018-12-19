@@ -6,9 +6,7 @@ class Header extends Component {
     return (
       <div className='row header width-full semi-bold bg-dark color-lightblue padding-sm height-sm text-lg content-hcenter content-vcenter'>
         <div className='column auto has-background-dark header'>
-          <h1 className='title has-text-white-ter'>
-            {this.props.enemyNickname ? `You're playing against ${this.props.enemyNickname}` : 'Hangman Multiplayer'}
-          </h1>
+          <h1 className='title has-text-white-ter'>{this.props.title && this.props.title}</h1>
         </div>
       </div>
     );

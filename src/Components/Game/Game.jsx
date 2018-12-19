@@ -85,7 +85,7 @@ class Card extends Component {
     return (
       <div className={this.getBorder()}>
         <div className='card-title'>Card</div>
-        <img className='card-image border-neon border-light-translucent' src={CardPlaceholder} />
+        <img className='card-image border-neon border-light-translucent' src={CardPlaceholder} alt='Card image.' />
       </div>
     );
   }

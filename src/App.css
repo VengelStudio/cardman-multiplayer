@@ -64,6 +64,10 @@
   border-color: rgba(177, 177, 177, 0.5);
 }
 
+.border-nobottom {
+  border-bottom-width: 0;
+}
+
 html,
 body,
 #root {
@@ -115,6 +119,10 @@ body,
 
 .text-md {
   font-size: 1.9vh;
+}
+
+.text-xlg {
+  font-size: 4vh;
 }
 
 .text-nunito {

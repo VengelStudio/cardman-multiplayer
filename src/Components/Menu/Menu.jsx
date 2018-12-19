@@ -11,9 +11,7 @@ class Menu extends Component {
       this.setState({ isNicknamePassed: true });
       this.setState({ nickname: inputValue });
     } else {
-      this.props.addPopup(
-        "<p>Your nickname has to be longer.</p>"
-      )
+      this.props.addPopup('<p>Your nickname has to be longer.</p>');
     }
   };
   render() {
@@ -28,15 +26,15 @@ class Menu extends Component {
                   this.props.gameStartHandler(this.state.nickname);
                 }}
               >
-                Game
+                Start
               </button>
               <button className='border-neon border-neon-orange'>Help</button>
               <button className='border-neon border-neon-violet'>Options</button>
               <button className='border-neon border-neon-lime'>Credits</button>
             </React.Fragment>
           ) : (
-              <WelcomePage menuStartHandler={this.menuStartHandler} />
-            )}
+            <WelcomePage menuStartHandler={this.menuStartHandler} />
+          )}
         </div>
       </React.Fragment>
     );

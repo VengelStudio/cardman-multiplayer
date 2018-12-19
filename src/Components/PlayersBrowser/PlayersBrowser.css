@@ -1,0 +1,67 @@
+.players-browser {
+  width: 70vw;
+  height: 90vh;
+  margin: auto;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.players-browser-title {
+  border-top-left-radius: 1vh;
+  border-top-right-radius: 1vh;
+  height: 8vh;
+  display: flex;
+}
+
+.players-browser-title p {
+  margin: auto;
+}
+
+.players-browser-scrollable {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.ScrollbarsCustom > .wrapper > .content {
+  display: block;
+}
+
+.players-browser-scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+.browser-entry {
+  background-color: grey;
+  border-radius: 0;
+  height: 8vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.browser-entry-lightbg {
+  background-color: rgb(107, 107, 107);
+}
+
+.browser-entry-darkbg {
+  background-color: rgb(58, 58, 58);
+}
+
+.browser-entry > .player-info {
+  font-size: 5vh;
+  display: flex;
+  margin-left: 10vw;
+}
+
+.browser-entry > .player-info > .country {
+  margin: auto;
+  margin-right: 1vw;
+  display: flex;
+}
+
+.browser-entry > .play {
+  height: 6vh;
+  width: 12vh;
+  font-size: 4vh;
+  margin-right: 10vw;
+}

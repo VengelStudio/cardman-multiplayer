@@ -6,27 +6,35 @@ import About from './Components/About/About';
 import Popup from './Components/Popup/Popup';
 import Game from './Components/Game/Game';
 import Menu from './Components/Menu/Menu';
+import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isGameOpened: false,
+      title: 'Hangman Multiplayer',
       nickname: null,
+      openedComponent: (
+        <Menu addPopup={this.addPopup} gameStartHandler={this.gameStartHandler} nickPopup={this.passNickname} />
+      ),
       popups: [],
-      lastPopupId: 0,
+      lastPopupId: 0
     };
   }
-  addPopup = (content) => {
-    this.setState({ popups: [...this.state.popups, { id: this.state.lastPopupId, content: content }] })
+
+  addPopup = content => {
+    this.setState({ popups: [...this.state.popups, { id: this.state.lastPopupId, content: content }] });
     this.setState((prevState, props) => {
-      lastPopupId: prevState.lastPopupId++
-    })
-  }
+      lastPopupId: prevState.lastPopupId++;
+    });
+  };
+
   gameStartHandler = nickname => {
-    this.setState({ isGameOpened: true });
-    console.log(nickname);
-    this.setState({ nickname: nickname });
+    this.setState({ nickname: nickname }, () => {
+      this.setState({ title: 'Players browser' }, () => {
+        this.setState({ openedComponent: <PlayersBrowser nickname={nickname} /> });
+      });
+    });
   };
 
   onPopupClose = id => {
@@ -35,8 +43,6 @@ class App extends React.Component {
     });
     this.setState({ popups: newPopups });
   };
-
-  passNickname = () => { };
 
   render() {
     return (
@@ -47,11 +53,7 @@ class App extends React.Component {
             this.state.popups.map(x => {
               return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.onPopupClose} />;
             })}
-          {this.state.isGameOpened ? (
-            <Game />
-          ) : (
-              <Menu addPopup={this.addPopup} gameStartHandler={this.gameStartHandler} nickPopup={this.passNickname} />
-            )}
+          {this.state.openedComponent && this.state.openedComponent}
         </div>
         <About />
       </div>
