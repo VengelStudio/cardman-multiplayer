@@ -24,7 +24,7 @@ class WelcomePage extends Component {
           <p>Please enter your nickname</p>
         </div>
         <div className='nickname-input'>
-          <input ref={this.inputRef} type='text' className='inputNickname border-neon border-neon-red' onKeyDown={this.submitOnEnter} />
+          <input ref={this.inputRef} type='text' maxLength='15' className='inputNickname border-neon border-neon-red' onKeyDown={this.submitOnEnter} />
           <button className='border-neon border-neon-orange' onClick={this.clickHandler} >
             SUBMIT
           </button>

@@ -29,12 +29,16 @@ class Menu extends Component {
                 Start
               </button>
               <button className='border-neon border-neon-orange'>Help</button>
-              <button className='border-neon border-neon-violet'>Options</button>
+              <button
+                className='border-neon border-neon-violet'
+                onClick={this.props.optionsStartHandler}
+              >
+                Options</button>
               <button className='border-neon border-neon-lime'>Credits</button>
             </React.Fragment>
           ) : (
-            <WelcomePage menuStartHandler={this.menuStartHandler} />
-          )}
+              <WelcomePage menuStartHandler={this.menuStartHandler} />
+            )}
         </div>
       </React.Fragment>
     );

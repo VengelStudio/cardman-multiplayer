@@ -4,6 +4,7 @@ import './App.css';
 import Header from './Components/Header/Header';
 import About from './Components/About/About';
 import Popup from './Components/Popup/Popup';
+import Options from './Components/Menu/Options/Options'
 import Game from './Components/Game/Game';
 import Menu from './Components/Menu/Menu';
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser';
@@ -15,7 +16,7 @@ class App extends React.Component {
       title: 'Hangman Multiplayer',
       nickname: null,
       openedComponent: (
-        <Menu addPopup={this.addPopup} gameStartHandler={this.gameStartHandler} nickPopup={this.passNickname} />
+        <Menu addPopup={this.addPopup} gameStartHandler={this.gameStartHandler} nickPopup={this.passNickname} optionsStartHandler={this.optionsStartHandler} />
       ),
       popups: [],
       lastPopupId: 0
@@ -36,6 +37,11 @@ class App extends React.Component {
       });
     });
   };
+  optionsStartHandler = () => {
+    this.setState({ title: 'Options' }, () => {
+      this.setState({ openedComponent: <Options /> })
+    })
+  }
 
   onPopupClose = id => {
     let newPopups = this.state.popups.filter(popup => {

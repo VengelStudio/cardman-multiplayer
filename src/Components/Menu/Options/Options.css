@@ -1,0 +1,22 @@
+.optionsWrapper{
+  width: 70vw;
+  height: 90vh;
+  margin: auto;
+  color:white;
+  font-size: 3vw;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.optionsContent{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.optionsContent > .countryOptions{
+    display: flex;
+}
+.country-image-in-options{
+  margin-left: 5vh;
+  height: 15vh;
+}
