@@ -37,7 +37,7 @@ class Menu extends Component {
               <button className='border-neon border-neon-lime'>Credits</button>
             </React.Fragment>
           ) : (
-              <WelcomePage menuStartHandler={this.menuStartHandler} />
+              <WelcomePage menuStartHandler={this.menuStartHandler}/>
             )}
         </div>
       </React.Fragment>

@@ -11,7 +11,7 @@ const BrowserEntry = props => {
   }
 
   const handleGameStart = () => {
-    console.log('start');
+    console.log("started")
   };
 
   return (
