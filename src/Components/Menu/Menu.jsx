@@ -23,7 +23,7 @@ class Menu extends Component {
               <button
                 className='border-neon border-neon-red'
                 onClick={() => {
-                  this.props.gameStartHandler(this.state.nickname);
+                  this.props.menuPlayHandler(this.state.nickname);
                 }}
               >
                 Start
