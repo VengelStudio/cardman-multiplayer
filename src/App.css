@@ -68,6 +68,24 @@
   border-bottom-width: 0;
 }
 
+.input-neon {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40vh;
+  height: 25px;
+  background: rgb(24, 24, 24);
+  outline: none;
+}
+.input-neon::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0.7vh;
+  width: 25px;
+  height: 25px;
+  background: whitesmoke;
+  cursor: pointer;
+}
+
 html,
 body,
 #root {
@@ -79,6 +97,18 @@ body,
 
 .container {
   display: flex;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 .of-rows {
@@ -103,6 +133,10 @@ body,
 
 .height-full {
   height: 100%;
+}
+
+.width-half {
+  width: 50%;
 }
 
 .padding-sm {
