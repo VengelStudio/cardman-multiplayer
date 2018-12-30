@@ -1,3 +1,6 @@
 [build]
   Functions = "lambda"
-  Command = "npm run build:lambda"
+  base = ""
+  Command = "npm run build:lambda && npm run build"
+  publish = "build"
+  
