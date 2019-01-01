@@ -34,10 +34,13 @@ class Menu extends Component {
                 onClick={this.props.optionsStartHandler}
               >
                 Options</button>
-              <button className='border-neon border-neon-lime'>Credits</button>
+              <button
+                className='border-neon border-neon-lime'
+                onClick={this.props.creditsStartHandler}
+              >Credits</button>
             </React.Fragment>
           ) : (
-              <WelcomePage menuStartHandler={this.menuStartHandler}/>
+              <WelcomePage menuStartHandler={this.menuStartHandler} />
             )}
         </div>
       </React.Fragment>

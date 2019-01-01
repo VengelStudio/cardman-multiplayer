@@ -6,6 +6,7 @@ import About from "./Components/About/About"
 import Popup from "./Components/Popup/Popup"
 import Options from "./Components/Menu/Options/Options"
 import Game from "./Components/Game/Game"
+import Credits from "./Components/Menu/Credits/Credits"
 import Menu from "./Components/Menu/Menu"
 import PlayersBrowser from "./Components/PlayersBrowser/PlayersBrowser"
 
@@ -21,6 +22,7 @@ class App extends React.Component {
 					menuPlayHandler={this.menuPlayHandler}
 					nickPopup={this.passNickname}
 					optionsStartHandler={this.optionsStartHandler}
+					creditsStartHandler={this.creditsStartHandler}
 				/>
 			),
 			popups: [],
@@ -63,6 +65,12 @@ class App extends React.Component {
 			this.setState({ openedComponent: <Options /> })
 		})
 	}
+	creditsStartHandler = () => {
+		this.setState({ title: "Credits" }, () => {
+			this.setState({ openedComponent: <Credits /> })
+		})
+	}
+
 
 	onPopupClose = id => {
 		let newPopups = this.state.popups.filter(popup => {
