@@ -7,14 +7,18 @@ class Credits extends Component {
     return (
       <React.Fragment>
         <div className="container of-rows credits-wrapper border-neon border-neon-red bg-dark text-nunito text-xlg">
-
-          <p className="text-xlg">Hangman Multiplayer</p>
-          <p className="text-lg">Created By:</p>
-          <p className="text-md">Vengel Studio</p>
-          <p className="text-lg">Developers:</p>
-          <p className="text-md">Bartosz Kępka</p>
-          <p className="text-md">Łukasz Blachnicki</p>
-
+          <div className="logos">
+            <img src="https://goo.gl/LjGLVJ" className="logo"></img>
+            <a href=" https://github.com/VengelStudio">
+              <img src="https://goo.gl/UHGvzL" className="logo"></img>
+            </a>
+          </div>
+          <p className="credits-header">Hangman Multiplayer</p>
+          <p className="test-xlg">Created By:</p>
+          <div className="developers-content">
+            <p>Bartosz Kępka</p>
+            <p>Łukasz Blachnicki</p>
+          </div>
         </div>
       </React.Fragment>
     );
