@@ -1,18 +1,19 @@
-import React from 'react';
-import './PlayersBrowser.css';
-import Scrollbar from 'react-scrollbars-custom';
+import React from 'react'
+import './PlayersBrowser.css'
+import Scrollbar from 'react-scrollbars-custom'
+import { PLAYER_CONNECTED, PLAYER_DISCONNECTED, LOGOUT } from '../../Events'
 
 const BrowserEntry = props => {
-  let classes = 'browser-entry width-full ';
+  let classes = 'browser-entry width-full '
   if (props.lightColor === true) {
-    classes += 'browser-entry-lightbg';
+    classes += 'browser-entry-lightbg'
   } else if (props.lightColor === false) {
-    classes += 'browser-entry-darkbg';
+    classes += 'browser-entry-darkbg'
   }
 
   const handleGameStart = props => {
-    props.gameStartHandler();
-  };
+    props.gameStartHandler()
+  }
 
   return (
     <div className={classes}>
@@ -22,29 +23,39 @@ const BrowserEntry = props => {
       </span>
       <button
         onClick={e => {
-          handleGameStart(props);
+          handleGameStart(props)
         }}
         className='play border-neon border-neon-lime'
       >
         Play
       </button>
     </div>
-  );
-};
+  )
+}
 
 class PlayersBrowser extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {
-      players: [{ nickname: 'Dezanek' }]
-    };
-    this.entries = this.getEntries(this.state.players);
+    super(props)
+    this.state = {}
+  }
+
+  componentWillMount() {
+    this.initializeSocket()
+    this.setState({ playerList: this.getEntries(this.props.connectedPlayers) })
+  }
+
+  initializeSocket = () => {
+    const { socket } = this.props
+    /*socket.on('broadcast', connectedPlayers => {
+      console.log(connectedPlayers)
+    })*/
   }
 
   getEntries = players => {
-    let result = [];
+    let result = []
     for (let index in players) {
-      let nickname = players[index].nickname;
+      console.log(players[index])
+      let nickname = players[index].nickname
       if (index % 2 === 0) {
         result.push(
           <BrowserEntry
@@ -53,7 +64,7 @@ class PlayersBrowser extends React.Component {
             key={index}
             lightColor={true}
           />
-        );
+        )
       } else {
         result.push(
           <BrowserEntry
@@ -62,28 +73,28 @@ class PlayersBrowser extends React.Component {
             key={index}
             lightColor={false}
           />
-        );
+        )
       }
     }
-    return result;
-  };
+    return result
+  }
 
   render() {
     return (
       <div className='players-browser container content-vcenter border-neon border-neon-orange'>
         <div className='players-browser-title bg-lightgrey width-full text-xlg text-center'>
           <p>
-            You are logged in as <b>{this.props.nickname}</b>.
+            You are logged in as <b>{this.props.player.nickname}</b>.
           </p>
         </div>
         <Scrollbar style={{ width: '100%', height: '100%' }}>
-          {this.entries.map(entry => {
-            return entry;
+          {this.state.playerList.map(entry => {
+            return entry
           })}
         </Scrollbar>
       </div>
-    );
+    )
   }
 }
 
-export default PlayersBrowser;
+export default PlayersBrowser
