@@ -5,6 +5,7 @@ class BrowserEntry extends Component {
   constructor(props) {
     super(props)
     this.classes = 'browser-entry width-full '
+    console.log(this.props.index)
     if (this.props.index % 2 === 0) {
       this.classes += 'browser-entry-lightbg'
     } else {

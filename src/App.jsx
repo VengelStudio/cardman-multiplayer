@@ -38,8 +38,9 @@ class App extends React.Component {
         <Menu
           addPopup={this.addPopup}
           menuPlayHandler={this.menuPlayHandler}
-          optionsStartHandler={this.optionsStartHandler}
-          creditsStartHandler={this.creditsStartHandler}
+          setTitle={this.setTitle}
+          optionsViewHandler={this.optionsViewHandler}
+          creditsViewHandler={this.creditsViewHandler}
           socket={socket}
           loginPlayer={this.loginPlayer}
         />
@@ -106,16 +107,18 @@ class App extends React.Component {
     this.setState({ openedComponent: <Game /> })
   }
 
+  setTitle = ({ title = null }) => {
+    this.setState({ title })
+  }
+
   optionsViewHandler = () => {
-    this.setState({ title: 'Options' }, () => {
-      this.setState({ openedComponent: <Options /> })
-    })
+    this.setTitle({ title: 'Options' })
+    this.setState({ openedComponent: <Options /> })
   }
 
   creditsViewHandler = () => {
-    this.setState({ title: 'Credits' }, () => {
-      this.setState({ openedComponent: <Credits /> })
-    })
+    this.setTitle({ title: 'Credits' })
+    this.setState({ openedComponent: <Credits /> })
   }
 
   addPopup = ({ title = null, content = null }) => {

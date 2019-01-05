@@ -23,17 +23,6 @@ class Key extends Component {
 }
 
 class Keyboard extends Component {
-  constructor(props) {
-    super(props)
-    // prettier-ignore
-    this.alphabet = [
-      'A', 'B', 'C', 'D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W',
-      'X',
-      'Y',
-      'Z'
-    ]
-  }
-
   generateKeys = () => {
     let result = []
     for (let i = 65; i <= 90; i++) {

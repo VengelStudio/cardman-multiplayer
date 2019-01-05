@@ -5,7 +5,7 @@ import { VERIFY_USERNAME } from '../../Events'
 
 class Menu extends Component {
   state = {
-    isNicknamePassed: false
+    showMenu: false
   }
 
   loginHandler = nickname => {
@@ -19,7 +19,9 @@ class Menu extends Component {
       if (isTaken) {
         this.props.addPopup('<p>This nickname is already taken.</p>')
       } else {
-        this.setState({ isNicknamePassed: true })
+        this.setState({ showMenu: true }, () => {
+          this.props.setTitle({ title: 'Menu' })
+        })
         this.props.loginPlayer(player)
       }
     })
@@ -29,7 +31,7 @@ class Menu extends Component {
     return (
       <React.Fragment>
         <div className='menu'>
-          {this.state.isNicknamePassed ? (
+          {this.state.showMenu ? (
             <React.Fragment>
               <button
                 className='button-pointer border-neon border-neon-red'
@@ -40,16 +42,16 @@ class Menu extends Component {
                 Start
               </button>
               <button className='button-pointer border-neon border-neon-orange'>Help</button>
-              <button className='button-pointer border-neon border-neon-violet' onClick={this.props.optionsStartHandler}>
+              <button className='button-pointer border-neon border-neon-violet' onClick={this.props.optionsViewHandler}>
                 Options
               </button>
-              <button className='button-pointer border-neon border-neon-lime' onClick={this.props.creditsStartHandler}>
+              <button className='button-pointer border-neon border-neon-lime' onClick={this.props.creditsViewHandler}>
                 Credits
               </button>
             </React.Fragment>
           ) : (
-              <LoginPage loginHandler={this.loginHandler} />
-            )}
+            <LoginPage loginHandler={this.loginHandler} />
+          )}
         </div>
       </React.Fragment>
     )

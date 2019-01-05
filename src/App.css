@@ -1,7 +1,12 @@
+@font-face {
+  font-family: 'Ostrich Sans';
+  src: local('Ostrich Sans'), url(./Fonts/OstrichSansInline-Regular.otf) format('opentype');
+}
+
 .bg-dark {
   background-color: #353535;
 }
-.button-pointer{
+.button-pointer {
   cursor: pointer;
 }
 .bg-blue {
@@ -159,6 +164,7 @@ body,
 
 .text-xlg {
   font-size: 4.2vh;
+  margin: 0;
 }
 
 .text-nunito {
