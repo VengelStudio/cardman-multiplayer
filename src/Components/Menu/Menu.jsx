@@ -32,24 +32,24 @@ class Menu extends Component {
           {this.state.isNicknamePassed ? (
             <React.Fragment>
               <button
-                className='border-neon border-neon-red'
+                className='button-pointer border-neon border-neon-red'
                 onClick={() => {
                   this.props.menuPlayHandler(this.state.nickname)
                 }}
               >
                 Start
               </button>
-              <button className='border-neon border-neon-orange'>Help</button>
-              <button className='border-neon border-neon-violet' onClick={this.props.optionsStartHandler}>
+              <button className='button-pointer border-neon border-neon-orange'>Help</button>
+              <button className='button-pointer border-neon border-neon-violet' onClick={this.props.optionsStartHandler}>
                 Options
               </button>
-              <button className='border-neon border-neon-lime' onClick={this.props.creditsStartHandler}>
+              <button className='button-pointer border-neon border-neon-lime' onClick={this.props.creditsStartHandler}>
                 Credits
               </button>
             </React.Fragment>
           ) : (
-            <LoginPage loginHandler={this.loginHandler} />
-          )}
+              <LoginPage loginHandler={this.loginHandler} />
+            )}
         </div>
       </React.Fragment>
     )

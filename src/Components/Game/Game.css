@@ -91,6 +91,7 @@
 
 .key {
   display: block;
+  cursor: pointer;
   font-size: 2vw;
   font-weight: bold;
   text-align: center;

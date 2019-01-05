@@ -32,7 +32,7 @@ class LoginPage extends Component {
             className='inputNickname border-neon border-neon-red'
             onKeyDown={this.submitOnEnter}
           />
-          <button className='border-neon border-neon-orange' onClick={this.clickHandler}>
+          <button className='button-pointer border-neon border-neon-orange' onClick={this.clickHandler}>
             SUBMIT
           </button>
         </div>

@@ -25,7 +25,7 @@ const BrowserEntry = props => {
         onClick={e => {
           handleGameStart(props)
         }}
-        className='play border-neon border-neon-lime'
+        className='button-pointer play border-neon border-neon-lime'
       >
         Play
       </button>

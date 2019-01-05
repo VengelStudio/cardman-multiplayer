@@ -1,7 +1,9 @@
 .bg-dark {
   background-color: #353535;
 }
-
+.button-pointer{
+  cursor: pointer;
+}
 .bg-blue {
   background-color: #28536b;
 }
