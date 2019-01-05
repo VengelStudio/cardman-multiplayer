@@ -36,47 +36,47 @@ const BrowserEntry = props => {
 class PlayersBrowser extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = { playersInBrowser: this.props.playersInBrowser }
+  }
+
+  extractBrowserPlayers = players => {
+    //Exclude current player from the players list
+    players = Object.assign({}, players)
+    delete players[this.props.player.nickname]
+
+    let result = []
+    for (let player in players) {
+      let nickname = players[player].nickname
+      let id = players[player].id
+      let socketId = players[player].socketId
+      result.push(
+        <BrowserEntry
+          id={id}
+          socketId={socketId}
+          invitationHandler={this.props.invitationHandler}
+          nickname={nickname}
+          key={player}
+          index={Object.keys(players).indexOf(player)}
+        />
+      )
+    }
+    return result
   }
 
   componentWillMount() {
     this.initializeSocket()
-    this.setState({ playerList: this.getEntries(this.props.connectedPlayers) })
+    this.setState({ playersInBrowser: this.extractBrowserPlayers(this.props.connectedPlayers) })
   }
 
   initializeSocket = () => {
     const { socket } = this.props
-    /*socket.on('broadcast', connectedPlayers => {
-      console.log(connectedPlayers)
-    })*/
-  }
 
-  getEntries = players => {
-    let result = []
-    for (let index in players) {
-      console.log(players[index])
-      let nickname = players[index].nickname
-      if (index % 2 === 0) {
-        result.push(
-          <BrowserEntry
-            gameStartHandler={this.props.gameStartHandler}
-            nickname={nickname}
-            key={index}
-            lightColor={true}
-          />
-        )
-      } else {
-        result.push(
-          <BrowserEntry
-            gameStartHandler={this.props.gameStartHandler}
-            nickname={nickname}
-            key={index}
-            lightColor={false}
-          />
-        )
-      }
-    }
-    return result
+    //Call when other players connect in order to update the player browser
+    socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
+      this.setState({ playersInBrowser: this.extractBrowserPlayers(connectedPlayers) }, () => {
+        console.log('Updated player list state: ', this.state.playersInBrowser)
+      })
+    })
   }
 
   render() {
@@ -88,7 +88,7 @@ class PlayersBrowser extends React.Component {
           </p>
         </div>
         <Scrollbar style={{ width: '100%', height: '100%' }}>
-          {this.state.playerList.map(entry => {
+          {this.state.playersInBrowser.map(entry => {
             return entry
           })}
         </Scrollbar>

@@ -1,95 +1,82 @@
-import React, { Component } from 'react';
-import CardPlaceholder from '../../Resources/Images/img.jpg';
-import './Game.css';
+import React, { Component } from 'react'
+import CardPlaceholder from '../../Resources/Images/img.jpg'
+import './Game.css'
 
 class Key extends Component {
   state = {
     style: {
       backgroundColor: '#519C3F'
     }
-  };
+  }
   clickHandler = () => {
     this.setState({
       style: { backgroundColor: '#555', textDecoration: 'none' }
-    });
-  };
+    })
+  }
   render() {
     return (
       <button style={{ ...this.state.style }} onClick={this.clickHandler} className='key'>
         {this.props.letter}
       </button>
-    );
+    )
   }
 }
 
 class Keyboard extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+    // prettier-ignore
     this.alphabet = [
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'J',
-      'K',
-      'L',
-      'M',
-      'N',
-      'O',
-      'P',
-      'Q',
-      'R',
-      'S',
-      'T',
-      'U',
-      'V',
-      'W',
+      'A', 'B', 'C', 'D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W',
       'X',
       'Y',
       'Z'
-    ];
+    ]
+  }
+
+  generateKeys = () => {
+    let result = []
+    for (let i = 65; i <= 90; i++) {
+      result.push(<Key key={i} letter={String.fromCharCode(i)} />)
+    }
+    return result
   }
 
   render() {
     return (
       <div className='keyboard border-neon border-light-translucent'>
-        {this.alphabet.map(key => (
-          <Key key={this.alphabet.indexOf(key)} letter={key} />
-        ))}
+        {this.generateKeys().map(key => {
+          return key
+        })}
       </div>
-    );
+    )
   }
 }
 
 class Card extends Component {
   getBorder = () => {
-    let classes = 'card border-neon ';
+    let classes = 'card border-neon '
     switch (this.props.type) {
       case 1:
-        classes += 'border-neon-lime';
-        break;
+        classes += 'border-neon-lime'
+        break
       case -1:
-        classes += 'border-neon-red';
-        break;
+        classes += 'border-neon-red'
+        break
       default:
-        classes += 'border-neon-violet';
-        break;
+        classes += 'border-neon-violet'
+        break
     }
-    return classes;
-  };
+    return classes
+  }
 
   render() {
     return (
       <div className={this.getBorder()}>
         <div className='card-title'>Card</div>
-        <img className='card-image border-neon border-light-translucent' src={CardPlaceholder} alt='Card image.' />
+        <img className='card-image border-neon border-light-translucent' src={CardPlaceholder} alt='Playing card.' />
       </div>
-    );
+    )
   }
 }
 
@@ -102,7 +89,7 @@ class Cards extends Component {
         <Card type={this.props.type} />
         <Card type={this.props.type} />
       </div>
-    );
+    )
   }
 }
 
@@ -123,12 +110,12 @@ class Content extends Component {
 					<Card type={0} />
 				</div> */}
       </div>
-    );
+    )
   }
 }
 
 class Game extends Component {
-  state = {};
+  state = {}
   render() {
     return (
       <div className='gameWrapper'>
@@ -136,8 +123,8 @@ class Game extends Component {
         <Content />
         <Cards type={-1} title='Enemy cards:' />
       </div>
-    );
+    )
   }
 }
 
-export default Game;
+export default Game

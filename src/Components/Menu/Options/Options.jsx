@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import './Options.css';
+import React, { Component } from 'react'
+import './Options.css'
 
 class Options extends Component {
-  state = {};
+  state = {}
   render() {
     return (
       <React.Fragment>
@@ -20,7 +20,7 @@ class Options extends Component {
               <span className='width-full'>Country:</span>
             </div>
             <div className='width-half container justify-center padding-sm'>
-              <img className='options-flag-image' src='https://www.countryflags.io/pl/flat/64.png' />
+              <img className='options-flag-image' src='https://www.countryflags.io/pl/flat/64.png' alt='Flag icon.' />
             </div>
           </div>
           <div className='row content-vcenter content-hcenter width-full padding-sm'>
@@ -41,8 +41,8 @@ class Options extends Component {
           </div>
         </div>
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default Options;
+export default Options

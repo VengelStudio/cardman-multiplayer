@@ -20,7 +20,7 @@ class Menu extends Component {
         this.props.addPopup('<p>This nickname is already taken.</p>')
       } else {
         this.setState({ isNicknamePassed: true })
-        this.props.setPlayer(player)
+        this.props.loginPlayer(player)
       }
     })
   }

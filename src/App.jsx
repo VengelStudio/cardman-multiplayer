@@ -11,7 +11,7 @@ import Menu from './Components/Menu/Menu'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
 
 import io from 'socket.io-client'
-import { PLAYER_CONNECTED, LOGOUT, GET_PLAYERLIST } from './Events'
+import { PLAYER_CONNECTED, LOGOUT, INVITATION } from './Events'
 const socketUrl = 'http://localhost:3231'
 
 class App extends React.Component {
@@ -24,7 +24,7 @@ class App extends React.Component {
       openedComponent: null,
       popups: [],
       lastPopupId: 0,
-      connectedPlayers: []
+      connectedPlayers: {}
     }
   }
 
@@ -41,7 +41,7 @@ class App extends React.Component {
           optionsStartHandler={this.optionsStartHandler}
           creditsStartHandler={this.creditsStartHandler}
           socket={socket}
-          setPlayer={this.setPlayer}
+          loginPlayer={this.loginPlayer}
         />
       )
     })
@@ -50,74 +50,84 @@ class App extends React.Component {
   initializeSocket = () => {
     const socket = io(socketUrl)
     socket.on('connect', () => {
-      console.log('Connected!')
+      console.log('Connected to server.')
     })
     this.setState({ socket }, this.initializeApp(socket))
   }
 
-  playerConnectedHandler = list => {
-    console.log(list)
-  }
-
-  setPlayer = player => {
+  loginPlayer = player => {
     const { socket } = this.state
+    //Sending login socket with newly generated, previosly verified player
     socket.emit(PLAYER_CONNECTED, player)
     this.setState({ player })
 
-    socket.emit(GET_PLAYERLIST, {}, ({ connectedPlayers }) => {
-      console.log('Got player list: ', connectedPlayers)
+    //Wait for server response, then get the player list
+    socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
+      console.log(player.nickname + ' just got initial player list: ' + connectedPlayers)
       this.setState({ connectedPlayers })
     })
   }
 
-  logout = () => {
+  logoutPlayer = () => {
+    //Sending logout socket and setting user to player, thus hiding all the functionalities
     const { socket } = this.state
     socket.emit(LOGOUT)
-    this.setState({ user: null })
+    this.setState({ player: null })
   }
 
-  addPopup = content => {
-    this.setState({
-      popups: [...this.state.popups, { id: this.state.lastPopupId, content: content }]
-    })
-    this.setState((prevState, props) => {
-      lastPopupId: prevState.lastPopupId++
-    })
-  }
-
-  menuPlayHandler = nickname => {
-    this.setState({ nickname: nickname }, () => {
-      this.setState({ title: 'Players browser' }, () => {
-        this.setState({
-          openedComponent: (
-            <PlayersBrowser
-              socket={this.state.socket}
-              player={this.state.player}
-              gameStartHandler={this.gameStartHandler}
-              connectedPlayers={this.state.connectedPlayers}
-            />
-          )
-        })
+  menuPlayHandler = () => {
+    this.setState({ title: 'Players browser' }, () => {
+      this.setState({
+        openedComponent: (
+          <PlayersBrowser
+            socket={this.state.socket}
+            player={this.state.player}
+            invitationHandler={this.invitationHandler}
+            connectedPlayers={this.state.connectedPlayers}
+          />
+        )
       })
     })
   }
 
-  gameStartHandler = () => {
+  invitationHandler = ({ id = null, socketId = null }) => {
+    //Prevent players fron inviting themselves
+    if (id === this.state.player.id) {
+      this.addPopup({ title: 'Error!', content: 'You cannot invite yourself.' })
+      return
+    }
+
+    const { socket } = this.state
+    socket.emit(INVITATION, { id, socketId })
+    socket.on(INVITATION, () => {
+      console.log('INVITEEEEED!')
+    })
+    //todo invitation socket
     this.setState({ openedComponent: <Game /> })
   }
 
-  optionsStartHandler = () => {
+  optionsViewHandler = () => {
     this.setState({ title: 'Options' }, () => {
       this.setState({ openedComponent: <Options /> })
     })
   }
-  creditsStartHandler = () => {
+
+  creditsViewHandler = () => {
     this.setState({ title: 'Credits' }, () => {
       this.setState({ openedComponent: <Credits /> })
     })
   }
 
-  onPopupClose = id => {
+  addPopup = ({ title = null, content = null }) => {
+    this.setState({
+      popups: [...this.state.popups, { id: this.state.lastPopupId, title: title, content: content }]
+    })
+    this.setState(prevState => ({
+      lastPopupId: prevState.lastPopupId + 1
+    }))
+  }
+
+  popupCloseHandler = id => {
     let newPopups = this.state.popups.filter(popup => {
       return popup.id !== id
     })
@@ -131,7 +141,7 @@ class App extends React.Component {
         <div className='row width-full height-full bg-lightgrey'>
           {this.state.popups &&
             this.state.popups.map(x => {
-              return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.onPopupClose} />
+              return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.popupCloseHandler} />
             })}
           {this.state.openedComponent && this.state.openedComponent}
         </div>
