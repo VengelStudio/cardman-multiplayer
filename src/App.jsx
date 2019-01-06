@@ -3,27 +3,29 @@ import './App.css'
 
 import Header from './Components/Header/Header'
 import About from './Components/About/About'
-import Popup from './Components/Popup/Popup'
+import Popups from './Components/Popup/Popups'
 import Options from './Components/Menu/Options/Options'
 import Game from './Components/Game/Game'
 import Credits from './Components/Menu/Credits/Credits'
 import Menu from './Components/Menu/Menu'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
+import LoginPage from './Components/Menu/LoginPage/LoginPage'
 
 import io from 'socket.io-client'
 import { PLAYER_CONNECTED, LOGOUT, INVITATION } from './Events'
+
+import { Route, withRouter, Switch } from 'react-router-dom'
+
 const socketUrl = 'http://localhost:3231'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
+    this.popupsRef = React.createRef()
     this.state = {
       title: 'Hangman Multiplayer',
       player: null,
       socket: null,
-      openedComponent: null,
-      popups: [],
-      lastPopupId: 0,
       connectedPlayers: {}
     }
   }
@@ -32,28 +34,12 @@ class App extends React.Component {
     this.initializeSocket()
   }
 
-  initializeApp = socket => {
-    this.setState({
-      openedComponent: (
-        <Menu
-          addPopup={this.addPopup}
-          menuPlayHandler={this.menuPlayHandler}
-          setTitle={this.setTitle}
-          optionsViewHandler={this.optionsViewHandler}
-          creditsViewHandler={this.creditsViewHandler}
-          socket={socket}
-          loginPlayer={this.loginPlayer}
-        />
-      )
-    })
-  }
-
   initializeSocket = () => {
     const socket = io(socketUrl)
     socket.on('connect', () => {
       console.log('Connected to server.')
     })
-    this.setState({ socket }, this.initializeApp(socket))
+    this.setState({ socket })
   }
 
   loginPlayer = player => {
@@ -66,6 +52,7 @@ class App extends React.Component {
     socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
       console.log(player.nickname + ' just got initial player list: ' + connectedPlayers)
       this.setState({ connectedPlayers })
+      this.props.history.push('/menu')
     })
   }
 
@@ -76,65 +63,8 @@ class App extends React.Component {
     this.setState({ player: null })
   }
 
-  menuPlayHandler = () => {
-    this.setState({ title: 'Players browser' }, () => {
-      this.setState({
-        openedComponent: (
-          <PlayersBrowser
-            socket={this.state.socket}
-            player={this.state.player}
-            invitationHandler={this.invitationHandler}
-            connectedPlayers={this.state.connectedPlayers}
-          />
-        )
-      })
-    })
-  }
-
-  invitationHandler = ({ id = null, socketId = null }) => {
-    //Prevent players fron inviting themselves
-    if (id === this.state.player.id) {
-      this.addPopup({ title: 'Error!', content: 'You cannot invite yourself.' })
-      return
-    }
-
-    const { socket } = this.state
-    socket.emit(INVITATION, { id, socketId })
-    socket.on(INVITATION, () => {
-      console.log('INVITEEEEED!')
-    })
-    //todo invitation socket
-    this.setState({ openedComponent: <Game /> })
-  }
-
   setTitle = ({ title = null }) => {
     this.setState({ title })
-  }
-
-  optionsViewHandler = () => {
-    this.setTitle({ title: 'Options' })
-    this.setState({ openedComponent: <Options /> })
-  }
-
-  creditsViewHandler = () => {
-    this.setTitle({ title: 'Credits' })
-    this.setState({ openedComponent: <Credits /> })
-  }
-
-  addPopup = ({ title = null, content = null }) => {
-    this.setState({
-      popups: [...this.state.popups, { id: this.state.lastPopupId, title: title, content: content }]
-    })
-    this.setState(prevState => ({
-      lastPopupId: prevState.lastPopupId + 1
-    }))
-  }
-
-  popupCloseHandler = id => {
-    let newPopups = this.state.popups.filter(popup => {
-      return popup.id !== id
-    })
-    this.setState({ popups: newPopups })
   }
 
   render() {
@@ -142,11 +72,34 @@ class App extends React.Component {
       <div className='container of-rows width-full height-full text-nunito '>
         <Header title={this.state.title} />
         <div className='row width-full height-full bg-lightgrey'>
-          {this.state.popups &&
-            this.state.popups.map(x => {
-              return <Popup title={x.title} content={x.content} key={x.id} id={x.id} onClose={this.popupCloseHandler} />
-            })}
-          {this.state.openedComponent && this.state.openedComponent}
+          <Popups ref={this.popupsRef} />
+          <Switch>
+            <Route exact path='/'>
+              <LoginPage socket={this.state.socket} loginPlayer={this.loginPlayer} setTitle={this.setTitle} />
+            </Route>
+            <Route
+              path='/menu'
+              component={Menu}
+              addPopup={this.addPopup}
+              menuPlayHandler={this.menuPlayHandler}
+              setTitle={this.setTitle}
+              socket={this.state.socket}
+              loginPlayer={this.loginPlayer}
+            />
+            <Route path='/menu/options' setTitle={this.setTitle} component={Options} />
+            <Route path='/menu/credits' setTitle={this.setTitle} component={Credits} />
+            <Route
+              path='/browser'
+              component={PlayersBrowser}
+              socket={this.state.socket}
+              player={this.state.player}
+              invitationHandler={this.invitationHandler}
+              connectedPlayers={this.state.connectedPlayers}
+              setTitle={this.setTitle}
+            />
+            <Route path='/game' component={Game} />
+            {/*todo <Route component={NotFound} />*/}
+          </Switch>
         </div>
         <About />
       </div>
@@ -154,4 +107,4 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default withRouter(App)
