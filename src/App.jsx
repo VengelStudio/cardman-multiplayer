@@ -3,7 +3,7 @@ import './App.css'
 
 import Header from './Components/Header/Header'
 import About from './Components/About/About'
-import Popups from './Components/Popup/Popups'
+import PopupManager from './Components/Popup/PopupManager'
 import Options from './Components/Menu/Options/Options'
 import Game from './Components/Game/Game'
 import Credits from './Components/Menu/Credits/Credits'
@@ -13,9 +13,9 @@ import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
 import LoginPage from './Components/Menu/LoginPage/LoginPage'
 
 import io from 'socket.io-client'
-import { PLAYER_CONNECTED, LOGOUT, INVITATION } from './Events'
+import { PLAYER_CONNECTED, LOGOUT } from './Events'
 
-import { BrowserRouter as Router, Route, withRouter, Switch } from 'react-router-dom'
+import { Route, withRouter, Switch } from 'react-router-dom'
 
 const socketUrl = 'http://localhost:3231'
 
@@ -69,15 +69,24 @@ class App extends React.Component {
     this.setState({ title })
   }
 
+  addPopupHandler = ({ title = null, content = null }) => {
+    this.popupsRef.current.addPopup({ title, content })
+  }
+
   render() {
     return (
       <div className='container of-rows width-full height-full text-nunito '>
         <Header title={this.state.title} />
         <div className='row width-full height-full bg-lightgrey'>
-          <Popups ref={this.popupsRef} />
+          <PopupManager ref={this.popupsRef} />
           <Switch>
             <Route exact path='/'>
-              <LoginPage socket={this.state.socket} loginPlayer={this.loginPlayer} setTitle={this.setTitle} />
+              <LoginPage
+                socket={this.state.socket}
+                loginPlayer={this.loginPlayer}
+                setTitle={this.setTitle}
+                addPopup={this.addPopupHandler}
+              />
             </Route>
             <Route path='/menu' component={Menu} />
             <Route path='/options/' setTitle={this.setTitle} component={Options} />
@@ -89,9 +98,9 @@ class App extends React.Component {
                 <PlayersBrowser
                   socket={this.state.socket}
                   player={this.state.player}
-                  invitationHandler={this.invitationHandler}
                   connectedPlayers={this.state.connectedPlayers}
                   setTitle={this.setTitle}
+                  addPopup={this.addPopupHandler}
                 />
               )}
             />

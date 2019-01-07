@@ -3,6 +3,7 @@ import './PlayersBrowser.css'
 import Scrollbar from 'react-scrollbars-custom'
 import { PLAYER_CONNECTED, INVITATION } from '../../Events'
 import BrowserEntry from './BrowserEntry'
+import { withRouter } from 'react-router-dom'
 
 class PlayersBrowser extends React.Component {
   constructor(props) {
@@ -13,12 +14,12 @@ class PlayersBrowser extends React.Component {
 
   invitationHandler = ({ id = null, socketId = null }) => {
     //Prevent players fron inviting themselves
-    if (id === this.state.player.id) {
-      //!this.addPopup({ title: 'Error!', content: 'You cannot invite yourself.' })
+    if (id === this.props.player.id) {
+      this.props.addPopup({ title: 'Error!', content: 'You cannot invite yourself.' })
       return
     }
 
-    const { socket } = this.state
+    const { socket } = this.props
     socket.emit(INVITATION, { id, socketId })
     socket.on(INVITATION, () => {
       console.log('INVITEEEEED!')
@@ -79,4 +80,4 @@ class PlayersBrowser extends React.Component {
   }
 }
 
-export default PlayersBrowser
+export default withRouter(PlayersBrowser)

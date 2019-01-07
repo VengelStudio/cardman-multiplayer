@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Popup from './Popup'
 
-class Popups extends Component {
+class PopupManager extends Component {
   state = { popups: [], lastPopupId: 0 }
 
   addPopup = ({ title = null, content = null }) => {
@@ -32,4 +32,4 @@ class Popups extends Component {
   }
 }
 
-export default Popups
+export default PopupManager

@@ -47,6 +47,7 @@ module.exports = function(socket) {
     console.log('Logout', connectedPlayers)
   })
 
+  //the one that logs in first doesn't get the invitation
   socket.on(INVITATION, ({ id = null, socketId = null }) => {
     if (socket.user.id === id) {
       console.log('Player tried to invite himself. Error.')
@@ -58,11 +59,11 @@ module.exports = function(socket) {
     console.log(socket.user.id)
     console.log('to: ')
     console.log(id)
-    console.log(socketId)
+    //console.log(socketId)
 
     //todo doesnt work in both ways
-
-    io.sockets.connected[socketId].emit(INVITATION)
+    io.to(socketId).emit(INVITATION)
+    //io.sockets.connected[socketId].emit(INVITATION)
   })
 }
 
