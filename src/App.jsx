@@ -68,9 +68,13 @@ class App extends React.Component {
     this.setState({ title })
   }
 
-  addPopupHandler = ({ title = null, content = null }) => {
-    this.popupsRef.current.addPopup({ title, content })
+  addPopupHandler = ({ title = null, content = null, isInvitation = false, acceptHandler = null }) => {
+    this.popupsRef.current.addPopup({ title, content, isInvitation, acceptHandler })
   }
+
+  /*componentDidMount() {
+    this.addPopupHandler({ content: 'asdasd', isInvitation: true })
+  }*/
 
   render() {
     return (

@@ -59,9 +59,14 @@ class PlayersBrowser extends React.Component {
         console.log('Updated player list state: ', this.state.playersInBrowser)
       })
     })
-    socket.on(INVITATION, ({ id }) => {
-      console.log('Invitation from ' + id)
+
+    socket.on(INVITATION, ({ id, nickname }) => {
+      this.incomingInvitationHandler({ id, nickname })
     })
+  }
+
+  incomingInvitationHandler = ({ id = null, nickname = null }) => {
+    console.log(`Invitation from ${nickname} (${id})`)
   }
 
   render() {

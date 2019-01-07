@@ -56,7 +56,7 @@ module.exports = function(socket) {
       return
     }
     console.log(`New invite from ${socket.user.id} to ${id}`)
-    socket.to(socketId).emit(INVITATION, { id: socket.user.id })
+    socket.to(socketId).emit(INVITATION, { id: socket.user.id, nickname: socket.user.nickname })
   })
 }
 
