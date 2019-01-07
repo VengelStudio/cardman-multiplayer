@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './LoginPage.css'
 import { VERIFY_USERNAME } from '../../../Events'
 
+
 class LoginPage extends Component {
   constructor(props) {
     super(props)
@@ -17,7 +18,7 @@ class LoginPage extends Component {
     }
     socket.emit(VERIFY_USERNAME, nickname, ({ player, isTaken }) => {
       if (isTaken) {
-        //!this.props.addPopup('<p>This nickname is already taken.</p>')
+        console.log("this nickname is already taken")
       } else {
         this.props.setTitle({ title: 'Menu' })
         this.props.loginPlayer(player)

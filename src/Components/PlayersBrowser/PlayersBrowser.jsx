@@ -50,10 +50,7 @@ class PlayersBrowser extends React.Component {
     return result
   }
 
-  componentWillMount() {
-    this.initializeSocket()
-    this.setState({ playersInBrowser: this.extractBrowserPlayers(this.props.connectedPlayers) })
-  }
+
 
   initializeSocket = () => {
     const { socket } = this.props
@@ -64,6 +61,10 @@ class PlayersBrowser extends React.Component {
         console.log('Updated player list state: ', this.state.playersInBrowser)
       })
     })
+  }
+  componentWillMount() {
+    this.initializeSocket()
+    this.setState({ playersInBrowser: this.extractBrowserPlayers(this.props.connectedPlayers) })
   }
 
   render() {

@@ -7,14 +7,16 @@ import Popups from './Components/Popup/Popups'
 import Options from './Components/Menu/Options/Options'
 import Game from './Components/Game/Game'
 import Credits from './Components/Menu/Credits/Credits'
+import Help from './Components/Menu/Help/Help'
 import Menu from './Components/Menu/Menu'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
 import LoginPage from './Components/Menu/LoginPage/LoginPage'
 
+
 import io from 'socket.io-client'
 import { PLAYER_CONNECTED, LOGOUT, INVITATION } from './Events'
 
-import { Route, withRouter, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, withRouter, Switch } from 'react-router-dom'
 
 const socketUrl = 'http://localhost:3231'
 
@@ -86,8 +88,9 @@ class App extends React.Component {
               socket={this.state.socket}
               loginPlayer={this.loginPlayer}
             />
-            <Route path='/menu/options' setTitle={this.setTitle} component={Options} />
-            <Route path='/menu/credits' setTitle={this.setTitle} component={Credits} />
+            <Route path='/options/' setTitle={this.setTitle} component={Options} />
+            <Route path='/credits' setTitle={this.setTitle} component={Credits} />
+            <Route path='/help' setTitle={this.setTitle} component={Help} />
             <Route
               path='/browser'
               component={PlayersBrowser}

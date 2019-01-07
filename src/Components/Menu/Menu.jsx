@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './Menu.css'
 import { withRouter } from 'react-router-dom'
+import { browserHistory } from 'react-router-dom'
 
 class Menu extends Component {
   render() {
