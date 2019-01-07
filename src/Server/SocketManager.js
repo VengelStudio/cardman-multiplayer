@@ -48,22 +48,15 @@ module.exports = function(socket) {
   })
 
   //the one that logs in first doesn't get the invitation
+  //the second cannot invite the first
   socket.on(INVITATION, ({ id = null, socketId = null }) => {
     if (socket.user.id === id) {
       console.log('Player tried to invite himself. Error.')
       //todo error
       return
     }
-
-    console.log('from: ')
-    console.log(socket.user.id)
-    console.log('to: ')
-    console.log(id)
-    //console.log(socketId)
-
-    //todo doesnt work in both ways
-    io.to(socketId).emit(INVITATION)
-    //io.sockets.connected[socketId].emit(INVITATION)
+    console.log(`New invite from ${socket.user.id} to ${id}`)
+    socket.to(socketId).emit(INVITATION, { id: socket.user.id })
   })
 }
 

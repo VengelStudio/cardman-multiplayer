@@ -13,6 +13,7 @@ class PlayersBrowser extends React.Component {
   }
 
   invitationHandler = ({ id = null, socketId = null }) => {
+    console.log('Sending an invitation to player: ', id)
     //Prevent players fron inviting themselves
     if (id === this.props.player.id) {
       this.props.addPopup({ title: 'Error!', content: 'You cannot invite yourself.' })
@@ -20,10 +21,8 @@ class PlayersBrowser extends React.Component {
     }
 
     const { socket } = this.props
+
     socket.emit(INVITATION, { id, socketId })
-    socket.on(INVITATION, () => {
-      console.log('INVITEEEEED!')
-    })
     //todo invitation socket
     this.props.history.push('/game')
   }
@@ -59,6 +58,9 @@ class PlayersBrowser extends React.Component {
       this.setState({ playersInBrowser: this.extractBrowserPlayers(connectedPlayers) }, () => {
         console.log('Updated player list state: ', this.state.playersInBrowser)
       })
+    })
+    socket.on(INVITATION, ({ id }) => {
+      console.log('Invitation from ' + id)
     })
   }
 

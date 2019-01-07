@@ -2,7 +2,6 @@ import React from 'react'
 import './App.css'
 
 import Header from './Components/Header/Header'
-import About from './Components/About/About'
 import PopupManager from './Components/Popup/PopupManager'
 import Options from './Components/Menu/Options/Options'
 import Game from './Components/Game/Game'
@@ -108,7 +107,6 @@ class App extends React.Component {
             {/*todo <Route component={NotFound} />*/}
           </Switch>
         </div>
-        <About />
       </div>
     )
   }

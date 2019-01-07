@@ -14,7 +14,6 @@ class BrowserEntry extends Component {
   }
 
   clickHandler = () => {
-    console.log('Sending an invitation to player: ', this.props.id)
     this.props.invitationHandler({ id: this.props.id, socketId: this.props.socketId })
   }
 
