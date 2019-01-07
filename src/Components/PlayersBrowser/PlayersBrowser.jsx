@@ -7,7 +7,8 @@ import BrowserEntry from './BrowserEntry'
 class PlayersBrowser extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { playersInBrowser: this.props.playersInBrowser }
+    this.state = { playersInBrowser: this.extractBrowserPlayers(this.props.connectedPlayers) }
+    this.initializeSocket()
   }
 
   invitationHandler = ({ id = null, socketId = null }) => {
@@ -50,21 +51,14 @@ class PlayersBrowser extends React.Component {
     return result
   }
 
-
-
   initializeSocket = () => {
     const { socket } = this.props
-
     //Call when other players connect in order to update the player browser
     socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
       this.setState({ playersInBrowser: this.extractBrowserPlayers(connectedPlayers) }, () => {
         console.log('Updated player list state: ', this.state.playersInBrowser)
       })
     })
-  }
-  componentWillMount() {
-    this.initializeSocket()
-    this.setState({ playersInBrowser: this.extractBrowserPlayers(this.props.connectedPlayers) })
   }
 
   render() {

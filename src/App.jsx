@@ -12,7 +12,6 @@ import Menu from './Components/Menu/Menu'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
 import LoginPage from './Components/Menu/LoginPage/LoginPage'
 
-
 import io from 'socket.io-client'
 import { PLAYER_CONNECTED, LOGOUT, INVITATION } from './Events'
 
@@ -52,7 +51,8 @@ class App extends React.Component {
 
     //Wait for server response, then get the player list
     socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
-      console.log(player.nickname + ' just got initial player list: ' + connectedPlayers)
+      console.log(player.nickname + ' just got initial player list:')
+      console.log(connectedPlayers)
       this.setState({ connectedPlayers })
       this.props.history.push('/menu')
     })
@@ -79,26 +79,21 @@ class App extends React.Component {
             <Route exact path='/'>
               <LoginPage socket={this.state.socket} loginPlayer={this.loginPlayer} setTitle={this.setTitle} />
             </Route>
-            <Route
-              path='/menu'
-              component={Menu}
-              addPopup={this.addPopup}
-              menuPlayHandler={this.menuPlayHandler}
-              setTitle={this.setTitle}
-              socket={this.state.socket}
-              loginPlayer={this.loginPlayer}
-            />
+            <Route path='/menu' component={Menu} />
             <Route path='/options/' setTitle={this.setTitle} component={Options} />
             <Route path='/credits' setTitle={this.setTitle} component={Credits} />
             <Route path='/help' setTitle={this.setTitle} component={Help} />
             <Route
               path='/browser'
-              component={PlayersBrowser}
-              socket={this.state.socket}
-              player={this.state.player}
-              invitationHandler={this.invitationHandler}
-              connectedPlayers={this.state.connectedPlayers}
-              setTitle={this.setTitle}
+              render={() => (
+                <PlayersBrowser
+                  socket={this.state.socket}
+                  player={this.state.player}
+                  invitationHandler={this.invitationHandler}
+                  connectedPlayers={this.state.connectedPlayers}
+                  setTitle={this.setTitle}
+                />
+              )}
             />
             <Route path='/game' component={Game} />
             {/*todo <Route component={NotFound} />*/}
