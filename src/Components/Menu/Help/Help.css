@@ -5,5 +5,11 @@
   height: 70vh;
   margin: auto;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+}
+.good-luck{
+  font-size: 4vh;
+}
+.help-header{
+  text-align: center;
 }
