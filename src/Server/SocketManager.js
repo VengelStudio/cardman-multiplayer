@@ -73,6 +73,9 @@ module.exports = function (socket) {
       players: [fromSocketId, to.socketId]
     })
     addGame(game)
+    io.sockets.connected[fromSocketId].join(game.id);
+    io.sockets.connected[to.socketId].join(game.id);
+    io.in(game.id).emit(GAME_STARTED, { message: `Game between ${fromSocketId} and ${to.socketId}` })
     console.log(games)
     console.log(`Started game between ${fromSocketId} and ${to.socketId}, gameID: ${game.id}`)
   })

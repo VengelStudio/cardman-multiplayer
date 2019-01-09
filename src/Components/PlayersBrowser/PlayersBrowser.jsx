@@ -1,7 +1,7 @@
 import React from 'react'
 import './PlayersBrowser.css'
 import Scrollbar from 'react-scrollbars-custom'
-import { PLAYER_CONNECTED, INVITATION, INVITATION_ACCEPTED } from '../../Events'
+import { PLAYER_CONNECTED, INVITATION, INVITATION_ACCEPTED, GAME_STARTED } from '../../Events'
 import BrowserEntry from './BrowserEntry'
 import { withRouter } from 'react-router-dom'
 
@@ -23,8 +23,6 @@ class PlayersBrowser extends React.Component {
     const { socket } = this.props
 
     socket.emit(INVITATION, { id, socketId })
-    //todo invitation socket
-    this.props.history.push('/game')
   }
 
   extractBrowserPlayers = players => {
@@ -62,6 +60,10 @@ class PlayersBrowser extends React.Component {
 
     socket.on(INVITATION, ({ nickname, socketId }) => {
       this.incomingInvitationHandler({ nickname, socketId })
+    })
+    socket.on(GAME_STARTED, ({ message }) => {
+      console.log(message)
+      this.props.history.push('/game')
     })
   }
 
