@@ -24,16 +24,16 @@ class PopupManager extends Component {
     return (
       <React.Fragment>
         {this.state.popups &&
-          this.state.popups.map(x => {
+          this.state.popups.map(e => {
             return (
               <Popup
-                title={x.title}
-                content={x.content}
-                key={x.id}
-                id={x.id}
+                title={e.title}
+                content={e.content}
+                key={e.id}
+                id={e.id}
                 onClose={this.popupCloseHandler}
-                invitationData={x.invitationData}
-                acceptHandler={x.acceptHandler}
+                invitationData={e.invitationData}
+                acceptHandler={e.acceptHandler}
               />
             )
           })}
