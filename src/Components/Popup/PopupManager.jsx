@@ -4,9 +4,9 @@ import Popup from './Popup'
 class PopupManager extends Component {
   state = { popups: [], lastPopupId: 0 }
 
-  addPopup = ({ title = null, content = null, isInvitation = false, acceptHandler = null }) => {
+  addPopup = ({ title = null, content = null, invitationData = null, acceptHandler = null }) => {
     this.setState({
-      popups: [...this.state.popups, { id: this.state.lastPopupId, title, content, isInvitation, acceptHandler }]
+      popups: [...this.state.popups, { id: this.state.lastPopupId, title, content, invitationData, acceptHandler }]
     })
     this.setState(prevState => ({
       lastPopupId: prevState.lastPopupId + 1
@@ -32,7 +32,7 @@ class PopupManager extends Component {
                 key={x.id}
                 id={x.id}
                 onClose={this.popupCloseHandler}
-                isInvitation={x.isInvitation}
+                invitationData={x.invitationData}
                 acceptHandler={x.acceptHandler}
               />
             )

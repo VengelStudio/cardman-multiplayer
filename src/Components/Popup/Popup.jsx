@@ -16,10 +16,12 @@ class Popup extends Component {
     }
   }
 
-  clickHandler = () => {
-    if (this.props.isInvitation) {
-      this.props.acceptHandler()
-    }
+  acceptHandler = () => {
+    this.props.invitationData.acceptHandler()
+    this.closeHandler()
+  }
+
+  closeHandler = () => {
     this.props.onClose(this.props.id)
   }
 
@@ -29,13 +31,13 @@ class Popup extends Component {
         style={this.popupStyle}
         className='border-neon border-neon-red container of-rows text-nunito bg-khaki popup center-absolute-both d-block p-absolute popup-upper-round popup-bottom-round'
       >
-        {!this.props.isInvitation && (
+        {!this.props.invitationData && (
           <div
             style={this.roundedTopStyle}
             className='padding-sm popup-title row width-auto semi-bold text-lg color-light text-center'
           >
             <span dangerouslySetInnerHTML={{ __html: this.props.title }} />
-            <button onClick={this.clickHandler} className='btn-popup-close'>
+            <button onClick={this.closeHandler} className='btn-popup-close'>
               <span className='fas margin-auto d-block fa-window-close' />
             </button>
           </div>
@@ -44,10 +46,12 @@ class Popup extends Component {
           className='row width-full height-full popup-content padding-sm text-md'
           dangerouslySetInnerHTML={{ __html: this.props.content }}
         />
-        {this.props.isInvitation && (
+        {this.props.invitationData && (
           <div className='popup-buttons'>
-            <button className='border-neon border-neon-lime'>Accept</button>
-            <button onClick={this.clickHandler} className='border-neon border-neon-orange'>
+            <button onClick={this.acceptHandler} className='border-neon border-neon-lime'>
+              Accept
+            </button>
+            <button onClick={this.closeHandler} className='border-neon border-neon-orange'>
               Decline
             </button>
           </div>

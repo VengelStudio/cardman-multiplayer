@@ -68,12 +68,20 @@ class App extends React.Component {
     this.setState({ title })
   }
 
-  addPopupHandler = ({ title = null, content = null, isInvitation = false, acceptHandler = null }) => {
-    this.popupsRef.current.addPopup({ title, content, isInvitation, acceptHandler })
+  addPopupHandler = ({ title = null, content = null, invitationData = null, acceptHandler = null }) => {
+    this.popupsRef.current.addPopup({ title, content, invitationData, acceptHandler })
   }
 
+  //testing
   /*componentDidMount() {
-    this.addPopupHandler({ content: 'asdasd', isInvitation: true })
+    this.addPopupHandler({
+      content: 'asdasd',
+      invitationData: {
+        acceptHandler: () => {
+          console.log('ACCEPTED')
+        }
+      }
+    })
   }*/
 
   render() {
