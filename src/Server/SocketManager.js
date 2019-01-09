@@ -6,21 +6,28 @@ const {
   PLAYER_DISCONNECTED,
   LOGOUT,
   INVITATION,
+  INVITATION_ACCEPTED,
   GAME_STARTED
 } = require('../Events')
 
-const { createPlayer } = require('../Factories')
+const { createPlayer, createGame } = require('../Factories')
 
 let connectedPlayers = {}
+let games = {}
 
-module.exports = function(socket) {
+module.exports = function (socket) {
   console.log('Connected, socket id: ' + socket.id)
 
   socket.on(VERIFY_USERNAME, (nickname, callback) => {
     if (isPlayer(nickname)) {
       callback({ isTaken: true, player: null })
     } else {
-      callback({ isTaken: false, player: createPlayer({ nickname: nickname, socketId: socket.id }) })
+      callback({
+        isTaken: false, player: createPlayer({
+          nickname: nickname,
+          socketId: socket.id
+        })
+      })
     }
   })
 
@@ -48,21 +55,38 @@ module.exports = function(socket) {
   })
 
   //the one that logs in first doesn't get the invitation
-  //the second cannot invite the first
   socket.on(INVITATION, ({ id = null, socketId = null }) => {
     if (socket.user.id === id) {
       console.log('Player tried to invite himself. Error.')
-      //todo error
       return
     }
     console.log(`New invite from ${socket.user.id} to ${id}`)
-    socket.to(socketId).emit(INVITATION, { id: socket.user.id, nickname: socket.user.nickname })
+    socket.to(socketId).emit(INVITATION, {
+      socketId: socket.user.socketId,
+      nickname: socket.user.nickname
+    })
+  })
+
+  socket.on(INVITATION_ACCEPTED, ({ fromSocketId, to }) => {
+    console.log(`From: ${fromSocketId}, to: ${to.socketId}`)
+    let game = createGame({
+      players: [fromSocketId, to.socketId]
+    })
+    addGame(game)
+    console.log(games)
+    console.log(`Started game between ${fromSocketId} and ${to.socketId}, gameID: ${game.id}`)
   })
 }
 
 function addPlayer(player) {
   let newList = Object.assign({}, connectedPlayers)
   newList[player.nickname] = player
+  return newList
+}
+
+function addGame(game) {
+  let newList = Object.assign({}, games)
+  newList[game.id] = game
   return newList
 }
 

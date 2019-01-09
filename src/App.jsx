@@ -72,17 +72,19 @@ class App extends React.Component {
     this.popupsRef.current.addPopup({ title, content, invitationData, acceptHandler })
   }
 
-  //testing
-  /*componentDidMount() {
-    this.addPopupHandler({
-      content: 'asdasd',
-      invitationData: {
-        acceptHandler: () => {
-          console.log('ACCEPTED')
-        }
-      }
-    })
-  }*/
+  // testing
+  // componentDidMount() {
+  //   this.addPopupHandler({
+  //     content: 'asdasd',
+  //     invitationData: {
+  //       acceptHandler: () => {
+  //         console.log('ACCEPTED')
+  //       }
+  //     }
+  //   })
+  // }
+
+
 
   render() {
     return (

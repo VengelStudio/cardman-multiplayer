@@ -1,7 +1,7 @@
 import React from 'react'
 import './PlayersBrowser.css'
 import Scrollbar from 'react-scrollbars-custom'
-import { PLAYER_CONNECTED, INVITATION } from '../../Events'
+import { PLAYER_CONNECTED, INVITATION, INVITATION_ACCEPTED } from '../../Events'
 import BrowserEntry from './BrowserEntry'
 import { withRouter } from 'react-router-dom'
 
@@ -60,13 +60,26 @@ class PlayersBrowser extends React.Component {
       })
     })
 
-    socket.on(INVITATION, ({ id, nickname }) => {
-      this.incomingInvitationHandler({ id, nickname })
+    socket.on(INVITATION, ({ nickname, socketId }) => {
+      this.incomingInvitationHandler({ nickname, socketId })
     })
   }
 
-  incomingInvitationHandler = ({ id = null, nickname = null }) => {
-    console.log(`Invitation from ${nickname} (${id})`)
+  invitationAcceptHandler = ({ to = null, fromSocketId = null }) => {
+    const { socket } = this.props
+
+    socket.emit(INVITATION_ACCEPTED, { fromSocketId, to })
+  }
+
+  incomingInvitationHandler = ({ nickname = null, socketId = null }) => {
+    console.log(`Invitation from ${nickname} (${socketId})`)
+    this.props.addPopup({
+      content: `invitation from ${nickname}`, invitationData: {
+        acceptHandler: () => {
+          this.invitationAcceptHandler({ to: this.props.player, fromSocketId: socketId })
+        }
+      }
+    })
   }
 
   render() {
