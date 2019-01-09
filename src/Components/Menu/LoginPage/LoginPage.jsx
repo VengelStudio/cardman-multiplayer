@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './LoginPage.css'
+import { VERIFY_USERNAME } from '../../../Events'
 
 class LoginPage extends Component {
   constructor(props) {
@@ -7,34 +8,48 @@ class LoginPage extends Component {
     this.inputRef = React.createRef()
   }
 
-  submitOnEnter = key => {
-    if (key.which === 13) {
-      this.clickHandler()
+  loginHandler = () => {
+    let nickname = this.inputRef.current.value
+    const { socket } = this.props
+    if (nickname.length <= 1) {
+      this.props.addPopup({ title: '', content: '<p>Your nickname has to be longer.</p>' })
+      return
     }
+    socket.emit(VERIFY_USERNAME, nickname, ({ player, isTaken }) => {
+      if (isTaken) {
+        this.props.addPopup({ title: '', content: '<p>This nickname is taken.</p>' })
+      } else {
+        this.props.setTitle({ title: 'Menu' })
+        this.props.loginPlayer(player)
+      }
+    })
   }
 
-  clickHandler = () => {
-    let nickname = this.inputRef.current.value
-    this.props.loginHandler(nickname)
+  submitOnEnter = key => {
+    if (key.which === 13) {
+      this.loginHandler()
+    }
   }
 
   render() {
     return (
       <React.Fragment>
-        <div className='infoNickname border-neon border-neon-violet'>
-          <p>Please enter your nickname</p>
-        </div>
-        <div className='nickname-input'>
-          <input
-            ref={this.inputRef}
-            type='text'
-            maxLength='15'
-            className='inputNickname border-neon border-neon-red'
-            onKeyDown={this.submitOnEnter}
-          />
-          <button className='button-pointer border-neon border-neon-orange' onClick={this.clickHandler}>
-            SUBMIT
-          </button>
+        <div className='menu'>
+          <div className='infoNickname border-neon border-neon-violet'>
+            <p>Please enter your nickname</p>
+          </div>
+          <div className='nickname-input'>
+            <input
+              ref={this.inputRef}
+              type='text'
+              maxLength='15'
+              className='inputNickname border-neon border-neon-red'
+              onKeyDown={this.submitOnEnter}
+            />
+            <button className='button-pointer border-neon border-neon-orange' onClick={this.loginHandler}>
+              SUBMIT
+            </button>
+          </div>
         </div>
       </React.Fragment>
     )

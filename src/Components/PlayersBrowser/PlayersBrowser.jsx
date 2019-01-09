@@ -1,13 +1,28 @@
 import React from 'react'
 import './PlayersBrowser.css'
 import Scrollbar from 'react-scrollbars-custom'
-import { PLAYER_CONNECTED } from '../../Events'
+import { PLAYER_CONNECTED, INVITATION, INVITATION_ACCEPTED, GAME_STARTED } from '../../Events'
 import BrowserEntry from './BrowserEntry'
+import { withRouter } from 'react-router-dom'
 
 class PlayersBrowser extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { playersInBrowser: this.props.playersInBrowser }
+    this.state = { playersInBrowser: this.extractBrowserPlayers(this.props.connectedPlayers) }
+    this.initializeSocket()
+  }
+
+  invitationHandler = ({ id = null, socketId = null }) => {
+    console.log('Sending an invitation to player: ', id)
+    //Prevent players fron inviting themselves
+    if (id === this.props.player.id) {
+      this.props.addPopup({ title: 'Error!', content: 'You cannot invite yourself.' })
+      return
+    }
+
+    const { socket } = this.props
+
+    socket.emit(INVITATION, { id, socketId })
   }
 
   extractBrowserPlayers = players => {
@@ -24,7 +39,7 @@ class PlayersBrowser extends React.Component {
         <BrowserEntry
           id={id}
           socketId={socketId}
-          invitationHandler={this.props.invitationHandler}
+          invitationHandler={this.invitationHandler}
           nickname={nickname}
           key={player}
           index={Object.keys(players).indexOf(player)}
@@ -34,19 +49,38 @@ class PlayersBrowser extends React.Component {
     return result
   }
 
-  componentWillMount() {
-    this.initializeSocket()
-    this.setState({ playersInBrowser: this.extractBrowserPlayers(this.props.connectedPlayers) })
-  }
-
   initializeSocket = () => {
     const { socket } = this.props
-
     //Call when other players connect in order to update the player browser
     socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
       this.setState({ playersInBrowser: this.extractBrowserPlayers(connectedPlayers) }, () => {
         console.log('Updated player list state: ', this.state.playersInBrowser)
       })
+    })
+
+    socket.on(INVITATION, ({ nickname, socketId }) => {
+      this.incomingInvitationHandler({ nickname, socketId })
+    })
+    socket.on(GAME_STARTED, ({ message }) => {
+      console.log(message)
+      this.props.history.push('/game')
+    })
+  }
+
+  invitationAcceptHandler = ({ to = null, fromSocketId = null }) => {
+    const { socket } = this.props
+
+    socket.emit(INVITATION_ACCEPTED, { fromSocketId, to })
+  }
+
+  incomingInvitationHandler = ({ nickname = null, socketId = null }) => {
+    console.log(`Invitation from ${nickname} (${socketId})`)
+    this.props.addPopup({
+      content: `invitation from ${nickname}`, invitationData: {
+        acceptHandler: () => {
+          this.invitationAcceptHandler({ to: this.props.player, fromSocketId: socketId })
+        }
+      }
     })
   }
 
@@ -68,4 +102,4 @@ class PlayersBrowser extends React.Component {
   }
 }
 
-export default PlayersBrowser
+export default withRouter(PlayersBrowser)
