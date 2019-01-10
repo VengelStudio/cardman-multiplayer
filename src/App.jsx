@@ -26,7 +26,8 @@ class App extends React.Component {
       title: 'Hangman Multiplayer',
       player: null,
       socket: null,
-      connectedPlayers: {}
+      connectedPlayers: {},
+      game: null
     }
   }
 
@@ -50,8 +51,6 @@ class App extends React.Component {
 
     //Wait for server response, then get the player list
     socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
-      console.log(player.nickname + ' just got initial player list:')
-      console.log(connectedPlayers)
       this.setState({ connectedPlayers })
       this.props.history.push('/menu')
     })
@@ -68,8 +67,23 @@ class App extends React.Component {
     this.setState({ title })
   }
 
-  addPopupHandler = ({ title = null, content = null, invitationData = null, acceptHandler = null }) => {
-    this.popupsRef.current.addPopup({ title, content, invitationData, acceptHandler })
+  addPopupHandler = ({
+    title = null,
+    content = null,
+    invitationData = null,
+    acceptHandler = null
+  }) => {
+    this.popupsRef.current.addPopup({
+      title,
+      content,
+      invitationData,
+      acceptHandler
+    })
+  }
+
+  setGame = ({ game }) => {
+    console.log('Game started!')
+    this.setState({ game }, this.props.history.push('/game'))
   }
 
   render() {
@@ -88,8 +102,16 @@ class App extends React.Component {
               />
             </Route>
             <Route path='/menu' component={Menu} />
-            <Route path='/options/' setTitle={this.setTitle} component={Options} />
-            <Route path='/credits' setTitle={this.setTitle} component={Credits} />
+            <Route
+              path='/options/'
+              setTitle={this.setTitle}
+              component={Options}
+            />
+            <Route
+              path='/credits'
+              setTitle={this.setTitle}
+              component={Credits}
+            />
             <Route path='/help' setTitle={this.setTitle} component={Help} />
             <Route
               path='/browser'
@@ -100,10 +122,20 @@ class App extends React.Component {
                   connectedPlayers={this.state.connectedPlayers}
                   setTitle={this.setTitle}
                   addPopup={this.addPopupHandler}
+                  setGame={this.setGame}
                 />
               )}
             />
-            <Route path='/game' component={Game} />
+            <Route
+              path='/game'
+              render={() => (
+                <Game
+                  player={this.state.player}
+                  game={this.state.game}
+                  socket={this.state.socket}
+                />
+              )}
+            />
             {/*todo <Route component={NotFound} />*/}
           </Switch>
         </div>

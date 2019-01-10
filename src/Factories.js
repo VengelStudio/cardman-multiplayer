@@ -8,12 +8,18 @@ const createPlayer = ({ nickname = '', socketId = null } = {}) => ({
 })
 
 // Creates a game instance
-const createGame = ({ players = [], cards = [], dateTime = null, socketRoom = null }) => ({
+const createGame = ({
+  playerSockets = [],
+  word = null,
+  displayWord = null,
+  guessed = []
+}) => ({
   id: uuidv4(),
-  players,
-  cards,
-  dateTime,
-  socketRoom
+  word,
+  displayWord,
+  guessed,
+  playerSockets,
+  dateTime: new Date().toJSON
 })
 
 module.exports = {

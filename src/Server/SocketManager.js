@@ -7,27 +7,32 @@ const {
   LOGOUT,
   INVITATION,
   INVITATION_ACCEPTED,
-  GAME_STARTED
+  GAME_STARTED,
+  GAME_MOVE
 } = require('../Events')
 
-const { createPlayer, createGame } = require('../Factories')
+const { createPlayer, createGame, createTurn } = require('../Factories')
 
 let connectedPlayers = {}
 let games = {}
 
-module.exports = function (socket) {
-  console.log('Connected, socket id: ' + socket.id)
+const { words, displayWord } = require('../Game/Words/Words')
+
+module.exports = function(socket) {
+  //console.log('Connected, socket id: ' + socket.id)
 
   socket.on(VERIFY_USERNAME, (nickname, callback) => {
     if (isPlayer(nickname)) {
       callback({ isTaken: true, player: null })
     } else {
       callback({
-        isTaken: false, player: createPlayer({
+        isTaken: false,
+        player: createPlayer({
           nickname: nickname,
           socketId: socket.id
         })
       })
+      console.log(`[CONNECTED] Player ${nickname} (${socket.id})`)
     }
   })
 
@@ -37,30 +42,28 @@ module.exports = function (socket) {
     socket.user = player
 
     io.emit(PLAYER_CONNECTED, { connectedPlayers })
-    console.log(connectedPlayers)
   })
 
   socket.on('disconnect', () => {
     if ('user' in socket) {
       connectedPlayers = removePlayer(socket.user.nickname)
       io.emit(PLAYER_DISCONNECTED, connectedPlayers)
-      console.log('Disconnect', connectedPlayers)
+      console.log(`[DISCONNECTED] Player ${nickname} (${socket.user.username})`)
     }
   })
 
   socket.on(LOGOUT, () => {
     connectedPlayers = removePlayer(socket.user.nickname)
     io.emit(PLAYER_DISCONNECTED, connectedPlayers)
-    console.log('Logout', connectedPlayers)
+    console.log(`[LOGOUT] Player ${socket.user.username}`)
   })
 
-  //the one that logs in first doesn't get the invitation
   socket.on(INVITATION, ({ id = null, socketId = null }) => {
     if (socket.user.id === id) {
-      console.log('Player tried to invite himself. Error.')
+      console.log(`[ERROR] ${socket.user.username} tried to invite himself`)
       return
     }
-    console.log(`New invite from ${socket.user.id} to ${id}`)
+    console.log(`[INVITATION] from ${socket.user.id} to ${id}`)
     socket.to(socketId).emit(INVITATION, {
       socketId: socket.user.socketId,
       nickname: socket.user.nickname
@@ -68,16 +71,41 @@ module.exports = function (socket) {
   })
 
   socket.on(INVITATION_ACCEPTED, ({ fromSocketId, to }) => {
-    console.log(`From: ${fromSocketId}, to: ${to.socketId}`)
+    console.log(`[INVITATION] from: ${fromSocketId}, to: ${to.socketId}`)
+
+    let randomWord = getRandomWord()
     let game = createGame({
-      players: [fromSocketId, to.socketId]
+      word: randomWord,
+      displayWord: displayWord({ word: randomWord.word }), //todo move to words.js someday
+      players: [
+        io.sockets.connected[fromSocketId].user,
+        io.sockets.connected[to.socketId].user
+      ]
     })
-    addGame(game)
-    io.sockets.connected[fromSocketId].join(game.id);
-    io.sockets.connected[to.socketId].join(game.id);
-    io.in(game.id).emit(GAME_STARTED, { message: `Game between ${fromSocketId} and ${to.socketId}` })
+    games = addGame(game)
+    console.log()
+    io.sockets.connected[fromSocketId].join(game.id)
+    io.sockets.connected[to.socketId].join(game.id)
+    io.in(game.id).emit(GAME_STARTED, { game })
+    console.log(`[GAME] ${fromSocketId} vs ${to.socketId}, gameID: ${game.id}`)
+  })
+
+  socket.on(GAME_MOVE, ({ game, move }) => {
+    //game.id
     console.log(games)
-    console.log(`Started game between ${fromSocketId} and ${to.socketId}, gameID: ${game.id}`)
+    console.log('id: ' + game.id)
+    let currentGame = games[game.id]
+    if (move.type === 'key') {
+      let newGuessed = currentGame.guessed
+      newGuessed.push(move.key)
+      currentGame.displayWord = displayWord({
+        word: currentGame.displayWord,
+        guessed: newGuessed
+      })
+      currentGame.guessed = newGuessed
+    }
+
+    io.in(game.id).emit(GAME_MOVE, { game })
   })
 }
 
@@ -100,7 +128,12 @@ function removePlayer(username) {
 }
 
 function isPlayer(username) {
-  console.log(username)
-  console.log(connectedPlayers)
   return username in connectedPlayers
+}
+
+function getRandomWord(/*usedwords*/) {
+  //todo prevent from returning used words
+  let index = Math.floor(Math.random() * words.length)
+  let randomWord = words[index]
+  return randomWord
 }
