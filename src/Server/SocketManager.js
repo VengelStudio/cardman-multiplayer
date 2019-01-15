@@ -18,7 +18,7 @@ let games = {}
 
 const { words, displayWord } = require('../Game/Words/Words')
 
-module.exports = function (socket) {
+module.exports = function(socket) {
   //console.log('Connected, socket id: ' + socket.id)
 
   socket.on(VERIFY_USERNAME, (nickname, callback) => {
@@ -93,27 +93,30 @@ module.exports = function (socket) {
   })
 
   socket.on(GAME_MOVE, ({ game, move }) => {
-    //game.id
-    console.log(game)
-    console.log('[DEBUG] game id: ' + game.id)
     let currentGame = games[game.id]
-    if (move.type === 'key') {
-      let newGuessed = currentGame.guessed
-      newGuessed.push(move.key)
-      currentGame.displayWord = displayWord({
-        word: currentGame.word.word,
-        guessed: newGuessed
-      })
-      currentGame.guessed = newGuessed
-      if (currentGame.nextPlayerIndex === 0) {
-        currentGame.nextPlayerIndex = 1
-      } else {
-        currentGame.nextPlayerIndex = 0
-      }
-    }
-    games[game.id] = currentGame
+    let nextPlayerIndex = currentGame.nextPlayerIndex
+    let nextPlayer = currentGame.playerSockets[nextPlayerIndex]
 
-    io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
+    if (nextPlayer.id === socket.user.id) {
+      if (move.type === 'key') {
+        let newGuessed = currentGame.guessed
+        newGuessed.push(move.key)
+        currentGame.displayWord = displayWord({
+          word: currentGame.word.word,
+          guessed: newGuessed
+        })
+        currentGame.guessed = newGuessed
+
+        //switch next player
+        if (currentGame.nextPlayerIndex === 0) {
+          currentGame.nextPlayerIndex = 1
+        } else {
+          currentGame.nextPlayerIndex = 0
+        }
+      }
+      games[game.id] = currentGame
+      io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
+    }
   })
 }
 

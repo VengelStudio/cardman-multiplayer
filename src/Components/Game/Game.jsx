@@ -33,7 +33,12 @@ const isMove = ({ props }) => {
 class Game extends Component {
   constructor(props) {
     super(props)
-    this.state = { game: this.props.game, gameFromProps: true, move: true }
+    this.state = {
+      player: this.props.player,
+      game: this.props.game,
+      gameFromProps: true,
+      move: true
+    }
     this.initializeSocket()
   }
 
@@ -41,18 +46,15 @@ class Game extends Component {
     const { socket } = this.props
     socket.on(GAME_MOVE, ({ game }) => {
       this.setState({ game: game }, () => {
-        isMove({ props: this.state })
+        this.setState({ move: isMove({ props: this.state }) })
       })
       setScore({ props: this.props })
     })
   }
 
-
   moveHandler = ({ move = null }) => {
     const { socket } = this.props
     socket.emit(GAME_MOVE, { game: this.state.game, move })
-    console.log(this.props)
-
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -61,7 +63,7 @@ class Game extends Component {
         setScore({ props })
         return {
           gameFromProps: false,
-          game: props.game,
+          game: props.game
         }
       }
       return null
