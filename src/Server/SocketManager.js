@@ -48,7 +48,8 @@ module.exports = function(socket) {
     if ('user' in socket) {
       connectedPlayers = removePlayer(socket.user.nickname)
       io.emit(PLAYER_DISCONNECTED, connectedPlayers)
-      console.log(`[DISCONNECTED] Player ${nickname} (${socket.user.username})`)
+      //todo ${nickname} is not defined
+      //console.log(`[DISCONNECTED] Player ${nickname} (${socket.user.username})`)
     }
   })
 
@@ -77,13 +78,12 @@ module.exports = function(socket) {
     let game = createGame({
       word: randomWord,
       displayWord: displayWord({ word: randomWord.word }), //todo move to words.js someday
-      players: [
+      playerSockets: [
         io.sockets.connected[fromSocketId].user,
         io.sockets.connected[to.socketId].user
       ]
     })
     games = addGame(game)
-    console.log()
     io.sockets.connected[fromSocketId].join(game.id)
     io.sockets.connected[to.socketId].join(game.id)
     io.in(game.id).emit(GAME_STARTED, { game })
@@ -92,20 +92,25 @@ module.exports = function(socket) {
 
   socket.on(GAME_MOVE, ({ game, move }) => {
     //game.id
-    console.log(games)
-    console.log('id: ' + game.id)
+    console.log(game)
+    console.log('[DEBUG] game id: ' + game.id)
     let currentGame = games[game.id]
     if (move.type === 'key') {
       let newGuessed = currentGame.guessed
       newGuessed.push(move.key)
+      //console.log('key: ' + move.key)
+      //console.log('before: ' + currentGame.displayWord)
+      //console.log(currentGame.word)
       currentGame.displayWord = displayWord({
-        word: currentGame.displayWord,
+        word: currentGame.word.word,
         guessed: newGuessed
       })
+      //console.log('after: ' + currentGame.displayWord)
       currentGame.guessed = newGuessed
     }
+    games[game.id] = currentGame
 
-    io.in(game.id).emit(GAME_MOVE, { game })
+    io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
   })
 }
 
@@ -133,6 +138,7 @@ function isPlayer(username) {
 
 function getRandomWord(/*usedwords*/) {
   //todo prevent from returning used words
+  //todo app crashes (id null) after refreshing the page
   let index = Math.floor(Math.random() * words.length)
   let randomWord = words[index]
   return randomWord

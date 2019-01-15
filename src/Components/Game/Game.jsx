@@ -6,22 +6,32 @@ const { GAME_MOVE } = require('../../Events')
 
 class Key extends Component {
   state = {
-    style: {
-      backgroundColor: '#519C3F'
+    clicked: this.props.clicked
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.clicked !== state.clicked) {
+      return {
+        clicked: props.clicked
+      }
     }
+    return null
   }
 
   clickHandler = () => {
     this.props.moveHandler({ move: { type: 'key', key: this.props.letter } })
-    this.setState({
-      style: { backgroundColor: '#555', textDecoration: 'none' }
-    })
   }
 
   render() {
     return (
       <button
-        style={{ ...this.state.style }}
+        style={
+          this.state.clicked
+            ? { backgroundColor: '#555', textDecoration: 'none' }
+            : {
+                backgroundColor: '#519C3F'
+              }
+        }
         onClick={this.clickHandler}
         className='key'
       >
@@ -32,14 +42,35 @@ class Key extends Component {
 }
 
 class Keyboard extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { guessed: this.props.guessed }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.guessed !== state.guessed) {
+      return {
+        guessed: props.guessed
+      }
+    }
+    return null
+  }
+
   generateKeys = () => {
     let result = []
     for (let i = 65; i <= 90; i++) {
+      let letter = String.fromCharCode(i).toUpperCase()
+      let clicked = false
+      if (this.props.guessed.includes(letter)) {
+        clicked = true
+      }
+
       result.push(
         <Key
           moveHandler={this.props.moveHandler}
           key={i}
-          letter={String.fromCharCode(i)}
+          letter={letter}
+          clicked={clicked}
         />
       )
     }
@@ -106,7 +137,7 @@ class Cards extends Component {
 class Content extends Component {
   constructor(props) {
     super(props)
-    this.state = { game: null }
+    this.state = { game: this.props.game }
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -125,7 +156,12 @@ class Content extends Component {
           <div className='word'>
             {this.state.game && this.state.game.displayWord}
           </div>
-          <Keyboard moveHandler={this.props.moveHandler} />
+          {this.state.game && (
+            <Keyboard
+              moveHandler={this.props.moveHandler}
+              guessed={this.props.game.guessed}
+            />
+          )}
         </div>
         {/* <div className="deck-title">Game deck:</div>
 				<div className="deck">
@@ -143,32 +179,40 @@ class Content extends Component {
 class Game extends Component {
   constructor(props) {
     super(props)
-    this.state = { game: null }
-  }
-
-  componentWillMount() {
+    this.state = { game: this.props.game, gameFromProps: true }
     this.initializeSocket()
   }
 
   initializeSocket = () => {
     const { socket } = this.props
     socket.on(GAME_MOVE, ({ game }) => {
+      console.log(this.state.game)
+      //todo add the rest of parameters
       console.log(game)
+      let newWord = game.displayWord
+      console.log('new word: ' + newWord)
+      //this.setState({ game: { displayWord: newWord } })
+      this.setState({ game: game })
+      //this.setState(prevState => ({ game: { ...prevState.game, ...game } }))
+
+      console.log(this.state.game)
     })
   }
 
   moveHandler = ({ move = null }) => {
     const { socket } = this.props
-    console.log(move)
-    console.log(this.state.game)
     socket.emit(GAME_MOVE, { game: this.state.game, move })
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.game !== state.game) {
-      return {
-        game: props.game
+    if (state.gameFromProps) {
+      if (props.game !== state.game) {
+        return {
+          gameFromProps: false,
+          game: props.game
+        }
       }
+      return null
     }
     return null
   }

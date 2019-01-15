@@ -2,8 +2,8 @@ module.exports = {
   displayWord: ({ word = null, guessed = [] }) => {
     //todo force uppercase
     let result = ''
-    console.log(word)
-    let wordArray = word.split('')
+    console.log('[DEBUG]: ' + word)
+    let wordArray = word.toUpperCase().split('')
     for (let i = 0; i < wordArray.length; i++) {
       if (guessed.includes(wordArray[i])) {
         result += wordArray[i] + ' '
@@ -11,7 +11,7 @@ module.exports = {
         result += '_ '
       }
     }
-    return result.slice(0, result.length - 1)
+    return result.charAt(0).toUpperCase() + result.slice(1, result.length - 1)
   },
 
   words: [
