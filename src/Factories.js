@@ -9,9 +9,10 @@ const createPlayer = ({ nickname = '', socketId = null } = {}) => ({
 
 // Creates a game instance
 const createGame = ({
-  playerSockets = [],
-  word = null,
-  displayWord = null,
+  playerSockets,
+  word,
+  displayWord,
+  nextPlayerIndex,
   guessed = []
 }) => ({
   id: uuidv4(),
@@ -19,6 +20,7 @@ const createGame = ({
   displayWord,
   guessed,
   playerSockets,
+  nextPlayerIndex,
   dateTime: new Date().toJSON
 })
 

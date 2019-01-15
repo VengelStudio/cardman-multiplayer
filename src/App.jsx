@@ -31,10 +31,9 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.initializeSocket()
   }
-
   initializeSocket = () => {
     const socket = io(socketUrl)
     socket.on('connect', () => {
@@ -133,6 +132,7 @@ class App extends React.Component {
                   player={this.state.player}
                   game={this.state.game}
                   socket={this.state.socket}
+                  setTitle={this.setTitle}
                 />
               )}
             />

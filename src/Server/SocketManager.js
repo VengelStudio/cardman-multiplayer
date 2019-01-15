@@ -75,13 +75,15 @@ module.exports = function(socket) {
     console.log(`[INVITATION] from: ${fromSocketId}, to: ${to.socketId}`)
 
     let randomWord = getRandomWord()
+    let playerSockets = [
+      io.sockets.connected[fromSocketId].user,
+      io.sockets.connected[to.socketId].user
+    ]
     let game = createGame({
       word: randomWord,
       displayWord: displayWord({ word: randomWord.word }), //todo move to words.js someday
-      playerSockets: [
-        io.sockets.connected[fromSocketId].user,
-        io.sockets.connected[to.socketId].user
-      ]
+      playerSockets,
+      nextPlayerIndex: Math.floor(Math.random() * playerSockets.length)
     })
     games = addGame(game)
     io.sockets.connected[fromSocketId].join(game.id)
@@ -98,14 +100,10 @@ module.exports = function(socket) {
     if (move.type === 'key') {
       let newGuessed = currentGame.guessed
       newGuessed.push(move.key)
-      //console.log('key: ' + move.key)
-      //console.log('before: ' + currentGame.displayWord)
-      //console.log(currentGame.word)
       currentGame.displayWord = displayWord({
         word: currentGame.word.word,
         guessed: newGuessed
       })
-      //console.log('after: ' + currentGame.displayWord)
       currentGame.guessed = newGuessed
     }
     games[game.id] = currentGame

@@ -7,6 +7,15 @@
   color: whitesmoke;
 }
 
+@keyframes moveFlashing {
+  from {
+    background-color: rgba(60, 202, 76, 0.6);
+  }
+  to {
+    background-color: rgba(81, 240, 99, 0.6);
+  }
+}
+
 .cards {
   background-color: rgba(255, 255, 255, 0.2);
   justify-content: space-around;
