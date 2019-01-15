@@ -10,7 +10,7 @@ const setScore = ({ props }) => {
 
   // let me = props.game.playerSockets.filter(p => {
   //   return p.id === props.player.id
-  // })
+  // })<(-_-)>
 
   let enemy = props.game.playerSockets.filter(p => {
     return p.id !== props.player.id
@@ -22,6 +22,11 @@ const setScore = ({ props }) => {
 
 const isMove = ({ props }) => {
   let nextPlayerIndex = props.game.nextPlayerIndex
+  console.log(nextPlayerIndex)
+  console.log(props.game.playerSockets)
+  console.log(props.game.playerSockets[nextPlayerIndex])
+  console.log(props.game)
+  console.log(props.player)
   return props.game.playerSockets[nextPlayerIndex].id === props.player.id
 }
 
@@ -35,14 +40,19 @@ class Game extends Component {
   initializeSocket = () => {
     const { socket } = this.props
     socket.on(GAME_MOVE, ({ game }) => {
-      this.setState({ game: game })
+      this.setState({ game: game }, () => {
+        isMove({ props: this.state })
+      })
+      setScore({ props: this.props })
     })
   }
+
 
   moveHandler = ({ move = null }) => {
     const { socket } = this.props
     socket.emit(GAME_MOVE, { game: this.state.game, move })
-    this.setScore()
+    console.log(this.props)
+
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -52,7 +62,6 @@ class Game extends Component {
         return {
           gameFromProps: false,
           game: props.game,
-          move: isMove({ props })
         }
       }
       return null
