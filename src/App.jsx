@@ -89,7 +89,7 @@ class App extends React.Component {
     return (
       <div className='container of-rows width-full height-full text-nunito '>
         <Header title={this.state.title} />
-        <div className='row width-full height-full bg-lightgrey'>
+        <div className='row height-full width-full bg-lightgrey'>
           <PopupManager ref={this.popupsRef} />
           <Switch>
             <Route exact path='/'>

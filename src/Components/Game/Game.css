@@ -16,53 +16,57 @@
   }
 }
 
-.cards {
-  background-color: rgba(255, 255, 255, 0.2);
-  justify-content: space-around;
+.cards-title {
+  font-size: 3vh;
+  font-weight: 900;
 }
 
-.cards,
-.content {
+.cards {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 11vw;
+}
+
+.cards-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100%;
-}
-
-.content {
+  width: 12vw;
+  padding: 1vh;
   flex: 1;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 30vh;
-  margin: 1vh;
-  padding: 0.5vh;
-}
-
-.card-title,
-.cards-title {
-  text-align: center;
-}
-
-.cards-title {
-  font-size: 1.4vw;
+  align-items: center;
+  margin: 1vw;
 }
 
 .card-title {
-  height: 100%;
+  font-size: 1.5vh;
+  font-weight: bold;
+  text-align: center;
 }
 
 .card-image {
-  height: calc(100% - 4vh);
-  width: auto;
+  display: block;
+  flex: 1;
+  margin: auto;
+  margin-bottom: 1vw;
+  width: 7vw;
+  height: auto;
+  filter: hue-rotate(0deg);
 }
 
 .content {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 
 .deck {
@@ -114,11 +118,4 @@
   border-radius: 0.5vh;
   color: whitesmoke;
   background-color: rgb(81, 156, 63);
-}
-
-.card-placeholder {
-  height: auto;
-  width: 15%;
-  box-shadow: 0.2vw 0.2vw 0.2vw #000;
-  margin: 0 0.1vw 0 0.1vw;
 }

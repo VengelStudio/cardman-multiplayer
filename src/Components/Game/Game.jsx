@@ -39,7 +39,9 @@ class Game extends Component {
       gameFromProps: true,
       move: true
     }
-    this.initializeSocket()
+
+    //todo make an "Disconnected" error
+    this.props.socket && this.initializeSocket()
   }
 
   initializeSocket = () => {

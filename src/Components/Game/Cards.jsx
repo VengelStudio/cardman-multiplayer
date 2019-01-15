@@ -59,12 +59,14 @@ class Cards extends Component {
   render() {
     return (
       <div className='cards' style={this.getBg()}>
-        <div className='cards-title'>
+        <span className='cards-title'>
           {this.props.title ? this.props.title : ''}
+        </span>
+        <div className='cards-wrapper'>
+          <Card type={this.props.type} />
+          <Card type={this.props.type} />
+          <Card type={this.props.type} />
         </div>
-        <Card type={this.props.type} />
-        <Card type={this.props.type} />
-        <Card type={this.props.type} />
       </div>
     )
   }
