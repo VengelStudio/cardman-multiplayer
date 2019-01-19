@@ -51,12 +51,21 @@
   font-size: 5vh;
   display: flex;
   margin-left: 10vw;
+  height: 100%;
 }
 
 .browser-entry > .player-info > .country {
   margin: auto;
   margin-right: 1vw;
   display: flex;
+  height: 100%;
+  object-fit: scale-down;
+  image-rendering: pixelated;
+}
+
+.browser-entry > .player-info > .nickname {
+  display: block;
+  margin: auto;
 }
 
 .browser-entry > .play {

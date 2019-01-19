@@ -75,7 +75,6 @@ class PlayersBrowser extends React.Component {
 
   initializeSocket = () => {
     const { socket } = this.props
-    //Call when other players connect in order to update the player browser
     socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
       this.setState({
         playersInBrowser: extractBrowserPlayers({
@@ -86,12 +85,20 @@ class PlayersBrowser extends React.Component {
       })
     })
 
+    const isMove = ({ game }) => {
+      let nextPlayerIndex = game.nextPlayerIndex
+      console.log(game.playerSockets[nextPlayerIndex].id)
+      console.log(this.props.player.id)
+      return game.playerSockets[nextPlayerIndex].id === this.props.player.id
+    }
+
     socket.on(INVITATION, ({ nickname, socketId }) => {
       this.incomingInvitationHandler({ nickname, socketId })
     })
     socket.on(GAME_STARTED, ({ game }) => {
       console.log(game)
       this.props.setGame({ game })
+      this.props.setMove(isMove({ game }))
     })
   }
 
