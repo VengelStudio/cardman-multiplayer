@@ -19,7 +19,7 @@ let games = {}
 
 const { words, displayWord } = require("../Game/Words/Words")
 
-module.exports = function(socket) {
+module.exports = function (socket) {
 	//console.log('Connected, socket id: ' + socket.id)
 
 	socket.on(VERIFY_USERNAME, (nickname, callback) => {
@@ -84,8 +84,11 @@ module.exports = function(socket) {
 			word: randomWord,
 			displayWord: displayWord({ word: randomWord.word }), //todo move to words.js someday
 			playerSockets,
-			nextPlayerIndex: Math.floor(Math.random())
+			nextPlayerIndex: Math.floor(Math.random()),
 		})
+		game.score[playerSockets[0].socketId] = 0
+		game.score[playerSockets[1].socketId] = 0
+		console.log(game.score);
 		games = addGame(game)
 		io.sockets.connected[fromSocketId].join(game.id)
 		io.sockets.connected[to.socketId].join(game.id)
@@ -108,7 +111,8 @@ module.exports = function(socket) {
 						guessed: newGuessed
 					},
 					() => {
-						io.in(game.id).emit(WIN, { winner: nextPlayer })
+						currentGame.score[nextPlayer.socketId] += 1
+						io.in(game.id).emit(WIN, { winner: nextPlayer, score: currentGame.score })
 					}
 				)
 				currentGame.guessed = newGuessed

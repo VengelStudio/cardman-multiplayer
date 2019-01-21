@@ -13,7 +13,7 @@ const createGame = ({
   word,
   displayWord,
   nextPlayerIndex,
-  guessed = []
+  guessed = [],
 }) => ({
   id: uuidv4(),
   word,
@@ -21,6 +21,7 @@ const createGame = ({
   guessed,
   playerSockets,
   nextPlayerIndex,
+  score: {},
   dateTime: new Date().toJSON
 })
 

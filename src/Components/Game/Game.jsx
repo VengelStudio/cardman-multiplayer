@@ -6,19 +6,25 @@ import { withRouter } from 'react-router-dom'
 
 const { GAME_MOVE, WIN } = require('../../Events')
 
-const setScore = ({ props }) => {
+const setScore = ({ props, score = null }) => {
   let myNickname = props.player.nickname
 
-  // let me = props.game.playerSockets.filter(p => {
-  //   return p.id === props.player.id
-  // })<(-_-)>
+  let me = props.game.playerSockets.filter(p => {
+    return p.socketId === props.player.socketId
+  })
+  console.log(score);
+  console.log(me);
+
+
+  let myScore = (score === null) ? 0 : score[me[0].socketId]
 
   let enemy = props.game.playerSockets.filter(p => {
-    return p.id !== props.player.id
+    return p.socketId !== props.player.socketId
   })
+  let enemyScore = (score === null) ? 0 : score[enemy[0].socketId]
 
   let enemyNickname = enemy[0].nickname
-  props.setTitle({ title: `${myNickname} 0:0 ${enemyNickname}` })
+  props.setTitle({ title: `${myNickname} ${myScore}:${enemyScore} ${enemyNickname}` })
 }
 
 const isMove = ({ props }) => {
@@ -36,10 +42,10 @@ class Game extends Component {
       move: this.props.isMove
     }
 
-    if (this.props.game === null) {
-      console.log('DETECTED RELOAD, MOVE TO MAIN MENU')
-      this.props.history.push('/')
-    }
+    // if (this.props.game === null) {
+    //   console.log('DETECTED RELOAD, MOVE TO MAIN MENU')
+    //   this.props.history.push('/')
+    // }
 
     //todo make an "Disconnected" error
     this.props.socket && this.initializeSocket()
@@ -52,14 +58,16 @@ class Game extends Component {
         this.props.setMove(isMove({ props: this.state }))
         console.log(isMove({ props: this.state }))
       })
-      setScore({ props: this.props })
     })
-    socket.on(WIN, ({ winner }) => {
+    socket.on(WIN, ({ winner, score }) => {
       console.log(winner)
+      console.log(score)
+
       this.props.addPopup({
         title: 'WINNER',
-        content: `winner: ${winner.nickname}`
+        content: `winner: ${winner.nickname}`,
       })
+      setScore({ props: this.props, score })
     })
   }
 

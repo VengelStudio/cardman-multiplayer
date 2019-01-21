@@ -9,7 +9,9 @@
     },
     {
       "word": "modeled",
-      "definitions": ["Simple past tense and past participle of model."]
+      "definitions": [
+        "Simple past tense and past participle of model."
+      ]
     },
     {
       "word": "Narrows",
@@ -32,7 +34,9 @@
     },
     {
       "word": "bookshelf",
-      "definitions": ["A shelf or set of shelves for holding books."]
+      "definitions": [
+        "A shelf or set of shelves for holding books."
+      ]
     },
     {
       "word": "zine",
@@ -42,7 +46,7 @@
       ]
     },
     {
-      "word": "shout-out",
+      "word": "shoutout",
       "definitions": [
         "Slang   A public expression of gratitude or recognition."
       ]
@@ -73,7 +77,12 @@
         "A city of southwest Netherlands on the Rhine-Meuse delta south-southeast of The Hague. Chartered in 1328, it was a major commercial power during the 16th and 17th centuries and is today a thriving port accessible via canal to oceangoing vessels. The city was heavily bombed during World War II. Population: 584,000."
       ]
     },
-    { "word": "scoreless", "definitions": ["Having no points scored."] },
+    {
+      "word": "scoreless",
+      "definitions": [
+        "Having no points scored."
+      ]
+    },
     {
       "word": "flea",
       "definitions": [
@@ -83,7 +92,10 @@
     },
     {
       "word": "Bertram",
-      "definitions": ["A male given name.", "A patronymic surname."]
+      "definitions": [
+        "A male given name.",
+        "A patronymic surname."
+      ]
     },
     {
       "word": "Algeria",
@@ -91,10 +103,17 @@
         "A country of northwest Africa bordering on the Mediterranean Sea. The region was settled c. 2000 B.C. by Berber-speaking people and later formed a part of the Roman, Byzantine, and Ottoman empires. Arab invaders in the seventh and eighth centuries introduced Islam and the Arabic language and culture. A French territory from 1848, Algeria gained its independence in 1962 after more than seven years of fighting. Algiers is the capital and the largest city. Population: 33,300,000."
       ]
     },
-    { "word": "capturing", "definitions": ["Present participle of capture."] },
+    {
+      "word": "capturing",
+      "definitions": [
+        "Present participle of capture."
+      ]
+    },
     {
       "word": "redesigning",
-      "definitions": ["Present participle of redesign."]
+      "definitions": [
+        "Present participle of redesign."
+      ]
     },
     {
       "word": "eminent",
@@ -112,15 +131,22 @@
     },
     {
       "word": "secured",
-      "definitions": ["Simple past tense and past participle of secure."]
+      "definitions": [
+        "Simple past tense and past participle of secure."
+      ]
     },
     {
       "word": "bristling",
-      "definitions": ["Having bristles.", "Showing anger."]
+      "definitions": [
+        "Having bristles.",
+        "Showing anger."
+      ]
     },
     {
       "word": "brighter",
-      "definitions": ["comparative form of bright: more bright"]
+      "definitions": [
+        "comparative form of bright: more bright"
+      ]
     },
     {
       "word": "parse",
@@ -152,17 +178,14 @@
     },
     {
       "word": "sawed",
-      "definitions": ["Simple past tense and past participle of saw."]
+      "definitions": [
+        "Simple past tense and past participle of saw."
+      ]
     },
     {
       "word": "witnessed",
-      "definitions": ["Simple past tense and past participle of witness."]
-    },
-    {
-      "word": "thence",
       "definitions": [
-        "From that place; from there:  flew to Helsinki and thence to Moscow. ",
-        "From that circumstance or source; therefrom."
+        "Simple past tense and past participle of witness."
       ]
     },
     {
@@ -187,11 +210,16 @@
     },
     {
       "word": "Giles",
-      "definitions": ["A male given name.", "A patronymic surname."]
+      "definitions": [
+        "A male given name.",
+        "A patronymic surname."
+      ]
     },
     {
       "word": "welled",
-      "definitions": ["Simple past tense and past participle of well."]
+      "definitions": [
+        "Simple past tense and past participle of well."
+      ]
     },
     {
       "word": "incessantly",
@@ -200,27 +228,23 @@
       ]
     },
     {
-      "word": "addled",
+      "word": "renewals",
       "definitions": [
-        "Simple past tense and past participle of addle.",
-        "bad, rotten; inviable, containing a dead embryo"
+        "Plural form of renewal."
       ]
     },
     {
-      "word": "Alastair",
+      "word": "Wilkinson",
       "definitions": [
-        "A male given name, a variant of Alasdair, Scottish form of Alexander."
+        "An English patronymic surname."
       ]
     },
-    { "word": "renewals", "definitions": ["Plural form of renewal."] },
-    { "word": "Wilkinson", "definitions": ["An English patronymic surname."] },
     {
-      "word": "Dada",
+      "word": "namely",
       "definitions": [
-        "A European artistic and literary movement (1916-1923) that flouted conventional aesthetic and cultural values by producing works marked by nonsense, travesty, and incongruity."
+        "That is to say; specifically."
       ]
     },
-    { "word": "namely", "definitions": ["That is to say; specifically."] },
     {
       "word": "bevy",
       "definitions": [
@@ -235,7 +259,12 @@
         "Gulf ofMexico  An arm of the Atlantic Ocean in southeast North America bordering on eastern Mexico, the southeast United States, and Cuba. It connects with the Atlantic Ocean through the Straits of Florida and with the Caribbean Sea through the Yucatán Channel."
       ]
     },
-    { "word": "bedrooms", "definitions": ["Plural form of bedroom."] },
+    {
+      "word": "bedrooms",
+      "definitions": [
+        "Plural form of bedroom."
+      ]
+    },
     {
       "word": "Australia",
       "definitions": [
@@ -243,7 +272,12 @@
         "A commonwealth comprising the continent of Australia, the island state of Tasmania, two external territories, and several dependencies. The first British settlement, a penal colony at Port Jackson (now part of Sydney), was established in 1788. The present-day states grew as separate colonies; six of them formed a federation in 1901. In 1911 Northern Territory joined the commonwealth and the Capital Territory, site of Canberra, was created. Canberra is the capital and Sydney is the largest city. Population: 20,400,000."
       ]
     },
-    { "word": "residues", "definitions": ["Plural form of residue."] },
+    {
+      "word": "residues",
+      "definitions": [
+        "Plural form of residue."
+      ]
+    },
     {
       "word": "diverge",
       "definitions": [
@@ -253,19 +287,15 @@
     },
     {
       "word": "recaptured",
-      "definitions": ["Simple past tense and past participle of recapture."]
+      "definitions": [
+        "Simple past tense and past participle of recapture."
+      ]
     },
     {
       "word": "decorum",
       "definitions": [
         "Appropriateness of behavior or conduct; propriety: \"In the Ireland of the 1940's ... the stolidity of a long, empty, grave face was thought to be the height of decorum and profundity”  ( John McGahern). ",
         "The conventions or requirements of polite behavior:  the formalities and decorums of a military funeral. "
-      ]
-    },
-    {
-      "word": "Chengdu",
-      "definitions": [
-        "A city of south-central China west-northwest of Chongqing. Founded before 770 B.C., it is one of China's oldest cities. Population: 2,340,000."
       ]
     },
     {
@@ -309,7 +339,12 @@
         "In a nervous manner; with nervosity; in a way that displays nervousness."
       ]
     },
-    { "word": "e-mailing", "definitions": ["Present participle of e-mail."] },
+    {
+      "word": "emailing",
+      "definitions": [
+        "Present participle of e-mail."
+      ]
+    },
     {
       "word": "chin",
       "definitions": [
@@ -367,7 +402,10 @@
     },
     {
       "word": "oats",
-      "definitions": ["Plural form of oat.", "Seeds of an oat plant."]
+      "definitions": [
+        "Plural form of oat.",
+        "Seeds of an oat plant."
+      ]
     },
     {
       "word": "seeding",
@@ -447,13 +485,16 @@
         "A device used to encode a signal either for cryptography or compression."
       ]
     },
-    { "word": "telescopes", "definitions": ["Plural form of telescope."] },
-    { "word": "Christa", "definitions": ["A female given name."] },
     {
-      "word": "low-lying",
+      "word": "telescopes",
       "definitions": [
-        "Lying close to water or ground level:  low-lying coastal areas. ",
-        "Situated below the normal height or altitude:  low-lying deserts of central Arizona. "
+        "Plural form of telescope."
+      ]
+    },
+    {
+      "word": "Christa",
+      "definitions": [
+        "A female given name."
       ]
     },
     {
@@ -472,7 +513,12 @@
         "Having the husk or outer layers removed. Used of grains of rice."
       ]
     },
-    { "word": "hotels", "definitions": ["Plural form of hotel."] },
+    {
+      "word": "hotels",
+      "definitions": [
+        "Plural form of hotel."
+      ]
+    },
     {
       "word": "Acre",
       "definitions": [
@@ -487,8 +533,18 @@
         "Related through one's mother:  my maternal uncle. "
       ]
     },
-    { "word": "forthwith", "definitions": ["At once; immediately."] },
-    { "word": "Muses", "definitions": ["Plural form of Muse."] },
+    {
+      "word": "forthwith",
+      "definitions": [
+        "At once; immediately."
+      ]
+    },
+    {
+      "word": "Muses",
+      "definitions": [
+        "Plural form of Muse."
+      ]
+    },
     {
       "word": "develops",
       "definitions": [
@@ -508,8 +564,18 @@
         "Something that protects."
       ]
     },
-    { "word": "networks", "definitions": ["Plural form of network."] },
-    { "word": "sofas", "definitions": ["Plural form of sofa."] },
+    {
+      "word": "networks",
+      "definitions": [
+        "Plural form of network."
+      ]
+    },
+    {
+      "word": "sofas",
+      "definitions": [
+        "Plural form of sofa."
+      ]
+    },
     {
       "word": "freebie",
       "definitions": [
@@ -547,17 +613,23 @@
         "Biochemistry   Interference in the physiological action of a chemical substance by another having a similar structure."
       ]
     },
-    { "word": "cont", "definitions": ["continue", "continued"] },
-    { "word": "awarding", "definitions": ["Present participle of award."] },
     {
-      "word": "Porte",
-      "definitions": ["The government of the Ottoman Empire."]
+      "word": "cont",
+      "definitions": [
+        "continue",
+        "continued"
+      ]
     },
     {
-      "word": "kick-ass",
+      "word": "awarding",
       "definitions": [
-        "Rough, aggressive; powerful and successful.",
-        "Excellent, first-class."
+        "Present participle of award."
+      ]
+    },
+    {
+      "word": "Porte",
+      "definitions": [
+        "The government of the Ottoman Empire."
       ]
     },
     {
@@ -601,7 +673,12 @@
         "A program or class for four-year-old to six-year-old children that serves as an introduction to school."
       ]
     },
-    { "word": "provocations", "definitions": ["Plural form of provocation."] },
+    {
+      "word": "provocations",
+      "definitions": [
+        "Plural form of provocation."
+      ]
+    },
     {
       "word": "stitches",
       "definitions": [
@@ -609,7 +686,12 @@
         "Third-person singular simple present indicative form of stitch."
       ]
     },
-    { "word": "Anastasia", "definitions": ["A female given name."] },
+    {
+      "word": "Anastasia",
+      "definitions": [
+        "A female given name."
+      ]
+    },
     {
       "word": "renders",
       "definitions": [
@@ -626,9 +708,16 @@
     },
     {
       "word": "doubted",
-      "definitions": ["Simple past tense and past participle of doubt."]
+      "definitions": [
+        "Simple past tense and past participle of doubt."
+      ]
     },
-    { "word": "mountaintop", "definitions": ["The summit of a mountain."] },
+    {
+      "word": "mountaintop",
+      "definitions": [
+        "The summit of a mountain."
+      ]
+    },
     {
       "word": "deprivation",
       "definitions": [
@@ -647,11 +736,15 @@
     },
     {
       "word": "lavishly",
-      "definitions": ["In a lavish manner, expending profusely."]
+      "definitions": [
+        "In a lavish manner, expending profusely."
+      ]
     },
     {
       "word": "Cheshire",
-      "definitions": ["A hard yellow English cheese made from cow's milk."]
+      "definitions": [
+        "A hard yellow English cheese made from cow's milk."
+      ]
     },
     {
       "word": "prosper",
@@ -661,7 +754,9 @@
     },
     {
       "word": "Walt",
-      "definitions": ["A diminutive of the male given name Walter."]
+      "definitions": [
+        "A diminutive of the male given name Walter."
+      ]
     },
     {
       "word": "Cadillac",
@@ -686,7 +781,9 @@
     },
     {
       "word": "restaurateur",
-      "definitions": ["The manager or owner of a restaurant."]
+      "definitions": [
+        "The manager or owner of a restaurant."
+      ]
     },
     {
       "word": "hype",
