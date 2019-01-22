@@ -1,35 +1,35 @@
 .inputNickname {
-  margin-right: 1vw;
-  border-radius: 1vh;
-  font-size: 4vw;
+    margin-right: 1vw;
+    border-radius: 1vh;
+    font-size: 4vw;
 }
 
 .infoNickname {
-  display: block;
-  margin: auto;
-  width: 100%;
-  height: 10vw;
-  text-align: center;
-  font-size: 3vw;
+    display: block;
+    margin: auto;
+    width: 100%;
+    height: 10vw;
+    text-align: center;
+    font-size: 3vw;
 }
 
 .infoNickname > span {
-  margin: auto;
-  text-align: center;
-  display: inline-block;
+    margin: auto;
+    text-align: center;
+    display: inline-block;
 }
 
 .nickname-input {
-  display: flex;
-  margin-top: 1vw;
+    display: flex;
+    margin-top: 1vw;
 }
 
 .nickname-input > input {
-  padding: 1vw;
+    padding: 1vw;
 }
 
 .nickname-input > button {
-  font-size: 3vw;
-  border-radius: 1vh;
-  padding: 2vh;
+    font-size: 3vw;
+    border-radius: 1vh;
+    padding: 2vh;
 }

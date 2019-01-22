@@ -1,60 +1,60 @@
 .credits-wrapper {
-  display: flex;
-  width: 40vw;
-  padding: 0 4vw 0 4vw;
-  height: 70vh;
-  margin: auto;
-  justify-content: space-evenly;
-  align-items: center;
+    display: flex;
+    width: 40vw;
+    padding: 0 4vw 0 4vw;
+    height: 70vh;
+    margin: auto;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .credits-header {
-  font-size: 6.2vw;
-  margin: 0;
-  font-family: 'Ostrich Sans';
-  color: rgb(255, 35, 83);
+    font-size: 6.2vw;
+    margin: 0;
+    font-family: 'Ostrich Sans';
+    color: rgb(255, 35, 83);
 }
 
 .divider {
-  background-color: rgb(255, 35, 83);
-  width: 80%;
-  height: 1px;
-  margin: 0 auto 0 auto;
+    background-color: rgb(255, 35, 83);
+    width: 80%;
+    height: 1px;
+    margin: 0 auto 0 auto;
 }
 
 .logo {
-  /*width: 11vh;*/
-  height: 7vh;
+    /*width: 11vh;*/
+    height: 7vh;
 }
 
 .developer-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .developers-content {
-  display: flex;
-  margin-top: 2vh;
-  width: 47vh;
-  justify-content: space-between;
-  font-size: 3vh;
+    display: flex;
+    margin-top: 2vh;
+    width: 47vh;
+    justify-content: space-between;
+    font-size: 3vh;
 }
 
 .developers-content p {
-  margin: 0;
+    margin: 0;
 }
 
 .logos {
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
 .logos a:nth-child(1) svg,
 .logos a:nth-child(3) svg {
-  width: 11.5vh;
-  display: block;
-  margin: auto;
+    width: 11.5vh;
+    display: block;
+    margin: auto;
 }

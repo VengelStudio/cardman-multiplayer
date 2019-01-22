@@ -1,31 +1,31 @@
 .header {
-  border: 0;
-  border-bottom-width: 0.3vh;
-  border-style: solid;
-  border-color: rgb(122, 214, 35);
+    border: 0;
+    border-bottom-width: 0.3vh;
+    border-style: solid;
+    border-color: rgb(122, 214, 35);
 }
 
 .header > div {
-  border: 0;
+    border: 0;
 }
 
 .back-button-wrapper {
-  position: absolute;
-  margin: 0.3vw;
-  left: 0;
-  top: 0;
-  height: 4.7vh;
-  width: 8vh;
+    position: absolute;
+    margin: 0.3vw;
+    left: 0;
+    top: 0;
+    height: 4.7vh;
+    width: 8vh;
 }
 
 .back-button {
-  margin: 0;
-  border: 0;
-  background: transparent;
-  outline: none;
-  border-radius: 1vw;
-  font-size: 5vh;
-  height: 4.7vh;
-  width: 8vh;
-  color: whitesmoke;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    outline: none;
+    border-radius: 1vw;
+    font-size: 5vh;
+    height: 4.7vh;
+    width: 8vh;
+    color: whitesmoke;
 }

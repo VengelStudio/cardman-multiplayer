@@ -19,138 +19,144 @@ import { Route, withRouter, Switch } from 'react-router-dom'
 const socketUrl = 'http://localhost:3231'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.popupsRef = React.createRef()
-    this.state = {
-      title: 'Hangman Multiplayer',
-      player: null,
-      socket: null,
-      connectedPlayers: {},
-      game: null,
-      isMove: false
+    constructor(props) {
+        super(props)
+        this.popupsRef = React.createRef()
+        this.state = {
+            title: 'Hangman Multiplayer',
+            player: null,
+            socket: null,
+            connectedPlayers: {},
+            game: null,
+            isMove: false
+        }
     }
-  }
 
-  componentDidMount() {
-    this.initializeSocket()
-  }
-  initializeSocket = () => {
-    const socket = io(socketUrl)
-    socket.on('connect', () => {
-      console.log('Connected to server.')
-    })
-    this.setState({ socket })
-  }
+    componentDidMount() {
+        this.initializeSocket()
+    }
+    initializeSocket = () => {
+        const socket = io(socketUrl)
+        socket.on('connect', () => {
+            console.log('Connected to server.')
+        })
+        this.setState({ socket })
+    }
 
-  loginPlayer = player => {
-    const { socket } = this.state
-    //Sending login socket with newly generated, previosly verified player
-    socket.emit(PLAYER_CONNECTED, player)
-    this.setState({ player })
+    loginPlayer = player => {
+        const { socket } = this.state
+        //Sending login socket with newly generated, previosly verified player
+        socket.emit(PLAYER_CONNECTED, player)
+        this.setState({ player })
 
-    //Wait for server response, then get the player list
-    socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
-      this.setState({ connectedPlayers })
-      this.props.history.push('/menu')
-    })
-  }
+        //Wait for server response, then get the player list
+        socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
+            this.setState({ connectedPlayers })
+            this.props.history.push('/menu')
+        })
+    }
 
-  logoutPlayer = () => {
-    //Sending logout socket and setting user to player, thus hiding all the functionalities
-    const { socket } = this.state
-    socket.emit(LOGOUT)
-    this.setState({ player: null })
-  }
+    logoutPlayer = () => {
+        //Sending logout socket and setting user to player, thus hiding all the functionalities
+        const { socket } = this.state
+        socket.emit(LOGOUT)
+        this.setState({ player: null })
+    }
 
-  setTitle = ({ title = null }) => {
-    this.setState({ title })
-  }
+    setTitle = ({ title = null }) => {
+        this.setState({ title })
+    }
 
-  addPopupHandler = ({
-    title = null,
-    content = null,
-    invitationData = null,
-    acceptHandler = null
-  }) => {
-    this.popupsRef.current.addPopup({
-      title,
-      content,
-      invitationData,
-      acceptHandler
-    })
-  }
+    addPopupHandler = ({
+        title = null,
+        content = null,
+        invitationData = null,
+        acceptHandler = null
+    }) => {
+        this.popupsRef.current.addPopup({
+            title,
+            content,
+            invitationData,
+            acceptHandler
+        })
+    }
 
-  setGame = ({ game }) => {
-    console.log('Game started!')
-    this.setState({ game }, this.props.history.push('/game'))
-  }
+    setGame = ({ game }) => {
+        console.log('Game started!')
+        this.setState({ game }, this.props.history.push('/game'))
+    }
 
-  setMove = isMove => {
-    this.setState({ isMove })
-  }
+    setMove = isMove => {
+        this.setState({ isMove })
+    }
 
-  render() {
-    return (
-      <div className='container of-rows width-full height-full text-nunito '>
-        <Header title={this.state.title} />
-        <div className='row height-full width-full bg-lightgrey'>
-          <PopupManager ref={this.popupsRef} />
-          <Switch>
-            <Route exact path='/'>
-              <LoginPage
-                socket={this.state.socket}
-                loginPlayer={this.loginPlayer}
-                setTitle={this.setTitle}
-                addPopup={this.addPopupHandler}
-              />
-            </Route>
-            <Route path='/menu' component={Menu} />
-            <Route
-              path='/options/'
-              setTitle={this.setTitle}
-              component={Options}
-            />
-            <Route
-              path='/credits'
-              setTitle={this.setTitle}
-              component={Credits}
-            />
-            <Route path='/help' setTitle={this.setTitle} component={Help} />
-            <Route
-              path='/browser'
-              render={() => (
-                <PlayersBrowser
-                  socket={this.state.socket}
-                  player={this.state.player}
-                  connectedPlayers={this.state.connectedPlayers}
-                  setTitle={this.setTitle}
-                  addPopup={this.addPopupHandler}
-                  setGame={this.setGame}
-                  setMove={this.setMove}
-                />
-              )}
-            />
-            <Route
-              path='/game'
-              render={() => (
-                <Game
-                  player={this.state.player}
-                  game={this.state.game}
-                  socket={this.state.socket}
-                  setTitle={this.setTitle}
-                  addPopup={this.addPopupHandler}
-                  setMove={this.setMove}
-                  isMove={this.state.isMove}
-                />
-              )}
-            />
-            {/*todo <Route component={NotFound} />*/}
-          </Switch>
-        </div>
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div className='container of-rows width-full height-full text-nunito '>
+                <Header title={this.state.title} />
+                <div className='row height-full width-full bg-lightgrey'>
+                    <PopupManager ref={this.popupsRef} />
+                    <Switch>
+                        <Route exact path='/'>
+                            <LoginPage
+                                socket={this.state.socket}
+                                loginPlayer={this.loginPlayer}
+                                setTitle={this.setTitle}
+                                addPopup={this.addPopupHandler}
+                            />
+                        </Route>
+                        <Route path='/menu' component={Menu} />
+                        <Route
+                            path='/options/'
+                            setTitle={this.setTitle}
+                            component={Options}
+                        />
+                        <Route
+                            path='/credits'
+                            setTitle={this.setTitle}
+                            component={Credits}
+                        />
+                        <Route
+                            path='/help'
+                            setTitle={this.setTitle}
+                            component={Help}
+                        />
+                        <Route
+                            path='/browser'
+                            render={() => (
+                                <PlayersBrowser
+                                    socket={this.state.socket}
+                                    player={this.state.player}
+                                    connectedPlayers={
+                                        this.state.connectedPlayers
+                                    }
+                                    setTitle={this.setTitle}
+                                    addPopup={this.addPopupHandler}
+                                    setGame={this.setGame}
+                                    setMove={this.setMove}
+                                />
+                            )}
+                        />
+                        <Route
+                            path='/game'
+                            render={() => (
+                                <Game
+                                    player={this.state.player}
+                                    game={this.state.game}
+                                    socket={this.state.socket}
+                                    setTitle={this.setTitle}
+                                    addPopup={this.addPopupHandler}
+                                    setMove={this.setMove}
+                                    isMove={this.state.isMove}
+                                />
+                            )}
+                        />
+                        {/*todo <Route component={NotFound} />*/}
+                    </Switch>
+                </div>
+            </div>
+        )
+    }
 }
 
 export default withRouter(App)
