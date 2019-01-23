@@ -60,6 +60,10 @@
     border-color: rgb(122, 214, 35);
 }
 
+.border-neon-blue {
+    border-color: #0e4fe6;
+}
+
 .border-neon-red {
     border-color: rgb(255, 35, 83);
 }

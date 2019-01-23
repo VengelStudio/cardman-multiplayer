@@ -3,28 +3,27 @@ import './Header.css'
 
 class Header extends Component {
     generateHeader = () => {
-        console.log(this.props.score)
-        console.log(this.props.title)
         if (this.props.score) {
             return (
                 <div className='title has-text-white-ter'>
-                    <div className="scoreHeader">
-                        <div className='flex-item me'><span>{this.props.score.me}</span></div>
-                        <div className="flex-item score">
+                    <div className='scoreHeader'>
+                        <div className='flex-item me'>
+                            <span>{this.props.score.me}</span>
+                        </div>
+                        <div className='flex-item score'>
                             <span>{this.props.score.myScore}</span>
                             <span>{`:`}</span>
                             <span>{this.props.score.enemyScore}</span>
                         </div>
-                        <div className='flex-item enemy'><span>{this.props.score.enemy}</span></div>
+                        <div className='flex-item enemy'>
+                            <span>{this.props.score.enemy}</span>
+                        </div>
                     </div>
                 </div>
             )
-        }
-        else if (this.props.title) {
+        } else if (this.props.title) {
             return (
-                <h1 className='title has-text-white-ter'>
-                    {this.props.title}
-                </h1>
+                <h1 className='title has-text-white-ter'>{this.props.title}</h1>
             )
         }
     }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Keyboard from './Keyboard'
+import Card from './Cards'
 
 class Content extends Component {
     constructor(props) {
@@ -15,33 +16,54 @@ class Content extends Component {
         }
         return null
     }
-    colorDisplayWord = (word) => {
+
+    colorDisplayWord = word => {
+        word = word.toUpperCase()
         let result = []
         let guessed = this.props.game.guessed
-        console.log(guessed)
-        console.log(word)
-        word.forEach(e => {
-            if (word !== "_") {
-                guessed.forEach(g => {
-                    if (e === g.key) {
-                        result.push(<span>g.key</span>)
-                        return
-                    }
-                });
+        //word = "_ _ _ _ _ _ _ _"
+        //guessed = [
+        //    {key: "A", socketId: "aasdasdasdasdasdasd"}
+        //]
+        Array.from(word).forEach(letter => {
+            let newLetter = null
+            if (letter === '_') {
+                newLetter = <span>{letter}</span>
+            } else if (letter === ' ') {
+                newLetter = <span>{letter}</span>
+            } else {
+                let guessedKeyData = guessed.filter(g => {
+                    return g.key === letter
+                })[0]
+                let guessedKeyByMe =
+                    guessedKeyData.playerSocketId === this.props.player.socketId
+                if (guessedKeyByMe) {
+                    newLetter = (
+                        <span style={{ color: '#0900ff' }}>{letter}</span>
+                    )
+                } else {
+                    newLetter = (
+                        <span style={{ color: '#b92e34' }}>{letter}</span>
+                    )
+                }
             }
-        });
+            result.push(newLetter)
+        })
         return result
     }
 
     render() {
-        console.log("game: " + this.props.game)
-        let displayWord = this.colorDisplayWord(this.state.game.displayWord)
-        console.log(displayWord)
+        let displayWord = []
+        if (this.state.game !== null) {
+            displayWord = this.colorDisplayWord(this.state.game.displayWord)
+        }
         return (
             <div className='content'>
                 <div className='game'>
-                    <div className='word'>
-                        {this.state.game && displayWord.map(x => { return x })}
+                    <div className='word border-neon border-neon-violet'>
+                        {displayWord.map(x => {
+                            return x
+                        })}
                     </div>
                     {this.state.game && (
                         <Keyboard
@@ -51,14 +73,6 @@ class Content extends Component {
                         />
                     )}
                 </div>
-                {/* <div className="deck-title">Game deck:</div>
-                <div className="deck">
-                <Card type={0} />
-                <Card type={0} />
-                <Card type={0} />
-                <Card type={0} />
-                <Card type={0} />
-            </div> */}
             </div>
         )
     }
