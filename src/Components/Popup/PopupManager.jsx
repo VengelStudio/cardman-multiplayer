@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Popup from './Popup'
+import { POPUP_GENERIC } from './Types'
 
 class PopupManager extends Component {
     state = { popups: [], lastPopupId: 0 }
@@ -8,7 +9,8 @@ class PopupManager extends Component {
         title = null,
         content = null,
         invitationData = null,
-        acceptHandler = null
+        acceptHandler = null,
+        type = POPUP_GENERIC
     }) => {
         this.setState({
             popups: [
@@ -18,7 +20,8 @@ class PopupManager extends Component {
                     title,
                     content,
                     invitationData,
-                    acceptHandler
+                    acceptHandler,
+                    type
                 }
             ]
         })
@@ -45,6 +48,7 @@ class PopupManager extends Component {
                                 content={e.content}
                                 key={e.id}
                                 id={e.id}
+                                type={e.type}
                                 onClose={this.popupCloseHandler}
                                 invitationData={e.invitationData}
                                 acceptHandler={e.acceptHandler}

@@ -7,6 +7,7 @@ import {
     INVITATION_ACCEPTED,
     GAME_STARTED
 } from '../../Events'
+import { POPUP_INVITATION } from '../Popup/Types'
 import BrowserEntry from './BrowserEntry'
 
 /**
@@ -111,6 +112,7 @@ class PlayersBrowser extends React.Component {
         console.log(`Invitation from ${nickname} (${socketId})`)
         this.props.addPopup({
             content: `New invitation from ${nickname}`,
+            type: POPUP_INVITATION,
             invitationData: {
                 acceptHandler: () => {
                     this.invitationAcceptHandler({

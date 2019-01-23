@@ -3,6 +3,7 @@ import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
 import { withRouter } from 'react-router-dom'
+import { POPUP_GAME_END } from '../Popup/Types'
 
 const { GAME_MOVE, WIN } = require('../../Events')
 
@@ -74,6 +75,7 @@ class Game extends Component {
                     //todo if win === true disable any interactions
                     this.props.addPopup({
                         title: 'WINNER',
+                        type: POPUP_GAME_END,
                         content: `winner: ${winner.nickname}`
                     })
                 )

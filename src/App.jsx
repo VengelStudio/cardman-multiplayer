@@ -10,6 +10,7 @@ import Help from './Components/Menu/Help/Help'
 import Menu from './Components/Menu/Menu'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
 import LoginPage from './Components/Menu/LoginPage/LoginPage'
+import { POPUP_GENERIC } from './Components/Popup/Types'
 
 import io from 'socket.io-client'
 import { PLAYER_CONNECTED, LOGOUT } from './Events'
@@ -77,13 +78,15 @@ class App extends React.Component {
         title = null,
         content = null,
         invitationData = null,
-        acceptHandler = null
+        acceptHandler = null,
+        type = POPUP_GENERIC
     }) => {
         this.popupsRef.current.addPopup({
             title,
             content,
             invitationData,
-            acceptHandler
+            acceptHandler,
+            type
         })
     }
 

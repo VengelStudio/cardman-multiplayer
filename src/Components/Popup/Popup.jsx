@@ -1,31 +1,113 @@
 import React, { Component } from 'react'
 import './Popup.css'
+import { POPUP_INVITATION } from './Types'
 
 class Popup extends Component {
-    constructor(props) {
-        super(props)
-        this.bRadius = '0.5vw'
-        this.roundedBottomStyle = {
-            borderBottomLeftRadius: this.bRadius,
-            borderBottomRightRadius: this.bRadius
-        }
-        this.roundedTopStyle = {
-            borderTopLeftRadius: this.bRadius,
-            borderTopRightRadius: this.bRadius
-        }
-        this.popupStyle = {
-            ...this.roundedTopStyle,
-            ...this.roundedBottomStyle
-        }
+    //todo popup type constants
+
+    state = {
+        type: this.props.type
     }
 
-    acceptHandler = () => {
+    bRadius = '0.5vw'
+    roundedBottomStyle = {
+        borderBottomLeftRadius: this.bRadius,
+        borderBottomRightRadius: this.bRadius
+    }
+
+    roundedTopStyle = {
+        borderTopLeftRadius: this.bRadius,
+        borderTopRightRadius: this.bRadius
+    }
+
+    popupStyle = {
+        ...this.roundedTopStyle,
+        ...this.roundedBottomStyle
+    }
+
+    acceptButtonStyle = 'border-neon border-neon-lime'
+    declineButtonStyle = 'border-neon border-neon-orange'
+    closeButtonStyle = 'btn-popup-close'
+    //prettier-ignore
+    titleStyle = 'padding-sm popup-title row width-auto semi-bold text-lg color-light text-center'
+    contentStyle = 'row width-full height-full popup-content padding-sm text-md'
+
+    generateButton = ({ onClick, style, content = '' }) => {
+        return (
+            <button onClick={onClick} className={style}>
+                {content}
+            </button>
+        )
+    }
+
+    onAcceptButton = () => {
         this.props.invitationData.acceptHandler()
-        this.closeHandler()
+        this.onCloseButton()
     }
 
-    closeHandler = () => {
+    onCloseButton = () => {
         this.props.onClose(this.props.id)
+    }
+
+    isInvitation = () => {
+        this.setState({
+            isInvitation: this.props.invitationData ? true : false
+        })
+    }
+
+    PopupContent = () => {
+        let content = []
+        if (this.state.type !== POPUP_INVITATION) {
+            content.push(
+                <div
+                    style={this.roundedTopStyle}
+                    className={this.titleStyle}
+                    key={0}
+                >
+                    <span>{this.props.title}</span>
+                    {this.generateButton({
+                        onClick: this.onCloseButton,
+                        style: this.closeButtonStyle,
+                        content: (
+                            <span className='fas margin-auto d-block fa-window-close' />
+                        )
+                    })}
+                </div>
+            )
+        }
+
+        content.push(
+            <div
+                className={this.contentStyle}
+                dangerouslySetInnerHTML={{ __html: this.props.content }}
+                key={1}
+            />
+        )
+
+        if (this.state.type === POPUP_INVITATION) {
+            content.push(
+                <div className='popup-buttons' key={2}>
+                    {this.generateButton({
+                        onClick: this.onAcceptButton,
+                        style: this.acceptButtonStyle,
+                        content: 'Accept'
+                    })}
+                    {this.generateButton({
+                        onClick: this.onCloseButton,
+                        style: this.declineButtonStyle,
+                        content: 'Decline'
+                    })}
+                </div>
+            )
+        }
+
+        return (
+            <React.Fragment>
+                {content.map(el => {
+                    return el
+                })}
+            </React.Fragment>
+        )
     }
 
     render() {
@@ -34,44 +116,7 @@ class Popup extends Component {
                 style={this.popupStyle}
                 className='border-neon border-neon-red container of-rows text-nunito bg-khaki popup center-absolute-both d-block p-absolute popup-upper-round popup-bottom-round'
             >
-                {!this.props.invitationData && (
-                    <div
-                        style={this.roundedTopStyle}
-                        className='padding-sm popup-title row width-auto semi-bold text-lg color-light text-center'
-                    >
-                        <span
-                            dangerouslySetInnerHTML={{
-                                __html: this.props.title
-                            }}
-                        />
-                        <button
-                            onClick={this.closeHandler}
-                            className='btn-popup-close'
-                        >
-                            <span className='fas margin-auto d-block fa-window-close' />
-                        </button>
-                    </div>
-                )}
-                <div
-                    className='row width-full height-full popup-content padding-sm text-md'
-                    dangerouslySetInnerHTML={{ __html: this.props.content }}
-                />
-                {this.props.invitationData && (
-                    <div className='popup-buttons'>
-                        <button
-                            onClick={this.acceptHandler}
-                            className='border-neon border-neon-lime'
-                        >
-                            Accept
-                        </button>
-                        <button
-                            onClick={this.closeHandler}
-                            className='border-neon border-neon-orange'
-                        >
-                            Decline
-                        </button>
-                    </div>
-                )}
+                <this.PopupContent />
             </div>
         )
     }

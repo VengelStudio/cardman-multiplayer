@@ -128,6 +128,8 @@ module.exports = function(socket) {
                     word: currentGame.word.word,
                     guessed: newGuessed,
                     winCallback: () => {
+                        //todo win after e.g. 2:0
+                        //todo fix wrong nickname on win popup
                         currentGame.guessed = []
                         currentGame.score[nextPlayer.socketId] += 1
                         let scoreSum = sumScores(currentGame.score)
