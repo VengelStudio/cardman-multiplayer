@@ -22,7 +22,12 @@ const setScore = ({ props, score = null }) => {
 
     let enemyNickname = enemy[0].nickname
     props.setTitle({
-        title: `${myNickname} ${myScore}:${enemyScore} ${enemyNickname}`
+        score: {
+            me: myNickname,
+            myScore: myScore,
+            enemy: enemyNickname,
+            enemyScore: enemyScore,
+        }
     })
 }
 

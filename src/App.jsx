@@ -24,6 +24,7 @@ class App extends React.Component {
         this.popupsRef = React.createRef()
         this.state = {
             title: 'Hangman Multiplayer',
+            score: null,
             player: null,
             socket: null,
             connectedPlayers: {},
@@ -63,8 +64,13 @@ class App extends React.Component {
         this.setState({ player: null })
     }
 
-    setTitle = ({ title = null }) => {
-        this.setState({ title })
+    setTitle = ({ title = null, score = null }) => {
+        if (title) {
+            this.setState({ title: title })
+        }
+        else if (score) {
+            this.setState({ score: score })
+        }
     }
 
     addPopupHandler = ({
@@ -93,7 +99,7 @@ class App extends React.Component {
     render() {
         return (
             <div className='container of-rows width-full height-full text-nunito '>
-                <Header title={this.state.title} />
+                <Header title={this.state.title} score={this.state.score} />
                 <div className='row height-full width-full bg-lightgrey'>
                     <PopupManager ref={this.popupsRef} />
                     <Switch>

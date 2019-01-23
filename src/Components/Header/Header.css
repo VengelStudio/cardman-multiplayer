@@ -8,24 +8,28 @@
 .header > div {
     border: 0;
 }
-
-.back-button-wrapper {
-    position: absolute;
-    margin: 0.3vw;
-    left: 0;
-    top: 0;
-    height: 4.7vh;
-    width: 8vh;
+.scoreHeader, .title, .column{
+    width:100%
 }
 
-.back-button {
-    margin: 0;
-    border: 0;
-    background: transparent;
-    outline: none;
-    border-radius: 1vw;
-    font-size: 5vh;
-    height: 4.7vh;
-    width: 8vh;
-    color: whitesmoke;
+.scoreHeader {
+    display: flex;
+}
+  
+.flex-item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+  
+.flex-item:first-child>span{
+    width:100%;
+    margin-right: auto;
+    margin-left: 35vw;
+}
+  
+.flex-item:last-child>span {
+    width:100%;
+    margin-left: auto;
+    margin-right: 35vw;
 }
