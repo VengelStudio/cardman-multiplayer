@@ -110,6 +110,7 @@ class Game extends Component {
             <div className='gameWrapper'>
                 <Cards type={1} move={this.props.isMove} title='Your cards:' />
                 <Content
+                    player={this.state.player}
                     moveHandler={this.moveHandler}
                     game={this.state.game}
                 />

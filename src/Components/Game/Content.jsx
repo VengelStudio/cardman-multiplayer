@@ -15,16 +15,37 @@ class Content extends Component {
         }
         return null
     }
+    colorDisplayWord = (word) => {
+        let result = []
+        let guessed = this.props.game.guessed
+        console.log(guessed)
+        console.log(word)
+        word.forEach(e => {
+            if (word !== "_") {
+                guessed.forEach(g => {
+                    if (e === g.key) {
+                        result.push(<span>g.key</span>)
+                        return
+                    }
+                });
+            }
+        });
+        return result
+    }
 
     render() {
+        console.log("game: " + this.props.game)
+        let displayWord = this.colorDisplayWord(this.state.game.displayWord)
+        console.log(displayWord)
         return (
             <div className='content'>
                 <div className='game'>
                     <div className='word'>
-                        {this.state.game && this.state.game.displayWord}
+                        {this.state.game && displayWord.map(x => { return x })}
                     </div>
                     {this.state.game && (
                         <Keyboard
+                            player={this.props.player}
                             moveHandler={this.props.moveHandler}
                             guessed={this.props.game.guessed}
                         />

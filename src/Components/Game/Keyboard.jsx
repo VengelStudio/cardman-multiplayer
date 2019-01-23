@@ -15,8 +15,13 @@ class Key extends Component {
     }
 
     clickHandler = () => {
+        console.log(this.props.player)
         this.props.moveHandler({
-            move: { type: 'key', key: this.props.letter }
+            move: {
+                type: 'key',
+                key: this.props.letter,
+                playerSocketId: this.props.player.socketId
+            }
         })
     }
 
@@ -27,8 +32,8 @@ class Key extends Component {
                     this.state.clicked
                         ? { backgroundColor: '#555', textDecoration: 'none' }
                         : {
-                              backgroundColor: '#519C3F'
-                          }
+                            backgroundColor: '#519C3F'
+                        }
                 }
                 onClick={this.clickHandler}
                 className='key'
@@ -59,7 +64,13 @@ class Keyboard extends Component {
         for (let i = 65; i <= 90; i++) {
             let letter = String.fromCharCode(i).toUpperCase()
             let clicked = false
-            if (this.props.guessed.includes(letter)) {
+            let guessedKeys = []
+            let guessed = this.props.guessed
+
+            for (let j = 0; j < guessed.length; j++) {
+                guessedKeys.push(guessed[j].key)
+            }
+            if (guessedKeys.includes(letter)) {
                 clicked = true
             }
 
@@ -67,6 +78,7 @@ class Keyboard extends Component {
                 <Key
                     moveHandler={this.props.moveHandler}
                     key={i}
+                    player={this.props.player}
                     letter={letter}
                     clicked={clicked}
                 />

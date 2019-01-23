@@ -13,11 +13,23 @@ let clearWord = word => {
 
 let displayWord = ({ word = null, guessed = [], winCallback = null }) => {
     //todo force uppercase
+
+    // guessed = [{
+    //     key: "A",
+    // },]
+
     let result = ''
     console.log('[DEBUG]: ' + word)
     let wordArray = word.toUpperCase().split('')
+
+    let guessedKeys = []
+
+    for (let j = 0; j < guessed.length; j++) {
+        guessedKeys.push(guessed[j].key)
+    }
     for (let i = 0; i < wordArray.length; i++) {
-        if (guessed.includes(wordArray[i])) {
+
+        if (guessedKeys.includes(wordArray[i])) {
             result += wordArray[i] + ' '
         } else {
             result += '_ '

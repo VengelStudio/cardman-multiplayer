@@ -51,16 +51,3 @@
     font-size: 5.8vh;
     color: orange;
 }
-/*
-.flex-item:first-child > span {
-    width: 100%;
-    margin-right: auto;
-    margin-left: 35vw;
-}
-
-.flex-item:last-child > span {
-    width: 100%;
-    margin-left: auto;
-    margin-right: 35vw;
-}
-*/

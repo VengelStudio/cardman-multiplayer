@@ -19,7 +19,7 @@ let games = {}
 
 const { words, displayWord } = require('../Game/Words/Words')
 
-module.exports = function(socket) {
+module.exports = function (socket) {
     //console.log('Connected, socket id: ' + socket.id)
 
     socket.on(VERIFY_USERNAME, (nickname, callback) => {
@@ -117,7 +117,8 @@ module.exports = function(socket) {
 
             if (move.type === 'key') {
                 let newGuessed = currentGame.guessed
-                newGuessed.push(move.key)
+                // console.log(move.playerSocketId);
+                newGuessed.push({ key: move.key, playerSocketId: move.playerSocketId })
 
                 //switch player turns
                 currentGame.nextPlayerIndex =
