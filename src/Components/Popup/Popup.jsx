@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './Popup.css'
-import { POPUP_INVITATION } from './Types'
+import { POPUP_INVITATION, POPUP_GAME_END } from './Types'
+import { withRouter } from 'react-router-dom'
 
 class Popup extends Component {
     //todo popup type constants
@@ -45,6 +46,11 @@ class Popup extends Component {
         this.onCloseButton()
     }
 
+    onGameEndButton = () => {
+        this.props.history.push('/browser')
+        this.onCloseButton()
+    }
+
     onCloseButton = () => {
         this.props.onClose(this.props.id)
     }
@@ -84,9 +90,21 @@ class Popup extends Component {
             />
         )
 
-        if (this.state.type === POPUP_INVITATION) {
+        if (this.state.type === POPUP_GAME_END) {
             content.push(
                 <div className='popup-buttons' key={2}>
+                    {this.generateButton({
+                        onClick: this.onGameEndButton,
+                        style: this.acceptButtonStyle,
+                        content: 'OK'
+                    })}
+                </div>
+            )
+        }
+
+        if (this.state.type === POPUP_INVITATION) {
+            content.push(
+                <div className='popup-buttons' key={3}>
                     {this.generateButton({
                         onClick: this.onAcceptButton,
                         style: this.acceptButtonStyle,
@@ -122,4 +140,4 @@ class Popup extends Component {
     }
 }
 
-export default Popup
+export default withRouter(Popup)

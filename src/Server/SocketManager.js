@@ -99,13 +99,12 @@ module.exports = function(socket) {
         )
     })
 
-    let sumScores = scoreObj => {
-        let result = 0
+    let checkGameWin = scoreObj => {
         let playerKeys = Object.keys(scoreObj)
-        playerKeys.forEach(k => {
-            result += scoreObj[k]
-        })
-        return result
+        let result1 = scoreObj[playerKeys[0]]
+        let result2 = scoreObj[playerKeys[1]]
+        if (result1 === 2 || result2 === 2) return true
+        return false
     }
 
     socket.on(GAME_MOVE, ({ game, move }) => {
@@ -132,12 +131,12 @@ module.exports = function(socket) {
                         //todo fix wrong nickname on win popup
                         currentGame.guessed = []
                         currentGame.score[nextPlayer.socketId] += 1
-                        let scoreSum = sumScores(currentGame.score)
+                        let gameWin = checkGameWin(currentGame.score)
                         let winObject = {
                             winner: nextPlayer,
                             score: currentGame.score
                         }
-                        if (scoreSum === 3) {
+                        if (gameWin === true) {
                             winObject = { ...winObject, type: 'game' }
                         } else {
                             let randomWord = getRandomWord()

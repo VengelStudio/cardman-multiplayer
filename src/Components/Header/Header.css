@@ -8,28 +8,59 @@
 .header > div {
     border: 0;
 }
-.scoreHeader, .title, .column{
-    width:100%
+
+.title,
+.header > .column,
+.column > .title {
+    width: 100%;
+    text-align: center;
 }
 
 .scoreHeader {
     display: flex;
+    width: 100%;
+    text-align: center;
 }
-  
+
 .flex-item {
-    flex: 1;
     display: flex;
+    flex: 0;
+    margin: 0 2vw;
     justify-content: center;
+    align-items: center;
+    font-size: 4vh;
 }
-  
-.flex-item:first-child>span{
-    width:100%;
+
+.flex-item > span {
+    display: flex;
+}
+
+.flex-item.me {
+    flex: 1;
+    justify-content: flex-end;
+    color: khaki;
+}
+
+.flex-item.enemy {
+    flex: 1;
+    justify-content: flex-start;
+    color: khaki;
+}
+
+.flex-item.score {
+    font-size: 5.8vh;
+    color: orange;
+}
+/*
+.flex-item:first-child > span {
+    width: 100%;
     margin-right: auto;
     margin-left: 35vw;
 }
-  
-.flex-item:last-child>span {
-    width:100%;
+
+.flex-item:last-child > span {
+    width: 100%;
     margin-left: auto;
     margin-right: 35vw;
 }
+*/
