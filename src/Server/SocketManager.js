@@ -19,7 +19,7 @@ let games = {}
 
 const { words, displayWord } = require('../Game/Words/Words')
 
-module.exports = function (socket) {
+module.exports = function(socket) {
     //console.log('Connected, socket id: ' + socket.id)
 
     socket.on(VERIFY_USERNAME, (nickname, callback) => {
@@ -107,6 +107,38 @@ module.exports = function (socket) {
         return false
     }
 
+    let winCallback = (currentGame, nextPlayer) => {
+        currentGame.guessed = []
+        currentGame.score[nextPlayer.socketId] += 1
+        let gameWin = checkGameWin(currentGame.score)
+        let winObject = {
+            winner: nextPlayer,
+            score: currentGame.score
+        }
+        if (gameWin === true) {
+            winObject = { ...winObject, type: 'game' }
+        } else {
+            let randomWord = getRandomWord()
+            currentGame.word = randomWord
+            currentGame.displayWord = displayWord({
+                word: randomWord.word
+            })
+
+            winObject = {
+                ...winObject,
+                game: currentGame,
+                type: 'turn'
+            }
+        }
+        io.in(game.id).emit(WIN, winObject)
+        isTurnWin = true
+        return {
+            tempCurrentGame: currentGame,
+            tempWinObject: winObject,
+            tempIsTurnWin: isTurnWin
+        }
+    }
+
     socket.on(GAME_MOVE, ({ game, move }) => {
         let currentGame = games[game.id]
         let nextPlayerIndex = currentGame.nextPlayerIndex
@@ -118,7 +150,10 @@ module.exports = function (socket) {
             if (move.type === 'key') {
                 let newGuessed = currentGame.guessed
                 // console.log(move.playerSocketId);
-                newGuessed.push({ key: move.key, playerSocketId: move.playerSocketId })
+                newGuessed.push({
+                    key: move.key,
+                    playerSocketId: move.playerSocketId
+                })
 
                 //switch player turns
                 currentGame.nextPlayerIndex =
@@ -128,33 +163,16 @@ module.exports = function (socket) {
                     word: currentGame.word.word,
                     guessed: newGuessed,
                     player: socket.user,
-                    winCallback: () => {
-                        //todo win after e.g. 2:0
-                        //todo fix wrong nickname on win popup
-                        currentGame.guessed = []
-                        currentGame.score[nextPlayer.socketId] += 1
-                        let gameWin = checkGameWin(currentGame.score)
-                        let winObject = {
-                            winner: nextPlayer,
-                            score: currentGame.score
-                        }
-                        if (gameWin === true) {
-                            winObject = { ...winObject, type: 'game' }
-                        } else {
-                            let randomWord = getRandomWord()
-                            currentGame.word = randomWord
-                            currentGame.displayWord = displayWord({
-                                word: randomWord.word
-                            })
-
-                            winObject = {
-                                ...winObject,
-                                game: currentGame,
-                                type: 'turn'
-                            }
-                        }
-                        io.in(game.id).emit(WIN, winObject)
-                        isTurnWin = true
+                    winCallback: (currentGame, nextPlayer) => {
+                        let result = winCallback(currentGame, nextPlayer)
+                        let {
+                            tempCurrentGame,
+                            tempWinObject,
+                            tempIsTurnWin
+                        } = { result }
+                        currentGame = tempCurrentGame
+                        winObject = tempWinObject
+                        isTurnWin = tempIsTurnWin
                     }
                 })
                 if (isTurnWin === false) currentGame.guessed = newGuessed

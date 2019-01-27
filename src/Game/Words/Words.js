@@ -37,13 +37,12 @@ let clearWord = word => {
     return result.toLowerCase()
 }
 
-let displayWord = ({ word = null, guessed = [], winCallback = null, player = null }) => {
-    //todo force uppercase
-
-    // guessed = [{
-    //     key: "A",
-    // },]
-
+let displayWord = ({
+    word = null,
+    guessed = [],
+    winCallback = null,
+    player = null
+}) => {
     let result = ''
     console.log('[DEBUG]: ' + word)
     let wordArray = word.toUpperCase().split('')
@@ -54,7 +53,6 @@ let displayWord = ({ word = null, guessed = [], winCallback = null, player = nul
         guessedKeys.push(guessed[j].key)
     }
     for (let i = 0; i < wordArray.length; i++) {
-
         if (guessedKeys.includes(wordArray[i])) {
             result += wordArray[i] + ' '
         } else {
@@ -62,7 +60,7 @@ let displayWord = ({ word = null, guessed = [], winCallback = null, player = nul
         }
     }
     let guessedWord = result.replace('_', ' ')
-    if (checkWin(word, guessed, player)) {
+    if (player !== null && checkWin(word, guessed, player)) {
         if (winCallback != null) winCallback()
     }
     return result.charAt(0).toUpperCase() + result.slice(1, result.length - 1)
