@@ -127,6 +127,7 @@ module.exports = function (socket) {
                 currentGame.displayWord = displayWord({
                     word: currentGame.word.word,
                     guessed: newGuessed,
+                    player: socket.user,
                     winCallback: () => {
                         //todo win after e.g. 2:0
                         //todo fix wrong nickname on win popup

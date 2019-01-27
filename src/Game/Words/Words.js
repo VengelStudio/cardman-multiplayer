@@ -1,5 +1,31 @@
 const data = require('./data.json')
 
+let countOccurrences = (word, char) => {
+    let occurrence = 0
+    Array.from(word).forEach(letter => {
+        if (letter === char) {
+            occurrence++
+        }
+    })
+    return occurrence
+}
+
+let checkWin = (word, guessed, player) => {
+    let playerSocketId = player.socketId
+    let playerCounter = 0
+    let enemyCounter = 0
+    guessed.forEach(key => {
+        if (key.playerSocketId === playerSocketId) {
+            playerCounter += countOccurrences(word, key.key)
+        } else {
+            enemyCounter += countOccurrences(word, key.key)
+        }
+    })
+    console.log(playerCounter)
+    console.log(enemyCounter)
+    return playerCounter > enemyCounter
+}
+
 let clearWord = word => {
     let result = ''
 
@@ -11,7 +37,7 @@ let clearWord = word => {
     return result.toLowerCase()
 }
 
-let displayWord = ({ word = null, guessed = [], winCallback = null }) => {
+let displayWord = ({ word = null, guessed = [], winCallback = null, player = null }) => {
     //todo force uppercase
 
     // guessed = [{
@@ -36,7 +62,7 @@ let displayWord = ({ word = null, guessed = [], winCallback = null }) => {
         }
     }
     let guessedWord = result.replace('_', ' ')
-    if (clearWord(result) === clearWord(word)) {
+    if (checkWin(word, guessed, player)) {
         if (winCallback != null) winCallback()
     }
     return result.charAt(0).toUpperCase() + result.slice(1, result.length - 1)
