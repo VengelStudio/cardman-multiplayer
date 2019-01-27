@@ -19,7 +19,7 @@ let games = {}
 
 const { words, displayWord } = require('../Game/Words/Words')
 
-module.exports = function(socket) {
+module.exports = function (socket) {
     //console.log('Connected, socket id: ' + socket.id)
 
     socket.on(VERIFY_USERNAME, (nickname, callback) => {
@@ -107,37 +107,7 @@ module.exports = function(socket) {
         return false
     }
 
-    let winCallback = (currentGame, nextPlayer) => {
-        currentGame.guessed = []
-        currentGame.score[nextPlayer.socketId] += 1
-        let gameWin = checkGameWin(currentGame.score)
-        let winObject = {
-            winner: nextPlayer,
-            score: currentGame.score
-        }
-        if (gameWin === true) {
-            winObject = { ...winObject, type: 'game' }
-        } else {
-            let randomWord = getRandomWord()
-            currentGame.word = randomWord
-            currentGame.displayWord = displayWord({
-                word: randomWord.word
-            })
 
-            winObject = {
-                ...winObject,
-                game: currentGame,
-                type: 'turn'
-            }
-        }
-        io.in(game.id).emit(WIN, winObject)
-        isTurnWin = true
-        return {
-            tempCurrentGame: currentGame,
-            tempWinObject: winObject,
-            tempIsTurnWin: isTurnWin
-        }
-    }
 
     socket.on(GAME_MOVE, ({ game, move }) => {
         let currentGame = games[game.id]
@@ -158,13 +128,44 @@ module.exports = function(socket) {
                 //switch player turns
                 currentGame.nextPlayerIndex =
                     currentGame.nextPlayerIndex === 0 ? 1 : 0
+                let winCallback = (currentGame, nextPlayer) => {
+                    currentGame.guessed = []
+                    currentGame.score[nextPlayer.socketId] += 1
+                    let gameWin = checkGameWin(currentGame.score)
+                    let winObject = {
+                        winner: nextPlayer,
+                        score: currentGame.score
+                    }
+                    if (gameWin === true) {
+                        winObject = { ...winObject, type: 'game' }
+                    } else {
+                        let randomWord = getRandomWord()
+                        currentGame.word = randomWord
+                        currentGame.displayWord = displayWord({
+                            word: randomWord.word
+                        })
+
+                        winObject = {
+                            ...winObject,
+                            game: currentGame,
+                            type: 'turn'
+                        }
+                    }
+                    io.in(game.id).emit(WIN, winObject)
+                    isTurnWin = true
+                    return {
+                        tempCurrentGame: currentGame,
+                        tempWinObject: winObject,
+                        tempIsTurnWin: isTurnWin
+                    }
+                }
 
                 currentGame.displayWord = displayWord({
                     word: currentGame.word.word,
                     guessed: newGuessed,
                     player: socket.user,
-                    winCallback: (currentGame, nextPlayer) => {
-                        let result = winCallback(currentGame, nextPlayer)
+                    winCallback: () => {
+                        let result = winCallback()
                         let {
                             tempCurrentGame,
                             tempWinObject,

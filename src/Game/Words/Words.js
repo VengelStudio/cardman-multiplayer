@@ -16,9 +16,9 @@ let checkWin = (word, guessed, player) => {
     let enemyCounter = 0
     guessed.forEach(key => {
         if (key.playerSocketId === playerSocketId) {
-            playerCounter += countOccurrences(word, key.key)
+            playerCounter += countOccurrences(word.toUpperCase(), key.key)
         } else {
-            enemyCounter += countOccurrences(word, key.key)
+            enemyCounter += countOccurrences(word.toUpperCase(), key.key)
         }
     })
     console.log(playerCounter)
