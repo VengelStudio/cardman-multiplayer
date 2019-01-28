@@ -28,7 +28,8 @@ const {
     words,
     displayWord,
     checkTurnWin,
-    handleWin
+    handleTurnResult,
+    TurnResultEnum
 } = require('../Game/Words/Words')
 
 module.exports = function(socket) {
@@ -118,7 +119,7 @@ module.exports = function(socket) {
         let currentGame = games[game.id]
         let nextPlayerIndex = currentGame.nextPlayerIndex
         let nextPlayer = currentGame.playerSockets[nextPlayerIndex]
-        let isTurnWin = false
+        let turnResult = null
         if (nextPlayer.id === socket.user.id) {
             if (move.type === 'key') {
                 let newGuessed = currentGame.guessed
@@ -128,30 +129,42 @@ module.exports = function(socket) {
                     playerSocketId: move.playerSocketId
                 })
 
-                //switch player turns
-                currentGame.nextPlayerIndex =
-                    currentGame.nextPlayerIndex === 0 ? 1 : 0
+                //*switching player turns
+                //prettier-ignore
+                currentGame.nextPlayerIndex = currentGame.nextPlayerIndex === 0 ? 1 : 0
 
+                //*display our word regarding guessed letters
                 currentGame.displayWord = displayWord({
                     word: currentGame.word.word,
                     guessed: newGuessed
                 })
 
-                isTurnWin = checkTurnWin({
+                turnResult = checkTurnWin({
                     word: currentGame.word.word,
                     guessed: newGuessed,
                     player: socket.user
                 })
 
-                if (isTurnWin) {
-                    let win = handleWin(currentGame, nextPlayer)
+                //* turnResult is TIE or WIN
+                if (turnResult !== TurnResultEnum.NOTHING) {
+                    //* alter our game object accordingly to the turn result
+                    let win = handleTurnResult(
+                        currentGame,
+                        nextPlayer,
+                        turnResult
+                    )
                     currentGame = win.currentGame
                     io.in(game.id).emit(WIN, win.winObject)
                 }
-                if (isTurnWin === false) currentGame.guessed = newGuessed
+
+                //* turnResult is neither WIN or TIE, so the turn is just moving on
+                if (turnResult === TurnResultEnum.NOTHING)
+                    currentGame.guessed = newGuessed
             }
+
+            //* save altered game
             games[game.id] = currentGame
-            if (isTurnWin === false) {
+            if (turnResult === TurnResultEnum.NOTHING) {
                 io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
             }
         }

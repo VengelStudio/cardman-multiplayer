@@ -1,6 +1,12 @@
 const data = require('./data.json')
 const { getRandomWord } = require('../../Functions')
 
+const TurnResultEnum = {
+    TIE: 0,
+    WIN: 1,
+    NOTHING: 2
+}
+
 let countOccurrences = (word, char) => {
     let occurrence = 0
     Array.from(word).forEach(letter => {
@@ -19,17 +25,34 @@ let checkGameWin = scoreObj => {
     return false
 }
 
-let handleWin = (currentGame, nextPlayer) => {
-    currentGame.guessed = []
-    currentGame.score[nextPlayer.socketId] += 1
-    let isGameWin = checkGameWin(currentGame.score)
-    let winObject = {
-        winner: nextPlayer,
-        score: currentGame.score
-    }
-    if (isGameWin === true) {
-        winObject = { ...winObject, type: 'game' }
-    } else {
+let handleTurnResult = (currentGame, nextPlayer, turnResultEnum) => {
+    let winObject = null
+    if (turnResultEnum === TurnResultEnum.WIN) {
+        currentGame.guessed = []
+        currentGame.score[nextPlayer.socketId] += 1
+        let isGameWin = checkGameWin(currentGame.score)
+        winObject = {
+            winner: nextPlayer,
+            score: currentGame.score
+        }
+        if (isGameWin === true) {
+            winObject = { ...winObject, type: 'game' }
+        } else {
+            let randomWord = getRandomWord(data.words)
+            currentGame.word = randomWord
+            currentGame.displayWord = displayWord({
+                word: randomWord.word
+            })
+
+            winObject = {
+                ...winObject,
+                game: currentGame,
+                type: 'turn'
+            }
+        }
+    } else if (turnResultEnum === TurnResultEnum.TIE) {
+        console.log('tie!')
+        currentGame.guessed = []
         let randomWord = getRandomWord(data.words)
         currentGame.word = randomWord
         currentGame.displayWord = displayWord({
@@ -37,10 +60,12 @@ let handleWin = (currentGame, nextPlayer) => {
         })
 
         winObject = {
-            ...winObject,
+            winner: null,
+            score: null,
             game: currentGame,
-            type: 'turn'
+            type: 'turn_tie'
         }
+        //todo use the same enum (and extend it) on the front-end
     }
 
     return {
@@ -61,9 +86,15 @@ let checkTurnWin = ({ word, guessed, player }) => {
         } else {
             enemyCounter += occurrences
         }
-        //todo handle ties
     })
-    return playerCounter > word.length / 2
+
+    if (playerCounter > word.length / 2) {
+        return TurnResultEnum.WIN
+    } else if (playerCounter + enemyCounter === word.length) {
+        return TurnResultEnum.TIE
+    } else {
+        return TurnResultEnum.NOTHING
+    }
 }
 
 let displayWord = ({ word = null, guessed = [] }) => {
@@ -90,6 +121,7 @@ let displayWord = ({ word = null, guessed = [] }) => {
 module.exports = {
     displayWord,
     checkTurnWin,
-    handleWin,
+    handleTurnResult,
+    TurnResultEnum,
     words: data.words
 }
