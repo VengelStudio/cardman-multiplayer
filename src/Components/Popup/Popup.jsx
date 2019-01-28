@@ -108,12 +108,12 @@ class Popup extends Component {
                     {this.generateButton({
                         onClick: this.onAcceptButton,
                         style: this.acceptButtonStyle,
-                        content: 'Accept'
+                        content: <span>{'Accept'}</span>
                     })}
                     {this.generateButton({
                         onClick: this.onCloseButton,
                         style: this.declineButtonStyle,
-                        content: 'Decline'
+                        content: <span>{'Decline'}</span>
                     })}
                 </div>
             )

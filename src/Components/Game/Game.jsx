@@ -3,7 +3,7 @@ import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
 import { withRouter } from 'react-router-dom'
-import { POPUP_GAME_END } from '../Popup/Types'
+import { POPUP_GAME_END, POPUP_GENERIC } from '../Popup/Types'
 
 const { GAME_MOVE, WIN } = require('../../Events')
 
@@ -27,7 +27,7 @@ const setScore = ({ props, score = null }) => {
             me: myNickname,
             myScore: myScore,
             enemy: enemyNickname,
-            enemyScore: enemyScore,
+            enemyScore: enemyScore
         }
     })
 }
@@ -68,6 +68,15 @@ class Game extends Component {
             if (type === 'turn') {
                 this.setState({ gameFromProps: false, game }, () => {
                     this.props.setMove(isMove({ props: this.state }))
+                })
+            } else if (type === 'turn_tie') {
+                this.setState({ gameFromProps: false, game }, () => {
+                    this.props.setMove(isMove({ props: this.state }))
+                })
+                this.props.addPopup({
+                    title: 'TIE',
+                    type: POPUP_GENERIC,
+                    content: `Turn is tied. None of the players won.`
                 })
             } else {
                 this.setState(

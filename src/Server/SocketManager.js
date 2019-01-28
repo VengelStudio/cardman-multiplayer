@@ -13,17 +13,30 @@ const {
 } = require('../Events')
 
 const { createPlayer, createGame, createTurn } = require('../Factories')
+const {
+    addPlayer,
+    addGame,
+    removePlayer,
+    isPlayer,
+    getRandomWord
+} = require('../Functions')
 
 let connectedPlayers = {}
 let games = {}
 
-const { words, displayWord } = require('../Game/Words/Words')
+const {
+    words,
+    displayWord,
+    checkTurnWin,
+    handleTurnResult,
+    TurnResultEnum
+} = require('../Game/Words/Words')
 
 module.exports = function(socket) {
     //console.log('Connected, socket id: ' + socket.id)
 
     socket.on(VERIFY_USERNAME, (nickname, callback) => {
-        if (isPlayer(nickname)) {
+        if (isPlayer(nickname, connectedPlayers)) {
             callback({ isTaken: true, player: null })
         } else {
             callback({
@@ -39,7 +52,7 @@ module.exports = function(socket) {
 
     socket.on(PLAYER_CONNECTED, player => {
         player.socketId = socket.id
-        connectedPlayers = addPlayer(player)
+        connectedPlayers = addPlayer(player, connectedPlayers)
         socket.user = player
 
         io.emit(PLAYER_CONNECTED, { connectedPlayers })
@@ -47,7 +60,10 @@ module.exports = function(socket) {
 
     socket.on('disconnect', () => {
         if ('user' in socket) {
-            connectedPlayers = removePlayer(socket.user.nickname)
+            connectedPlayers = removePlayer(
+                socket.user.nickname,
+                connectedPlayers
+            )
             io.emit(PLAYER_DISCONNECTED, connectedPlayers)
             //todo ${nickname} is not defined
             //console.log(`[DISCONNECTED] Player ${nickname} (${socket.user.username})`)
@@ -55,7 +71,7 @@ module.exports = function(socket) {
     })
 
     socket.on(LOGOUT, () => {
-        connectedPlayers = removePlayer(socket.user.nickname)
+        connectedPlayers = removePlayer(socket.user.nickname, connectedPlayers)
         io.emit(PLAYER_DISCONNECTED, connectedPlayers)
         console.log(`[LOGOUT] Player ${socket.user.username}`)
     })
@@ -77,7 +93,7 @@ module.exports = function(socket) {
     socket.on(INVITATION_ACCEPTED, ({ fromSocketId, to }) => {
         console.log(`[INVITATION] from: ${fromSocketId}, to: ${to.socketId}`)
 
-        let randomWord = getRandomWord()
+        let randomWord = getRandomWord(words)
         let playerSockets = [
             io.sockets.connected[fromSocketId].user,
             io.sockets.connected[to.socketId].user
@@ -90,7 +106,7 @@ module.exports = function(socket) {
         })
         game.score[playerSockets[0].socketId] = 0
         game.score[playerSockets[1].socketId] = 0
-        games = addGame(game)
+        games = addGame(game, games)
         io.sockets.connected[fromSocketId].join(game.id)
         io.sockets.connected[to.socketId].join(game.id)
         io.in(game.id).emit(GAME_STARTED, { game })
@@ -99,54 +115,12 @@ module.exports = function(socket) {
         )
     })
 
-    let checkGameWin = scoreObj => {
-        let playerKeys = Object.keys(scoreObj)
-        let result1 = scoreObj[playerKeys[0]]
-        let result2 = scoreObj[playerKeys[1]]
-        if (result1 === 2 || result2 === 2) return true
-        return false
-    }
-
-    let winCallback = (currentGame, nextPlayer) => {
-        currentGame.guessed = []
-        currentGame.score[nextPlayer.socketId] += 1
-        let gameWin = checkGameWin(currentGame.score)
-        let winObject = {
-            winner: nextPlayer,
-            score: currentGame.score
-        }
-        if (gameWin === true) {
-            winObject = { ...winObject, type: 'game' }
-        } else {
-            let randomWord = getRandomWord()
-            currentGame.word = randomWord
-            currentGame.displayWord = displayWord({
-                word: randomWord.word
-            })
-
-            winObject = {
-                ...winObject,
-                game: currentGame,
-                type: 'turn'
-            }
-        }
-        io.in(game.id).emit(WIN, winObject)
-        isTurnWin = true
-        return {
-            tempCurrentGame: currentGame,
-            tempWinObject: winObject,
-            tempIsTurnWin: isTurnWin
-        }
-    }
-
     socket.on(GAME_MOVE, ({ game, move }) => {
         let currentGame = games[game.id]
         let nextPlayerIndex = currentGame.nextPlayerIndex
         let nextPlayer = currentGame.playerSockets[nextPlayerIndex]
-
+        let turnResult = null
         if (nextPlayer.id === socket.user.id) {
-            let isTurnWin = false
-
             if (move.type === 'key') {
                 let newGuessed = currentGame.guessed
                 // console.log(move.playerSocketId);
@@ -155,62 +129,44 @@ module.exports = function(socket) {
                     playerSocketId: move.playerSocketId
                 })
 
-                //switch player turns
-                currentGame.nextPlayerIndex =
-                    currentGame.nextPlayerIndex === 0 ? 1 : 0
+                //*switching player turns
+                //prettier-ignore
+                currentGame.nextPlayerIndex = currentGame.nextPlayerIndex === 0 ? 1 : 0
 
+                //*display our word regarding guessed letters
                 currentGame.displayWord = displayWord({
                     word: currentGame.word.word,
-                    guessed: newGuessed,
-                    player: socket.user,
-                    winCallback: (currentGame, nextPlayer) => {
-                        let result = winCallback(currentGame, nextPlayer)
-                        let {
-                            tempCurrentGame,
-                            tempWinObject,
-                            tempIsTurnWin
-                        } = { result }
-                        currentGame = tempCurrentGame
-                        winObject = tempWinObject
-                        isTurnWin = tempIsTurnWin
-                    }
+                    guessed: newGuessed
                 })
-                if (isTurnWin === false) currentGame.guessed = newGuessed
+
+                turnResult = checkTurnWin({
+                    word: currentGame.word.word,
+                    guessed: newGuessed,
+                    player: socket.user
+                })
+
+                //* turnResult is TIE or WIN
+                if (turnResult !== TurnResultEnum.NOTHING) {
+                    //* alter our game object accordingly to the turn result
+                    let win = handleTurnResult(
+                        currentGame,
+                        nextPlayer,
+                        turnResult
+                    )
+                    currentGame = win.currentGame
+                    io.in(game.id).emit(WIN, win.winObject)
+                }
+
+                //* turnResult is neither WIN or TIE, so the turn is just moving on
+                if (turnResult === TurnResultEnum.NOTHING)
+                    currentGame.guessed = newGuessed
             }
+
+            //* save altered game
             games[game.id] = currentGame
-            if (isTurnWin === false) {
+            if (turnResult === TurnResultEnum.NOTHING) {
                 io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
             }
         }
     })
-}
-
-function addPlayer(player) {
-    let newList = Object.assign({}, connectedPlayers)
-    newList[player.nickname] = player
-    return newList
-}
-
-function addGame(game) {
-    let newList = Object.assign({}, games)
-    newList[game.id] = game
-    return newList
-}
-
-function removePlayer(username) {
-    let newList = Object.assign({}, connectedPlayers)
-    delete newList[username]
-    return newList
-}
-
-function isPlayer(username) {
-    return username in connectedPlayers
-}
-
-function getRandomWord(/*usedwords*/) {
-    //todo prevent from returning used words
-    //todo app crashes (id null) after refreshing the page
-    let index = Math.floor(Math.random() * words.length)
-    let randomWord = words[index]
-    return randomWord
 }
