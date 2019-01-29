@@ -6,7 +6,7 @@ import {
     INVITATION,
     INVITATION_ACCEPTED,
     GAME_STARTED
-} from '../../Events'
+} from '../../Shared/Events'
 import { POPUP_INVITATION } from '../Popup/Types'
 import BrowserEntry from './BrowserEntry'
 

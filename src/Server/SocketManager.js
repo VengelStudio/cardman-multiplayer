@@ -10,16 +10,16 @@ const {
     GAME_STARTED,
     GAME_MOVE,
     WIN
-} = require('../Events')
+} = require('../Shared/Events')
 
-const { createPlayer, createGame, createTurn } = require('../Factories')
+const { createPlayer, createGame, createTurn } = require('../Server/Factories')
 const {
     addPlayer,
     addGame,
     removePlayer,
     isPlayer,
     getRandomWord
-} = require('../Functions')
+} = require('../Server/Functions')
 
 let connectedPlayers = {}
 let games = {}
@@ -28,9 +28,10 @@ const {
     words,
     displayWord,
     checkTurnWin,
-    handleTurnResult,
-    TurnResultEnum
+    handleTurnResult
 } = require('../Game/Words/Words')
+
+const { TurnResultEnum } = require('../Shared/Enums')
 
 module.exports = function(socket) {
     //console.log('Connected, socket id: ' + socket.id)
@@ -154,6 +155,7 @@ module.exports = function(socket) {
                         turnResult
                     )
                     currentGame = win.currentGame
+                    console.log(win.winObject)
                     io.in(game.id).emit(WIN, win.winObject)
                 }
 

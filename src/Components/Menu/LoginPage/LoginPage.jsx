@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './LoginPage.css'
-import { VERIFY_USERNAME } from '../../../Events'
+import { VERIFY_USERNAME } from '../../../Shared/Events'
 
 class LoginPage extends Component {
     constructor(props) {

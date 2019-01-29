@@ -13,7 +13,7 @@ import LoginPage from './Components/Menu/LoginPage/LoginPage'
 import { POPUP_GENERIC } from './Components/Popup/Types'
 
 import io from 'socket.io-client'
-import { PLAYER_CONNECTED, LOGOUT } from './Events'
+import { PLAYER_CONNECTED, LOGOUT } from './Shared/Events'
 
 import { Route, withRouter, Switch } from 'react-router-dom'
 
@@ -68,8 +68,7 @@ class App extends React.Component {
     setTitle = ({ title = null, score = null }) => {
         if (title) {
             this.setState({ title: title })
-        }
-        else if (score) {
+        } else if (score) {
             this.setState({ score: score })
         }
     }

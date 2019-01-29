@@ -1,11 +1,6 @@
 const data = require('./data.json')
-const { getRandomWord } = require('../../Functions')
-
-const TurnResultEnum = {
-    TIE: 0,
-    WIN: 1,
-    NOTHING: 2
-}
+const { getRandomWord } = require('../../Server/Functions')
+const TurnResultEnum = require('../../Shared/Enums')
 
 let countOccurrences = (word, char) => {
     let occurrence = 0
@@ -89,8 +84,12 @@ let checkTurnWin = ({ word, guessed, player }) => {
     })
 
     if (playerCounter > word.length / 2) {
+        console.log('turn win')
         return TurnResultEnum.WIN
     } else if (playerCounter + enemyCounter === word.length) {
+        console.log(playerCounter)
+        console.log(enemyCounter)
+        console.log(word.length)
         return TurnResultEnum.TIE
     } else {
         return TurnResultEnum.NOTHING

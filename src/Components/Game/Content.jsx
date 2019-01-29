@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Keyboard from './Keyboard'
-import Card from './Cards'
 
 class Content extends Component {
     constructor(props) {
