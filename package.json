@@ -4,6 +4,7 @@
     "private": true,
     "dependencies": {
         "@babel/core": "^7.2.2",
+        "iplocation": "^6.1.0",
         "normalize.css": "^8.0.1",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",

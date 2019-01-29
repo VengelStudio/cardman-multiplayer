@@ -1,4 +1,5 @@
 const io = require('./index.js').io
+const iplocation = require("iplocation").default;
 
 const {
     VERIFY_USERNAME,
@@ -32,7 +33,7 @@ const {
     TurnResultEnum
 } = require('../Game/Words/Words')
 
-module.exports = function(socket) {
+module.exports = function (socket) {
     //console.log('Connected, socket id: ' + socket.id)
 
     socket.on(VERIFY_USERNAME, (nickname, callback) => {
@@ -43,7 +44,7 @@ module.exports = function(socket) {
                 isTaken: false,
                 player: createPlayer({
                     nickname: nickname,
-                    socketId: socket.id
+                    socketId: socket.id,
                 })
             })
             console.log(`[CONNECTED] Player ${nickname} (${socket.id})`)

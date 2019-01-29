@@ -6,47 +6,26 @@ class Options extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className='container of-rows options-wrapper border-neon border-neon-violet bg-dark text-nunito text-xlg'>
-                    <div className='row content-vcenter content-hcenter width-full padding-sm'>
-                        <div className='width-half container justify-center padding-sm'>
-                            <span className='width-full'>Change nickname:</span>
+                <div className='container options-wrapper border-neon border-neon-violet bg-dark text-nunito'>
+                    <div className="options-items">
+                        <div className="options-item">
+                            <p>Change nickname</p>
+                            <input></input>
                         </div>
-                        <div className='width-half container justify-start padding-sm'>
-                            <input className='input-neon padding-left-sm text-lg border-neon width-full border-neon-violet change-nickname' />
+                        <div className="options-item">
+                            <span>Sound volume</span>
+                            <div className="slidecontainer">
+                                <input type="range" min="1" max="100" class="slider" id="myRange"></input>
+                            </div>
                         </div>
-                    </div>
-                    <div className='row content-vcenter content-hcenter width-full padding-sm'>
-                        <div className='width-half container justify-center padding-sm'>
-                            <span className='width-full'>Country:</span>
+                        <div className="options-item">
+                            <span>Music volume</span>
+                            <div className="slidecontainer">
+                                <input type="range" min="1" max="100" class="slider" id="myRange"></input>
+                            </div>
                         </div>
-                        <div className='width-half container justify-center padding-sm'>
-                            <img
-                                className='options-flag-image'
-                                src='https://www.countryflags.io/pl/flat/64.png'
-                                alt='Flag icon.'
-                            />
-                        </div>
-                    </div>
-                    <div className='row content-vcenter content-hcenter width-full padding-sm'>
-                        <div className='width-half container justify-center padding-sm'>
-                            <span className='width-full'>Music volume:</span>
-                        </div>
-                        <div className='width-half container justify-start padding-sm'>
-                            <input
-                                type='range'
-                                className='input-neon width-full border-neon border-neon-violet'
-                            />
-                        </div>
-                    </div>
-                    <div className='row content-vcenter content-hcenter width-full padding-sm'>
-                        <div className='width-half container justify-center padding-sm'>
-                            <span className='width-full'>Sound volume:</span>
-                        </div>
-                        <div className='width-half container justify-start padding-sm'>
-                            <input
-                                type='range'
-                                className='input-neon width-full border-neon border-neon-violet'
-                            />
+                        <div className="save-btn-wrapper">
+                            <button>SAVE</button>
                         </div>
                     </div>
                 </div>
