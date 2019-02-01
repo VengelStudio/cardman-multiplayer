@@ -3,7 +3,7 @@ const uuidv4 = require('uuid/v4')
 const createPlayer = ({ nickname = '', socketId = null } = {}) => ({
     id: uuidv4(),
     nickname,
-    socketId
+    socketId,
 })
 
 const createGame = ({

@@ -30,12 +30,18 @@ class App extends React.Component {
             socket: null,
             connectedPlayers: {},
             game: null,
-            isMove: false
+            isMove: false,
+            volumeSettings: {
+                //todo get saved music volume
+                musicVol: '5',
+                soundVol: '5'
+            }
         }
     }
 
     componentDidMount() {
         this.initializeSocket()
+        console.log(this.state.volumeSettings)
     }
     initializeSocket = () => {
         const socket = io(socketUrl)
@@ -98,10 +104,23 @@ class App extends React.Component {
         this.setState({ isMove })
     }
 
+    setSettings = ({ soundVol, musicVol }) => {
+        this.setState({
+            volumeSettings: { soundVol: soundVol, musicVol: musicVol }
+        })
+    }
+
+    //todo give keys and enforce update
+    //todo if on any page and without socket, go to main menu
+
     render() {
         return (
             <div className='container of-rows width-full height-full text-nunito '>
-                <Header title={this.state.title} score={this.state.score} />
+                <Header
+                    volumeSettings={this.state.volumeSettings}
+                    title={this.state.title}
+                    score={this.state.score}
+                />
                 <div className='row height-full width-full bg-lightgrey'>
                     <PopupManager ref={this.popupsRef} />
                     <Switch>
@@ -116,8 +135,13 @@ class App extends React.Component {
                         <Route path='/menu' component={Menu} />
                         <Route
                             path='/options/'
-                            setTitle={this.setTitle}
-                            component={Options}
+                            render={() => (
+                                <Options
+                                    setTitle={this.setTitle}
+                                    volumeSettings={this.state.volumeSettings}
+                                    setSettings={this.setSettings}
+                                />
+                            )}
                         />
                         <Route
                             path='/credits'

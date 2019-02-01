@@ -24,11 +24,6 @@ class BrowserEntry extends Component {
         return (
             <div className={this.classes}>
                 <span className='player-info'>
-                    <img
-                        className='country'
-                        src='https://www.countryflags.io/pl/flat/64.png'
-                        alt='Country flag.'
-                    />
                     <span className='nickname'>{this.props.nickname}</span>
                 </span>
                 <button
