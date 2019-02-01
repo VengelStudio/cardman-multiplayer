@@ -6,8 +6,8 @@ class Options extends Component {
         super(props)
         this.state = {
             volumeSettings: {
-                musicVol: this.props.volumeSettings.musicVol,
-                soundVol: this.props.volumeSettings.soundVol
+                musicVol: this.props.volumeSettings.musicVol * 100,
+                soundVol: this.props.volumeSettings.soundVol * 100
             }
         }
         console.log(this.state)
@@ -42,8 +42,8 @@ class Options extends Component {
 
     handleSave = () => {
         this.props.setSettings({
-            soundVol: this.state.volumeSettings.soundVol,
-            musicVol: this.state.volumeSettings.musicVol
+            soundVol: parseInt(this.state.volumeSettings.soundVol) / 100,
+            musicVol: parseInt(this.state.volumeSettings.musicVol) / 100
         })
     }
 
@@ -58,8 +58,8 @@ class Options extends Component {
                         </div>
                         <div className='options-item'>
                             <span>{`Sound volume: ${
-                                this.state.volumeSettings.soundVol
-                            }%`}</span>
+                                Math.round(this.state.volumeSettings.soundVol)
+                                }%`}</span>
                             <div className='slider-wrapper input-neon border-neon border-neon-violet'>
                                 <input
                                     type='range'
@@ -74,8 +74,8 @@ class Options extends Component {
                         </div>
                         <div className='options-item'>
                             <span>{`Music volume: ${
-                                this.state.volumeSettings.musicVol
-                            }%`}</span>
+                                Math.round(this.state.volumeSettings.musicVol)
+                                }%`}</span>
                             <div className='slider-wrapper input-neon border-neon border-neon-violet'>
                                 <input
                                     type='range'

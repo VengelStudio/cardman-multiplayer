@@ -49,7 +49,20 @@ class App extends React.Component {
         }
     }
 
+    isInCache = key => {
+        console.log(localStorage)
+        return (localStorage.getItem(key) !== null && localStorage.getItem(key) !== undefined)
+    }
+
     componentDidMount() {
+        if (this.isInCache("cachedVolumeSettings")) {
+            let cachedVolumeSettings = JSON.parse(localStorage.getItem('cachedVolumeSettings'))
+            this.setState({ volumeSettings: { musicVol: cachedVolumeSettings.musicVol, soundVol: cachedVolumeSettings.soundVol } })
+        } else {
+            let cachedVolumeSettings = { musicVol: this.config.defaultVolumeSettings.musicVol, soundVol: this.config.defaultVolumeSettings.soundVol }
+            localStorage.setItem("cachedVolumeSettings", JSON.stringify(cachedVolumeSettings))
+        }
+
         this.initializeSocket()
     }
 
@@ -124,6 +137,9 @@ class App extends React.Component {
         this.setState({
             volumeSettings: { soundVol: soundVol, musicVol: musicVol }
         })
+        let cachedVolumeSettings = { musicVol: musicVol, soundVol: soundVol }
+        localStorage.setItem("cachedVolumeSettings", JSON.stringify(cachedVolumeSettings))
+
     }
 
     render() {
