@@ -79,6 +79,7 @@ class Game extends Component {
             })
         })
         //todo doesn't work for R E D E S I G N I N G
+        //todo pass enemy to setScore
         socket.on(WIN, ({ winner, score, type, game }) => {
             console.log(game)
             let winObj = winHandler({

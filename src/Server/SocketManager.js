@@ -124,7 +124,6 @@ module.exports = function(socket) {
         if (nextPlayer.id === socket.user.id) {
             if (move.type === 'key') {
                 let newGuessed = currentGame.guessed
-                // console.log(move.playerSocketId);
                 newGuessed.push({
                     key: move.key,
                     playerSocketId: move.playerSocketId
@@ -139,13 +138,12 @@ module.exports = function(socket) {
                     word: currentGame.word.word,
                     guessed: newGuessed
                 })
-
+                //todo random first player is always the first player?
                 turnResult = checkTurnWin({
                     word: currentGame.word.word,
                     guessed: newGuessed,
                     player: socket.user
                 })
-
                 //* turnResult is TIE or WIN
                 if (turnResult !== TurnResultEnum.NOTHING) {
                     //* alter our game object accordingly to the turn result

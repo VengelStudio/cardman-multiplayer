@@ -36,3 +36,5 @@ const isMove = ({ game, player }) => {
 }
 
 module.exports = { setScore, isMove }
+
+//todo something is null here
