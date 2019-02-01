@@ -2,30 +2,101 @@ import React, { Component } from 'react'
 import './Options.css'
 
 class Options extends Component {
-    state = {}
+    constructor(props) {
+        super(props)
+        this.state = {
+            volumeSettings: {
+                musicVol: this.props.volumeSettings.musicVol,
+                soundVol: this.props.volumeSettings.soundVol
+            }
+        }
+        console.log(this.state)
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (state.volumeSettings === !props.volumeSettings) {
+            return {
+                volumeSettings: props.volumeSettings
+            }
+        }
+        return null
+    }
+
+    onChange = e => {
+        if (e.target.id === 'sound-slider-thumb') {
+            this.setState({
+                volumeSettings: {
+                    ...this.state.volumeSettings,
+                    soundVol: e.target.value
+                }
+            })
+        } else if (e.target.id === 'music-slider-thumb') {
+            this.setState({
+                volumeSettings: {
+                    ...this.state.volumeSettings,
+                    musicVol: e.target.value
+                }
+            })
+        }
+    }
+
+    handleSave = () => {
+        this.props.setSettings({
+            soundVol: this.state.volumeSettings.soundVol,
+            musicVol: this.state.volumeSettings.musicVol
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
                 <div className='container options-wrapper border-neon border-neon-violet bg-dark text-nunito'>
-                    <div className="options-items">
-                        <div className="options-item">
-                            <p>Change nickname</p>
-                            <input></input>
+                    <div className='options-items'>
+                        <div className='options-item'>
+                            <span>Change nickname</span>
+                            <input className='nickname-input input-neon border-neon border-neon-violet' />
                         </div>
-                        <div className="options-item">
-                            <span>Sound volume</span>
-                            <div className="slidecontainer">
-                                <input type="range" min="1" max="100" class="slider" id="myRange"></input>
+                        <div className='options-item'>
+                            <span>{`Sound volume: ${
+                                this.state.volumeSettings.soundVol
+                            }%`}</span>
+                            <div className='slider-wrapper input-neon border-neon border-neon-violet'>
+                                <input
+                                    type='range'
+                                    min='0'
+                                    max='100'
+                                    id='sound-slider-thumb'
+                                    className='options-slider slider'
+                                    value={this.state.volumeSettings.soundVol}
+                                    onChange={e => this.onChange(e)}
+                                />
                             </div>
                         </div>
-                        <div className="options-item">
-                            <span>Music volume</span>
-                            <div className="slidecontainer">
-                                <input type="range" min="1" max="100" class="slider" id="myRange"></input>
+                        <div className='options-item'>
+                            <span>{`Music volume: ${
+                                this.state.volumeSettings.musicVol
+                            }%`}</span>
+                            <div className='slider-wrapper input-neon border-neon border-neon-violet'>
+                                <input
+                                    type='range'
+                                    min='0'
+                                    max='100'
+                                    id='music-slider-thumb'
+                                    className='options-slider slider'
+                                    value={this.state.volumeSettings.musicVol}
+                                    onChange={e => this.onChange(e)}
+                                />
                             </div>
                         </div>
-                        <div className="save-btn-wrapper">
-                            <button>SAVE</button>
+                        <div className='options-item'>
+                            <div className='save-btn-wrapper'>
+                                <button
+                                    onClick={this.handleSave}
+                                    className='save-btn-wrapper border-neon border-neon-orange'
+                                >
+                                    SAVE
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
