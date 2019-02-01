@@ -65,7 +65,6 @@ class Game extends Component {
         //   this.props.history.push('/')
         // }
 
-        //todo create a "Disconnected" error popup
         this.props.socket && this.initializeSocket()
     }
 
@@ -78,8 +77,10 @@ class Game extends Component {
                 )
             })
         })
+        //todo create a "Disconnected" error popup
         //todo doesn't work for R E D E S I G N I N G
         //todo pass enemy to setScore
+        //todo if win === true disable any interactions
         socket.on(WIN, ({ winner, score, type, game }) => {
             console.log(game)
             let winObj = winHandler({
@@ -95,31 +96,6 @@ class Game extends Component {
             })
             console.log(winObj)
             this.setState({ ...winObj })
-            // if (type === 'turn') {
-            //     this.setState({ gameFromProps: false, game }, () => {
-            //         this.props.setMove(isMove({ props: this.state }))
-            //     })
-            // } else if (type === 'turn_tie') {
-            //     this.setState({ gameFromProps: false, game }, () => {
-            //         this.props.setMove(isMove({ props: this.state }))
-            //     })
-            //     this.props.addPopup({
-            //         title: 'TIE',
-            //         type: POPUP_GENERIC,
-            //         content: `Turn is tied. None of the players won.`
-            //     })
-            // } else {
-            //     this.setState(
-            //         { allowMove: false },
-            //         //todo if win === true disable any interactions
-            //         this.props.addPopup({
-            //             title: 'WINNER',
-            //             type: POPUP_GAME_END,
-            //             content: `winner: ${winner.nickname}`
-            //         })
-            //     )
-            // }
-            // setScore({ props: this.props, score })
         })
     }
 
@@ -148,6 +124,16 @@ class Game extends Component {
         return null
     }
 
+    onMoveTimeout = () => {
+        this.moveHandler({
+            move: {
+                type: 'key',
+                key: '',
+                playerSocketId: this.props.player.socketId
+            }
+        })
+    }
+
     render() {
         return (
             <div className='gameWrapper'>
@@ -155,6 +141,8 @@ class Game extends Component {
                 <Content
                     player={this.props.player}
                     moveHandler={this.moveHandler}
+                    onMoveTimeout={this.onMoveTimeout}
+                    move={this.props.isMove}
                     game={this.state.game}
                 />
                 <Cards

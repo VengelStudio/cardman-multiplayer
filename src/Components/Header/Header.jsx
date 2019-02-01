@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import './Header.css'
-import Sound from 'react-sound'
-import bgMusic from './bg.mp3'
 
 class Header extends Component {
     generateHeader = () => {
@@ -33,11 +31,6 @@ class Header extends Component {
     render() {
         return (
             <div className='row header width-full semi-bold bg-dark color-lightblue padding-sm height-sm text-lg content-hcenter content-vcenter'>
-                <Sound
-                    url={bgMusic}
-                    volume={parseInt(this.props.volumeSettings.musicVol)}
-                    playStatus={Sound.status.PLAYING}
-                />
                 <div className='column auto has-background-dark header'>
                     {this.generateHeader()}
                 </div>

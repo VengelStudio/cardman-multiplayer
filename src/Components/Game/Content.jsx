@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Keyboard from './Keyboard'
+import Timer from './Timer'
 
 class Content extends Component {
     constructor(props) {
@@ -24,12 +25,13 @@ class Content extends Component {
         //guessed = [
         //    {key: "A", socketId: "aasdasdasdasdasdasd"}
         //]
+        let key = 0
         Array.from(word).forEach(letter => {
             let newLetter = null
             if (letter === '_') {
-                newLetter = <span>{letter}</span>
+                newLetter = <span key={key}>{letter}</span>
             } else if (letter === ' ') {
-                newLetter = <span>{letter}</span>
+                newLetter = <span key={key}>{letter}</span>
             } else {
                 let guessedKeyData = guessed.filter(g => {
                     return g.key === letter
@@ -38,15 +40,20 @@ class Content extends Component {
                     guessedKeyData.playerSocketId === this.props.player.socketId
                 if (guessedKeyByMe) {
                     newLetter = (
-                        <span style={{ color: '#0900ff' }}>{letter}</span>
+                        <span key={key} style={{ color: '#0900ff' }}>
+                            {letter}
+                        </span>
                     )
                 } else {
                     newLetter = (
-                        <span style={{ color: '#b92e34' }}>{letter}</span>
+                        <span key={key} style={{ color: '#b92e34' }}>
+                            {letter}
+                        </span>
                     )
                 }
             }
             result.push(newLetter)
+            key = key + 1
         })
         return result
     }
@@ -58,6 +65,11 @@ class Content extends Component {
         }
         return (
             <div className='content'>
+                <div className='timer-wrapper'>
+                    {this.props.move && (
+                        <Timer time={30} onEnd={this.props.onMoveTimeout} />
+                    )}
+                </div>
                 <div className='game'>
                     <div className='word border-neon border-neon-violet'>
                         {displayWord.map(x => {

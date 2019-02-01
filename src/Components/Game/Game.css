@@ -64,6 +64,8 @@
 
 .content {
     display: flex;
+    position: relative;
+    flex: 1;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -113,4 +115,53 @@
     border-radius: 0.5vh;
     color: whitesmoke;
     background-color: rgb(81, 156, 63);
+}
+
+.timer-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 1vh 0 0 1vh;
+}
+
+.timer {
+    height: 4vh;
+    width: 4vh;
+    position: relative;
+    text-align: center;
+}
+
+#timer-number {
+    color: white;
+    display: block;
+    margin: auto;
+    line-height: 40px;
+}
+
+svg.timer-svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+.timer-svg circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 5px;
+    stroke: rgb(130, 204, 33);
+    fill: none;
+    animation: countdown 30s linear 1 forwards;
+}
+
+@keyframes countdown {
+    from {
+        stroke-dashoffset: 0px;
+    }
+    to {
+        stroke-dashoffset: 113px;
+    }
 }

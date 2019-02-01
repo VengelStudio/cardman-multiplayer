@@ -66,7 +66,6 @@ module.exports = function(socket) {
                 connectedPlayers
             )
             io.emit(PLAYER_DISCONNECTED, connectedPlayers)
-            //todo ${nickname} is not defined
             //console.log(`[DISCONNECTED] Player ${nickname} (${socket.user.username})`)
         }
     })
@@ -101,7 +100,7 @@ module.exports = function(socket) {
         ]
         let game = createGame({
             word: randomWord,
-            displayWord: displayWord({ word: randomWord.word }), //todo move to words.js someday
+            displayWord: displayWord({ word: randomWord.word }),
             playerSockets,
             nextPlayerIndex: Math.floor(Math.random())
         })
@@ -138,7 +137,7 @@ module.exports = function(socket) {
                     word: currentGame.word.word,
                     guessed: newGuessed
                 })
-                //todo random first player is always the first player?
+
                 turnResult = checkTurnWin({
                     word: currentGame.word.word,
                     guessed: newGuessed,

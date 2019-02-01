@@ -102,6 +102,13 @@ class PlayersBrowser extends React.Component {
         })
     }
 
+    componentWillUnmount() {
+        const { socket } = this.props
+        socket.off(PLAYER_CONNECTED)
+        socket.off(INVITATION)
+        socket.off(GAME_STARTED)
+    }
+
     invitationAcceptHandler = ({ to = null, fromSocketId = null }) => {
         const { socket } = this.props
 

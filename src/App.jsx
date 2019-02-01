@@ -17,6 +17,9 @@ import { PLAYER_CONNECTED, LOGOUT } from './Shared/Events'
 
 import { Route, withRouter, Switch } from 'react-router-dom'
 
+import ReactAudioPlayer from 'react-audio-player'
+import bgMusic from './Resources/Sounds/bg-lower.mp3'
+
 const socketUrl = 'http://localhost:3231'
 
 class App extends React.Component {
@@ -32,23 +35,36 @@ class App extends React.Component {
             game: null,
             isMove: false,
             volumeSettings: {
-                //todo get saved music volume
-                musicVol: '5',
-                soundVol: '5'
+                musicVol: 0.5,
+                soundVol: 0.5
             }
+        }
+    }
+
+    config = {
+        disconnectedTimeoutMs: 5000,
+        defaultVolumeSettings: {
+            musicVol: 0.5,
+            soundVol: 0.5
         }
     }
 
     componentDidMount() {
         this.initializeSocket()
-        console.log(this.state.volumeSettings)
     }
+
     initializeSocket = () => {
         const socket = io(socketUrl)
         socket.on('connect', () => {
             console.log('Connected to server.')
         })
         this.setState({ socket })
+
+        socket.on('pong', latency => {
+            if (latency > this.config.disconnectedTimeoutMs) {
+                //todo add popup
+            }
+        })
     }
 
     loginPlayer = player => {
@@ -110,16 +126,15 @@ class App extends React.Component {
         })
     }
 
-    //todo give keys and enforce update
-    //todo if on any page and without socket, go to main menu
-
     render() {
         return (
             <div className='container of-rows width-full height-full text-nunito '>
-                <Header
-                    volumeSettings={this.state.volumeSettings}
-                    title={this.state.title}
-                    score={this.state.score}
+                <Header title={this.state.title} score={this.state.score} />
+                <ReactAudioPlayer
+                    src={bgMusic}
+                    autoPlay
+                    volume={this.state.volumeSettings.musicVol}
+                    loop={true}
                 />
                 <div className='row height-full width-full bg-lightgrey'>
                     <PopupManager ref={this.popupsRef} />
