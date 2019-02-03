@@ -48,7 +48,6 @@ let handleTurnResult = (currentGame, nextPlayer, turnResultEnum) => {
             }
         }
     } else if (turnResultEnum === TurnResultEnum.TIE) {
-        console.log('tie!')
         currentGame.guessed = []
         let randomWord = getRandomWord(data.words)
         currentGame.word = randomWord
@@ -85,7 +84,6 @@ let checkTurnWin = ({ word, guessed, player }) => {
         }
     })
 
-    console.log(TurnResultEnum)
     if (playerCounter > word.length / 2) {
         return TurnResultEnum.WIN
     } else if (playerCounter + enemyCounter === word.length) {
