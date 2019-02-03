@@ -145,7 +145,7 @@ class App extends React.Component {
     render() {
         return (
             <div className='container of-rows width-full height-full text-nunito '>
-                <Header title={this.state.title} score={this.state.score} />
+                <Header volumeSettings={this.state.volumeSettings} title={this.state.title} score={this.state.score} setSettings={this.setSettings} />
                 <ReactAudioPlayer
                     src={bgMusic}
                     autoPlay

@@ -53,10 +53,6 @@ class Options extends Component {
                 <div className='container options-wrapper border-neon border-neon-violet bg-dark text-nunito'>
                     <div className='options-items'>
                         <div className='options-item'>
-                            <span>Change nickname</span>
-                            <input className='nickname-input input-neon border-neon border-neon-violet' />
-                        </div>
-                        <div className='options-item'>
                             <span>{`Sound volume: ${
                                 Math.round(this.state.volumeSettings.soundVol)
                                 }%`}</span>
