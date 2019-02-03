@@ -26,10 +26,20 @@ function getRandomWord(words) {
     return randomWord
 }
 
+function setPlayersInGameStatus(connectedPlayers, players, boolean) {
+    let newList = Object.assign({}, connectedPlayers)
+    players.forEach(player => {
+        newList[player.nickname].isInGame = boolean
+    })
+    console.log(newList)
+    return newList
+}
+
 module.exports = {
     addPlayer,
     addGame,
     removePlayer,
     isPlayer,
-    getRandomWord
+    getRandomWord,
+    setPlayersInGameStatus
 }

@@ -24,28 +24,34 @@ const extractBrowserPlayers = ({
 }) => {
     connectedPlayers = Object.assign({}, connectedPlayers)
 
-    //! not sure if it's not a source of bugs
-    if (player) delete connectedPlayers[player.nickname]
+    //* don't display the current player
+    if (player) {
+        delete connectedPlayers[player.nickname]
+    }
 
     let result = []
-    for (let player in connectedPlayers) {
-        let nickname = connectedPlayers[player].nickname
-        let id = connectedPlayers[player].id
-        let socketId = connectedPlayers[player].socketId
-        result.push(
-            <BrowserEntry
-                id={id}
-                socketId={socketId}
-                invitationHandler={invitationHandler}
-                nickname={nickname}
-                key={player}
-                index={Object.keys(connectedPlayers).indexOf(player)}
-            />
-        )
-    }
+    console.log(connectedPlayers)
+    console.log(Object.values(connectedPlayers))
+    Object.values(connectedPlayers).forEach(player => {
+        let { isInGame } = player
+        console.log(isInGame)
+        if (isInGame === false) {
+            result.push(
+                <BrowserEntry
+                    id={player.id}
+                    socketId={player.socketId}
+                    invitationHandler={invitationHandler}
+                    nickname={player.nickname}
+                    key={player.id}
+                    index={Object.values(connectedPlayers).indexOf(player)}
+                />
+            )
+        }
+    })
     return result
 }
 
+//todo unmounted timer
 class PlayersBrowser extends React.Component {
     constructor(props) {
         super(props)

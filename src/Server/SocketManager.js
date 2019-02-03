@@ -18,7 +18,8 @@ const {
     addGame,
     removePlayer,
     isPlayer,
-    getRandomWord
+    getRandomWord,
+    setPlayersInGameStatus
 } = require('../Server/Functions')
 
 let connectedPlayers = {}
@@ -98,6 +99,14 @@ module.exports = function(socket) {
             io.sockets.connected[fromSocketId].user,
             io.sockets.connected[to.socketId].user
         ]
+
+        //* players are in game
+        connectedPlayers = setPlayersInGameStatus(
+            connectedPlayers,
+            playerSockets,
+            true
+        )
+
         let game = createGame({
             word: randomWord,
             displayWord: displayWord({ word: randomWord.word }),
@@ -152,7 +161,13 @@ module.exports = function(socket) {
                         turnResult
                     )
                     currentGame = win.currentGame
-                    console.log(win.winObject)
+                    if (win.winObject.type === 'game') {
+                        connectedPlayers = setPlayersInGameStatus(
+                            connectedPlayers,
+                            currentGame.playerSockets,
+                            true
+                        )
+                    }
                     io.in(game.id).emit(WIN, win.winObject)
                 }
 

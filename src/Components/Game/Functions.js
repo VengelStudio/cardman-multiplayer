@@ -19,15 +19,17 @@ const setScore = ({ player, game = null, score = null, setTitle }) => {
 
     if (game !== null && score !== null) enemyScore = score[enemy[0].socketId]
 
-    let enemyNickname = enemy[0].nickname
-    setTitle({
-        score: {
-            me: myNickname,
-            myScore: myScore,
-            enemy: enemyNickname,
-            enemyScore: enemyScore
-        }
-    })
+    if (game !== null) {
+        let enemyNickname = enemy[0].nickname
+        setTitle({
+            score: {
+                me: myNickname,
+                myScore: myScore,
+                enemy: enemyNickname,
+                enemyScore: enemyScore
+            }
+        })
+    }
 }
 
 const isMove = ({ game, player }) => {
