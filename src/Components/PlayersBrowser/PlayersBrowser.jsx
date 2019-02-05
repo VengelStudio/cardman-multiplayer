@@ -1,55 +1,7 @@
 import React from 'react'
 import './PlayersBrowser.css'
 import Scrollbar from 'react-scrollbars-custom'
-import {
-    PLAYER_CONNECTED,
-    INVITATION,
-    INVITATION_ACCEPTED,
-    GAME_STARTED
-} from '../../Shared/Events'
-import { POPUP_INVITATION } from '../Popup/Types'
-import BrowserEntry from './BrowserEntry'
-
-/**
- * Returns a player list without the current player.
- * @callback invitationHandler
- * @param {Object} player Current player.
- * @param {Object[]} connectedPlayers An array of all currently connected players.
- * @param {invitationHandler} invitationHandler Sending invitation to our back-end.
- */
-const extractBrowserPlayers = ({
-    player,
-    connectedPlayers,
-    invitationHandler
-}) => {
-    connectedPlayers = Object.assign({}, connectedPlayers)
-
-    //* don't display the current player
-    if (player) {
-        delete connectedPlayers[player.nickname]
-    }
-
-    let result = []
-    console.log(connectedPlayers)
-    console.log(Object.values(connectedPlayers))
-    Object.values(connectedPlayers).forEach(player => {
-        let { isInGame } = player
-        console.log(isInGame)
-        if (isInGame === false) {
-            result.push(
-                <BrowserEntry
-                    id={player.id}
-                    socketId={player.socketId}
-                    invitationHandler={invitationHandler}
-                    nickname={player.nickname}
-                    key={player.id}
-                    index={Object.values(connectedPlayers).indexOf(player)}
-                />
-            )
-        }
-    })
-    return result
-}
+import { extractBrowserPlayers } from './Functions'
 
 //todo unmounted timer
 class PlayersBrowser extends React.Component {
@@ -59,82 +11,23 @@ class PlayersBrowser extends React.Component {
             playersInBrowser: extractBrowserPlayers({
                 player: this.props.player,
                 connectedPlayers: this.props.connectedPlayers,
-                invitationHandler: this.invitationHandler
+                invitationHandler: this.props.invitationHandler
             })
         }
-        this.initializeSocket()
     }
 
-    invitationHandler = ({ id = null, socketId = null }) => {
-        //Prevent players fron inviting themselves
-        if (id === this.props.player.id) {
-            this.props.addPopup({
-                title: 'Error!',
-                content: 'You cannot invite yourself.'
-            })
-            return
-        }
-
-        const { socket } = this.props
-
-        socket.emit(INVITATION, { id, socketId })
-    }
-
-    initializeSocket = () => {
-        const { socket } = this.props
-        socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
-            this.setState({
+    static getDerivedStateFromProps(props, state) {
+        if (state.playersInBrowser !== props.playersInBrowser) {
+            console.log('updating player list!')
+            return {
                 playersInBrowser: extractBrowserPlayers({
-                    player: this.props.player,
-                    connectedPlayers,
-                    invitationHandler: this.invitationHandler
+                    player: props.player,
+                    connectedPlayers: props.connectedPlayers,
+                    invitationHandler: props.invitationHandler
                 })
-            })
-        })
-
-        const isMove = ({ game }) => {
-            let nextPlayerIndex = game.nextPlayerIndex
-            return (
-                game.playerSockets[nextPlayerIndex].id === this.props.player.id
-            )
-        }
-
-        socket.on(INVITATION, ({ nickname, socketId }) => {
-            this.incomingInvitationHandler({ nickname, socketId })
-        })
-        socket.on(GAME_STARTED, ({ game }) => {
-            this.props.setGame({ game })
-            this.props.setMove(isMove({ game }))
-        })
-    }
-
-    componentWillUnmount() {
-        const { socket } = this.props
-        socket.off(PLAYER_CONNECTED)
-        socket.off(INVITATION)
-        socket.off(GAME_STARTED)
-    }
-
-    invitationAcceptHandler = ({ to = null, fromSocketId = null }) => {
-        const { socket } = this.props
-
-        socket.emit(INVITATION_ACCEPTED, { fromSocketId, to })
-    }
-
-    incomingInvitationHandler = ({ nickname = null, socketId = null }) => {
-        console.log(`Invitation from ${nickname} (${socketId})`)
-        this.props.addPopup({
-            content: `New invitation from ${nickname}`,
-            type: POPUP_INVITATION,
-            invitationData: {
-                acceptHandler: () => {
-                    this.invitationAcceptHandler({
-                        to: this.props.player,
-                        fromSocketId: socketId
-                    })
-                }
             }
-        })
+        }
+        return null
     }
 
     render() {

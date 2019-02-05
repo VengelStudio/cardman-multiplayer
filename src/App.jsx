@@ -10,10 +10,18 @@ import Help from './Components/Menu/Help/Help'
 import Menu from './Components/Menu/Menu'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
 import LoginPage from './Components/Menu/LoginPage/LoginPage'
-import { POPUP_GENERIC } from './Components/Popup/Types'
+import { POPUP_GENERIC, POPUP_INVITATION } from './Components/Popup/Types'
 
 import io from 'socket.io-client'
-import { PLAYER_CONNECTED, LOGOUT } from './Shared/Events'
+import {
+    PLAYER_CONNECTED,
+    LOGOUT,
+    PLAYER_DISCONNECTED,
+    INVITATION,
+    GAME_STARTED,
+    REFRESH_PLAYERS,
+    INVITATION_ACCEPTED
+} from './Shared/Events'
 
 import { Route, withRouter, Switch } from 'react-router-dom'
 
@@ -50,20 +58,48 @@ class App extends React.Component {
     }
 
     isInCache = key => {
-        console.log(localStorage)
-        return (localStorage.getItem(key) !== null && localStorage.getItem(key) !== undefined)
+        return (
+            localStorage.getItem(key) !== null &&
+            localStorage.getItem(key) !== undefined
+        )
     }
 
     componentDidMount() {
-        if (this.isInCache("cachedVolumeSettings")) {
-            let cachedVolumeSettings = JSON.parse(localStorage.getItem('cachedVolumeSettings'))
-            this.setState({ volumeSettings: { musicVol: cachedVolumeSettings.musicVol, soundVol: cachedVolumeSettings.soundVol } })
+        if (this.isInCache('cachedVolumeSettings')) {
+            let cachedVolumeSettings = JSON.parse(
+                localStorage.getItem('cachedVolumeSettings')
+            )
+            this.setState({
+                volumeSettings: {
+                    musicVol: cachedVolumeSettings.musicVol,
+                    soundVol: cachedVolumeSettings.soundVol
+                }
+            })
         } else {
-            let cachedVolumeSettings = { musicVol: this.config.defaultVolumeSettings.musicVol, soundVol: this.config.defaultVolumeSettings.soundVol }
-            localStorage.setItem("cachedVolumeSettings", JSON.stringify(cachedVolumeSettings))
+            let cachedVolumeSettings = {
+                musicVol: this.config.defaultVolumeSettings.musicVol,
+                soundVol: this.config.defaultVolumeSettings.soundVol
+            }
+            localStorage.setItem(
+                'cachedVolumeSettings',
+                JSON.stringify(cachedVolumeSettings)
+            )
         }
 
         this.initializeSocket()
+    }
+
+    invitationHandler = ({ id = null, socketId = null }) => {
+        //Prevent players fron inviting themselves
+        if (id === this.state.player.id) {
+            this.addPopupHandler({
+                title: 'Error!',
+                content: 'You cannot invite yourself.'
+            })
+        } else {
+            const { socket } = this.state
+            socket.emit(INVITATION, { id, socketId })
+        }
     }
 
     initializeSocket = () => {
@@ -78,11 +114,53 @@ class App extends React.Component {
                 //todo add popup
             }
         })
+
+        socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
+            console.log('Player connected!')
+            this.setState({ connectedPlayers })
+        })
+
+        socket.on(PLAYER_DISCONNECTED, ({ connectedPlayers }) => {
+            this.setState({ connectedPlayers })
+            console.log('Player disconnected!')
+        })
+
+        socket.on(REFRESH_PLAYERS, ({ connectedPlayers }) => {
+            console.log('Refreshing players!')
+            this.setState({ connectedPlayers })
+        })
+
+        const isMove = ({ game }) => {
+            let nextPlayerIndex = game.nextPlayerIndex
+            return (
+                game.playerSockets[nextPlayerIndex].id === this.state.player.id
+            )
+        }
+
+        socket.on(INVITATION, ({ nickname, socketId }) => {
+            const { socket } = this.state
+            this.addPopupHandler({
+                content: `New invitation from ${nickname}`,
+                type: POPUP_INVITATION,
+                invitationData: {
+                    acceptHandler: () => {
+                        socket.emit(INVITATION_ACCEPTED, {
+                            fromSocketId: socketId,
+                            to: this.state.player
+                        })
+                    }
+                }
+            })
+        })
+        socket.on(GAME_STARTED, ({ game }) => {
+            this.setGame({ game })
+            this.setMove(isMove({ game }))
+        })
     }
 
     loginPlayer = player => {
         const { socket } = this.state
-        //Sending login socket with newly generated, previosly verified player
+        //Sending login socket with freshly generated, previosly verified player
         socket.emit(PLAYER_CONNECTED, player)
         this.setState({ player })
 
@@ -138,14 +216,21 @@ class App extends React.Component {
             volumeSettings: { soundVol: soundVol, musicVol: musicVol }
         })
         let cachedVolumeSettings = { musicVol: musicVol, soundVol: soundVol }
-        localStorage.setItem("cachedVolumeSettings", JSON.stringify(cachedVolumeSettings))
-
+        localStorage.setItem(
+            'cachedVolumeSettings',
+            JSON.stringify(cachedVolumeSettings)
+        )
     }
 
     render() {
         return (
             <div className='container of-rows width-full height-full text-nunito '>
-                <Header volumeSettings={this.state.volumeSettings} title={this.state.title} score={this.state.score} setSettings={this.setSettings} />
+                <Header
+                    volumeSettings={this.state.volumeSettings}
+                    title={this.state.title}
+                    score={this.state.score}
+                    setSettings={this.setSettings}
+                />
                 <ReactAudioPlayer
                     src={bgMusic}
                     autoPlay
@@ -188,15 +273,11 @@ class App extends React.Component {
                             path='/browser'
                             render={() => (
                                 <PlayersBrowser
-                                    socket={this.state.socket}
                                     player={this.state.player}
+                                    invitationHandler={this.invitationHandler}
                                     connectedPlayers={
                                         this.state.connectedPlayers
                                     }
-                                    setTitle={this.setTitle}
-                                    addPopup={this.addPopupHandler}
-                                    setGame={this.setGame}
-                                    setMove={this.setMove}
                                 />
                             )}
                         />

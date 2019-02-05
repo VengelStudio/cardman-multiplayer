@@ -9,10 +9,11 @@ const {
     INVITATION_ACCEPTED,
     GAME_STARTED,
     GAME_MOVE,
-    WIN
+    WIN,
+    REFRESH_PLAYERS
 } = require('../Shared/Events')
 
-const { createPlayer, createGame, createTurn } = require('../Server/Factories')
+const { createPlayer, createGame } = require('../Server/Factories')
 const {
     addPlayer,
     addGame,
@@ -66,8 +67,10 @@ module.exports = function(socket) {
                 socket.user.nickname,
                 connectedPlayers
             )
-            io.emit(PLAYER_DISCONNECTED, connectedPlayers)
-            //console.log(`[DISCONNECTED] Player ${nickname} (${socket.user.username})`)
+            io.emit(PLAYER_DISCONNECTED, { connectedPlayers })
+            console.log(
+                `[DISCONNECTED] Player ${socket.user.nickname} (${socket.id})`
+            )
         }
     })
 
@@ -78,17 +81,17 @@ module.exports = function(socket) {
     })
 
     socket.on(INVITATION, ({ id = null, socketId = null }) => {
+        let nickname = socket.user.nickname
+        let fromSocketId = socket.user.socketId
         if (socket.user.id === id) {
-            console.log(
-                `[ERROR] ${socket.user.username} tried to invite himself`
-            )
-            return
+            console.log(`[ERROR] ${nickname} tried to invite himself`)
+        } else {
+            console.log(`[INVITATION] from ${socket.user.id} to ${id}`)
+            socket.to(socketId).emit(INVITATION, {
+                socketId: fromSocketId,
+                nickname
+            })
         }
-        console.log(`[INVITATION] from ${socket.user.id} to ${id}`)
-        socket.to(socketId).emit(INVITATION, {
-            socketId: socket.user.socketId,
-            nickname: socket.user.nickname
-        })
     })
 
     socket.on(INVITATION_ACCEPTED, ({ fromSocketId, to }) => {
@@ -106,6 +109,8 @@ module.exports = function(socket) {
             playerSockets,
             true
         )
+
+        socket.emit(REFRESH_PLAYERS, { connectedPlayers })
 
         let game = createGame({
             word: randomWord,
@@ -155,6 +160,7 @@ module.exports = function(socket) {
                 //* turnResult is TIE or WIN
                 if (turnResult !== TurnResultEnum.NOTHING) {
                     //* alter our game object accordingly to the turn result
+                    //todo seperate socket for connectedPlayers
                     let win = handleTurnResult(
                         currentGame,
                         nextPlayer,
@@ -165,10 +171,11 @@ module.exports = function(socket) {
                         connectedPlayers = setPlayersInGameStatus(
                             connectedPlayers,
                             currentGame.playerSockets,
-                            true
+                            false
                         )
                     }
                     io.in(game.id).emit(WIN, win.winObject)
+                    socket.emit(REFRESH_PLAYERS, { connectedPlayers })
                 }
 
                 //* turnResult is neither WIN or TIE, so the turn is just moving on

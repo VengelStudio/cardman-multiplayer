@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Header.css'
-import Icon from 'react-icons-kit';
-import { volume_2, } from 'react-icons-kit/ikons/volume_2'
+import Icon from 'react-icons-kit'
+import { volume_2 } from 'react-icons-kit/ikons/volume_2'
 import { note } from 'react-icons-kit/entypo/note'
 import { cog } from 'react-icons-kit/fa/cog'
 
@@ -80,15 +80,15 @@ class Header extends Component {
     render() {
         return (
             <div className='row header width-full semi-bold bg-dark color-lightblue padding-sm height-sm text-lg content-hcenter content-vcenter'>
-                <div className="options-btn ">
-                    <Icon icon={cog} size={32} class="gear-icon"></Icon>
-                    <div class="dropdown-options button-pointer border-neon border-neon-translucent">
-                        <div className="settings-wrapper">
+                <div className='options-btn '>
+                    <Icon icon={cog} size={32} className='gear-icon' />
+                    <div className='dropdown-options button-pointer border-neon border-neon-translucent'>
+                        <div className='settings-wrapper'>
                             <div className='options-items'>
                                 <div className='options-item'>
-                                    <span>{`Sound volume: ${
-                                        Math.round(this.state.volumeSettings.soundVol)
-                                        }%`}</span>
+                                    <span>{`Sound volume: ${Math.round(
+                                        this.state.volumeSettings.soundVol
+                                    )}%`}</span>
                                     <div className='slider-wrapper input-neon border-neon border-neon-violet'>
                                         <input
                                             type='range'
@@ -96,15 +96,18 @@ class Header extends Component {
                                             max='100'
                                             id='sound-slider-thumb'
                                             className='options-slider slider'
-                                            value={this.state.volumeSettings.soundVol}
+                                            value={
+                                                this.state.volumeSettings
+                                                    .soundVol
+                                            }
                                             onChange={e => this.onChange(e)}
                                         />
                                     </div>
                                 </div>
                                 <div className='options-item'>
-                                    <span>{`Music volume: ${
-                                        Math.round(this.state.volumeSettings.musicVol)
-                                        }%`}</span>
+                                    <span>{`Music volume: ${Math.round(
+                                        this.state.volumeSettings.musicVol
+                                    )}%`}</span>
                                     <div className='slider-wrapper input-neon border-neon border-neon-violet'>
                                         <input
                                             type='range'
@@ -112,7 +115,10 @@ class Header extends Component {
                                             max='100'
                                             id='music-slider-thumb'
                                             className='options-slider slider'
-                                            value={this.state.volumeSettings.musicVol}
+                                            value={
+                                                this.state.volumeSettings
+                                                    .musicVol
+                                            }
                                             onChange={e => this.onChange(e)}
                                         />
                                     </div>
@@ -124,7 +130,7 @@ class Header extends Component {
                                             className='save-btn-wrapper border-neon border-neon-orange'
                                         >
                                             SAVE
-                                </button>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +140,7 @@ class Header extends Component {
                 <div className='column auto has-background-dark header'>
                     {this.generateHeader()}
                 </div>
-            </div >
+            </div>
         )
     }
 }
