@@ -31,7 +31,7 @@ let handleTurnResult = (currentGame, nextPlayer, turnResultEnum) => {
             score: currentGame.score
         }
         if (isGameWin === true) {
-            winObject = { ...winObject, type: 'game' }
+            winObject = { ...winObject, game: currentGame, type: 'game' }
         } else {
             let randomWord = getRandomWord(data.words)
             currentGame.word = randomWord

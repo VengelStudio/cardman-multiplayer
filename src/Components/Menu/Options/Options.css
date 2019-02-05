@@ -24,8 +24,7 @@
 }
 
 .options-item > span,
-.options-item > input,
-.options-item > div {
+.options-item > input {
     display: flex;
     flex: 1;
 }

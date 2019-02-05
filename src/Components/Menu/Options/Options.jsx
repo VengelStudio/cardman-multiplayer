@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './Options.css'
+//import './Options.css'
 
 class Options extends Component {
     constructor(props) {
@@ -53,9 +53,9 @@ class Options extends Component {
                 <div className='container options-wrapper border-neon border-neon-violet bg-dark text-nunito'>
                     <div className='options-items'>
                         <div className='options-item'>
-                            <span>{`Sound volume: ${
-                                Math.round(this.state.volumeSettings.soundVol)
-                                }%`}</span>
+                            <span>{`Sound volume: ${Math.round(
+                                this.state.volumeSettings.soundVol
+                            )}%`}</span>
                             <div className='slider-wrapper input-neon border-neon border-neon-violet'>
                                 <input
                                     type='range'
@@ -69,9 +69,9 @@ class Options extends Component {
                             </div>
                         </div>
                         <div className='options-item'>
-                            <span>{`Music volume: ${
-                                Math.round(this.state.volumeSettings.musicVol)
-                                }%`}</span>
+                            <span>{`Music volume: ${Math.round(
+                                this.state.volumeSettings.musicVol
+                            )}%`}</span>
                             <div className='slider-wrapper input-neon border-neon border-neon-violet'>
                                 <input
                                     type='range'

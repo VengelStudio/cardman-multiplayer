@@ -1,9 +1,6 @@
 import React from 'react'
 
 const HeaderBar = ({ title = null, score = null }) => {
-    let displayScore = false
-    if (score !== null) displayScore = true
-
     return (
         <div className='column auto has-background-dark header'>
             {score && (
@@ -23,9 +20,7 @@ const HeaderBar = ({ title = null, score = null }) => {
                     </div>
                 </div>
             )}
-            {!displayScore && title && (
-                <h1 className='title has-text-white-ter'>{title}</h1>
-            )}
+            {title && <h1 className='title has-text-white-ter'>{title}</h1>}
         </div>
     )
 }

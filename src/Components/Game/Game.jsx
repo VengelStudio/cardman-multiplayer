@@ -5,7 +5,8 @@ import Content from './Content'
 import { withRouter } from 'react-router-dom'
 
 const { isMove } = require('../../Shared/Functions')
-const { setScore, winHandler } = require('./Functions')
+const { winHandler } = require('./Functions')
+const { setScore } = require('../../Shared/Functions')
 const { GAME_MOVE, WIN } = require('../../Shared/Events')
 
 class Game extends Component {
@@ -14,7 +15,6 @@ class Game extends Component {
         this.state = {
             game: this.props.game,
             gameFromProps: true,
-            move: this.props.isMove,
             allowMove: true
         }
 
@@ -30,18 +30,15 @@ class Game extends Component {
                 )
             })
         })
-        //todo IMPORTANT: HEADER IS NOT CHANGING AFTER THE GAME ENDS!
         //todo create a "Disconnected" error popup
         //todo doesn't work for R E D E S I G N I N G
-        //todo pass enemy to setScore
-        //todo if win === true disable any interactions
-        //todo stop timer if game ends
+        //todo players can't see each other after end
         //todo remove game after end
         socket.on(WIN, ({ winner, score, type, game }) => {
             let winObj = winHandler({
                 type,
                 setMove: this.props.setMove,
-                setScore,
+                setScore: setScore,
                 setTitle: this.props.setTitle,
                 score,
                 game,

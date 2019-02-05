@@ -48,7 +48,6 @@ class Popup extends Component {
 
     onGameEndButton = () => {
         this.props.history.push('/browser')
-        console.log('game end button')
         this.onCloseButton()
     }
 

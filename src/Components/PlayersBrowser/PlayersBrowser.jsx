@@ -15,9 +15,12 @@ class PlayersBrowser extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.props.setTitle({ title: 'Players browser' })
+    }
+
     static getDerivedStateFromProps(props, state) {
         if (state.playersInBrowser !== props.playersInBrowser) {
-            console.log('updating player list!')
             return {
                 playersInBrowser: extractBrowserPlayers({
                     player: props.player,

@@ -22,14 +22,14 @@ class Menu extends Component {
                 >
                     Help
                 </button>
-                <button
+                {/* <button
                     onClick={() => {
                         this.props.history.push('/options')
                     }}
                     className='button-pointer border-neon border-neon-violet'
                 >
                     Options
-                </button>
+                </button> */}
                 <button
                     onClick={() => {
                         this.props.history.push('/credits')

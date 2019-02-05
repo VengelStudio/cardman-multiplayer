@@ -2,16 +2,6 @@ import React, { Component } from 'react'
 import './PlayersBrowser.css'
 
 class BrowserEntry extends Component {
-    constructor(props) {
-        super(props)
-        this.classes = 'browser-entry width-full '
-        if (this.props.index % 2 === 0) {
-            this.classes += 'browser-entry-lightbg'
-        } else {
-            this.classes += 'browser-entry-darkbg'
-        }
-    }
-
     clickHandler = () => {
         this.props.invitationHandler({
             id: this.props.id,
@@ -21,7 +11,7 @@ class BrowserEntry extends Component {
 
     render() {
         return (
-            <div className={this.classes}>
+            <div className='browser-entry width-full'>
                 <span className='player-info'>
                     <span className='nickname'>{this.props.nickname}</span>
                 </span>

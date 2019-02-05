@@ -30,6 +30,7 @@ import ReactAudioPlayer from 'react-audio-player'
 import bgMusic from './Resources/Sounds/bg-lower.mp3'
 
 const socketUrl = 'http://localhost:3231'
+const { setScore } = require('./Shared/Functions')
 
 class App extends React.Component {
     constructor(props) {
@@ -150,6 +151,11 @@ class App extends React.Component {
         socket.on(GAME_STARTED, ({ game }) => {
             this.setGame({ game })
             this.setMove(isMove({ game, player: this.state.player }))
+            setScore({
+                player: this.state.player,
+                game,
+                setTitle: this.setTitle
+            })
         })
     }
 
@@ -174,11 +180,8 @@ class App extends React.Component {
     }
 
     setTitle = ({ title = null, score = null }) => {
-        if (title) {
-            this.setState({ title: title })
-        } else if (score) {
-            this.setState({ score: score })
-        }
+        this.setState({ title: title })
+        this.setState({ score: score })
     }
 
     addPopupHandler = ({
@@ -198,7 +201,6 @@ class App extends React.Component {
     }
 
     setGame = ({ game }) => {
-        console.log('Game started!')
         this.setState({ game }, this.props.history.push('/game'))
     }
 
@@ -269,6 +271,7 @@ class App extends React.Component {
                             render={() => (
                                 <PlayersBrowser
                                     player={this.state.player}
+                                    setTitle={this.setTitle}
                                     invitationHandler={this.invitationHandler}
                                     connectedPlayers={
                                         this.state.connectedPlayers

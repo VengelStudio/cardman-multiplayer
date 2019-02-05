@@ -74,3 +74,10 @@
     font-size: 4vh;
     margin-right: 10vw;
 }
+
+.browser-entry:nth-child(odd) {
+    background-color: rgb(107, 107, 107);
+}
+.browser-entry:nth-child(even) {
+    background-color: rgb(58, 58, 58);
+}
