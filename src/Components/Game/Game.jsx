@@ -3,52 +3,10 @@ import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
 import { withRouter } from 'react-router-dom'
-import { POPUP_GAME_END, POPUP_GENERIC } from '../Popup/Types'
-import { isMove, setScore } from './Functions'
 
+const { isMove } = require('../../Shared/Functions')
+const { setScore, winHandler } = require('./Functions')
 const { GAME_MOVE, WIN } = require('../../Shared/Events')
-
-let winHandler = ({
-    type,
-    setMove = null,
-    setScore = null,
-    setTitle = null,
-    score = null,
-    game = null,
-    addPopup = null,
-    winner = null,
-    player = null
-}) => {
-    let returnState = null
-    if (type === 'turn') {
-        returnState = { gameFromProps: false, game }
-        setMove(isMove({ game, player }))
-    } else if (type === 'turn_tie') {
-        returnState = { gameFromProps: false, game }
-        setMove(isMove({ game, player }))
-        addPopup({
-            title: 'TIE',
-            type: POPUP_GENERIC,
-            content: `Turn is tied. None of the players won.`
-        })
-    } else if (type === 'game') {
-        //* win
-        //todo if win === true disable any interactions
-        returnState = { allowMove: false }
-        addPopup({
-            title: 'WINNER',
-            type: POPUP_GAME_END,
-            content: `winner: ${winner.nickname}`
-        })
-    }
-    setScore({
-        player,
-        game,
-        setTitle,
-        score
-    })
-    return returnState
-}
 
 class Game extends Component {
     constructor(props) {
@@ -59,11 +17,6 @@ class Game extends Component {
             move: this.props.isMove,
             allowMove: true
         }
-
-        // if (this.props.game === null) {
-        //   console.log('DETECTED RELOAD, MOVE TO MAIN MENU')
-        //   this.props.history.push('/')
-        // }
 
         this.props.socket && this.initializeSocket()
     }
@@ -83,6 +36,7 @@ class Game extends Component {
         //todo if win === true disable any interactions
         socket.on(WIN, ({ winner, score, type, game }) => {
             console.log(game)
+            //todo is undefined, why?
             let winObj = winHandler({
                 type,
                 setMove: this.props.setMove,
@@ -94,6 +48,7 @@ class Game extends Component {
                 winner,
                 player: this.props.player
             })
+            //todo is 'allowMove: false' instead of actual winObject
             console.log(winObj)
             this.setState({ ...winObj })
         })

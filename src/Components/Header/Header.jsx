@@ -14,7 +14,6 @@ class Header extends Component {
                 soundVol: this.props.volumeSettings.soundVol * 100
             }
         }
-        console.log(this.state)
     }
 
     static getDerivedStateFromProps(props, state) {

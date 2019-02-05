@@ -3,7 +3,6 @@ import './PlayersBrowser.css'
 import Scrollbar from 'react-scrollbars-custom'
 import { extractBrowserPlayers } from './Functions'
 
-//todo unmounted timer
 class PlayersBrowser extends React.Component {
     constructor(props) {
         super(props)

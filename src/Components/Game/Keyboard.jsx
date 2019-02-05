@@ -15,7 +15,6 @@ class Key extends Component {
     }
 
     clickHandler = () => {
-        console.log(this.props.player)
         this.props.moveHandler({
             move: {
                 type: 'key',
@@ -32,8 +31,8 @@ class Key extends Component {
                     this.state.clicked
                         ? { backgroundColor: '#555', textDecoration: 'none' }
                         : {
-                            backgroundColor: '#519C3F'
-                        }
+                              backgroundColor: '#519C3F'
+                          }
                 }
                 onClick={this.clickHandler}
                 className='key'

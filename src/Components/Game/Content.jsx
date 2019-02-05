@@ -63,6 +63,7 @@ class Content extends Component {
         if (this.state.game !== null) {
             displayWord = this.colorDisplayWord(this.state.game.displayWord)
         }
+        //todo unmounted timer
         return (
             <div className='content'>
                 <div className='timer-wrapper'>

@@ -14,11 +14,8 @@ export const extractBrowserPlayers = ({
     }
 
     let result = []
-    console.log(connectedPlayers)
-    console.log(Object.values(connectedPlayers))
     Object.values(connectedPlayers).forEach(player => {
         let { isInGame } = player
-        console.log(isInGame)
         if (isInGame === false) {
             result.push(
                 <BrowserEntry

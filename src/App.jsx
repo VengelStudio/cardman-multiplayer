@@ -22,6 +22,7 @@ import {
     REFRESH_PLAYERS,
     INVITATION_ACCEPTED
 } from './Shared/Events'
+import { isMove } from './Shared/Functions'
 
 import { Route, withRouter, Switch } from 'react-router-dom'
 
@@ -130,13 +131,6 @@ class App extends React.Component {
             this.setState({ connectedPlayers })
         })
 
-        const isMove = ({ game }) => {
-            let nextPlayerIndex = game.nextPlayerIndex
-            return (
-                game.playerSockets[nextPlayerIndex].id === this.state.player.id
-            )
-        }
-
         socket.on(INVITATION, ({ nickname, socketId }) => {
             const { socket } = this.state
             this.addPopupHandler({
@@ -152,9 +146,10 @@ class App extends React.Component {
                 }
             })
         })
+
         socket.on(GAME_STARTED, ({ game }) => {
             this.setGame({ game })
-            this.setMove(isMove({ game }))
+            this.setMove(isMove({ game, player: this.state.player }))
         })
     }
 
