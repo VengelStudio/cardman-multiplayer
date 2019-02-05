@@ -30,13 +30,14 @@ class Game extends Component {
                 )
             })
         })
+        //todo IMPORTANT: HEADER IS NOT CHANGING AFTER THE GAME ENDS!
         //todo create a "Disconnected" error popup
         //todo doesn't work for R E D E S I G N I N G
         //todo pass enemy to setScore
         //todo if win === true disable any interactions
+        //todo stop timer if game ends
+        //todo remove game after end
         socket.on(WIN, ({ winner, score, type, game }) => {
-            console.log(game)
-            //todo is undefined, why?
             let winObj = winHandler({
                 type,
                 setMove: this.props.setMove,
@@ -48,17 +49,8 @@ class Game extends Component {
                 winner,
                 player: this.props.player
             })
-            //todo is 'allowMove: false' instead of actual winObject
-            console.log(winObj)
             this.setState({ ...winObj })
         })
-    }
-
-    moveHandler = ({ move = null }) => {
-        if (this.state.allowMove === true) {
-            const { socket } = this.props
-            socket.emit(GAME_MOVE, { game: this.state.game, move })
-        }
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -77,6 +69,13 @@ class Game extends Component {
             return null
         }
         return null
+    }
+
+    moveHandler = ({ move = null }) => {
+        if (this.state.allowMove === true) {
+            const { socket } = this.props
+            socket.emit(GAME_MOVE, { game: this.state.game, move })
+        }
     }
 
     onMoveTimeout = () => {

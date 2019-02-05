@@ -112,7 +112,7 @@ class App extends React.Component {
 
         socket.on('pong', latency => {
             if (latency > this.config.disconnectedTimeoutMs) {
-                //todo add popup
+                //todo Add 'lost connection' popup here
             }
         })
 

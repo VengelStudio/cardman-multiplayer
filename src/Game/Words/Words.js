@@ -1,9 +1,7 @@
 const data = require('./data.json')
 const { getRandomWord } = require('../../Server/Functions')
 const { TurnResultEnum } = require('../../Shared/Enums')
-//todo BE AWARE OF THIS
-//const TurnResultEnum = require('../../Shared/Enums')
-//TurnResultEnum === undefined
+
 let countOccurrences = (word, char) => {
     let occurrence = 0
     Array.from(word).forEach(letter => {

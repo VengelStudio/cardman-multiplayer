@@ -77,6 +77,7 @@ const winHandler = ({
         setTitle,
         score
     })
+
     return returnState
 }
 

@@ -152,11 +152,12 @@ module.exports = function(socket) {
                     guessed: newGuessed
                 })
 
-                turnResult = checkTurnWin({
+                /*turnResult = checkTurnWin({
                     word: currentGame.word.word,
                     guessed: newGuessed,
                     player: socket.user
-                })
+                })*/
+                turnResult = TurnResultEnum.WIN
                 //* turnResult is TIE or WIN
                 if (turnResult !== TurnResultEnum.NOTHING) {
                     //* alter our game object accordingly to the turn result
