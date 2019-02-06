@@ -5,6 +5,18 @@ import { POPUP_GENERIC } from './Types'
 class PopupManager extends Component {
     state = { popups: [], lastPopupId: 0 }
 
+    // isDisconnected
+
+    // static getDerivedStateFromProps(props, current_state) {
+    //     if (current_state.value !== props.value) {
+    //       return {
+    //         value: props.value,
+    //         computed_prop: heavy_computation(props.value)
+    //       }
+    //     }
+    //     return null
+    //   }
+
     addPopup = ({
         title = null,
         content = null,

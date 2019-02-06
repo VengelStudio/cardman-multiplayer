@@ -30,9 +30,7 @@ class Game extends Component {
                 )
             })
         })
-        //todo create a "Disconnected" error popup
-        //todo doesn't work for R E D E S I G N I N G
-        //todo players can't see each other after end
+        //todo divide popups
         //todo remove game after end
         socket.on(WIN, ({ winner, score, type, game }) => {
             let winObj = winHandler({

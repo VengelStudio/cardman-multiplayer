@@ -1,5 +1,6 @@
 var app = require('http').createServer()
-var io = (module.exports.io = require('socket.io')(app))
+console.log(app)
+var io = (module.exports.io = require('socket.io')(app, { pingInterval: 2000 }))
 
 const PORT = process.env.PORT || 3231
 

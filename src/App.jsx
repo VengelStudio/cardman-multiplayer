@@ -47,12 +47,13 @@ class App extends React.Component {
             volumeSettings: {
                 musicVol: 0.5,
                 soundVol: 0.5
-            }
+            },
+            isDisconnected: false
         }
     }
 
     config = {
-        disconnectedTimeoutMs: 5000,
+        disconnectedTimeoutMs: 1,
         defaultVolumeSettings: {
             musicVol: 0.5,
             soundVol: 0.5
@@ -111,9 +112,11 @@ class App extends React.Component {
         })
         this.setState({ socket })
 
-        socket.on('pong', latency => {
-            if (latency > this.config.disconnectedTimeoutMs) {
-                //todo Add 'lost connection' popup here
+        socket.on('pong', ms => {
+            if (ms > this.config.disconnectedTimeoutMs) {
+                this.setState({ isDisconnected: true })
+            } else {
+                this.setState({ isDisconnected: false })
             }
         })
 
@@ -235,7 +238,10 @@ class App extends React.Component {
                     loop={true}
                 />
                 <div className='row height-full width-full bg-lightgrey'>
-                    <PopupManager ref={this.popupsRef} />
+                    <PopupManager
+                        ref={this.popupsRef}
+                        isDisconnected={this.state.isDisconnected}
+                    />
                     <Switch>
                         <Route exact path='/'>
                             <LoginPage

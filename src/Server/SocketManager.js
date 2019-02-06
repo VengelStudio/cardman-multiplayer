@@ -94,6 +94,11 @@ module.exports = function(socket) {
         }
     })
 
+    socket.on('knock', ({ time }) => {
+        let latency = Date.now() - time
+        socket.emit('knock', { latency })
+    })
+
     socket.on(INVITATION_ACCEPTED, ({ fromSocketId, to }) => {
         console.log(`[INVITATION] from: ${fromSocketId}, to: ${to.socketId}`)
 
@@ -110,7 +115,7 @@ module.exports = function(socket) {
             true
         )
 
-        socket.emit(REFRESH_PLAYERS, { connectedPlayers })
+        io.emit(REFRESH_PLAYERS, { connectedPlayers })
 
         let game = createGame({
             word: randomWord,
@@ -176,7 +181,7 @@ module.exports = function(socket) {
                         )
                     }
                     io.in(game.id).emit(WIN, win.winObject)
-                    socket.emit(REFRESH_PLAYERS, { connectedPlayers })
+                    io.emit(REFRESH_PLAYERS, { connectedPlayers })
                 }
 
                 //* turnResult is neither WIN or TIE, so the turn is just moving on
