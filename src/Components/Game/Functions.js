@@ -1,6 +1,6 @@
 const { isMove } = require('../../Shared/Functions')
 const {
-    POPUP_GAME_END,
+    POPUP_CONFIRMATION,
     POPUP_GENERIC
 } = require('../../Components/Popup/Types')
 
@@ -23,18 +23,24 @@ const winHandler = ({
         returnState = { gameFromProps: false, game }
         setMove(isMove({ game, player }))
         addPopup({
-            title: 'TIE',
             type: POPUP_GENERIC,
-            content: `Turn is tied. None of the players won.`
+            popupData: {
+                title: 'TIE',
+                content: `Turn is tied. None of the players won.`
+            }
         })
     } else if (type === 'game') {
         //* win
-        //todo if win === true disable any interactions
         returnState = { allowMove: false }
         addPopup({
-            title: 'WINNER',
-            type: POPUP_GAME_END,
-            content: `winner: ${winner.nickname}`
+            type: POPUP_CONFIRMATION,
+            popupData: {
+                title: 'GAME ENDED',
+                content: `Player ${winner.nickname} has won the game.`,
+                onConfirm: () => {
+                    console.log('confirmed')
+                }
+            }
         })
     }
     setScore({

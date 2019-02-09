@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 
 import Header from './Components/Header/Header'
-import PopupManager from './Components/Popup/PopupManager'
+import PopupManager from './Components/Popup/Popups'
 import Options from './Components/Menu/Options/Options'
 import Game from './Components/Game/Game'
 import Credits from './Components/Menu/Credits/Credits'
@@ -10,7 +10,12 @@ import Help from './Components/Menu/Help/Help'
 import Menu from './Components/Menu/Menu'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
 import LoginPage from './Components/Menu/LoginPage/LoginPage'
-import { POPUP_GENERIC, POPUP_INVITATION } from './Components/Popup/Types'
+
+import {
+    POPUP_GENERIC,
+    POPUP_GAME_END,
+    POPUP_INVITATION
+} from './Components/Popup/Types'
 
 import io from 'socket.io-client'
 import {
@@ -29,6 +34,7 @@ import { Route, withRouter, Switch } from 'react-router-dom'
 import ReactAudioPlayer from 'react-audio-player'
 import bgMusic from './Resources/Sounds/bg-lower.mp3'
 
+const uuidv4 = require('uuid/v4')
 const socketUrl = 'http://localhost:3231'
 const { setScore } = require('./Shared/Functions')
 
@@ -49,11 +55,24 @@ class App extends React.Component {
                 soundVol: 0.5
             },
             isDisconnected: false
+            // newPopup: {
+            //     type: POPUP_INVITATION,
+            //     id: uuidv4(),
+            //     popupData: {
+            //         nickname: 'Dezanek',
+            //         onAccept: () => {
+            //             console.log('accepted')
+            //         },
+            //         onDecline: () => {
+            //             console.log('declined!')
+            //         }
+            //     }
+            // }
         }
     }
 
     config = {
-        disconnectedTimeoutMs: 1,
+        disconnectedTimeoutMs: 20,
         defaultVolumeSettings: {
             musicVol: 0.5,
             soundVol: 0.5
@@ -95,7 +114,7 @@ class App extends React.Component {
     invitationHandler = ({ id = null, socketId = null }) => {
         //Prevent players fron inviting themselves
         if (id === this.state.player.id) {
-            this.addPopupHandler({
+            this.addPopup({
                 title: 'Error!',
                 content: 'You cannot invite yourself.'
             })
@@ -137,15 +156,18 @@ class App extends React.Component {
 
         socket.on(INVITATION, ({ nickname, socketId }) => {
             const { socket } = this.state
-            this.addPopupHandler({
-                content: `New invitation from ${nickname}`,
+            this.addPopup({
                 type: POPUP_INVITATION,
-                invitationData: {
-                    acceptHandler: () => {
+                popupData: {
+                    nickname,
+                    onAccept: () => {
                         socket.emit(INVITATION_ACCEPTED, {
                             fromSocketId: socketId,
                             to: this.state.player
                         })
+                    },
+                    onDecline: () => {
+                        console.log('declined, todo here')
                     }
                 }
             })
@@ -187,22 +209,6 @@ class App extends React.Component {
         this.setState({ score: score })
     }
 
-    addPopupHandler = ({
-        title = null,
-        content = null,
-        invitationData = null,
-        acceptHandler = null,
-        type = POPUP_GENERIC
-    }) => {
-        this.popupsRef.current.addPopup({
-            title,
-            content,
-            invitationData,
-            acceptHandler,
-            type
-        })
-    }
-
     setGame = ({ game }) => {
         this.setState({ game }, this.props.history.push('/game'))
     }
@@ -222,6 +228,12 @@ class App extends React.Component {
         )
     }
 
+    addPopup = ({ type = POPUP_GENERIC, popupData }) => {
+        this.setState({
+            newPopup: { type, popupData: { ...popupData, id: uuidv4() } }
+        })
+    }
+
     render() {
         return (
             <div className='container of-rows width-full height-full text-nunito '>
@@ -239,7 +251,7 @@ class App extends React.Component {
                 />
                 <div className='row height-full width-full bg-lightgrey'>
                     <PopupManager
-                        ref={this.popupsRef}
+                        newPopup={this.state.newPopup}
                         isDisconnected={this.state.isDisconnected}
                     />
                     <Switch>
@@ -248,7 +260,7 @@ class App extends React.Component {
                                 socket={this.state.socket}
                                 loginPlayer={this.loginPlayer}
                                 setTitle={this.setTitle}
-                                addPopup={this.addPopupHandler}
+                                addPopup={this.addPopup}
                             />
                         </Route>
                         <Route path='/menu' component={Menu} />
@@ -293,7 +305,7 @@ class App extends React.Component {
                                     game={this.state.game}
                                     socket={this.state.socket}
                                     setTitle={this.setTitle}
-                                    addPopup={this.addPopupHandler}
+                                    addPopup={this.addPopup}
                                     setMove={this.setMove}
                                     isMove={this.state.isMove}
                                 />

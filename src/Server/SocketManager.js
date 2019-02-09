@@ -165,8 +165,7 @@ module.exports = function(socket) {
                 turnResult = TurnResultEnum.WIN
                 //* turnResult is TIE or WIN
                 if (turnResult !== TurnResultEnum.NOTHING) {
-                    //* alter our game object accordingly to the turn result
-                    //todo seperate socket for connectedPlayers
+                    //* modify our game object accordingly to the turn result
                     let win = handleTurnResult(
                         currentGame,
                         nextPlayer,
@@ -179,6 +178,10 @@ module.exports = function(socket) {
                             currentGame.playerSockets,
                             false
                         )
+                        //todo remove game object
+                        /*
+                            games[game.id] = currentGame filter etc
+                        */
                     }
                     io.in(game.id).emit(WIN, win.winObject)
                     io.emit(REFRESH_PLAYERS, { connectedPlayers })
@@ -189,8 +192,9 @@ module.exports = function(socket) {
                     currentGame.guessed = newGuessed
             }
 
-            //* save altered game
+            //* save modified game
             games[game.id] = currentGame
+
             if (turnResult === TurnResultEnum.NOTHING) {
                 io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
             }

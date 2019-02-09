@@ -30,8 +30,6 @@ class Game extends Component {
                 )
             })
         })
-        //todo divide popups
-        //todo remove game after end
         socket.on(WIN, ({ winner, score, type, game }) => {
             let winObj = winHandler({
                 type,

@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import './Popup.css'
-import { POPUP_INVITATION, POPUP_GAME_END } from './Types'
+import { POPUP_INVITATION, POPUP_GAME_END } from '../Types'
 import { withRouter } from 'react-router-dom'
 
 class Popup extends Component {
-    //todo popup type constants
-
     state = {
         type: this.props.type
     }
@@ -26,8 +24,6 @@ class Popup extends Component {
         ...this.roundedBottomStyle
     }
 
-    acceptButtonStyle = 'border-neon border-neon-lime'
-    declineButtonStyle = 'border-neon border-neon-orange'
     closeButtonStyle = 'btn-popup-close'
     //prettier-ignore
     titleStyle = 'padding-sm popup-title row width-auto semi-bold text-lg color-light text-center'
@@ -103,20 +99,7 @@ class Popup extends Component {
         }
 
         if (this.state.type === POPUP_INVITATION) {
-            content.push(
-                <div className='popup-buttons' key={3}>
-                    {this.generateButton({
-                        onClick: this.onAcceptButton,
-                        style: this.acceptButtonStyle,
-                        content: <span>{'Accept'}</span>
-                    })}
-                    {this.generateButton({
-                        onClick: this.onCloseButton,
-                        style: this.declineButtonStyle,
-                        content: <span>{'Decline'}</span>
-                    })}
-                </div>
-            )
+            content.push()
         }
 
         return (
