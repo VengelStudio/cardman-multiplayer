@@ -1,6 +1,16 @@
+.popups-wrapper {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
 .generic-popup {
-    display: block;
-    margin: auto;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
     z-index: 100;
     min-height: 15vh;
     max-height: 80vh;

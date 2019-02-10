@@ -43,9 +43,8 @@ class Popups extends Component {
         this.setState({ popups: newPopups })
     }
 
-    Popup = ({ type, id, popupData }) => {
+    Popup = ({ type, popupData }) => {
         let Component = this.components[type]
-        console.log(popupData)
         return (
             <Component
                 key={popupData.id}
@@ -56,7 +55,7 @@ class Popups extends Component {
 
     render() {
         return (
-            <React.Fragment>
+            <div className='popups-wrapper'>
                 {this.props.isDisconnected === true ? (
                     <DisconnectedPopup />
                 ) : null}
@@ -64,12 +63,13 @@ class Popups extends Component {
                     this.state.popups.map(popup => {
                         return (
                             <this.Popup
+                                key={popup.popupData.id}
                                 type={popup.type}
                                 popupData={popup.popupData}
                             />
                         )
                     })}
-            </React.Fragment>
+            </div>
         )
     }
 }

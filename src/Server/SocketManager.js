@@ -20,7 +20,8 @@ const {
     removePlayer,
     isPlayer,
     getRandomWord,
-    setPlayersInGameStatus
+    setPlayersInGameStatus,
+    removeGame
 } = require('../Server/Functions')
 
 let connectedPlayers = {}
@@ -72,11 +73,42 @@ module.exports = function(socket) {
                 `[DISCONNECTED] Player ${socket.user.nickname} (${socket.id})`
             )
         }
+
+        if (
+            games[socket.user.gameId] !== undefined &&
+            socket.user !== undefined &&
+            socket.user.gameId !== null
+        ) {
+            let playersGame = games[socket.user.gameId]
+            let nextPlayerIndex = playersGame.nextPlayerIndex
+            nextPlayerIndex = nextPlayerIndex === 0 ? 1 : 0
+            let nextPlayer = playersGame.playerSockets[nextPlayerIndex]
+            //todo wrong person gets the point
+            playersGame.score[nextPlayer.socketId] += 1
+
+            let winObject = {
+                winner: nextPlayer,
+                score: playersGame.score,
+                game: playersGame,
+                type: 'game'
+            }
+
+            connectedPlayers = setPlayersInGameStatus(
+                connectedPlayers,
+                playersGame.playerSockets,
+                false
+            )
+
+            games = removeGame(playersGame, games)
+
+            io.in(socket.user.gameId).emit(WIN, winObject)
+            io.emit(REFRESH_PLAYERS, { connectedPlayers })
+        }
     })
 
     socket.on(LOGOUT, () => {
         connectedPlayers = removePlayer(socket.user.nickname, connectedPlayers)
-        io.emit(PLAYER_DISCONNECTED, connectedPlayers)
+        io.emit(PLAYER_DISCONNECTED, { connectedPlayers })
         console.log(`[LOGOUT] Player ${socket.user.username}`)
     })
 
@@ -108,15 +140,6 @@ module.exports = function(socket) {
             io.sockets.connected[to.socketId].user
         ]
 
-        //* players are in game
-        connectedPlayers = setPlayersInGameStatus(
-            connectedPlayers,
-            playerSockets,
-            true
-        )
-
-        io.emit(REFRESH_PLAYERS, { connectedPlayers })
-
         let game = createGame({
             word: randomWord,
             displayWord: displayWord({ word: randomWord.word }),
@@ -128,6 +151,16 @@ module.exports = function(socket) {
         games = addGame(game, games)
         io.sockets.connected[fromSocketId].join(game.id)
         io.sockets.connected[to.socketId].join(game.id)
+
+        //* players are in game
+        connectedPlayers = setPlayersInGameStatus(
+            connectedPlayers,
+            playerSockets,
+            true,
+            game
+        )
+        io.emit(REFRESH_PLAYERS, { connectedPlayers })
+
         io.in(game.id).emit(GAME_STARTED, { game })
         console.log(
             `[GAME] ${fromSocketId} vs ${to.socketId}, gameID: ${game.id}`
@@ -178,10 +211,7 @@ module.exports = function(socket) {
                             currentGame.playerSockets,
                             false
                         )
-                        //todo remove game object
-                        /*
-                            games[game.id] = currentGame filter etc
-                        */
+                        games = removeGame(game, games)
                     }
                     io.in(game.id).emit(WIN, win.winObject)
                     io.emit(REFRESH_PLAYERS, { connectedPlayers })

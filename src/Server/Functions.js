@@ -16,6 +16,12 @@ function removePlayer(username, connectedPlayers) {
     return newList
 }
 
+function removeGame(game, games) {
+    let newList = Object.assign({}, games)
+    delete newList[game.id]
+    return newList
+}
+
 function isPlayer(username, connectedPlayers) {
     return username in connectedPlayers
 }
@@ -26,12 +32,19 @@ function getRandomWord(words) {
     return randomWord
 }
 
-function setPlayersInGameStatus(connectedPlayers, players, boolean) {
+function setPlayersInGameStatus(
+    connectedPlayers,
+    players,
+    boolean,
+    game = null
+) {
     let newList = Object.assign({}, connectedPlayers)
     players.forEach(player => {
-        newList[player.nickname].isInGame = boolean
+        if (newList[player.nickname] !== undefined) {
+            newList[player.nickname].isInGame = boolean
+            if (game !== null) newList[player.nickname].gameId = game.id
+        }
     })
-    console.log(newList)
     return newList
 }
 
@@ -41,5 +54,6 @@ module.exports = {
     removePlayer,
     isPlayer,
     getRandomWord,
-    setPlayersInGameStatus
+    setPlayersInGameStatus,
+    removeGame
 }

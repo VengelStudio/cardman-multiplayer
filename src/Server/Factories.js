@@ -4,6 +4,7 @@ const createPlayer = ({ nickname = '', socketId = null } = {}) => ({
     id: uuidv4(),
     nickname,
     socketId,
+    gameId: null,
     isInGame: false
 })
 

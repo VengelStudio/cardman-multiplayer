@@ -208,8 +208,10 @@ class App extends React.Component {
     setMove = isMove => {
         this.setState({ isMove })
     }
-    muteMusic = (state) => {
-        this.setState({ volumeSettings: { ...this.state.volumeSettings, muted: state } })
+    muteMusic = state => {
+        this.setState({
+            volumeSettings: { ...this.state.volumeSettings, muted: state }
+        })
     }
 
     setSettings = ({ soundVol, musicVol }) => {
@@ -261,11 +263,7 @@ class App extends React.Component {
                         </Route>
                         <Route
                             path='/menu'
-                            render={() => (
-                                <Menu
-                                    setTitle={this.setTitle}
-                                />
-                            )}
+                            render={() => <Menu setTitle={this.setTitle} />}
                         />
                         <Route
                             path='/credits'
