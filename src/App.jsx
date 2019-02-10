@@ -3,7 +3,6 @@ import './App.css'
 
 import Header from './Components/Header/Header'
 import PopupManager from './Components/Popup/Popups'
-import Options from './Components/Menu/Options/Options'
 import Game from './Components/Game/Game'
 import Credits from './Components/Menu/Credits/Credits'
 import Help from './Components/Menu/Help/Help'
@@ -48,7 +47,8 @@ class App extends React.Component {
             isMove: false,
             volumeSettings: {
                 musicVol: 0.5,
-                soundVol: 0.5
+                soundVol: 0.5,
+                muted: false
             },
             isDisconnected: false
         }
@@ -208,6 +208,9 @@ class App extends React.Component {
     setMove = isMove => {
         this.setState({ isMove })
     }
+    muteMusic = (state) => {
+        this.setState({ volumeSettings: { ...this.state.volumeSettings, muted: state } })
+    }
 
     setSettings = ({ soundVol, musicVol }) => {
         this.setState({
@@ -240,6 +243,7 @@ class App extends React.Component {
                     autoPlay
                     volume={this.state.volumeSettings.musicVol}
                     loop={true}
+                    muted={this.state.volumeSettings.muted}
                 />
                 <div className='row height-full width-full bg-lightgrey'>
                     <PopupManager
@@ -255,14 +259,11 @@ class App extends React.Component {
                                 addPopup={this.addPopup}
                             />
                         </Route>
-                        <Route path='/menu' component={Menu} />
                         <Route
-                            path='/options/'
+                            path='/menu'
                             render={() => (
-                                <Options
+                                <Menu
                                     setTitle={this.setTitle}
-                                    volumeSettings={this.state.volumeSettings}
-                                    setSettings={this.setSettings}
                                 />
                             )}
                         />
@@ -295,6 +296,7 @@ class App extends React.Component {
                                 <Game
                                     player={this.state.player}
                                     game={this.state.game}
+                                    muteMusic={this.muteMusic}
                                     socket={this.state.socket}
                                     setTitle={this.setTitle}
                                     addPopup={this.addPopup}

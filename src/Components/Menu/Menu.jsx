@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 
 class Menu extends Component {
     componentDidMount() {
+        this.props.setTitle({ title: "Menu" })
         if (this.props.socket !== null) {
             this.props.history.push('/menu')
         }
@@ -28,14 +29,6 @@ class Menu extends Component {
                 >
                     Help
                 </button>
-                {/* <button
-                    onClick={() => {
-                        this.props.history.push('/options')
-                    }}
-                    className='button-pointer border-neon border-neon-violet'
-                >
-                    Options
-                </button> */}
                 <button
                     onClick={() => {
                         this.props.history.push('/credits')

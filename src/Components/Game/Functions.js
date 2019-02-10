@@ -13,7 +13,9 @@ const winHandler = ({
     game = null,
     addPopup = null,
     winner = null,
-    player = null
+    player = null,
+    muteMusic = null,
+    returnToMenu = null
 }) => {
     let returnState = null
     if (type === 'turn') {
@@ -38,6 +40,8 @@ const winHandler = ({
                 title: 'GAME ENDED',
                 content: `Player ${winner.nickname} has won the game.`,
                 onConfirm: () => {
+                    muteMusic(false)
+                    returnToMenu()
                     console.log('confirmed')
                 }
             }

@@ -61,7 +61,7 @@
     display: flex;
     visibility: hidden;
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s cubic-bezier(0, 1.04, 1, 1);
     position: absolute;
     background-color: rgb(53, 53, 53);
     min-width: 50vh;
@@ -74,7 +74,7 @@
 .options-btn:hover .dropdown-options {
     visibility: visible;
     opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s cubic-bezier(0, 1.04, 1, 1);
     margin: auto;
     justify-content: center;
     align-items: center;
@@ -87,7 +87,7 @@
 
 .gear-icon-wrapper > div.gear-icon > svg {
     transform: rotate(0deg);
-    transition: transform 0.4s ease-in-out;
+    transition: transform 0.4s cubic-bezier(0, 1.04, 1, 1);
 }
 
 .gear-icon-wrapper:hover > div.gear-icon > svg {

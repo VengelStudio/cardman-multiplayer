@@ -40,7 +40,9 @@ class Game extends Component {
                 game,
                 addPopup: this.props.addPopup,
                 winner,
-                player: this.props.player
+                player: this.props.player,
+                muteMusic: this.props.muteMusic,
+                returnToMenu: () => { this.props.history.push("/menu") }
             })
             this.setState({ ...winObj })
         })
@@ -63,7 +65,10 @@ class Game extends Component {
         }
         return null
     }
-
+    componentDidMount() {
+        this.props.muteMusic(true)
+        console.log("kurwyjebane")
+    }
     moveHandler = ({ move = null }) => {
         if (this.state.allowMove === true) {
             const { socket } = this.props
