@@ -1,29 +1,28 @@
-import React, { Component } from 'react'
-import '../Popup.css'
+import React from 'react'
+import { Icon } from 'react-icons-kit'
+import { ic_close } from 'react-icons-kit/md/ic_close'
 
-class GenericPopup extends Component {
-    onClose = () => {
-        this.props.popupData.onClose(this.props.popupData.id)
+const GenericPopup = props => {
+    const onClose = () => {
+        props.popupData.onClose(props.popupData.id)
     }
 
-    render() {
-        return (
-            <div className='generic-popup border-neon border-neon-red text-nunito'>
-                <div className='generic-popup-title'>
-                    <span>{this.props.popupData.title}</span>
-                    <button onClick={this.onClose} className='btn-popup-close'>
-                        <span className='fas margin-auto d-block fa-window-close' />
-                    </button>
-                </div>
-                <div
-                    className='generic-popup-content'
-                    dangerouslySetInnerHTML={{
-                        __html: this.props.popupData.content
-                    }}
-                />
+    return (
+        <div className='generic-popup border-neon border-neon-red text-nunito'>
+            <div className='generic-popup-title'>
+                <span>{props.popupData.title}</span>
+                <button onClick={onClose} className='btn-popup-close'>
+                    <Icon icon={ic_close} size='28' className='close-icon' />
+                </button>
             </div>
-        )
-    }
+            <div
+                className='generic-popup-content'
+                dangerouslySetInnerHTML={{
+                    __html: props.popupData.content
+                }}
+            />
+        </div>
+    )
 }
 
 export default GenericPopup

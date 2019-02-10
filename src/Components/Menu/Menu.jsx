@@ -3,6 +3,12 @@ import './Menu.css'
 import { withRouter } from 'react-router-dom'
 
 class Menu extends Component {
+    componentDidMount() {
+        if (this.props.socket !== null) {
+            this.props.history.push('/menu')
+        }
+    }
+
     render() {
         return (
             <div className='menu'>

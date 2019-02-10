@@ -11,11 +11,7 @@ import Menu from './Components/Menu/Menu'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
 import LoginPage from './Components/Menu/LoginPage/LoginPage'
 
-import {
-    POPUP_GENERIC,
-    POPUP_GAME_END,
-    POPUP_INVITATION
-} from './Components/Popup/Types'
+import { POPUP_GENERIC, POPUP_INVITATION } from './Components/Popup/Types'
 
 import io from 'socket.io-client'
 import {
@@ -55,19 +51,6 @@ class App extends React.Component {
                 soundVol: 0.5
             },
             isDisconnected: false
-            // newPopup: {
-            //     type: POPUP_INVITATION,
-            //     id: uuidv4(),
-            //     popupData: {
-            //         nickname: 'Dezanek',
-            //         onAccept: () => {
-            //             console.log('accepted')
-            //         },
-            //         onDecline: () => {
-            //             console.log('declined!')
-            //         }
-            //     }
-            // }
         }
     }
 
@@ -84,6 +67,14 @@ class App extends React.Component {
             localStorage.getItem(key) !== null &&
             localStorage.getItem(key) !== undefined
         )
+    }
+
+    componentDidUpdate() {
+        if (this.props.location.pathname !== '/') {
+            if (this.state.player === null) {
+                this.props.history.push('/')
+            }
+        }
     }
 
     componentDidMount() {
@@ -193,6 +184,7 @@ class App extends React.Component {
         //Wait for server response, then get the player list
         socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
             this.setState({ connectedPlayers })
+            console.log('PLAYER CONNECTED')
             this.props.history.push('/menu')
         })
     }
@@ -311,7 +303,6 @@ class App extends React.Component {
                                 />
                             )}
                         />
-                        {/*todo <Route component={NotFound} />*/}
                     </Switch>
                 </div>
             </div>

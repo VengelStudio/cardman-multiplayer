@@ -10,12 +10,6 @@ class LoginPage extends Component {
         this.inputRef = React.createRef()
     }
 
-    componentDidMount() {
-        if (this.props.socket !== null) {
-            this.props.history.push('/menu')
-        }
-    }
-
     loginHandler = () => {
         let nickname = this.inputRef.current.value
         const { socket } = this.props

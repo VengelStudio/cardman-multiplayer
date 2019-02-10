@@ -13,6 +13,7 @@ import {
     // eslint-disable-next-line
     POPUP_DISCONNECTED
 } from './Types'
+import './Popup.css'
 
 class Popups extends Component {
     state = { popups: [], newPopup: null }

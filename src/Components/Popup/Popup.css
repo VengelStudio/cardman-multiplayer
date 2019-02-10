@@ -52,6 +52,20 @@
     color: #811e1e;
 }
 
+.close-icon {
+    border-color: rgb(255, 35, 83);
+    border-width: 0 0 0.3vh 0.3vh;
+    border-style: solid;
+    border-top: none;
+    border-right: none;
+    border-bottom-left-radius: 1vh;
+}
+
+.btn-popup-close > div,
+.btn-popup-close > div > svg {
+    display: block !important;
+}
+
 .generic-popup-content {
     text-align: justify;
     overflow-y: hidden;
