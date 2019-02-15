@@ -34,7 +34,7 @@ const {
     handleTurnResult
 } = require('../Game/Words/Words')
 
-const { TurnResultEnum } = require('../Shared/Enums')
+const { Result } = require('../Shared/Enums')
 
 module.exports = function(socket) {
     //console.log('Connected, socket id: ' + socket.id)
@@ -75,7 +75,7 @@ module.exports = function(socket) {
         }
 
         if (
-            games[socket.user.gameId] !== undefined &&
+            games[socket.user] !== undefined &&
             socket.user !== undefined &&
             socket.user.gameId !== null
         ) {
@@ -90,7 +90,7 @@ module.exports = function(socket) {
                 winner: nextPlayer,
                 score: playersGame.score,
                 game: playersGame,
-                type: 'game'
+                type: Result.GAME_WIN
             }
 
             connectedPlayers = setPlayersInGameStatus(
@@ -124,11 +124,6 @@ module.exports = function(socket) {
                 nickname
             })
         }
-    })
-
-    socket.on('knock', ({ time }) => {
-        let latency = Date.now() - time
-        socket.emit('knock', { latency })
     })
 
     socket.on(INVITATION_ACCEPTED, ({ fromSocketId, to }) => {
@@ -180,9 +175,8 @@ module.exports = function(socket) {
                     playerSocketId: move.playerSocketId
                 })
 
-                //*switching player turns
-                //prettier-ignore
-                currentGame.nextPlayerIndex = currentGame.nextPlayerIndex === 0 ? 1 : 0
+                //*switch between 0 and 1
+                currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
 
                 //*display our word regarding guessed letters
                 currentGame.displayWord = displayWord({
@@ -190,14 +184,17 @@ module.exports = function(socket) {
                     guessed: newGuessed
                 })
 
-                /*turnResult = checkTurnWin({
-                    word: currentGame.word.word,
-                    guessed: newGuessed,
-                    player: socket.user
-                })*/
-                turnResult = TurnResultEnum.WIN
-                //* turnResult is TIE or WIN
-                if (turnResult !== TurnResultEnum.NOTHING) {
+                let debugMode = true
+                if (debugMode) {
+                    turnResult = Result.TURN_WIN
+                } else {
+                    turnResult = checkTurnWin({
+                        word: currentGame.word.word,
+                        guessed: newGuessed,
+                        player: socket.user
+                    })
+                }
+                if (turnResult !== Result.NOTHING) {
                     //* modify our game object accordingly to the turn result
                     let win = handleTurnResult(
                         currentGame,
@@ -205,7 +202,7 @@ module.exports = function(socket) {
                         turnResult
                     )
                     currentGame = win.currentGame
-                    if (win.winObject.type === 'game') {
+                    if (win.winObject.type === Result.GAME_WIN) {
                         connectedPlayers = setPlayersInGameStatus(
                             connectedPlayers,
                             currentGame.playerSockets,
@@ -218,14 +215,14 @@ module.exports = function(socket) {
                 }
 
                 //* turnResult is neither WIN or TIE, so the turn is just moving on
-                if (turnResult === TurnResultEnum.NOTHING)
+                if (turnResult === Result.NOTHING)
                     currentGame.guessed = newGuessed
             }
 
             //* save modified game
             games[game.id] = currentGame
 
-            if (turnResult === TurnResultEnum.NOTHING) {
+            if (turnResult === Result.NOTHING) {
                 io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
             }
         }

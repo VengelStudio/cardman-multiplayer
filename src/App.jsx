@@ -117,10 +117,11 @@ class App extends React.Component {
 
     initializeSocket = () => {
         const socket = io(socketUrl)
+        this.setState({ socket })
+
         socket.on('connect', () => {
             console.log('Connected to server.')
         })
-        this.setState({ socket })
 
         socket.on('pong', ms => {
             if (ms > this.config.disconnectedTimeoutMs) {
@@ -130,19 +131,17 @@ class App extends React.Component {
             }
         })
 
-        socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
-            console.log('Player connected!')
-            this.setState({ connectedPlayers })
-        })
+        let refreshingPlayersSockets = [
+            PLAYER_CONNECTED,
+            PLAYER_DISCONNECTED,
+            REFRESH_PLAYERS
+        ]
 
-        socket.on(PLAYER_DISCONNECTED, ({ connectedPlayers }) => {
-            this.setState({ connectedPlayers })
-            console.log('Player disconnected!')
-        })
-
-        socket.on(REFRESH_PLAYERS, ({ connectedPlayers }) => {
-            console.log('Refreshing players!')
-            this.setState({ connectedPlayers })
+        refreshingPlayersSockets.forEach(s => {
+            socket.on(s, ({ connectedPlayers }) => {
+                console.log('working!')
+                this.setState({ connectedPlayers })
+            })
         })
 
         socket.on(INVITATION, ({ nickname, socketId }) => {
@@ -158,6 +157,7 @@ class App extends React.Component {
                         })
                     },
                     onDecline: () => {
+                        //todo decline
                         console.log('declined, todo here')
                     }
                 }
@@ -184,7 +184,6 @@ class App extends React.Component {
         //Wait for server response, then get the player list
         socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
             this.setState({ connectedPlayers })
-            console.log('PLAYER CONNECTED')
             this.props.history.push('/menu')
         })
     }

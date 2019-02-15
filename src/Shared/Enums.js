@@ -1,9 +1,11 @@
-const TurnResultEnum = {
-    TIE: 0,
-    WIN: 1,
-    NOTHING: 2
+const Result = {
+    GAME_TIE: 'GAME_TIE',
+    TURN_WIN: 'TURN_WIN',
+    TURN_TIE: 'TURN_TIE',
+    GAME_WIN: 'GAME_WIN',
+    NOTHING: 'NOTHING'
 }
 
 module.exports = {
-    TurnResultEnum
+    Result
 }
