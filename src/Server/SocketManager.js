@@ -50,7 +50,7 @@ module.exports = function(socket) {
                     socketId: socket.id
                 })
             })
-            console.log(`[CONNECTED] Player ${nickname} (${socket.id})`)
+            console.log(`[CONNECTED] Player ${nickname} (${socket.id}).`)
         }
     })
 
@@ -70,7 +70,7 @@ module.exports = function(socket) {
             )
             io.emit(PLAYER_DISCONNECTED, { connectedPlayers })
             console.log(
-                `[DISCONNECTED] Player ${socket.user.nickname} (${socket.id})`
+                `[DISCONNECTED] Player ${socket.user.nickname} (${socket.id}).`
             )
         }
 
@@ -109,16 +109,16 @@ module.exports = function(socket) {
     socket.on(LOGOUT, () => {
         connectedPlayers = removePlayer(socket.user.nickname, connectedPlayers)
         io.emit(PLAYER_DISCONNECTED, { connectedPlayers })
-        console.log(`[LOGOUT] Player ${socket.user.username}`)
+        console.log(`[LOGOUT] Player ${socket.user.username}.`)
     })
 
     socket.on(INVITATION, ({ id = null, socketId = null }) => {
         let nickname = socket.user.nickname
         let fromSocketId = socket.user.socketId
         if (socket.user.id === id) {
-            console.log(`[ERROR] ${nickname} tried to invite himself`)
+            console.log(`[ERROR] ${nickname} tried to invite himself.`)
         } else {
-            console.log(`[INVITATION] from ${socket.user.id} to ${id}`)
+            console.log(`[INVITATION] from ${socket.user.id} to ${id}.`)
             socket.to(socketId).emit(INVITATION, {
                 socketId: fromSocketId,
                 nickname
@@ -127,7 +127,7 @@ module.exports = function(socket) {
     })
 
     socket.on(INVITATION_ACCEPTED, ({ fromSocketId, to }) => {
-        console.log(`[INVITATION] from: ${fromSocketId}, to: ${to.socketId}`)
+        console.log(`[INVITATION] from: ${fromSocketId}, to: ${to.socketId}.`)
 
         let randomWord = getRandomWord(words)
         let playerSockets = [
@@ -158,7 +158,7 @@ module.exports = function(socket) {
 
         io.in(game.id).emit(GAME_STARTED, { game })
         console.log(
-            `[GAME] ${fromSocketId} vs ${to.socketId}, gameID: ${game.id}`
+            `[GAME] ${fromSocketId} vs ${to.socketId}, gameID: ${game.id}.`
         )
     })
 

@@ -1,11 +1,6 @@
 .menu {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
+    display: block;
+    margin: auto;
 }
 
 .menu > button {

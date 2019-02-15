@@ -140,13 +140,14 @@
     flex: 3;
 }
 
-.nickname-input,
 .slider-wrapper {
     align-items: center;
 }
 
 .nickname-input {
-    padding-left: 0.5vw;
+    width: 100%;
+    justify-content: center;
+    align-items: stretch;
 }
 
 .slider {
