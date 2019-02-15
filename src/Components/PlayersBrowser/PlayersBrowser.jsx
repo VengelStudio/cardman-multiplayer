@@ -10,7 +10,8 @@ class PlayersBrowser extends React.Component {
             playersInBrowser: extractBrowserPlayers({
                 player: this.props.player,
                 connectedPlayers: this.props.connectedPlayers,
-                invitationHandler: this.props.invitationHandler
+                invitationHandler: this.props.invitationHandler,
+                addPopup: this.props.addPopup
             })
         }
     }
@@ -25,7 +26,8 @@ class PlayersBrowser extends React.Component {
                 playersInBrowser: extractBrowserPlayers({
                     player: props.player,
                     connectedPlayers: props.connectedPlayers,
-                    invitationHandler: props.invitationHandler
+                    invitationHandler: props.invitationHandler,
+                    addPopup: props.addPopup
                 })
             }
         }

@@ -280,6 +280,7 @@ class App extends React.Component {
                                 <PlayersBrowser
                                     player={this.state.player}
                                     setTitle={this.setTitle}
+                                    addPopup={this.addPopup}
                                     invitationHandler={this.invitationHandler}
                                     connectedPlayers={
                                         this.state.connectedPlayers
