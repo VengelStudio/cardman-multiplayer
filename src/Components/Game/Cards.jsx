@@ -63,15 +63,20 @@ class Cards extends Component {
                     renderList={({ children, props }) => (
                         <ul {...props}>{children}</ul>
                     )}
-                    renderItem={({ value, props }) => (
-                        <li
-                            {...Object.assign(props, {
-                                style: { ...props.style, ...draggedStyle }
-                            })}
-                        >
-                            <Card {...value} />
-                        </li>
-                    )}
+                    renderItem={({ value, props, isDragged }) => {
+                        console.log(props.style)
+                        return (
+                            <li
+                                {...Object.assign(props, {
+                                    style: { ...props.style, ...draggedStyle }
+                                })}
+                            >
+                                <Card
+                                    {...Object.assign(value, { isDragged })}
+                                />
+                            </li>
+                        )
+                    }}
                 />
             )
         } else {

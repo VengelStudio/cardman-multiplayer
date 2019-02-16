@@ -33,6 +33,7 @@ class Game extends Component {
             })
         })
         socket.on(WIN, ({ winner, score, type, game }) => {
+            console.log(game)
             let winObj = winHandler({
                 type,
                 setScore,

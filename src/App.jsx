@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 
 import Header from './Components/Header/Header'
-import PopupManager from './Components/Popup/Popups'
+import Popups from './Components/Popup/Popups'
 import Game from './Components/Game/Game'
 import Credits from './Components/Menu/Credits/Credits'
 import Help from './Components/Menu/Help/Help'
@@ -139,6 +139,7 @@ class App extends React.Component {
 
         refreshingPlayersSockets.forEach(s => {
             socket.on(s, ({ connectedPlayers }) => {
+                console.log(s)
                 this.setState({ connectedPlayers })
             })
         })
@@ -246,9 +247,10 @@ class App extends React.Component {
                     muted={this.state.volumeSettings.muted}
                 />
                 <div className='row height-full width-full bg-lightgrey'>
-                    <PopupManager
+                    <Popups
                         newPopup={this.state.newPopup}
                         isDisconnected={this.state.isDisconnected}
+                        soundVolume={this.state.volumeSettings.soundVol}
                     />
                     <Switch>
                         <Route exact path='/'>

@@ -37,7 +37,7 @@ const {
 const { Result } = require('../Shared/Enums')
 const { generateCards } = require('../Game/Cards/Cards')
 
-module.exports = function (socket) {
+module.exports = function(socket) {
     //console.log('Connected, socket id: ' + socket.id)
 
     socket.on(VERIFY_USERNAME, (nickname, callback) => {
@@ -73,37 +73,32 @@ module.exports = function (socket) {
             console.log(
                 `[DISCONNECTED] Player ${socket.user.nickname} (${socket.id}).`
             )
-        }
 
-        if (
-            games[socket.user] !== undefined &&
-            socket.user !== undefined &&
-            socket.user.gameId !== null
-        ) {
-            let playersGame = games[socket.user.gameId]
-            let nextPlayerIndex = playersGame.nextPlayerIndex
-            nextPlayerIndex = nextPlayerIndex === 0 ? 1 : 0
-            let nextPlayer = playersGame.playerSockets[nextPlayerIndex]
-            //todo wrong person gets the point
-            playersGame.score[nextPlayer.socketId] += 1
+            let { gameId } = socket.user
+            if (gameId !== null && games[gameId] !== undefined) {
+                let playersGame = games[socket.user.gameId]
+                //* switch to opponent and let him win
+                let playerIndex = playersGame.nextPlayerIndex === 0 ? 1 : 0
+                let player = playersGame.playerSockets[playerIndex]
+                playersGame.score[player.socketId] += 1
 
-            let winObject = {
-                winner: nextPlayer,
-                score: playersGame.score,
-                game: playersGame,
-                type: Result.GAME_WIN
+                let winObject = {
+                    winner: player,
+                    score: playersGame.score,
+                    game: playersGame,
+                    type: Result.GAME_WIN
+                }
+
+                connectedPlayers = setPlayersInGameStatus(
+                    connectedPlayers,
+                    playersGame.playerSockets,
+                    false
+                )
+
+                games = removeGame(playersGame, games)
+                io.in(socket.user.gameId).emit(WIN, winObject)
+                io.emit(REFRESH_PLAYERS, { connectedPlayers })
             }
-
-            connectedPlayers = setPlayersInGameStatus(
-                connectedPlayers,
-                playersGame.playerSockets,
-                false
-            )
-
-            games = removeGame(playersGame, games)
-
-            io.in(socket.user.gameId).emit(WIN, winObject)
-            io.emit(REFRESH_PLAYERS, { connectedPlayers })
         }
     })
 
@@ -148,7 +143,6 @@ module.exports = function (socket) {
             game.cards[playerSockets[i].socketId] = generateCards(3)
         }
 
-        console.log(game.cards)
         games = addGame(game, games)
         io.sockets.connected[fromSocketId].join(game.id)
         io.sockets.connected[to.socketId].join(game.id)
@@ -190,7 +184,7 @@ module.exports = function (socket) {
                     guessed: newGuessed
                 })
 
-                let debugMode = false
+                const debugMode = true
                 if (debugMode) {
                     turnResult = Result.TURN_WIN
                 } else {

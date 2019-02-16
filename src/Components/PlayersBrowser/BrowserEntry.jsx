@@ -6,15 +6,29 @@ class BrowserEntry extends Component {
     state = {
         isButtonDisabled: false
     }
+
+    componentDidMount() {
+        this._isMounted = true
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
     componentDidUpdate() {
         if (this.state.isButtonDisabled === true) {
-            setTimeout(() => this.setState({ isButtonDisabled: false }), 5000)
+            setTimeout(() => {
+                if (this._isMounted === true) {
+                    this.setState({ isButtonDisabled: false })
+                }
+            }, 5000)
         }
     }
-    clickHandler = (event) => {
+
+    clickHandler = event => {
         event.preventDefault()
         if (this.state.isButtonDisabled === true) {
-            console.log("pipup")
+            console.log('pipup')
             this.props.addPopup({
                 type: POPUP_GENERIC,
                 popupData: {
@@ -22,8 +36,7 @@ class BrowserEntry extends Component {
                     content: '<p>You are inviting too fast. Wait 5 seconds</p>'
                 }
             })
-        }
-        else {
+        } else {
             this.setState({
                 isButtonDisabled: true
             })
@@ -42,7 +55,7 @@ class BrowserEntry extends Component {
                     <span className='nickname'>{this.props.nickname}</span>
                 </span>
                 <button
-                    id="inviteButton"
+                    id='inviteButton'
                     onClick={e => {
                         this.clickHandler(e)
                     }}

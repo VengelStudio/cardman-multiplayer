@@ -57,7 +57,7 @@
 }
 
 .border-neon-lime {
-    border-color: rgb(122, 214, 35);
+    border-color: #7ad623;
 }
 
 .border-neon-blue {
@@ -65,11 +65,11 @@
 }
 
 .border-neon-red {
-    border-color: rgb(255, 35, 83);
+    border-color: #ff2353;
 }
 
 .border-neon-violet {
-    border-color: slateblue;
+    border-color: #6a5acd;
 }
 
 .border-neon-translucent {

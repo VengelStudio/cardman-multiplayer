@@ -15,6 +15,9 @@ import {
 } from './Types'
 import './Popup.css'
 
+import ReactAudioPlayer from 'react-audio-player'
+import popupSound from '../../Resources/Sounds/popup.mp3'
+
 class Popups extends Component {
     state = { popups: [], newPopup: null }
 
@@ -61,13 +64,20 @@ class Popups extends Component {
                     <DisconnectedPopup />
                 ) : null}
                 {this.state.popups &&
-                    this.state.popups.map(popup => {
+                    this.state.popups.map((popup, i) => {
                         return (
-                            <this.Popup
-                                key={popup.popupData.id}
-                                type={popup.type}
-                                popupData={popup.popupData}
-                            />
+                            <React.Fragment key={i}>
+                                <this.Popup
+                                    key={i}
+                                    type={popup.type}
+                                    popupData={popup.popupData}
+                                />
+                                <ReactAudioPlayer
+                                    volume={this.props.soundVolume}
+                                    src={popupSound}
+                                    autoPlay
+                                />
+                            </React.Fragment>
                         )
                     })}
             </div>
