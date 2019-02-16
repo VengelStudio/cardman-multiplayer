@@ -10,7 +10,7 @@ class Card extends Component {
                     src={`images/cards/${this.props.id}.png`}
                     alt='Playing card.'
                 />
-                {/* <div className='card-info'>{this.props.description}</div> */}
+                <div className='card-info'>{this.props.description}</div>
             </div>
         )
     }

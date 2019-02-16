@@ -37,7 +37,7 @@ const {
 const { Result } = require('../Shared/Enums')
 const { generateCards } = require('../Game/Cards/Cards')
 
-module.exports = function(socket) {
+module.exports = function (socket) {
     //console.log('Connected, socket id: ' + socket.id)
 
     socket.on(VERIFY_USERNAME, (nickname, callback) => {
@@ -190,7 +190,7 @@ module.exports = function(socket) {
                     guessed: newGuessed
                 })
 
-                let debugMode = true
+                let debugMode = false
                 if (debugMode) {
                     turnResult = Result.TURN_WIN
                 } else {

@@ -30,10 +30,13 @@
     flex-direction: column;
     background-color: rgba(255, 255, 255, 0.2);
     width: 11vw;
+    z-index: 1000;
 }
 
 .cards-wrapper {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     width: 12vw;
     padding: 1vh;
@@ -54,6 +57,7 @@
     margin-right: calc(1vw + 3px);
     border: 0;
     cursor: grab;
+    width: 17.5vh;
 }
 
 .card-title {
@@ -176,4 +180,24 @@ svg.timer-svg {
     to {
         stroke-dashoffset: 113px;
     }
+}
+
+.card-info{
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    background-color: rgb(53, 53, 53);
+    min-width: 50vh;
+    height: 24vh;
+    left: 0;
+    padding: 1vh;
+    z-index: 1000;
+}
+.card:hover .card-info {
+    visibility: visible;
+    opacity: 1;
+    margin-left: 8.5vw;;
+    justify-content: center;
+    align-items: center;
 }
