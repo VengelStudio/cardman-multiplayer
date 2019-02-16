@@ -33,17 +33,6 @@ class Card extends Component {
 }
 
 class Cards extends Component {
-    state = { move: this.props.move }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.move !== state.move) {
-            return {
-                move: props.move
-            }
-        }
-        return null
-    }
-
     getBg = () => {
         let animationStyle = {
             animationName: 'moveFlashing',
@@ -53,7 +42,7 @@ class Cards extends Component {
             animationDirection: 'alternate-reverse',
             animationFillMode: 'forwards'
         }
-        return this.state.move ? animationStyle : {}
+        return this.props.move ? animationStyle : {}
     }
 
     render() {

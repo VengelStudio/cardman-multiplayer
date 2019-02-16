@@ -22,6 +22,7 @@ const createGame = ({
     playerSockets,
     nextPlayerIndex,
     score: {},
+    cards: {},
     dateTime: new Date().toJSON
 })
 

@@ -15,7 +15,9 @@ class Game extends Component {
         this.state = {
             game: this.props.game,
             gameFromProps: true,
-            allowMove: true
+            allowMove: true,
+            myCards: null,
+            enemyCards: null
         }
 
         this.props.socket && this.initializeSocket()
@@ -33,15 +35,11 @@ class Game extends Component {
         socket.on(WIN, ({ winner, score, type, game }) => {
             let winObj = winHandler({
                 type,
-                setMove: this.props.setMove,
-                setScore: setScore,
-                setTitle: this.props.setTitle,
+                setScore,
                 score,
                 game,
-                addPopup: this.props.addPopup,
                 winner,
-                player: this.props.player,
-                muteMusic: this.props.muteMusic,
+                props: this.props,
                 returnToMenu: () => {
                     this.props.history.push('/menu')
                 }
@@ -67,9 +65,11 @@ class Game extends Component {
         }
         return null
     }
+
     componentDidMount() {
         this.props.muteMusic(true)
     }
+
     moveHandler = ({ move = null }) => {
         if (this.state.allowMove === true) {
             const { socket } = this.props

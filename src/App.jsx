@@ -139,7 +139,6 @@ class App extends React.Component {
 
         refreshingPlayersSockets.forEach(s => {
             socket.on(s, ({ connectedPlayers }) => {
-                console.log('working!')
                 this.setState({ connectedPlayers })
             })
         })

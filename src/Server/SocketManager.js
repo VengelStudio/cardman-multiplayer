@@ -35,6 +35,7 @@ const {
 } = require('../Game/Words/Words')
 
 const { Result } = require('../Shared/Enums')
+const { generateCards } = require('../Game/Cards/Cards')
 
 module.exports = function(socket) {
     //console.log('Connected, socket id: ' + socket.id)
@@ -141,8 +142,13 @@ module.exports = function(socket) {
             playerSockets,
             nextPlayerIndex: Math.floor(Math.random())
         })
-        game.score[playerSockets[0].socketId] = 0
-        game.score[playerSockets[1].socketId] = 0
+
+        for (let i = 0; i <= 1; i++) {
+            game.score[playerSockets[i].socketId] = 0
+            game.cards[playerSockets[i].socketId] = generateCards(3)
+        }
+
+        console.log(game.cards)
         games = addGame(game, games)
         io.sockets.connected[fromSocketId].join(game.id)
         io.sockets.connected[to.socketId].join(game.id)

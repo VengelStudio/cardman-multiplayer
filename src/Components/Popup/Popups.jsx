@@ -54,8 +54,9 @@ class Popups extends Component {
     }
 
     render() {
+        let displayStyle = this.state.popups.length === 0 ? 'none' : 'flex'
         return (
-            <div className='popups-wrapper'>
+            <div style={{ display: displayStyle }} className='popups-wrapper'>
                 {this.props.isDisconnected === true ? (
                     <DisconnectedPopup />
                 ) : null}

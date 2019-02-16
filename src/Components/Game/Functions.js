@@ -7,17 +7,14 @@ const { Result } = require('../../Shared/Enums')
 
 const winHandler = ({
     type,
-    setMove = null,
+    props,
     setScore = null,
-    setTitle = null,
     score = null,
     game = null,
-    addPopup = null,
     winner = null,
-    player = null,
-    muteMusic = null,
     returnToMenu = null
 }) => {
+    const { addPopup, setMove, setTitle, player, muteMusic } = props
     let returnState = null
     if (type === Result.TURN_WIN) {
         returnState = { gameFromProps: false, game }
