@@ -1,0 +1,11 @@
+.child-border-neon-blue > div {
+    border-color: #0e4fe6;
+}
+
+.child-border-neon-red > div {
+    border-color: rgb(255, 35, 83);
+}
+
+.child-border-neon-violet > div {
+    border-color: slateblue;
+}

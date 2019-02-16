@@ -38,7 +38,7 @@ class App extends React.Component {
         super(props)
         this.popupsRef = React.createRef()
         this.state = {
-            title: 'Hangman Multiplayer',
+            title: 'Cardman Multiplayer',
             score: null,
             player: null,
             socket: null,

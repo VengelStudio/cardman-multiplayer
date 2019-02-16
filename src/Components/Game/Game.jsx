@@ -87,10 +87,30 @@ class Game extends Component {
         })
     }
 
+    getCards = () => {
+        let cards = { my: null, enemy: null }
+        if (this.props.game !== null) {
+            let gameCards = this.props.game.cards
+            let mySocketId = this.props.player.socketId
+            cards.my = gameCards[mySocketId]
+            let enemySocketId = this.props.game.playerSockets.filter(x => {
+                return x.socketId !== this.props.player.socketId
+            })[0].socketId
+            cards.enemy = gameCards[enemySocketId]
+        }
+        return cards
+    }
+
     render() {
+        let cards = this.getCards()
         return (
             <div className='gameWrapper'>
-                <Cards type={1} move={this.props.isMove} title='Your cards:' />
+                <Cards
+                    cards={cards.my}
+                    type={1}
+                    move={this.props.isMove}
+                    title='Your cards:'
+                />
                 <Content
                     player={this.props.player}
                     moveHandler={this.moveHandler}
@@ -99,6 +119,7 @@ class Game extends Component {
                     game={this.state.game}
                 />
                 <Cards
+                    cards={cards.enemy}
                     type={-1}
                     move={!this.props.isMove}
                     title='Enemy cards:'

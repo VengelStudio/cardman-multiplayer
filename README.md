@@ -1,2 +1,3 @@
-# hangman-multiplayer
+# Cardman
+
 Simple hangman multiplayer game using react
