@@ -1,22 +1,8 @@
 import React, { Component } from 'react'
-import { List, arrayMove } from 'react-movable'
 import Card from './Card'
 import './Cards.css'
 
 class Cards extends Component {
-    state = {
-        cards: null
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.cards !== state.cards) {
-            return {
-                cards: props.cards
-            }
-        }
-        return null
-    }
-
     getBg = () => {
         let animationStyle = {
             animationName: 'moveFlashing',
@@ -29,56 +15,16 @@ class Cards extends Component {
         return this.props.move ? animationStyle : {}
     }
 
-    getTypeCss = () => {
-        switch (this.props.type) {
-            case 1:
-                return 'child-border-neon-blue'
-            case -1:
-                return 'child-border-neon-red'
-            default:
-                return 'child-border-neon-violet'
-        }
-    }
-
     CardsSpawner = () => {
-        let cards = this.state.cards
-        let draggedStyle = {
-            color: '#fff',
-            fontFamily: 'Nunito, sans-serif',
-            textAlign: 'center'
-        }
+        let { cards } = this.props
         if (cards !== null) {
-            return (
-                <List
-                    values={cards}
-                    onChange={({ oldIndex, newIndex }) =>
-                        this.setState(prevState => ({
-                            cards: arrayMove(
-                                prevState.cards,
-                                oldIndex,
-                                newIndex
-                            )
-                        }))
-                    }
-                    renderList={({ children, props }) => (
-                        <ul {...props}>{children}</ul>
-                    )}
-                    renderItem={({ value, props, isDragged }) => {
-                        console.log(props.style)
-                        return (
-                            <li
-                                {...Object.assign(props, {
-                                    style: { ...props.style, ...draggedStyle }
-                                })}
-                            >
-                                <Card
-                                    {...Object.assign(value, { isDragged })}
-                                />
-                            </li>
-                        )
-                    }}
+            return cards.map((card, i) => (
+                <Card
+                    card={card}
+                    key={i}
+                    displayTooltip={this.props.displayTooltip}
                 />
-            )
+            ))
         } else {
             return null
         }
@@ -88,9 +34,9 @@ class Cards extends Component {
         return (
             <div className='cards' style={this.getBg()}>
                 <span className='cards-title'>
-                    {this.props.title ? this.props.title : ''}
+                    {this.props.title && this.props.title}
                 </span>
-                <div className={`cards-wrapper ${this.getTypeCss()}`}>
+                <div className='cards-wrapper'>
                     <this.CardsSpawner />
                 </div>
             </div>

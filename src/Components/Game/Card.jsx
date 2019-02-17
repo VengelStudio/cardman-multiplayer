@@ -7,15 +7,6 @@ import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
 class Card extends Component {
     state = { playFlipSound: false }
 
-    static getDerivedStateFromProps(props, state) {
-        if (props.isDragged === true) {
-            return {
-                playFlipSound: true
-            }
-        }
-        return null
-    }
-
     getRandomFlipSound = () => {
         let i = Math.floor(Math.random() * 2)
         switch (i) {
@@ -47,10 +38,14 @@ class Card extends Component {
                 {this.state.playFlipSound && <this.FlipSound />}
                 <img
                     className='card-image'
-                    src={`images/cards/${this.props.id}.svg`}
+                    src={`images/cards/${this.props.card.id}.svg`}
                     alt='Playing card.'
                 />
-                <div className='card-info'>{this.props.description}</div>
+                {this.props.displayTooltip && (
+                    <div className='card-info'>
+                        {this.props.card.description}
+                    </div>
+                )}
             </div>
         )
     }

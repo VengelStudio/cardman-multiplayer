@@ -108,9 +108,10 @@ class Game extends Component {
             <div className='gameWrapper'>
                 <Cards
                     cards={cards.my}
-                    type={1}
+                    displayTooltip={true}
                     move={this.props.isMove}
                     title='Your cards:'
+                    soundVolume={this.props.soundVolume}
                 />
                 <Content
                     player={this.props.player}
@@ -121,9 +122,10 @@ class Game extends Component {
                 />
                 <Cards
                     cards={cards.enemy}
-                    type={-1}
+                    displayTooltip={false}
                     move={!this.props.isMove}
                     title='Enemy cards:'
+                    soundVolume={this.props.soundVolume}
                 />
             </div>
         )

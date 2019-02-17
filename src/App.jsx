@@ -301,6 +301,9 @@ class App extends React.Component {
                                     addPopup={this.addPopup}
                                     setMove={this.setMove}
                                     isMove={this.state.isMove}
+                                    soundVolume={
+                                        this.state.volumeSettings.soundVol
+                                    }
                                 />
                             )}
                         />
