@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import Card from './Card'
 import './Cards.css'
 
+import { Draggable } from 'react-drag-and-drop'
+
 class Cards extends Component {
+    state = { displayTooltip: this.props.displayTooltip }
     getBg = () => {
         let animationStyle = {
             animationName: 'moveFlashing',
@@ -19,11 +22,27 @@ class Cards extends Component {
         let { cards } = this.props
         if (cards !== null) {
             return cards.map((card, i) => (
-                <Card
-                    card={card}
+                <Draggable
                     key={i}
-                    displayTooltip={this.props.displayTooltip}
-                />
+                    onDragStart={() => {
+                        this.setState({ displayTooltip: false })
+                        this.props.setCardTargetHighlight(true)
+                    }}
+                    onDragEnd={() => {
+                        this.setState({ displayTooltip: true })
+                        this.props.setCardTargetHighlight(false)
+                    }}
+                    type='card'
+                    data={card.id}
+                >
+                    <li>
+                        <Card
+                            card={card}
+                            key={i}
+                            displayTooltip={this.state.displayTooltip}
+                        />
+                    </li>
+                </Draggable>
             ))
         } else {
             return null
@@ -37,7 +56,9 @@ class Cards extends Component {
                     {this.props.title && this.props.title}
                 </span>
                 <div className='cards-wrapper'>
-                    <this.CardsSpawner />
+                    <ul>
+                        <this.CardsSpawner />
+                    </ul>
                 </div>
             </div>
         )

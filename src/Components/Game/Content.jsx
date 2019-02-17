@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Keyboard from './Keyboard'
 import Timer from './Timer'
+import { Droppable } from 'react-drag-and-drop'
+import './Content.css'
 
 class Content extends Component {
     constructor(props) {
@@ -21,10 +23,6 @@ class Content extends Component {
         word = word.toUpperCase()
         let result = []
         let guessed = this.props.game.guessed
-        //word = "_ _ _ _ _ _ _ _"
-        //guessed = [
-        //    {key: "A", socketId: "aasdasdasdasdasdasd"}
-        //]
         let key = 0
         Array.from(word).forEach(letter => {
             let newLetter = null
@@ -58,12 +56,21 @@ class Content extends Component {
         return result
     }
 
+    onDrop(data) {
+        console.log(data)
+    }
+
     render() {
         let displayWord = []
         if (this.state.game !== null) {
             displayWord = this.colorDisplayWord(this.state.game.displayWord)
         }
-        //todo unmounted timer
+
+        let isHighlight = this.props.isCardTargetHighlight
+        let highlightStyle = isHighlight
+            ? { boxShadow: '0px 0px 66px 19px rgba(247,217,22,1)' }
+            : null
+
         return (
             <div className='content'>
                 <div className='timer-wrapper'>
@@ -72,11 +79,16 @@ class Content extends Component {
                     )}
                 </div>
                 <div className='game'>
-                    <div className='word border-neon border-neon-violet'>
-                        {displayWord.map(x => {
-                            return x
-                        })}
-                    </div>
+                    <Droppable types={['card']} onDrop={this.onDrop}>
+                        <div
+                            style={highlightStyle}
+                            className='word border-neon border-neon-violet'
+                        >
+                            {displayWord.map(x => {
+                                return x
+                            })}
+                        </div>
+                    </Droppable>
                     {this.state.game && (
                         <Keyboard
                             player={this.props.player}

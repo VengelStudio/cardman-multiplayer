@@ -17,7 +17,8 @@ class Game extends Component {
             gameFromProps: true,
             allowMove: true,
             myCards: null,
-            enemyCards: null
+            enemyCards: null,
+            cardTargetHighlight: false
         }
 
         this.props.socket && this.initializeSocket()
@@ -102,6 +103,10 @@ class Game extends Component {
         return cards
     }
 
+    setCardTargetHighlight = bool => {
+        this.setState({ cardTargetHighlight: bool })
+    }
+
     render() {
         let cards = this.getCards()
         return (
@@ -112,6 +117,7 @@ class Game extends Component {
                     move={this.props.isMove}
                     title='Your cards:'
                     soundVolume={this.props.soundVolume}
+                    setCardTargetHighlight={this.setCardTargetHighlight}
                 />
                 <Content
                     player={this.props.player}
@@ -119,6 +125,7 @@ class Game extends Component {
                     onMoveTimeout={this.onMoveTimeout}
                     move={this.props.isMove}
                     game={this.state.game}
+                    isCardTargetHighlight={this.state.cardTargetHighlight}
                 />
                 <Cards
                     cards={cards.enemy}
@@ -126,6 +133,7 @@ class Game extends Component {
                     move={!this.props.isMove}
                     title='Enemy cards:'
                     soundVolume={this.props.soundVolume}
+                    setCardTargetHighlight={this.setCardTargetHighlight}
                 />
             </div>
         )
