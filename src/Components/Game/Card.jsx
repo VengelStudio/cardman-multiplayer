@@ -17,7 +17,7 @@ const CardImage = ({ id, isMine }) => {
         return (
             <img
                 draggable='false'
-                onmousedown={false}
+                onMouseDown={false}
                 style={{ userDrag: 'none' }}
                 className='card-image'
                 src={`images/cards/placeholder.svg`}

@@ -9,6 +9,7 @@ class BrowserEntry extends Component {
 
     componentDidMount() {
         this._isMounted = true
+        this.setState({ isButtonDisabled: false })
     }
 
     componentWillUnmount() {

@@ -60,7 +60,8 @@ module.exports = function(socket) {
         connectedPlayers = addPlayer(player, connectedPlayers)
         socket.user = player
 
-        io.emit(PLAYER_CONNECTED, { connectedPlayers })
+        socket.emit(PLAYER_CONNECTED, { connectedPlayers })
+        io.emit(REFRESH_PLAYERS, { connectedPlayers })
     })
 
     socket.on('disconnect', () => {

@@ -156,10 +156,7 @@ class App extends React.Component {
                             to: this.state.player
                         })
                     },
-                    onDecline: () => {
-                        //todo decline
-                        console.log('declined, todo here')
-                    }
+                    onDecline: () => {}
                 }
             })
         })
