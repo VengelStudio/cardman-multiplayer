@@ -12,7 +12,8 @@ class PlayersBrowser extends React.Component {
                 connectedPlayers: this.props.connectedPlayers,
                 invitationHandler: this.props.invitationHandler,
                 addPopup: this.props.addPopup
-            })
+            }),
+            searchedPlayer: null
         }
     }
 
@@ -34,6 +35,30 @@ class PlayersBrowser extends React.Component {
         return null
     }
 
+    searchPlayer = (e) => {
+        let input = e.target.value
+        if (input === "") {
+            this.setState({ searchedPlayer: null })
+        } else {
+            let players = Object.keys(this.props.connectedPlayers)
+            players = players.filter(item => item !== this.props.player.nickname)
+            for (let i = 0; i < players.length; i++) {
+                if (players[i].toLowerCase().includes(input.toLowerCase())) {
+                    this.setState({ searchedPlayer: this.props.connectedPlayers[players[i]] })
+                }
+            }
+        }
+    }
+
+    SearchedPlayer = () => {
+        return extractBrowserPlayers({
+            player: this.props.player,
+            connectedPlayers: [this.state.searchedPlayer],
+            invitationHandler: this.props.invitationHandler,
+            addPopup: this.props.addPopup
+        })
+    }
+
     render() {
         return (
             <div className='players-browser container content-vcenter border-neon border-neon-orange'>
@@ -48,12 +73,14 @@ class PlayersBrowser extends React.Component {
                     </p>
                 </div>
                 <div className='search-player'>
-                    <input placeholder="Search player" className='search-player-input border-neon border-neon-blue'></input>
+                    <input placeholder="Search player" onChange={this.searchPlayer} className='search-player-input border-neon border-neon-blue'></input>
                 </div>
                 <Scrollbar style={{ width: '100%', height: '80%' }}>
-                    {this.state.playersInBrowser.map(entry => {
-                        return entry
-                    })}
+                    {!this.state.searchedPlayer ?
+                        this.state.playersInBrowser.map(entry => {
+                            return entry
+                        })
+                        : <this.SearchedPlayer></this.SearchedPlayer>}
                 </Scrollbar>
             </div>
         )
