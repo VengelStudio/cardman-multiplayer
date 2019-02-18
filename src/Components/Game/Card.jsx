@@ -4,6 +4,36 @@ import flipSound1 from '../../Resources/Sounds/card_flip.mp3'
 import flipSound2 from '../../Resources/Sounds/card_flip2.mp3'
 import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
 
+const CardImage = ({ id, isMine }) => {
+    if (isMine) {
+        return (
+            <img
+                className='card-image'
+                src={`images/cards/${id}.svg`}
+                alt='Playing card.'
+            />
+        )
+    } else {
+        return (
+            <img
+                draggable='false'
+                onmousedown={false}
+                style={{ userDrag: 'none' }}
+                className='card-image'
+                src={`images/cards/placeholder.svg`}
+                alt='Playing card.'
+            />
+        )
+    }
+}
+
+const CardDescription = ({ text, displayTooltip }) => {
+    if (displayTooltip) {
+        return <div className='card-info'>{text}</div>
+    }
+    return null
+}
+
 class Card extends Component {
     state = { playFlipSound: false }
 
@@ -36,16 +66,11 @@ class Card extends Component {
         return (
             <div className='card'>
                 {this.state.playFlipSound && <this.FlipSound />}
-                <img
-                    className='card-image'
-                    src={`images/cards/${this.props.card.id}.svg`}
-                    alt='Playing card.'
+                <CardImage id={this.props.card.id} isMine={this.props.isMine} />
+                <CardDescription
+                    text={this.props.card.description}
+                    displayTooltip={this.props.displayTooltip}
                 />
-                {this.props.displayTooltip && (
-                    <div className='card-info'>
-                        {this.props.card.description}
-                    </div>
-                )}
             </div>
         )
     }

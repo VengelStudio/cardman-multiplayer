@@ -5,7 +5,7 @@ import './Cards.css'
 import { Draggable } from 'react-drag-and-drop'
 
 class Cards extends Component {
-    state = { displayTooltip: this.props.displayTooltip }
+    state = { displayTooltip: this.props.areMine }
     getBg = () => {
         let animationStyle = {
             animationName: 'moveFlashing',
@@ -18,12 +18,11 @@ class Cards extends Component {
         return this.props.move ? animationStyle : {}
     }
 
-    CardsSpawner = () => {
-        let { cards } = this.props
-        if (cards !== null) {
-            return cards.map((card, i) => (
+    GenerateCard = ({ card, isMine }) => {
+        if (isMine) {
+            return (
                 <Draggable
-                    key={i}
+                    enabled={false}
                     onDragStart={() => {
                         this.setState({ displayTooltip: false })
                         this.props.setCardTargetHighlight(true)
@@ -38,11 +37,34 @@ class Cards extends Component {
                     <li>
                         <Card
                             card={card}
-                            key={i}
                             displayTooltip={this.state.displayTooltip}
+                            isMine={isMine}
                         />
                     </li>
                 </Draggable>
+            )
+        } else {
+            return (
+                <li>
+                    <Card
+                        card={card}
+                        displayTooltip={this.state.displayTooltip}
+                        isMine={isMine}
+                    />
+                </li>
+            )
+        }
+    }
+
+    CardsSpawner = () => {
+        let { cards } = this.props
+        if (cards !== null) {
+            return cards.map((card, i) => (
+                <this.GenerateCard
+                    card={card}
+                    key={i}
+                    isMine={this.props.areMine}
+                />
             ))
         } else {
             return null

@@ -113,7 +113,7 @@ class Game extends Component {
             <div className='gameWrapper'>
                 <Cards
                     cards={cards.my}
-                    displayTooltip={true}
+                    areMine={true}
                     move={this.props.isMove}
                     title='Your cards:'
                     soundVolume={this.props.soundVolume}
@@ -129,7 +129,7 @@ class Game extends Component {
                 />
                 <Cards
                     cards={cards.enemy}
-                    displayTooltip={false}
+                    areMine={false}
                     move={!this.props.isMove}
                     title='Enemy cards:'
                     soundVolume={this.props.soundVolume}

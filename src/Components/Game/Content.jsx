@@ -66,10 +66,8 @@ class Content extends Component {
             displayWord = this.colorDisplayWord(this.state.game.displayWord)
         }
 
-        let isHighlight = this.props.isCardTargetHighlight
-        let highlightStyle = isHighlight
-            ? { boxShadow: '0px 0px 66px 19px rgba(247,217,22,1)' }
-            : null
+        let wordClass = 'word border-neon border-neon-violet '
+        if (this.props.isCardTargetHighlight) wordClass += 'word-glow'
 
         return (
             <div className='content'>
@@ -80,10 +78,7 @@ class Content extends Component {
                 </div>
                 <div className='game'>
                     <Droppable types={['card']} onDrop={this.onDrop}>
-                        <div
-                            style={highlightStyle}
-                            className='word border-neon border-neon-violet'
-                        >
+                        <div className={wordClass}>
                             {displayWord.map(x => {
                                 return x
                             })}

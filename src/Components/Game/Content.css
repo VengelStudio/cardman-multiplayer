@@ -4,3 +4,17 @@
     width: 200px;
     background-color: gray;
 }
+
+@keyframes glowing {
+    from {
+        box-shadow: 0 0 10px 0px rgba(247, 217, 22, 1);
+    }
+    to {
+        box-shadow: 0 0 10px 10px rgba(247, 217, 22, 1);
+    }
+}
+
+.word-glow {
+    animation: glowing 650ms infinite alternate;
+    animation-timing-function: ease-in-out;
+}
