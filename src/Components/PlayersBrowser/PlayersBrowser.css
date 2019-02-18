@@ -81,3 +81,15 @@
 .browser-entry:nth-child(even) {
     background-color: rgb(58, 58, 58);
 }
+.search-player{
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    width:100%;
+}
+.search-player-input{
+    text-align: center;
+    font-size: 3.5vh;
+    width: 30vw;
+    height: 5vh;
+}

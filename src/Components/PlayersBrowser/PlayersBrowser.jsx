@@ -47,7 +47,10 @@ class PlayersBrowser extends React.Component {
                         )}
                     </p>
                 </div>
-                <Scrollbar style={{ width: '100%', height: '100%' }}>
+                <div className='search-player'>
+                    <input placeholder="Search player" className='search-player-input border-neon border-neon-blue'></input>
+                </div>
+                <Scrollbar style={{ width: '100%', height: '80%' }}>
                     {this.state.playersInBrowser.map(entry => {
                         return entry
                     })}
