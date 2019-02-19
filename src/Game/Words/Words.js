@@ -117,6 +117,8 @@ let displayWord = ({ word = null, guessed = [] }) => {
     return result.charAt(0).toUpperCase() + result.slice(1, result.length - 1)
 }
 
+let onKeyMove = () => {}
+
 module.exports = {
     displayWord,
     checkTurnWin,

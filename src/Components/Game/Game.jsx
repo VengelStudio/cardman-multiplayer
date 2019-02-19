@@ -35,7 +35,6 @@ class Game extends Component {
             })
         })
         socket.on(WIN, ({ winner, score, type, game }) => {
-            console.log(game)
             let winObj = winHandler({
                 type,
                 setScore,
@@ -76,6 +75,7 @@ class Game extends Component {
     moveHandler = ({ move = null }) => {
         if (this.state.allowMove === true) {
             const { socket } = this.props
+            console.log(move)
             socket.emit(GAME_MOVE, { game: this.state.game, move })
         }
     }

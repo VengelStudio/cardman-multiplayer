@@ -35,7 +35,7 @@ const {
 } = require('../Game/Words/Words')
 
 const { Result } = require('../Shared/Enums')
-const { generateCards } = require('../Game/Cards/Cards')
+const { generateCards, getCard } = require('../Game/Cards/Cards')
 
 module.exports = function(socket) {
     //console.log('Connected, socket id: ' + socket.id)
@@ -195,6 +195,7 @@ module.exports = function(socket) {
                         player: socket.user
                     })
                 }
+
                 if (turnResult !== Result.NOTHING) {
                     //* modify our game object accordingly to the turn result
                     let win = handleTurnResult(
@@ -218,6 +219,10 @@ module.exports = function(socket) {
                 //* turnResult is neither WIN or TIE, so the turn is just moving on
                 if (turnResult === Result.NOTHING)
                     currentGame.guessed = newGuessed
+            } else if (move.type === 'card') {
+                // let cardName = move.card.card
+                // let card = getCard(cardName)
+                // currentGame = card.use({ currentGame, socket, move })
             }
 
             //* save modified game

@@ -5,10 +5,7 @@ import { Droppable } from 'react-drag-and-drop'
 import './Content.css'
 
 class Content extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { game: this.props.game }
-    }
+    state = { game: this.props.game }
 
     static getDerivedStateFromProps(props, state) {
         if (props.game !== state.game) {
@@ -56,8 +53,14 @@ class Content extends Component {
         return result
     }
 
-    onDrop(data) {
-        console.log(data)
+    onDrop = data => {
+        this.props.moveHandler({
+            move: {
+                type: 'card',
+                card: data,
+                playerSocketId: this.props.player.socketId
+            }
+        })
     }
 
     render() {

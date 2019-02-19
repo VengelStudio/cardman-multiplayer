@@ -6,23 +6,26 @@ import { Draggable } from 'react-drag-and-drop'
 
 class Cards extends Component {
     state = { displayTooltip: this.props.areMine }
+
     getBg = () => {
-        let animationStyle = {
-            animationName: 'moveFlashing',
-            animationDuration: '400ms',
-            animationIterationCount: 'infinite',
-            animationTimingFunction: 'linear',
-            animationDirection: 'alternate-reverse',
-            animationFillMode: 'forwards'
+        if (this.props.move) {
+            return {
+                animationName: 'moveFlashing',
+                animationDuration: '400ms',
+                animationIterationCount: 'infinite',
+                animationTimingFunction: 'linear',
+                animationDirection: 'alternate-reverse',
+                animationFillMode: 'forwards'
+            }
         }
-        return this.props.move ? animationStyle : {}
+        return null
     }
 
     GenerateCard = ({ card, isMine }) => {
         if (isMine) {
             return (
                 <Draggable
-                    enabled={false}
+                    enabled={isMine}
                     onDragStart={() => {
                         this.setState({ displayTooltip: false })
                         this.props.setCardTargetHighlight(true)
