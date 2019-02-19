@@ -204,11 +204,6 @@ class App extends React.Component {
     setMove = isMove => {
         this.setState({ isMove })
     }
-    muteMusic = state => {
-        this.setState({
-            volumeSettings: { ...this.state.volumeSettings, muted: state }
-        })
-    }
 
     setSettings = ({ soundVol, musicVol }) => {
         this.setState({
@@ -219,6 +214,12 @@ class App extends React.Component {
             'cachedVolumeSettings',
             JSON.stringify(cachedVolumeSettings)
         )
+    }
+
+    muteMusic = state => {
+        this.setState({
+            volumeSettings: { ...this.state.volumeSettings, muted: state }
+        })
     }
 
     addPopup = ({ type = POPUP_GENERIC, popupData }) => {

@@ -3,6 +3,7 @@ import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
 import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 const { isMove } = require('../../Shared/Functions')
 const { winHandler } = require('./Functions')
@@ -138,6 +139,18 @@ class Game extends Component {
             </div>
         )
     }
+}
+
+Game.propTypes = {
+    game: PropTypes.object,
+    history: PropTypes.object.isRequired,
+    isMove: PropTypes.bool.isRequired,
+    muteMusic: PropTypes.func.isRequired,
+    player: PropTypes.object.isRequired,
+    setMove: PropTypes.func.isRequired,
+    setTitle: PropTypes.func.isRequired,
+    socket: PropTypes.object.isRequired,
+    soundVolume: PropTypes.number.isRequired
 }
 
 export default withRouter(Game)

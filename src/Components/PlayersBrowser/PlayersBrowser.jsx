@@ -2,6 +2,7 @@ import React from 'react'
 import './PlayersBrowser.css'
 import Scrollbar from 'react-scrollbars-custom'
 import { extractBrowserPlayers } from './Functions'
+import PropTypes from 'prop-types'
 
 class PlayersBrowser extends React.Component {
     constructor(props) {
@@ -95,6 +96,15 @@ class PlayersBrowser extends React.Component {
             </div>
         )
     }
+}
+
+PlayersBrowser.propTypes = {
+    addPopup: PropTypes.func.isRequired,
+    connectedPlayers: PropTypes.object.isRequired,
+    invitationHandler: PropTypes.func.isRequired,
+    player: PropTypes.object.isRequired,
+    playersInBrowser: PropTypes.array,
+    setTitle: PropTypes.func.isRequired
 }
 
 export default PlayersBrowser
