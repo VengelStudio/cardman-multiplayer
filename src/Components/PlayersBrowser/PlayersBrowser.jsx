@@ -35,16 +35,20 @@ class PlayersBrowser extends React.Component {
         return null
     }
 
-    searchPlayer = (e) => {
+    searchPlayer = e => {
         let input = e.target.value
-        if (input === "") {
+        if (input === '') {
             this.setState({ searchedPlayer: null })
         } else {
             let players = Object.keys(this.props.connectedPlayers)
-            players = players.filter(item => item !== this.props.player.nickname)
+            players = players.filter(
+                item => item !== this.props.player.nickname
+            )
             for (let i = 0; i < players.length; i++) {
                 if (players[i].toLowerCase().includes(input.toLowerCase())) {
-                    this.setState({ searchedPlayer: this.props.connectedPlayers[players[i]] })
+                    this.setState({
+                        searchedPlayer: this.props.connectedPlayers[players[i]]
+                    })
                 }
             }
         }
@@ -73,14 +77,20 @@ class PlayersBrowser extends React.Component {
                     </p>
                 </div>
                 <div className='search-player'>
-                    <input placeholder="Search player" onChange={this.searchPlayer} className='search-player-input border-neon border-neon-blue'></input>
+                    <input
+                        placeholder='Search player'
+                        onChange={this.searchPlayer}
+                        className='border-neon border-neon-blue'
+                    />
                 </div>
-                <Scrollbar style={{ width: '100%', height: '80%' }}>
-                    {!this.state.searchedPlayer ?
+                <Scrollbar style={{ width: '100%', height: '100%' }}>
+                    {!this.state.searchedPlayer ? (
                         this.state.playersInBrowser.map(entry => {
                             return entry
                         })
-                        : <this.SearchedPlayer></this.SearchedPlayer>}
+                    ) : (
+                        <this.SearchedPlayer />
+                    )}
                 </Scrollbar>
             </div>
         )

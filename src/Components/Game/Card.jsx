@@ -3,6 +3,7 @@ import ReactAudioPlayer from 'react-audio-player'
 import flipSound1 from '../../Resources/Sounds/card_flip.mp3'
 import flipSound2 from '../../Resources/Sounds/card_flip2.mp3'
 import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
+import './Cards.css'
 
 const CardImage = ({ id, isMine }) => {
     if (isMine) {
@@ -17,9 +18,11 @@ const CardImage = ({ id, isMine }) => {
         return (
             <img
                 draggable='false'
-                onMouseDown={false}
+                onMouseDown={() => {
+                    return false
+                }}
                 style={{ userDrag: 'none' }}
-                className='card-image'
+                className='card-image default-pointer'
                 src={`images/cards/placeholder.svg`}
                 alt='Playing card.'
             />
@@ -62,9 +65,15 @@ class Card extends Component {
         )
     }
 
+    cardClasses = () => {
+        let classes = 'card '
+        if (this.props.isMine) classes += 'hover-pointer'
+        return classes
+    }
+
     render() {
         return (
-            <div className='card'>
+            <div className={this.cardClasses()}>
                 {this.state.playFlipSound && <this.FlipSound />}
                 <CardImage id={this.props.card.id} isMine={this.props.isMine} />
                 <CardDescription

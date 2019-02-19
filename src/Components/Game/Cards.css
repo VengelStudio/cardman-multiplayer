@@ -9,3 +9,11 @@
 .child-border-neon-violet > div {
     border-color: slateblue;
 }
+
+.hover-pointer {
+    cursor: pointer;
+}
+
+.default-pointer {
+    cursor: default;
+}
