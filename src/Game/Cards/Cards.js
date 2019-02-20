@@ -15,60 +15,25 @@ const Cards = {
             console.log('RANDOM_CORRECT_LETTER_CARD card used')
 
             let randomCorrectLetter = () => {
-                //* random character from currentGame.word
-                //* which is not included in guessed
                 let { word } = currentGame.word
-                for (let i = 0; i < word.length; i++) {
-                    let letter = word[i].toLowerCase()
-                    if (currentGame.guessed.includes(letter) === false) {
-                        return letter.toLowerCase()
-                    }
-                }
+                let { guessed } = currentGame
+                let guessedArr = guessed.map(g => g.key.toUpperCase())
+                word = word.toUpperCase()
+                let arr = Array.from(word).filter(char => {
+                    return !guessedArr.includes(char)
+                })
+                let randomIndex = Math.floor(Math.random() * arr.length)
+                return arr[randomIndex].toUpperCase()
+
                 //todo error or exception
                 return null
             }
 
-            let newGuessed = currentGame.guessed
-            newGuessed.push({
+            currentGame.guessed.push({
                 key: randomCorrectLetter(),
                 playerSocketId: move.playerSocketId
             })
-
-            currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
-
-            currentGame.displayWord = displayWord({
-                word: currentGame.word.word,
-                guessed: newGuessed
-            })
-            const debugMode = true
-            if (debugMode) {
-                turnResult = Result.TURN_WIN
-            } else {
-                turnResult = checkTurnWin({
-                    word: currentGame.word.word,
-                    guessed: newGuessed,
-                    player: socket.user
-                })
-            }
-
-            if (turnResult !== Result.NOTHING) {
-                //* modify our game object accordingly to the turn result
-                let win = handleTurnResult(currentGame, nextPlayer, turnResult)
-                currentGame = win.currentGame
-                if (win.winObject.type === Result.GAME_WIN) {
-                    connectedPlayers = setPlayersInGameStatus(
-                        connectedPlayers,
-                        currentGame.playerSockets,
-                        false
-                    )
-                    games = removeGame(game, games)
-                }
-                io.in(game.id).emit(WIN, win.winObject)
-                io.emit(REFRESH_PLAYERS, { connectedPlayers })
-            }
-
-            //* turnResult is neither WIN or TIE, so the turn is just moving on
-            if (turnResult === Result.NOTHING) currentGame.guessed = newGuessed
+            return currentGame
         }
     }
     // REMOVE_ONE_UNFITTING_CARD: {

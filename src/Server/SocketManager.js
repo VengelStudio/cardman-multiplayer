@@ -30,8 +30,8 @@ let games = {}
 const {
     words,
     displayWord,
-    checkTurnWin,
-    handleTurnResult
+    checkWin,
+    handleWin
 } = require('../Game/Words/Words')
 
 const { Result } = require('../Shared/Enums')
@@ -134,10 +134,11 @@ module.exports = function(socket) {
 
         let game = createGame({
             word: randomWord,
-            displayWord: displayWord({ word: randomWord.word }),
             playerSockets,
             nextPlayerIndex: Math.floor(Math.random())
         })
+
+        game.displayWord = displayWord(game)
 
         for (let i = 0; i <= 1; i++) {
             game.score[playerSockets[i].socketId] = 0
@@ -165,72 +166,44 @@ module.exports = function(socket) {
 
     socket.on(GAME_MOVE, ({ game, move }) => {
         let currentGame = games[game.id]
-        let nextPlayerIndex = currentGame.nextPlayerIndex
-        let nextPlayer = currentGame.playerSockets[nextPlayerIndex]
-        let turnResult = null
-        if (nextPlayer.id === socket.user.id) {
+        let player = game.playerSockets[game.nextPlayerIndex]
+        if (player.id === socket.user.id) {
             if (move.type === 'key') {
-                let newGuessed = currentGame.guessed
-                newGuessed.push({
+                currentGame.guessed.push({
                     key: move.key,
                     playerSocketId: move.playerSocketId
                 })
-
-                //*switch between 0 and 1
-                currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
-
-                //*display our word regarding guessed letters
-                currentGame.displayWord = displayWord({
-                    word: currentGame.word.word,
-                    guessed: newGuessed
-                })
-
-                const debugMode = true
-                if (debugMode) {
-                    turnResult = Result.TURN_WIN
-                } else {
-                    turnResult = checkTurnWin({
-                        word: currentGame.word.word,
-                        guessed: newGuessed,
-                        player: socket.user
-                    })
-                }
-
-                if (turnResult !== Result.NOTHING) {
-                    //* modify our game object accordingly to the turn result
-                    let win = handleTurnResult(
-                        currentGame,
-                        nextPlayer,
-                        turnResult
-                    )
-                    currentGame = win.currentGame
-                    if (win.winObject.type === Result.GAME_WIN) {
-                        connectedPlayers = setPlayersInGameStatus(
-                            connectedPlayers,
-                            currentGame.playerSockets,
-                            false
-                        )
-                        games = removeGame(game, games)
-                    }
-                    io.in(game.id).emit(WIN, win.winObject)
-                    io.emit(REFRESH_PLAYERS, { connectedPlayers })
-                }
-
-                //* turnResult is neither WIN or TIE, so the turn is just moving on
-                if (turnResult === Result.NOTHING)
-                    currentGame.guessed = newGuessed
             } else if (move.type === 'card') {
-                // let cardName = move.card.card
-                // let card = getCard(cardName)
-                // currentGame = card.use({ currentGame, socket, move })
+                let cardName = move.card.card
+                let card = getCard(cardName)
+                currentGame = card.use({ currentGame, socket, move })
             }
 
-            //* save modified game
+            currentGame.displayWord = displayWord(currentGame)
+
+            const debugMode = false
+
+            let result = checkWin(currentGame, socket)
+            if (debugMode) result = Result.TURN_WIN
+            currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
+
+            if (result !== Result.NOTHING) {
+                let win = handleWin(currentGame, result)
+                currentGame = win.currentGame
+                if (win.winObject.type === Result.GAME_WIN) {
+                    connectedPlayers = setPlayersInGameStatus(
+                        connectedPlayers,
+                        currentGame.playerSockets,
+                        false
+                    )
+                    games = removeGame(game, games)
+                }
+                io.in(game.id).emit(WIN, win.winObject)
+                io.emit(REFRESH_PLAYERS, { connectedPlayers })
+                return
+            }
             games[game.id] = currentGame
-
-            if (turnResult === Result.NOTHING) {
-                io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
-            }
+            io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
         }
     })
 }

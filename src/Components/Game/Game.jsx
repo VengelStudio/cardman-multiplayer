@@ -11,18 +11,13 @@ const { setScore } = require('../../Shared/Functions')
 const { GAME_MOVE, WIN } = require('../../Shared/Events')
 
 class Game extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            game: this.props.game,
-            gameFromProps: true,
-            allowMove: true,
-            myCards: null,
-            enemyCards: null,
-            cardTargetHighlight: false
-        }
-
-        this.props.socket && this.initializeSocket()
+    state = {
+        game: this.props.game,
+        gameFromProps: true,
+        allowMove: true,
+        myCards: null,
+        enemyCards: null,
+        cardTargetHighlight: false
     }
 
     initializeSocket = () => {
@@ -69,6 +64,7 @@ class Game extends Component {
     }
 
     componentDidMount() {
+        this.props.socket && this.initializeSocket()
         this.props.muteMusic(true)
     }
 

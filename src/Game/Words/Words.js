@@ -21,7 +21,10 @@ let checkGameWin = scoreObj => {
     return false
 }
 
-let handleTurnResult = (currentGame, nextPlayer, result) => {
+let handleWin = (currentGame, result) => {
+    let { nextPlayerIndex } = currentGame
+    nextPlayerIndex = 1 - nextPlayerIndex
+    let nextPlayer = currentGame.playerSockets[nextPlayerIndex]
     let winObject = null
     if (result === Result.TURN_WIN) {
         currentGame.guessed = []
@@ -37,12 +40,10 @@ let handleTurnResult = (currentGame, nextPlayer, result) => {
                 game: currentGame,
                 type: Result.GAME_WIN
             }
-        } else {
+        } else if (result === Result.TURN_WIN) {
             let randomWord = getRandomWord(data.words)
             currentGame.word = randomWord
-            currentGame.displayWord = displayWord({
-                word: randomWord.word
-            })
+            currentGame.displayWord = displayWord(currentGame)
 
             winObject = {
                 ...winObject,
@@ -65,7 +66,7 @@ let handleTurnResult = (currentGame, nextPlayer, result) => {
             type: Result.GAME_TIE
         }
         //todo use the same enum (and extend it) on the front-end
-    }
+    } //! turn tie?
 
     return {
         currentGame,
@@ -73,14 +74,16 @@ let handleTurnResult = (currentGame, nextPlayer, result) => {
     }
 }
 
-let checkTurnWin = ({ word, guessed, player }) => {
-    let playerSocketId = player.socketId
+let checkWin = (game, socket) => {
+    let { socketId } = socket.user
+    let { word } = game.word
+    let { guessed } = game
     let playerCounter = 0
     let enemyCounter = 0
     guessed.forEach(key => {
         let occurrences = countOccurrences(word.toUpperCase(), key.key)
 
-        if (key.playerSocketId === playerSocketId) {
+        if (key.socketId === socketId) {
             playerCounter += occurrences
         } else {
             enemyCounter += occurrences
@@ -96,7 +99,10 @@ let checkTurnWin = ({ word, guessed, player }) => {
     }
 }
 
-let displayWord = ({ word = null, guessed = [] }) => {
+let displayWord = game => {
+    let { word } = game.word
+    let { guessed } = game
+
     let result = ''
     console.log('[DEBUG]: ' + word)
     let wordArray = word.toUpperCase().split('')
@@ -121,7 +127,7 @@ let onKeyMove = () => {}
 
 module.exports = {
     displayWord,
-    checkTurnWin,
-    handleTurnResult,
+    checkWin,
+    handleWin,
     words: data.words
 }
