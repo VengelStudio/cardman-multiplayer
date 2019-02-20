@@ -126,16 +126,15 @@ module.exports = function(socket) {
     socket.on(INVITATION_ACCEPTED, ({ fromSocketId, to }) => {
         console.log(`[INVITATION] from: ${fromSocketId}, to: ${to.socketId}.`)
 
-        let randomWord = getRandomWord(words)
         let playerSockets = [
             io.sockets.connected[fromSocketId].user,
             io.sockets.connected[to.socketId].user
         ]
 
         let game = createGame({
-            word: randomWord,
+            word: getRandomWord(words),
             playerSockets,
-            nextPlayerIndex: Math.floor(Math.random())
+            nextPlayerIndex: Math.round(Math.random())
         })
 
         game.displayWord = displayWord(game)
@@ -189,7 +188,7 @@ module.exports = function(socket) {
 
             if (result !== Result.NOTHING) {
                 let win = handleWin(currentGame, result)
-                currentGame = win.currentGame
+                currentGame = win.game
                 if (win.winObject.type === Result.GAME_WIN) {
                     connectedPlayers = setPlayersInGameStatus(
                         connectedPlayers,

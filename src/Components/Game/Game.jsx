@@ -139,13 +139,13 @@ class Game extends Component {
 
 Game.propTypes = {
     game: PropTypes.object,
+    socket: PropTypes.object,
+    player: PropTypes.object,
     history: PropTypes.object.isRequired,
     isMove: PropTypes.bool.isRequired,
     muteMusic: PropTypes.func.isRequired,
-    player: PropTypes.object.isRequired,
     setMove: PropTypes.func.isRequired,
     setTitle: PropTypes.func.isRequired,
-    socket: PropTypes.object.isRequired,
     soundVolume: PropTypes.number.isRequired
 }
 

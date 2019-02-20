@@ -3,16 +3,19 @@ const { getRandomWord } = require('../../Server/Functions')
 const { Result } = require('../../Shared/Enums')
 
 let countOccurrences = (word, char) => {
+    let { key } = char
+    word = word.toUpperCase()
     let occurrence = 0
     Array.from(word).forEach(letter => {
-        if (letter === char) {
+        if (letter === key) {
             occurrence++
         }
     })
     return occurrence
 }
 
-let checkGameWin = scoreObj => {
+let checkGameWin = game => {
+    let { scoreObj } = game
     let playerKeys = Object.keys(scoreObj)
     //todo use some here
     let result1 = scoreObj[playerKeys[0]]
@@ -21,55 +24,51 @@ let checkGameWin = scoreObj => {
     return false
 }
 
-let handleWin = (currentGame, result) => {
-    let { nextPlayerIndex } = currentGame
+let handleWin = (game, result) => {
+    let { nextPlayerIndex } = game
     nextPlayerIndex = 1 - nextPlayerIndex
-    let nextPlayer = currentGame.playerSockets[nextPlayerIndex]
+    let nextPlayer = game.playerSockets[nextPlayerIndex]
     let winObject = null
     if (result === Result.TURN_WIN) {
-        currentGame.guessed = []
-        currentGame.score[nextPlayer.socketId] += 1
-        let isGameWin = checkGameWin(currentGame.score)
+        game.guessed = []
+        game.score[nextPlayer.socketId] += 1
         winObject = {
             winner: nextPlayer,
-            score: currentGame.score
+            score: game.score
         }
-        if (isGameWin === true) {
+        if (checkGameWin(game) === true) {
             winObject = {
                 ...winObject,
-                game: currentGame,
+                game,
                 type: Result.GAME_WIN
             }
         } else if (result === Result.TURN_WIN) {
             let randomWord = getRandomWord(data.words)
-            currentGame.word = randomWord
-            currentGame.displayWord = displayWord(currentGame)
+            game.word = randomWord
+            game.displayWord = displayWord(game)
 
             winObject = {
                 ...winObject,
-                game: currentGame,
+                game,
                 type: Result.TURN_WIN
             }
         }
-    } else if (result === Result.GAME_TIE) {
-        currentGame.guessed = []
+    } else if (result === Result.TURN_TIE) {
+        game.guessed = []
         let randomWord = getRandomWord(data.words)
-        currentGame.word = randomWord
-        currentGame.displayWord = displayWord({
-            word: randomWord.word
-        })
+        game.word = randomWord
+        game.displayWord = displayWord(game)
 
         winObject = {
             winner: null,
             score: null,
-            game: currentGame,
-            type: Result.GAME_TIE
+            game,
+            type: Result.TURN_TIE
         }
-        //todo use the same enum (and extend it) on the front-end
-    } //! turn tie?
+    }
 
     return {
-        currentGame,
+        game,
         winObject
     }
 }
@@ -81,7 +80,7 @@ let checkWin = (game, socket) => {
     let playerCounter = 0
     let enemyCounter = 0
     guessed.forEach(key => {
-        let occurrences = countOccurrences(word.toUpperCase(), key.key)
+        let occurrences = countOccurrences(word, key)
 
         if (key.socketId === socketId) {
             playerCounter += occurrences
@@ -105,6 +104,9 @@ let displayWord = game => {
 
     let result = ''
     console.log('[DEBUG]: ' + word)
+    if (word === undefined) {
+        console.log(game)
+    }
     let wordArray = word.toUpperCase().split('')
 
     let guessedKeys = []

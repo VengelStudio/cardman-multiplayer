@@ -24,9 +24,6 @@ const Cards = {
                 })
                 let randomIndex = Math.floor(Math.random() * arr.length)
                 return arr[randomIndex].toUpperCase()
-
-                //todo error or exception
-                return null
             }
 
             currentGame.guessed.push({
