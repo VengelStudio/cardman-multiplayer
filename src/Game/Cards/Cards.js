@@ -35,7 +35,17 @@ const Cards = {
             })
             return currentGame
         }
-    }
+    },
+    // ADDITIONAL_LETTER_CARD: {
+    //     id: 'ADDITIONAL_LETTER_CARD',
+    //     title: 'Additional letter',
+    //     description: 'You can choose two letters in a turn.',
+    //     use: ({ currentGame, socket, move }) => {
+    //         console.log('ADDITIONAL_LETTER_CARD card used')
+    //         currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
+    //         return currentGame
+    //     }
+    // },
     // REMOVE_ONE_UNFITTING_CARD: {
     //     id: 'REMOVE_ONE_UNFITTING_CARD',
     //     title: 'Remove one unfitting letter.',
@@ -66,14 +76,6 @@ const Cards = {
     //     description: 'Immune to block for 2 turns.',
     //     use: () => {
     //         console.log('IMMUNE_TO_BLOCK_CARD card used')
-    //     }
-    // },
-    // ADDITIONAL_LETTER_CARD: {
-    //     id: 'ADDITIONAL_LETTER_CARD',
-    //     title: 'Additional letter',
-    //     description: 'You can choose two letters in a turn.',
-    //     use: () => {
-    //         console.log('ADDITIONAL_LETTER_CARD card used')
     //     }
     // },
     // LOOK_UP_CARD: {

@@ -87,13 +87,16 @@ class Content extends Component {
                             })}
                         </div>
                     </Droppable>
-                    {this.state.game && (
-                        <Keyboard
-                            player={this.props.player}
-                            moveHandler={this.props.moveHandler}
-                            guessed={this.props.game.guessed}
-                        />
-                    )}
+                    <div className="keyboard-wrapper">
+                        <button class="end-turn-btn button-pointer border-neon border-light-translucent">End turn</button>
+                        {this.state.game && (
+                            <Keyboard
+                                player={this.props.player}
+                                moveHandler={this.props.moveHandler}
+                                guessed={this.props.game.guessed}
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
         )

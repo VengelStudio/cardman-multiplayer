@@ -97,6 +97,7 @@
 }
 
 .word {
+    margin-top: 15vh;
     font-size: 3vw;
     border-radius: 2vw;
     background-color: #7ea8be;
@@ -105,8 +106,9 @@
 
 .keyboard {
     display: flex;
-    margin: 2vh 1vw 1vw 1vh;
     flex-direction: row;
+    position: absolute;
+    top:6.6vh;
     flex-wrap: wrap;
     background-color: rgb(53, 53, 53);
     padding: 1vh;
