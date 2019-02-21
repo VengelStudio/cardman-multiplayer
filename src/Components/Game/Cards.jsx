@@ -21,11 +21,13 @@ class Cards extends Component {
         return null
     }
 
-    GenerateCard = ({ card, isMine }) => {
+    GenerateCard = ({ card, isMine, index }) => {
         if (isMine) {
+            let isUsed = this.props.usedCardIndexes[index]
+            let data = JSON.stringify({ cardId: card.id, index })
             return (
                 <Draggable
-                    enabled={isMine}
+                    enabled={isMine && !isUsed}
                     onDragStart={() => {
                         this.setState({ displayTooltip: false })
                         this.props.setCardTargetHighlight(true)
@@ -35,13 +37,18 @@ class Cards extends Component {
                         this.props.setCardTargetHighlight(false)
                     }}
                     type='card'
-                    data={card.id}
+                    data={data}
                 >
                     <li>
                         <Card
+                            index={index}
                             card={card}
                             displayTooltip={this.state.displayTooltip}
                             isMine={isMine}
+                            isUsed={isUsed}
+                            onUseAbort={() => {
+                                this.props.onUseAbort(index)
+                            }}
                         />
                     </li>
                 </Draggable>
@@ -65,6 +72,7 @@ class Cards extends Component {
             return cards.map((card, i) => (
                 <this.GenerateCard
                     card={card}
+                    index={i}
                     key={i}
                     isMine={this.props.areMine}
                 />

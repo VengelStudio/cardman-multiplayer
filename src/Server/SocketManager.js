@@ -173,7 +173,7 @@ module.exports = function(socket) {
                     playerSocketId: move.playerSocketId
                 })
             } else if (move.type === 'card') {
-                let cardName = move.card.card
+                let cardName = move.card
                 let card = getCard(cardName)
                 currentGame = card.use({ currentGame, socket, move })
             }

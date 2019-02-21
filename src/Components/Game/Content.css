@@ -5,11 +5,11 @@
     background-color: gray;
 }
 
-.end-turn-btn{
+.end-turn-btn {
     position: absolute;
-    top:0;
-    height:7vh;
-    width:25vh;
+    top: 0;
+    height: 7vh;
+    width: 25vh;
     padding: 1vh;
     color: grey;
     margin-bottom: -0.3vh;
@@ -20,14 +20,18 @@
     border-bottom-right-radius: 0;
     font-size: 30px;
     z-index: 1000;
+    cursor: default;
 }
-.end-turn-btn:hover{
+
+.end-turn-btn-hover:hover {
+    cursor: pointer;
     color: white;
 }
-.keyboard-wrapper{
+
+.keyboard-wrapper {
     position: relative;
     height: 57.5vh;
-    display:flex;
+    display: flex;
     margin-top: 10vh;
     flex-direction: column;
     justify-content: center;

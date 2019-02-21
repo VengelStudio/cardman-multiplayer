@@ -1,68 +1,13 @@
 import React, { Component } from 'react'
-
-class Key extends Component {
-    state = {
-        clicked: this.props.clicked
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.clicked !== state.clicked) {
-            return {
-                clicked: props.clicked
-            }
-        }
-        return null
-    }
-
-    clickHandler = () => {
-        this.props.moveHandler({
-            move: {
-                type: 'key',
-                key: this.props.letter,
-                playerSocketId: this.props.player.socketId
-            }
-        })
-    }
-
-    render() {
-        return (
-            <button
-                style={
-                    this.state.clicked
-                        ? { backgroundColor: '#555', textDecoration: 'none' }
-                        : {
-                              backgroundColor: '#519C3F'
-                          }
-                }
-                onClick={this.clickHandler}
-                className='key'
-            >
-                {this.props.letter}
-            </button>
-        )
-    }
-}
+import Key from './Key'
 
 class Keyboard extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { guessed: this.props.guessed }
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.guessed !== state.guessed) {
-            return {
-                guessed: props.guessed
-            }
-        }
-        return null
-    }
-
+    state = { clickedIndex: null }
     generateKeys = () => {
         let result = []
         for (let i = 65; i <= 90; i++) {
             let letter = String.fromCharCode(i).toUpperCase()
-            let clicked = false
+            let isUsed = false
             let guessedKeys = []
             let guessed = this.props.guessed
 
@@ -70,16 +15,26 @@ class Keyboard extends Component {
                 guessedKeys.push(guessed[j].key)
             }
             if (guessedKeys.includes(letter)) {
-                clicked = true
+                isUsed = true
             }
 
+            let isClicked = this.state.clickedIndex === i
+            let onClick = index => {
+                if (this.state.clickedIndex === index) {
+                    this.setState({ clickedIndex: null })
+                } else {
+                    this.setState({ clickedIndex: index })
+                }
+            }
             result.push(
                 <Key
                     moveHandler={this.props.moveHandler}
+                    onClick={() => onClick(i)}
                     key={i}
                     player={this.props.player}
                     letter={letter}
-                    clicked={clicked}
+                    isUsed={isUsed}
+                    isClicked={isClicked}
                 />
             )
         }

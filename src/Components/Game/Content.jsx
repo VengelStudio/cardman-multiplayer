@@ -5,6 +5,24 @@ import { Droppable } from 'react-drag-and-drop'
 import './Content.css'
 
 class Content extends Component {
+    state = { keyMove: null, cardMoves: [] }
+
+    static getDerivedStateFromProps(props, state) {
+        let newCardMoves = state.cardMoves
+        Object.keys(props.usedCardIndexes).forEach(index => {
+            index = parseInt(index)
+            let val = props.usedCardIndexes[index]
+            if (val === false) {
+                newCardMoves = newCardMoves.filter(move => {
+                    return move.index !== index
+                })
+            }
+        })
+        return {
+            cardMoves: newCardMoves
+        }
+    }
+
     colorDisplayWord = word => {
         word = word.toUpperCase()
         let result = []
@@ -32,13 +50,61 @@ class Content extends Component {
     }
 
     onDrop = data => {
-        this.props.moveHandler({
-            move: {
+        if (this.props.move) {
+            let card = JSON.parse(data.card)
+            let move = {
+                index: card.index,
                 type: 'card',
-                card: data,
+                card: card.cardId,
                 playerSocketId: this.props.player.socketId
             }
-        })
+
+            let { usedCardIndexes } = this.props
+            usedCardIndexes[card.index] = true
+            this.props.updateUsedCardIndexes(usedCardIndexes)
+
+            let isDuplicate = this.state.cardMoves.some(
+                cardMove => cardMove.index === card.index
+            )
+            if (isDuplicate === false) {
+                this.setState({ cardMoves: [...this.state.cardMoves, move] })
+            }
+        }
+    }
+
+    onMove = ({ move }) => {
+        if (this.props.move) {
+            this.setState({ keyMove: move })
+        }
+    }
+
+    onEndTurn = () => {
+        if (this.props.move) {
+            let moves = []
+            let { keyMove, cardMoves } = this.state
+            if (keyMove !== null) moves.push(keyMove)
+            if (cardMoves !== []) moves = [...moves, ...cardMoves]
+            //todo SEND TO SERVER
+            this.props.updateUsedCardIndexes({ 0: false, 1: false, 2: false })
+            this.setState({ keyMove: null, cardMoves: [] })
+        }
+    }
+
+    endTurnButton = () => {
+        let text = 'Waiting...'
+        if (this.props.move) text = 'End turn'
+        let classes =
+            'end-turn-btn button-pointer border-neon border-light-translucent '
+        if (this.props.move) classes += 'end-turn-btn-hover'
+        return (
+            <button
+                onClick={this.onEndTurn}
+                disabled={!this.props.move}
+                className={classes}
+            >
+                {text}
+            </button>
+        )
     }
 
     render() {
@@ -48,7 +114,8 @@ class Content extends Component {
         }
 
         let wordClass = 'word border-neon border-neon-violet '
-        if (this.props.isCardTargetHighlight) wordClass += 'word-glow'
+        if (this.props.isCardTargetHighlight && this.props.move)
+            wordClass += 'word-glow'
 
         return (
             <div className='content'>
@@ -66,13 +133,11 @@ class Content extends Component {
                         </div>
                     </Droppable>
                     <div className='keyboard-wrapper'>
-                        <button class='end-turn-btn button-pointer border-neon border-light-translucent'>
-                            End turn
-                        </button>
+                        <this.endTurnButton />
                         {this.props.game && (
                             <Keyboard
                                 player={this.props.player}
-                                moveHandler={this.props.moveHandler}
+                                moveHandler={this.onMove}
                                 guessed={this.props.game.guessed}
                             />
                         )}

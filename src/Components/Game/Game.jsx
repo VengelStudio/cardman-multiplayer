@@ -17,7 +17,8 @@ class Game extends Component {
         allowMove: true,
         myCards: null,
         enemyCards: null,
-        cardTargetHighlight: false
+        cardTargetHighlight: false,
+        usedCardIndexes: { 0: false, 1: false, 2: false }
     }
 
     initializeSocket = () => {
@@ -104,12 +105,25 @@ class Game extends Component {
         this.setState({ cardTargetHighlight: bool })
     }
 
+    updateUsedCardIndexes = newIndexes => {
+        this.setState({ usedCardIndexes: newIndexes })
+    }
+
+    onUseAbort = index => {
+        let newIndexes = this.state.usedCardIndexes
+        newIndexes[index] = false
+        this.updateUsedCardIndexes(newIndexes)
+        console.log('aborted index ' + index)
+    }
+
     render() {
         let cards = this.getCards()
         return (
             <div className='gameWrapper'>
                 <Cards
                     cards={cards.my}
+                    onUseAbort={this.onUseAbort}
+                    usedCardIndexes={this.state.usedCardIndexes}
                     areMine={true}
                     move={this.props.isMove}
                     title='Your cards:'
@@ -118,6 +132,8 @@ class Game extends Component {
                 />
                 <Content
                     player={this.props.player}
+                    updateUsedCardIndexes={this.updateUsedCardIndexes}
+                    usedCardIndexes={this.state.usedCardIndexes}
                     moveHandler={this.moveHandler}
                     onMoveTimeout={this.onMoveTimeout}
                     move={this.props.isMove}
@@ -126,6 +142,7 @@ class Game extends Component {
                 />
                 <Cards
                     cards={cards.enemy}
+                    usedCardIndexes={{ 0: false, 1: false, 2: false }}
                     areMine={false}
                     move={!this.props.isMove}
                     title='Enemy cards:'

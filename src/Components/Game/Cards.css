@@ -17,3 +17,33 @@
 .default-pointer {
     cursor: default;
 }
+
+.card-image-used {
+    filter: grayscale(40%) brightness(40%);
+}
+
+.card-use-abort-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background-color: transparent;
+}
+
+.card-use-abort-button > div:hover {
+    background-color: #cf8e8eb9;
+}
+
+.card-use-abort-button > div {
+    color: whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 6vh;
+    font-family: 'Nunito', sans-serif;
+    font-size: 2vh;
+    background-color: #bd94949a;
+}
