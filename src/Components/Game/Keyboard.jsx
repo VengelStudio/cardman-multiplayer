@@ -3,6 +3,7 @@ import Key from './Key'
 
 class Keyboard extends Component {
     state = { clickedIndex: null }
+
     generateKeys = () => {
         let result = []
         for (let i = 65; i <= 90; i++) {
@@ -18,12 +19,12 @@ class Keyboard extends Component {
                 isUsed = true
             }
 
-            let isClicked = this.state.clickedIndex === i
+            let isClicked = this.props.clickedIndex === i
             let onClick = index => {
-                if (this.state.clickedIndex === index) {
-                    this.setState({ clickedIndex: null })
+                if (this.props.clickedIndex === index) {
+                    this.props.setSelectedKey(null)
                 } else {
-                    this.setState({ clickedIndex: index })
+                    this.props.setSelectedKey(index)
                 }
             }
             result.push(

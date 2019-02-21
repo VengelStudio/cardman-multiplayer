@@ -69,21 +69,21 @@ class Game extends Component {
         this.props.muteMusic(true)
     }
 
-    moveHandler = ({ move = null }) => {
+    moveHandler = ({ moves = null }) => {
         if (this.state.allowMove === true) {
             const { socket } = this.props
-            console.log(move)
-            socket.emit(GAME_MOVE, { game: this.state.game, move })
+            console.log(moves)
+            socket.emit(GAME_MOVE, { game: this.state.game, moves })
         }
     }
 
     onMoveTimeout = () => {
         this.moveHandler({
-            move: {
+            moves: [{
                 type: 'key',
                 key: '',
                 playerSocketId: this.props.player.socketId
-            }
+            }]
         })
     }
 

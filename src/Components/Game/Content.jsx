@@ -5,7 +5,7 @@ import { Droppable } from 'react-drag-and-drop'
 import './Content.css'
 
 class Content extends Component {
-    state = { keyMove: null, cardMoves: [] }
+    state = { keyMove: null, cardMoves: [], clickedIndex: null }
 
     static getDerivedStateFromProps(props, state) {
         let newCardMoves = state.cardMoves
@@ -21,6 +21,10 @@ class Content extends Component {
         return {
             cardMoves: newCardMoves
         }
+    }
+
+    setSelectedKey = (state) => {
+        this.setState({ clickedIndex: state })
     }
 
     colorDisplayWord = word => {
@@ -84,7 +88,8 @@ class Content extends Component {
             let { keyMove, cardMoves } = this.state
             if (keyMove !== null) moves.push(keyMove)
             if (cardMoves !== []) moves = [...moves, ...cardMoves]
-            //todo SEND TO SERVER
+            this.props.moveHandler({ moves })
+            this.setSelectedKey(null)
             this.props.updateUsedCardIndexes({ 0: false, 1: false, 2: false })
             this.setState({ keyMove: null, cardMoves: [] })
         }
@@ -139,6 +144,8 @@ class Content extends Component {
                                 player={this.props.player}
                                 moveHandler={this.onMove}
                                 guessed={this.props.game.guessed}
+                                setSelectedKey={this.setSelectedKey}
+                                clickedIndex={this.state.clickedIndex}
                             />
                         )}
                     </div>

@@ -21,6 +21,7 @@ const {
     isPlayer,
     getRandomWord,
     setPlayersInGameStatus,
+    removeUsedCard,
     removeGame
 } = require('../Server/Functions')
 
@@ -37,7 +38,7 @@ const {
 const { Result } = require('../Shared/Enums')
 const { generateCards, getCard } = require('../Game/Cards/Cards')
 
-module.exports = function(socket) {
+module.exports = function (socket) {
     //console.log('Connected, socket id: ' + socket.id)
 
     socket.on(VERIFY_USERNAME, (nickname, callback) => {
@@ -163,20 +164,24 @@ module.exports = function(socket) {
         )
     })
 
-    socket.on(GAME_MOVE, ({ game, move }) => {
+    socket.on(GAME_MOVE, ({ game, moves }) => {
         let currentGame = games[game.id]
         let player = game.playerSockets[game.nextPlayerIndex]
+
         if (player.id === socket.user.id) {
-            if (move.type === 'key') {
-                currentGame.guessed.push({
-                    key: move.key,
-                    playerSocketId: move.playerSocketId
-                })
-            } else if (move.type === 'card') {
-                let cardName = move.card
-                let card = getCard(cardName)
-                currentGame = card.use({ currentGame, socket, move })
-            }
+            moves.forEach(move => {
+                if (move.type === 'key') {
+                    currentGame.guessed.push({
+                        key: move.key,
+                        playerSocketId: move.playerSocketId
+                    })
+                } else if (move.type === 'card') {
+                    let cardName = move.card
+                    let card = getCard(cardName)
+                    currentGame = card.use({ currentGame, socket, move })
+                    currentGame.cards = removeUsedCard(game, card, socket.user.socketId)
+                }
+            });
 
             currentGame.displayWord = displayWord(currentGame)
 

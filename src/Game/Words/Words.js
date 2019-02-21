@@ -15,11 +15,11 @@ let countOccurrences = (word, char) => {
 }
 
 let checkGameWin = game => {
-    let { scoreObj } = game
-    let playerKeys = Object.keys(scoreObj)
+    let { score } = game
+    let playerKeys = Object.keys(score)
     //todo use some here
-    let result1 = scoreObj[playerKeys[0]]
-    let result2 = scoreObj[playerKeys[1]]
+    let result1 = score[playerKeys[0]]
+    let result2 = score[playerKeys[1]]
     if (result1 === 2 || result2 === 2) return true
     return false
 }
@@ -81,14 +81,12 @@ let checkWin = (game, socket) => {
     let enemyCounter = 0
     guessed.forEach(key => {
         let occurrences = countOccurrences(word, key)
-
-        if (key.socketId === socketId) {
+        if (key.playerSocketId === socketId) {
             playerCounter += occurrences
         } else {
             enemyCounter += occurrences
         }
     })
-
     if (playerCounter > word.length / 2) {
         return Result.TURN_WIN
     } else if (playerCounter + enemyCounter === word.length) {
@@ -125,7 +123,7 @@ let displayWord = game => {
     return result.charAt(0).toUpperCase() + result.slice(1, result.length - 1)
 }
 
-let onKeyMove = () => {}
+let onKeyMove = () => { }
 
 module.exports = {
     displayWord,
