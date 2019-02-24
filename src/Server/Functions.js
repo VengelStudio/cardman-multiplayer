@@ -32,12 +32,13 @@ function getRandomWord(words) {
     return randomWord
 }
 function removeUsedCard(game, card, id) {
-    console.log(game.cards[id])
-    let myCards = game.cards[id]
-    console.log(card)
-    console.log(myCards)
-    console.log(typeof (myCards))
-    return myCards.filter(carden => carden.id !== card.id)
+    let usedIndex = game.cards[id].findIndex(
+        gameCard => gameCard.id === card.id
+    )
+    game.cards[id] = game.cards[id].slice(usedIndex + 1)
+    console.log(game.cards)
+    return game.cards
+    //return myCards.filter(carden => carden.id !== card.id)
 }
 
 function setPlayersInGameStatus(

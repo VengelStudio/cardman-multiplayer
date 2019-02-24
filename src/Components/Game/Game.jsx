@@ -25,6 +25,7 @@ class Game extends Component {
         const { socket } = this.props
         socket.on(GAME_MOVE, ({ game }) => {
             this.setState({ game: game }, () => {
+                console.log(game.cards)
                 this.props.setMove(
                     isMove({ game: this.state.game, player: this.props.player })
                 )
@@ -79,21 +80,23 @@ class Game extends Component {
 
     onMoveTimeout = () => {
         this.moveHandler({
-            moves: [{
-                type: 'key',
-                key: '',
-                playerSocketId: this.props.player.socketId
-            }]
+            moves: [
+                {
+                    type: 'key',
+                    key: '',
+                    playerSocketId: this.props.player.socketId
+                }
+            ]
         })
     }
 
     getCards = () => {
         let cards = { my: null, enemy: null }
-        if (this.props.game !== null) {
-            let gameCards = this.props.game.cards
+        if (this.state.game !== null) {
+            let gameCards = this.state.game.cards
             let mySocketId = this.props.player.socketId
             cards.my = gameCards[mySocketId]
-            let enemySocketId = this.props.game.playerSockets.filter(x => {
+            let enemySocketId = this.state.game.playerSockets.filter(x => {
                 return x.socketId !== this.props.player.socketId
             })[0].socketId
             cards.enemy = gameCards[enemySocketId]

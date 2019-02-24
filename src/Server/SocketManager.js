@@ -38,7 +38,7 @@ const {
 const { Result } = require('../Shared/Enums')
 const { generateCards, getCard } = require('../Game/Cards/Cards')
 
-module.exports = function (socket) {
+module.exports = function(socket) {
     //console.log('Connected, socket id: ' + socket.id)
 
     socket.on(VERIFY_USERNAME, (nickname, callback) => {
@@ -179,9 +179,13 @@ module.exports = function (socket) {
                     let cardName = move.card
                     let card = getCard(cardName)
                     currentGame = card.use({ currentGame, socket, move })
-                    currentGame.cards = removeUsedCard(game, card, socket.user.socketId)
+                    currentGame.cards = removeUsedCard(
+                        game,
+                        card,
+                        socket.user.socketId
+                    )
                 }
-            });
+            })
 
             currentGame.displayWord = displayWord(currentGame)
 
