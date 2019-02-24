@@ -36,7 +36,7 @@ const {
 } = require('../Game/Words/Words')
 
 const { Result } = require('../Shared/Enums')
-const { generateCards, getCard } = require('../Game/Cards/Cards')
+const { generateCards, getCard, resupplyCards } = require('../Game/Cards/Cards')
 
 module.exports = function(socket) {
     //console.log('Connected, socket id: ' + socket.id)
@@ -198,13 +198,19 @@ module.exports = function(socket) {
             if (result !== Result.NOTHING) {
                 let win = handleWin(currentGame, result)
                 currentGame = win.game
-                if (win.winObject.type === Result.GAME_WIN) {
+                let winType = win.winObject.type
+                if (winType === Result.GAME_WIN) {
                     connectedPlayers = setPlayersInGameStatus(
                         connectedPlayers,
                         currentGame.playerSockets,
                         false
                     )
                     games = removeGame(game, games)
+                } else if (
+                    winType === Result.TURN_WIN ||
+                    winType === Result.TURN_TIE
+                ) {
+                    currentGame.cards = resupplyCards(currentGame)
                 }
                 io.in(game.id).emit(WIN, win.winObject)
                 io.emit(REFRESH_PLAYERS, { connectedPlayers })

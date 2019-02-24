@@ -32,7 +32,7 @@ const Cards = {
             })
             return currentGame
         }
-    },
+    }
     // ADDITIONAL_LETTER_CARD: {
     //     id: 'ADDITIONAL_LETTER_CARD',
     //     title: 'Additional letter',
@@ -119,9 +119,22 @@ const generateCards = amount => {
     return result
 }
 
+const resupplyCards = game => {
+    let { cards } = game
+    for (player of Object.keys(cards)) {
+        let newCards = cards[player]
+        if (newCards.length < 3) {
+            newCards.push(getRandomCard())
+        }
+        cards[player] = newCards
+    }
+    return cards
+}
+
 module.exports = {
     getRandomCard,
     generateCards,
     Cards,
-    getCard
+    getCard,
+    resupplyCards
 }

@@ -31,6 +31,7 @@ function getRandomWord(words) {
     let randomWord = words[index]
     return randomWord
 }
+
 function removeUsedCard(game, card, id) {
     let usedIndex = game.cards[id].findIndex(
         gameCard => gameCard.id === card.id

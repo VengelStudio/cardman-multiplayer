@@ -10,7 +10,7 @@ class Credits extends Component {
         return (
             <React.Fragment>
                 <div className='container of-rows credits-wrapper border-neon border-neon-red bg-dark text-nunito text-xlg'>
-                    <p className='credits-header'>Hangman Multiplayer</p>
+                    <p className='credits-header'>Cardman Multiplayer</p>
                     <div className='developer-wrapper'>
                         <p className='text-xlg'>Created by:</p>
                         <div className='developers-content'>
