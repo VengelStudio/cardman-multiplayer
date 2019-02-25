@@ -27,6 +27,16 @@ class LoginPage extends Component {
             })
             return
         }
+        else if (nickname.includes(' ')) {
+            this.props.addPopup({
+                type: POPUP_GENERIC,
+                popupData: {
+                    title: 'Error!',
+                    content: '<p>Your nickname cannot have spaces.</p>'
+                }
+            })
+            return
+        }
         socket.emit(VERIFY_USERNAME, nickname, ({ player, isTaken }) => {
             if (isTaken) {
                 this.props.addPopup({
