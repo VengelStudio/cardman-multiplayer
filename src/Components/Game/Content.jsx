@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import { Droppable } from 'react-drag-and-drop'
 import Keyboard from './Keyboard'
 import Timer from './Timer'
-import { Droppable } from 'react-drag-and-drop'
 import './Content.css'
+import cardDropSound from '../../Resources/Sounds/card_drop.mp3'
+import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
+import buttonClick from '../../Resources/Sounds/button_click.mp3'
 
 class Content extends Component {
     state = { keyMove: null, cardMoves: [], clickedIndex: null }
@@ -23,7 +26,8 @@ class Content extends Component {
         }
     }
 
-    setSelectedKey = (state) => {
+    setSelectedKey = state => {
+        this.props.playSound(buttonClick)
         this.setState({ clickedIndex: state })
     }
 
@@ -71,6 +75,9 @@ class Content extends Component {
                 cardMove => cardMove.index === card.index
             )
             if (isDuplicate === false) {
+                setTimeout(() => {
+                    this.props.playSound(cardDropSound)
+                }, 100)
                 this.setState({ cardMoves: [...this.state.cardMoves, move] })
             }
         }
@@ -91,7 +98,11 @@ class Content extends Component {
             this.props.moveHandler({ moves })
             this.setSelectedKey(null)
             this.props.updateUsedCardIndexes({ 0: false, 1: false, 2: false })
-            this.setState({ keyMove: null, cardMoves: [] })
+            this.setState({
+                keyMove: null,
+                cardMoves: []
+            })
+            this.props.playSound(flipSound3)
         }
     }
 
@@ -101,6 +112,7 @@ class Content extends Component {
         let classes =
             'end-turn-btn button-pointer border-neon border-light-translucent '
         if (this.props.move) classes += 'end-turn-btn-hover'
+
         return (
             <button
                 onClick={this.onEndTurn}
