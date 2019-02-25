@@ -4,11 +4,9 @@ import './App.css'
 import Header from './Components/Header/Header'
 import Popups from './Components/Popup/Popups'
 import Game from './Components/Game/Game'
-import Credits from './Components/Menu/Credits/Credits'
-import Help from './Components/Menu/Help/Help'
-import Menu from './Components/Menu/Menu'
+import Credits from './Components/Credits/Credits'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
-import LoginPage from './Components/Menu/LoginPage/LoginPage'
+import LoginPage from './Components/LoginPage/LoginPage'
 
 import { POPUP_GENERIC, POPUP_INVITATION } from './Components/Popup/Types'
 
@@ -156,7 +154,7 @@ class App extends React.Component {
                             to: this.state.player
                         })
                     },
-                    onDecline: () => {}
+                    onDecline: () => { }
                 }
             })
         })
@@ -181,7 +179,7 @@ class App extends React.Component {
         //Wait for server response, then get the player list
         socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
             this.setState({ connectedPlayers })
-            this.props.history.push('/menu')
+            this.props.history.push('/browser')
         })
     }
 
@@ -260,18 +258,9 @@ class App extends React.Component {
                             />
                         </Route>
                         <Route
-                            path='/menu'
-                            render={() => <Menu setTitle={this.setTitle} />}
-                        />
-                        <Route
                             path='/credits'
                             setTitle={this.setTitle}
                             component={Credits}
-                        />
-                        <Route
-                            path='/help'
-                            setTitle={this.setTitle}
-                            component={Help}
                         />
                         <Route
                             path='/browser'
