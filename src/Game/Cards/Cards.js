@@ -12,8 +12,6 @@ const Cards = {
         title: 'Random correct letter',
         description: 'Chooses a random correct letter.',
         use: ({ currentGame, socket, move }) => {
-            console.log('RANDOM_CORRECT_LETTER_CARD card used')
-
             let randomCorrectLetter = () => {
                 let { word } = currentGame.word
                 let { guessed } = currentGame
@@ -32,7 +30,7 @@ const Cards = {
             })
             return currentGame
         }
-    }
+    },
     // ADDITIONAL_LETTER_CARD: {
     //     id: 'ADDITIONAL_LETTER_CARD',
     //     title: 'Additional letter',
@@ -82,15 +80,24 @@ const Cards = {
     //     use: () => {
     //         console.log('LOOK_UP_CARD card used')
     //     }
-    // },
-    // RANDOMIZE_YOURSELF_CARD: {
-    //     id: 'RANDOMIZE_YOURSELF_CARD',
-    //     title: 'Randomize a card',
-    //     description: 'A random card of yours gets changed.',
-    //     use: () => {
-    //         console.log('RANDOMIZE_YOURSELF_CARD card used')
-    //     }
-    // },
+    //},
+    RANDOMIZE_YOURSELF_CARD: {
+        id: 'RANDOMIZE_YOURSELF_CARD',
+        title: 'Randomize a card',
+        description: 'A random card of yours gets changed.',
+        use: ({ currentGame, socket, move }) => {
+            let getRandomCard = (exception = null) => {
+                let excluded = ['RANDOMIZE_YOURSELF_CARD', exception]
+                let included = Object.values(Cards).filter(card =>
+                    excluded.includes(card.id)
+                )
+                let randomIndex = Math.floor(Math.random() * included.length)
+                return included[randomIndex]
+            }
+            currentGame.cards[move.playerSocketId].push(getRandomCard())
+            return currentGame
+        }
+    }
     // RANDOMIZE_ENEMY_CARD: {
     //     id: 'RANDOMIZE_ENEMY_CARD',
     //     title: 'Randomize an enemies card',

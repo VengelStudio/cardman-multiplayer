@@ -92,20 +92,6 @@ class Game extends Component {
         })
     }
 
-    getCards = () => {
-        let cards = { my: null, enemy: null }
-        if (this.state.game !== null) {
-            let gameCards = this.state.game.cards
-            let mySocketId = this.props.player.socketId
-            cards.my = gameCards[mySocketId]
-            let enemySocketId = this.state.game.playerSockets.filter(x => {
-                return x.socketId !== this.props.player.socketId
-            })[0].socketId
-            cards.enemy = gameCards[enemySocketId]
-        }
-        return cards
-    }
-
     setCardTargetHighlight = bool => {
         this.setState({ cardTargetHighlight: bool })
     }
@@ -126,7 +112,16 @@ class Game extends Component {
     }
 
     render() {
-        let cards = this.getCards()
+        let cards = { my: null, enemy: null }
+        if (this.state.game !== null) {
+            let gameCards = this.state.game.cards
+            let mySocketId = this.props.player.socketId
+            cards.my = gameCards[mySocketId]
+            let enemySocketId = this.state.game.playerSockets.filter(x => {
+                return x.socketId !== this.props.player.socketId
+            })[0].socketId
+            cards.enemy = gameCards[enemySocketId]
+        }
         return (
             <div className='gameWrapper'>
                 <ReactAudioPlayer
