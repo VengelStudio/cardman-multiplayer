@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import ReactAudioPlayer from 'react-audio-player'
+
 import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
-import { withRouter } from 'react-router-dom'
-import PropTypes from 'prop-types'
-
 const { isMove } = require('../../Shared/Functions')
 const { winHandler } = require('./Functions')
 const { setScore } = require('../../Shared/Functions')
@@ -18,7 +19,8 @@ class Game extends Component {
         myCards: null,
         enemyCards: null,
         cardTargetHighlight: false,
-        usedCardIndexes: { 0: false, 1: false, 2: false }
+        usedCardIndexes: { 0: false, 1: false, 2: false },
+        soundSrc: ''
     }
 
     initializeSocket = () => {
@@ -90,20 +92,6 @@ class Game extends Component {
         })
     }
 
-    getCards = () => {
-        let cards = { my: null, enemy: null }
-        if (this.state.game !== null) {
-            let gameCards = this.state.game.cards
-            let mySocketId = this.props.player.socketId
-            cards.my = gameCards[mySocketId]
-            let enemySocketId = this.state.game.playerSockets.filter(x => {
-                return x.socketId !== this.props.player.socketId
-            })[0].socketId
-            cards.enemy = gameCards[enemySocketId]
-        }
-        return cards
-    }
-
     setCardTargetHighlight = bool => {
         this.setState({ cardTargetHighlight: bool })
     }
@@ -119,10 +107,31 @@ class Game extends Component {
         console.log('aborted index ' + index)
     }
 
+    playSound = src => {
+        this.setState({ soundSrc: src })
+    }
+
     render() {
-        let cards = this.getCards()
+        let cards = { my: null, enemy: null }
+        if (this.state.game !== null) {
+            let gameCards = this.state.game.cards
+            let mySocketId = this.props.player.socketId
+            cards.my = gameCards[mySocketId]
+            let enemySocketId = this.state.game.playerSockets.filter(x => {
+                return x.socketId !== this.props.player.socketId
+            })[0].socketId
+            cards.enemy = gameCards[enemySocketId]
+        }
         return (
             <div className='gameWrapper'>
+                <ReactAudioPlayer
+                    volume={this.props.soundVolume}
+                    src={this.state.soundSrc}
+                    autoPlay
+                    onEnded={() => {
+                        this.setState({ soundSrc: '' })
+                    }}
+                />
                 <Cards
                     cards={cards.my}
                     onUseAbort={this.onUseAbort}
@@ -130,8 +139,8 @@ class Game extends Component {
                     areMine={true}
                     move={this.props.isMove}
                     title='Your cards:'
-                    soundVolume={this.props.soundVolume}
                     setCardTargetHighlight={this.setCardTargetHighlight}
+                    playSound={this.playSound}
                 />
                 <Content
                     player={this.props.player}
@@ -142,6 +151,7 @@ class Game extends Component {
                     move={this.props.isMove}
                     game={this.state.game}
                     isCardTargetHighlight={this.state.cardTargetHighlight}
+                    playSound={this.playSound}
                 />
                 <Cards
                     cards={cards.enemy}
@@ -149,8 +159,8 @@ class Game extends Component {
                     areMine={false}
                     move={!this.props.isMove}
                     title='Enemy cards:'
-                    soundVolume={this.props.soundVolume}
                     setCardTargetHighlight={this.setCardTargetHighlight}
+                    playSound={this.playSound}
                 />
             </div>
         )

@@ -4,6 +4,9 @@ import './Cards.css'
 
 import { Draggable } from 'react-drag-and-drop'
 
+import flipSound1 from '../../Resources/Sounds/card_flip.mp3'
+import flipSound2 from '../../Resources/Sounds/card_flip2.mp3'
+
 class Cards extends Component {
     state = { displayTooltip: this.props.areMine }
 
@@ -30,10 +33,12 @@ class Cards extends Component {
                     enabled={isMine && !isUsed}
                     onDragStart={() => {
                         this.setState({ displayTooltip: false })
+                        this.props.playSound(flipSound1)
                         this.props.setCardTargetHighlight(true)
                     }}
                     onDragEnd={() => {
                         this.setState({ displayTooltip: true })
+                        this.props.playSound(flipSound2)
                         this.props.setCardTargetHighlight(false)
                     }}
                     type='card'

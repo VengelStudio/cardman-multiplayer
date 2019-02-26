@@ -179,11 +179,13 @@ module.exports = function(socket) {
                     let cardName = move.card
                     let card = getCard(cardName)
                     currentGame = card.use({ currentGame, socket, move })
+                    console.log(currentGame.cards[move.playerSocketId])
                     currentGame.cards = removeUsedCard(
                         game,
                         card,
-                        socket.user.socketId
+                        move.playerSocketId
                     )
+                    console.log(currentGame.cards[move.playerSocketId])
                 }
             })
 
