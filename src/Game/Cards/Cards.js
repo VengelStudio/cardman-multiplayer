@@ -77,10 +77,13 @@ const Cards = {
     //     id: 'LOOK_UP_CARD',
     //     title: 'Look up enemy card',
     //     description: 'You can look up one of the enemies cards.',
-    //     use: () => {
+    //     use: ({ currentGame, socket, move }) => {
     //         console.log('LOOK_UP_CARD card used')
+    //         let myCards = currentGame.cards[move.playerSocketId]
+    //         let enemySocket = Object.keys(currentGame.cards).filter(s => { s != move.playerSocketId })
+    //         let enemyCards = currentGame.cards[enemySocket]
     //     }
-    //},
+    // },
     RANDOMIZE_YOURSELF_CARD: {
         id: 'RANDOMIZE_YOURSELF_CARD',
         title: 'Randomize a card',
