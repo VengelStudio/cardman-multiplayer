@@ -42,7 +42,7 @@ class Game extends Component {
                 winner,
                 props: this.props,
                 returnToMenu: () => {
-                    this.props.history.push('/menu')
+                    this.props.history.push('/browser')
                 }
             })
             this.setState({ ...winObj })
@@ -75,7 +75,6 @@ class Game extends Component {
     moveHandler = ({ moves = null }) => {
         if (this.state.allowMove === true) {
             const { socket } = this.props
-            console.log(moves)
             socket.emit(GAME_MOVE, { game: this.state.game, moves })
         }
     }
@@ -104,7 +103,6 @@ class Game extends Component {
         let newIndexes = this.state.usedCardIndexes
         newIndexes[index] = false
         this.updateUsedCardIndexes(newIndexes)
-        console.log('aborted index ' + index)
     }
 
     playSound = src => {

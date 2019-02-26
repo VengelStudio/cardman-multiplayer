@@ -34,7 +34,6 @@ function getRandomWord(words) {
 
 function removeUsedCard(game, card, id) {
     let cards = game.cards[id]
-    console.log(game.cards[id])
     let usedIndex = cards.findIndex(gameCard => gameCard.id === card.id)
     let newCards = []
     for (let i = 0; i < cards.length; i++) {
@@ -42,8 +41,6 @@ function removeUsedCard(game, card, id) {
             newCards.push(cards[i])
         }
     }
-    console.log(" ")
-    console.log(newCards)
     game.cards[id] = newCards
     return game.cards
 }

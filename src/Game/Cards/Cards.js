@@ -91,8 +91,8 @@ const Cards = {
         use: ({ currentGame, socket, move }) => {
             let getRandomCard = (exception = null) => {
                 let excluded = ['RANDOMIZE_YOURSELF_CARD', exception]
-                let included = Object.values(Cards).filter(card =>
-                    excluded.includes(card.id)
+                let included = Object.values(Cards).filter(
+                    card => !excluded.includes(card.id)
                 )
                 let randomIndex = Math.floor(Math.random() * included.length)
                 return included[randomIndex]
