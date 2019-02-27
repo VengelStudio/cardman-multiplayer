@@ -41,14 +41,26 @@ const Cards = {
     //         return currentGame
     //     }
     // },
-    // REMOVE_ONE_UNFITTING_CARD: {
-    //     id: 'REMOVE_ONE_UNFITTING_CARD',
-    //     title: 'Remove one unfitting letter.',
-    //     description: 'Removes one unfitting letter from the current word.',
-    //     use: () => {
-    //         console.log('REMOVE_ONE_UNFITTING_CARD card used')
-    //     }
-    // },
+    REMOVE_ONE_UNFITTING_CARD: {
+        id: 'REMOVE_ONE_UNFITTING_CARD',
+        title: 'Remove one unfitting letter.',
+        description: 'Removes one unfitting letter from the current word.',
+        use: ({ currentGame, socket, move }) => {
+            let { word } = currentGame.word
+            let wordKeys = Array.from(word.toUpperCase())
+            for (let i = 65; i <= 90; i++) {
+                let letter = String.fromCharCode(i).toUpperCase()
+                if (!wordKeys.includes(letter)) {
+                    currentGame.keys.push({
+                        key: letter,
+                        playerSocketId: socket.user.socketId
+                    })
+                    return currentGame
+                }
+            }
+            return currentGame
+        }
+    },
     // REMOVE_TWO_UNFITTING_CARD: {
     //     id: 'REMOVE_TWO_UNFITTING_CARD',
     //     title: 'Remove two unfitting letters.',
@@ -89,17 +101,26 @@ const Cards = {
         title: 'Swap with opponent.',
         description: 'Swap your card for a random opponents card ',
         use: ({ currentGame, socket, move }) => {
-            let enemySocket = currentGame.playerSockets.filter(e => { return e.socketId != move.playerSocketId })[0].socketId
+            let enemySocket = currentGame.playerSockets.filter(e => {
+                return e.socketId != move.playerSocketId
+            })[0].socketId
             let enemyCards = currentGame.cards[enemySocket]
             let myCards = currentGame.cards[move.playerSocketId]
 
             let randomIndexOfMine = Math.floor(Math.random() * myCards.length)
-            let randomIndexOfOpponent = Math.floor(Math.random() * enemyCards.length)
+            let randomIndexOfOpponent = Math.floor(
+                Math.random() * enemyCards.length
+            )
 
-            let a = myCards[randomIndexOfMine]
-            enemyCards[randomIndexOfOpponent] = a
-            myCards[randomIndexOfMine] = enemyCards[randomIndexOfOpponent]
+            if (enemyCards.length >= 1 && myCards.length >= 2) {
+                let a = myCards[randomIndexOfMine]
+                enemyCards[randomIndexOfOpponent] = a
+                myCards[randomIndexOfMine] = enemyCards[randomIndexOfOpponent]
+                currentGame.cards[enemySocket] = enemyCards
+                currentGame.cards[move.playerSocketId] = myCards
+            }
 
+            return currentGame
         }
     },
     RANDOMIZE_YOURSELF_CARD: {
@@ -126,7 +147,9 @@ const Cards = {
         use: ({ currentGame, socket, move }) => {
             console.log('RANDOMIZE_ENEMY_CARD card used')
 
-            let enemySocket = currentGame.playerSockets.filter(e => { return e.socketId != move.playerSocketId })[0].socketId
+            let enemySocket = currentGame.playerSockets.filter(e => {
+                return e.socketId != move.playerSocketId
+            })[0].socketId
 
             let getRandomCard = (exception = null) => {
                 let excluded = ['RANDOMIZE_YOURSELF_CARD', exception]

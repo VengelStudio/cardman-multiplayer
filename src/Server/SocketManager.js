@@ -167,13 +167,21 @@ module.exports = function(socket) {
     socket.on(GAME_MOVE, ({ game, moves }) => {
         let currentGame = games[game.id]
         let player = game.playerSockets[game.nextPlayerIndex]
-
+        let enemy = game.playerSockets[1 - game.nextPlayerIndex]
         if (player.id === socket.user.id) {
             moves.forEach(move => {
                 if (move.type === 'key') {
                     currentGame.guessed.push({
                         key: move.key,
                         playerSocketId: move.playerSocketId
+                    })
+                    currentGame.keys.push({
+                        key: move.key,
+                        playerSocketId: move.playerSocketId
+                    })
+                    currentGame.keys.push({
+                        key: move.key,
+                        playerSocketId: enemy.socketId
                     })
                 } else if (move.type === 'card') {
                     let cardName = move.card

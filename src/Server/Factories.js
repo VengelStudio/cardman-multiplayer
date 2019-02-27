@@ -23,6 +23,7 @@ const createGame = ({
     nextPlayerIndex,
     score: {},
     cards: {},
+    keys: [],
     dateTime: new Date().toJSON
 })
 
