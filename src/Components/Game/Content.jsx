@@ -91,19 +91,32 @@ class Content extends Component {
     }
 
     onEndTurn = () => {
-        if (this.props.move) {
-            let moves = []
-            let { keyMove, cardMoves } = this.state
-            if (keyMove !== null) moves.push(keyMove)
-            if (cardMoves !== []) moves = [...moves, ...cardMoves]
-            this.props.moveHandler({ moves })
-            this.setSelectedKey(null)
-            this.props.updateUsedCardIndexes({ 0: false, 1: false, 2: false })
-            this.setState({
-                keyMove: null,
-                cardMoves: []
+        if (this.state.keyMove !== null || this.state.cardMoves.length > 0) {
+            if (this.props.move) {
+                let moves = []
+                let { keyMove, cardMoves } = this.state
+                if (keyMove !== null) moves.push(keyMove)
+                if (cardMoves !== []) moves = [...moves, ...cardMoves]
+                this.props.moveHandler({ moves })
+                this.setSelectedKey(null)
+                this.props.updateUsedCardIndexes({
+                    0: false,
+                    1: false,
+                    2: false
+                })
+                this.setState({
+                    keyMove: null,
+                    cardMoves: []
+                })
+                this.props.playSound(flipSound3)
+            }
+        } else {
+            this.props.addPopup({
+                popupData: {
+                    title: 'You need to move',
+                    content: "You can't move without making any choice."
+                }
             })
-            this.props.playSound(flipSound3)
         }
     }
 

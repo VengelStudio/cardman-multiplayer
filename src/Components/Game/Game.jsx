@@ -8,7 +8,6 @@ import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
 
-import { POPUP_CONFIRMATION } from '../Popup/Types'
 const { isMove } = require('../../Shared/Functions')
 const { winHandler } = require('./Functions')
 const { setScore } = require('../../Shared/Functions')
@@ -39,7 +38,6 @@ class Game extends Component {
         socket.on(WIN, ({ winner, score, type, game }) => {
             if (type === Result.TURN_WIN || type === Result.TURN_TIE) {
                 this.props.addPopup({
-                    type: POPUP_CONFIRMATION,
                     popupData: {
                         title: 'Guessed word',
                         content: this.state.game.word.word

@@ -24,9 +24,23 @@ const Cards = {
                 return arr[randomIndex].toUpperCase()
             }
 
+            let key = randomCorrectLetter()
             currentGame.guessed.push({
-                key: randomCorrectLetter(),
+                key,
                 playerSocketId: move.playerSocketId
+            })
+            let playerSocket =
+                currentGame.playerSockets[currentGame.nextPlayerIndex].socketId
+            let enemySocket =
+                currentGame.playerSockets[1 - currentGame.nextPlayerIndex]
+                    .socketId
+            currentGame.keys.push({
+                key,
+                playerSocketId: playerSocket
+            })
+            currentGame.keys.push({
+                key,
+                playerSocketId: enemySocket
             })
             return currentGame
         }
@@ -48,27 +62,44 @@ const Cards = {
         use: ({ currentGame, socket, move }) => {
             let { word } = currentGame.word
             let wordKeys = Array.from(word.toUpperCase())
+            let myKeys = []
+            currentGame.keys.forEach(key => {
+                if (key.playerSocketId === socket.user.socketId) {
+                    myKeys.push(key.key)
+                }
+            })
+            let candidates = []
             for (let i = 65; i <= 90; i++) {
                 let letter = String.fromCharCode(i).toUpperCase()
-                if (!wordKeys.includes(letter)) {
-                    currentGame.keys.push({
-                        key: letter,
-                        playerSocketId: socket.user.socketId
-                    })
-                    return currentGame
+                if (!wordKeys.includes(letter) && !myKeys.includes(letter)) {
+                    candidates.push(letter)
                 }
             }
+            currentGame.keys.push({
+                key: candidates[Math.floor(Math.random() * candidates.length)],
+                playerSocketId: socket.user.socketId
+            })
             return currentGame
         }
     },
-    // REMOVE_TWO_UNFITTING_CARD: {
-    //     id: 'REMOVE_TWO_UNFITTING_CARD',
-    //     title: 'Remove two unfitting letters.',
-    //     description: 'Removes two unfitting letters from the current word.',
-    //     use: () => {
-    //         console.log('REMOVE_TWO_UNFITTING_CARD card used')
-    //     }
-    // },
+    REMOVE_TWO_UNFITTING_CARD: {
+        id: 'REMOVE_TWO_UNFITTING_CARD',
+        title: 'Remove two unfitting letters.',
+        description: 'Removes two unfitting letters from the current word.',
+        use: ({ currentGame, socket, move }) => {
+            currentGame = Cards.REMOVE_ONE_UNFITTING_CARD.use({
+                currentGame,
+                socket,
+                move
+            })
+            currentGame = Cards.REMOVE_ONE_UNFITTING_CARD.use({
+                currentGame,
+                socket,
+                move
+            })
+            return currentGame
+        }
+    },
     // BLOCK_CARD: {
     //     id: 'BLOCK_CARD',
     //     title: 'Block enemy for 2 turns.',

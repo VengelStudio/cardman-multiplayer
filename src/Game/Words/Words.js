@@ -31,6 +31,7 @@ let handleWin = (game, result) => {
     let winObject = null
     if (result === Result.TURN_WIN) {
         game.guessed = []
+        game.keys = []
         game.score[nextPlayer.socketId] += 1
         winObject = {
             winner: nextPlayer,
@@ -55,6 +56,7 @@ let handleWin = (game, result) => {
         }
     } else if (result === Result.TURN_TIE) {
         game.guessed = []
+        game.keys = []
         let randomWord = getRandomWord(data.words)
         game.word = randomWord
         game.displayWord = displayWord(game)
@@ -123,7 +125,7 @@ let displayWord = game => {
     return result.charAt(0).toUpperCase() + result.slice(1, result.length - 1)
 }
 
-let onKeyMove = () => { }
+let onKeyMove = () => {}
 
 module.exports = {
     displayWord,
