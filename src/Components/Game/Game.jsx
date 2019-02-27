@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+
 import PropTypes from 'prop-types'
 import ReactAudioPlayer from 'react-audio-player'
 
 import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
+
+import { POPUP_CONFIRMATION } from '../Popup/Types'
 const { isMove } = require('../../Shared/Functions')
 const { winHandler } = require('./Functions')
 const { setScore } = require('../../Shared/Functions')
 const { GAME_MOVE, WIN } = require('../../Shared/Events')
-
+const { Result } = require('../../Shared/Enums')
 class Game extends Component {
     state = {
         game: this.props.game,
@@ -34,6 +37,15 @@ class Game extends Component {
             })
         })
         socket.on(WIN, ({ winner, score, type, game }) => {
+            if (type === Result.TURN_WIN || type === Result.TURN_TIE) {
+                this.props.addPopup({
+                    type: POPUP_CONFIRMATION,
+                    popupData: {
+                        title: 'Guessed word',
+                        content: this.state.game.word.word
+                    }
+                })
+            }
             let winObj = winHandler({
                 type,
                 setScore,
@@ -45,6 +57,7 @@ class Game extends Component {
                     this.props.history.push('/browser')
                 }
             })
+
             this.setState({ ...winObj })
         })
     }
@@ -148,6 +161,7 @@ class Game extends Component {
                     onMoveTimeout={this.onMoveTimeout}
                     move={this.props.isMove}
                     game={this.state.game}
+                    addPopup={this.props.addPopup}
                     isCardTargetHighlight={this.state.cardTargetHighlight}
                     playSound={this.playSound}
                 />
