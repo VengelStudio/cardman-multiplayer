@@ -84,6 +84,24 @@ const Cards = {
     //         let enemyCards = currentGame.cards[enemySocket]
     //     }
     // },
+    SWAP_RANDOM_CARDS: {
+        id: 'SWAP_RANDOM_CARDS',
+        title: 'Swap with opponent.',
+        description: 'Swap your card for a random opponents card ',
+        use: ({ currentGame, socket, move }) => {
+            let enemySocket = currentGame.playerSockets.filter(e => { return e.socketId != move.playerSocketId })[0].socketId
+            let enemyCards = currentGame.cards[enemySocket]
+            let myCards = currentGame.cards[move.playerSocketId]
+
+            let randomIndexOfMine = Math.floor(Math.random() * myCards.length)
+            let randomIndexOfOpponent = Math.floor(Math.random() * enemyCards.length)
+
+            let a = myCards[randomIndexOfMine]
+            enemyCards[randomIndexOfOpponent] = a
+            myCards[randomIndexOfMine] = enemyCards[randomIndexOfOpponent]
+
+        }
+    },
     RANDOMIZE_YOURSELF_CARD: {
         id: 'RANDOMIZE_YOURSELF_CARD',
         title: 'Randomize a card',
@@ -100,15 +118,32 @@ const Cards = {
             currentGame.cards[move.playerSocketId].push(getRandomCard())
             return currentGame
         }
+    },
+    RANDOMIZE_ENEMY_CARD: {
+        id: 'RANDOMIZE_ENEMY_CARD',
+        title: 'Randomize an enemies card',
+        description: 'A random card of your opponent gets changed.',
+        use: ({ currentGame, socket, move }) => {
+            console.log('RANDOMIZE_ENEMY_CARD card used')
+
+            let enemySocket = currentGame.playerSockets.filter(e => { return e.socketId != move.playerSocketId })[0].socketId
+
+            let getRandomCard = (exception = null) => {
+                let excluded = ['RANDOMIZE_YOURSELF_CARD', exception]
+                let included = Object.values(Cards).filter(
+                    card => !excluded.includes(card.id)
+                )
+                let randomIndex = Math.floor(Math.random() * included.length)
+                return included[randomIndex]
+            }
+            let enemyCardAmount = currentGame.cards[enemySocket].length
+            let randomIndex = Math.floor(Math.random() * enemyCardAmount)
+            if (enemyCardAmount > 0) {
+                currentGame.cards[enemySocket][randomIndex] = getRandomCard()
+            }
+            return currentGame
+        }
     }
-    // RANDOMIZE_ENEMY_CARD: {
-    //     id: 'RANDOMIZE_ENEMY_CARD',
-    //     title: 'Randomize an enemies card',
-    //     description: 'A random card of your opponent gets changed.',
-    //     use: () => {
-    //         console.log('RANDOMIZE_ENEMY_CARD card used')
-    //     }
-    // }
 }
 
 const getCard = card => {
