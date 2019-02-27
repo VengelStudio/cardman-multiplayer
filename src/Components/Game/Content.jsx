@@ -156,7 +156,7 @@ class Content extends Component {
                             <Keyboard
                                 player={this.props.player}
                                 moveHandler={this.onMove}
-                                guessed={this.props.game.guessed}
+                                keys={this.props.game.keys}
                                 setSelectedKey={this.setSelectedKey}
                                 clickedIndex={this.state.clickedIndex}
                             />

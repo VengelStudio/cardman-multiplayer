@@ -8,16 +8,13 @@ class Keyboard extends Component {
         let result = []
         for (let i = 65; i <= 90; i++) {
             let letter = String.fromCharCode(i).toUpperCase()
-            let isUsed = false
-            let guessedKeys = []
-            let guessed = this.props.guessed
-
-            for (let j = 0; j < guessed.length; j++) {
-                guessedKeys.push(guessed[j].key)
-            }
-            if (guessedKeys.includes(letter)) {
-                isUsed = true
-            }
+            let myKeys = this.props.keys.filter(
+                key => key.playerSocketId === this.props.player.socketId
+            )
+            myKeys = myKeys.map(key => {
+                return key.key
+            })
+            let isUsed = myKeys.includes(letter)
 
             let isClicked = this.props.clickedIndex === i
             let onClick = index => {
