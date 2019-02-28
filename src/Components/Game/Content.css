@@ -38,6 +38,7 @@
     align-items: center;
 }
 
+
 @keyframes glowing {
     from {
         box-shadow: 0 0 10px 0px rgba(247, 217, 22, 1);

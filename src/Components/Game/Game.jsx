@@ -7,6 +7,7 @@ import ReactAudioPlayer from 'react-audio-player'
 import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
+import Walkthrough from './Walkthrough';
 
 const { isMove } = require('../../Shared/Functions')
 const { winHandler } = require('./Functions')
@@ -133,6 +134,9 @@ class Game extends Component {
         }
         return (
             <div className='gameWrapper'>
+                <Walkthrough>
+
+                </Walkthrough>
                 <ReactAudioPlayer
                     volume={this.props.soundVolume}
                     src={this.state.soundSrc}
@@ -172,7 +176,7 @@ class Game extends Component {
                     setCardTargetHighlight={this.setCardTargetHighlight}
                     playSound={this.playSound}
                 />
-            </div>
+            </div >
         )
     }
 }

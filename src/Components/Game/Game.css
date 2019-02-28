@@ -116,6 +116,32 @@
     width: 40vw;
     justify-content: center;
 }
+.walkthrough{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: absolute;
+    background-color:#353535;
+    width:100%;
+    height:100%;
+    z-index: 10000;
+}
+.walkthrough-disabled{
+    visibility: hidden;
+    position: absolute;
+    z-index: -1000;
+}
+.ok-btn-wrapper{
+    display: flex;
+    justify-content: center;
+}
+.ok-btn{
+    margin-bottom: 20vh;
+    cursor: pointer;
+    font-size: 30px;
+    width: 15vh;
+    height: 8vh;
+}
 
 .key {
     display: block;
