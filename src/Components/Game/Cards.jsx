@@ -6,6 +6,7 @@ import { Draggable } from 'react-drag-and-drop'
 
 import flipSound1 from '../../Resources/Sounds/card_flip.mp3'
 import flipSound2 from '../../Resources/Sounds/card_flip2.mp3'
+const { Cards: CardsData } = require('../../Game/Cards/Cards')
 
 class Cards extends Component {
     state = { displayTooltip: this.props.areMine }
@@ -24,13 +25,13 @@ class Cards extends Component {
         return null
     }
 
-    GenerateCard = ({ card, isMine, index }) => {
+    GenerateCard = ({ card, isMine, index, isDisabled }) => {
         if (isMine) {
             let isUsed = this.props.usedCardIndexes[index]
             let data = JSON.stringify({ cardId: card.id, index })
             return (
                 <Draggable
-                    enabled={isMine && !isUsed}
+                    enabled={isMine && !isUsed && !isDisabled}
                     onDragStart={() => {
                         this.setState({ displayTooltip: false })
                         this.props.playSound(flipSound1)
@@ -46,6 +47,7 @@ class Cards extends Component {
                 >
                     <li>
                         <Card
+                            isDisabled={isDisabled}
                             index={index}
                             card={card}
                             displayTooltip={this.state.displayTooltip}
@@ -74,14 +76,23 @@ class Cards extends Component {
     CardsSpawner = () => {
         let { cards } = this.props
         if (cards !== null) {
-            return cards.map((card, i) => (
-                <this.GenerateCard
-                    card={card}
-                    index={i}
-                    key={i}
-                    isMine={this.props.areMine}
-                />
-            ))
+            return cards.map((card, i) => {
+                let cardData = CardsData[card.id]
+                return (
+                    <this.GenerateCard
+                        card={card}
+                        index={i}
+                        key={i}
+                        isMine={this.props.areMine}
+                        isDisabled={
+                            !cardData.doesMeetConditions(
+                                this.props.game,
+                                this.props.player
+                            )
+                        }
+                    />
+                )
+            })
         } else {
             return null
         }

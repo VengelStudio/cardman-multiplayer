@@ -156,6 +156,8 @@ class Game extends Component {
                     title='Your cards:'
                     setCardTargetHighlight={this.setCardTargetHighlight}
                     playSound={this.playSound}
+                    game={this.state.game}
+                    player={this.props.player}
                 />
                 <Content
                     player={this.props.player}
@@ -177,6 +179,8 @@ class Game extends Component {
                     title='Enemy cards:'
                     setCardTargetHighlight={this.setCardTargetHighlight}
                     playSound={this.playSound}
+                    game={this.state.game}
+                    player={this.props.player}
                 />
             </div>
         )

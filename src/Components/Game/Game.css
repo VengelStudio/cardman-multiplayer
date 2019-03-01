@@ -226,7 +226,8 @@ svg.timer-svg {
 .card:hover .card-info {
     visibility: visible;
     opacity: 1;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     animation: infoSlide 350ms ease-in-out 1 forwards;
 }

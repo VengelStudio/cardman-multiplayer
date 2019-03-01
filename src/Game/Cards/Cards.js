@@ -43,6 +43,9 @@ const Cards = {
                 playerSocketId: enemySocket
             })
             return currentGame
+        },
+        doesMeetConditions: game => {
+            return true
         }
     },
     // ADDITIONAL_LETTER_CARD: {
@@ -80,6 +83,9 @@ const Cards = {
                 playerSocketId: socket.user.socketId
             })
             return currentGame
+        },
+        doesMeetConditions: game => {
+            return true
         }
     },
     REMOVE_TWO_UNFITTING_CARD: {
@@ -98,6 +104,9 @@ const Cards = {
                 move
             })
             return currentGame
+        },
+        doesMeetConditions: game => {
+            return true
         }
     },
     // BLOCK_CARD: {
@@ -130,7 +139,13 @@ const Cards = {
     SWAP_RANDOM_CARDS: {
         id: 'SWAP_RANDOM_CARDS',
         title: 'Swap with opponent.',
-        description: 'Swap your card for a random opponents card ',
+        description: `<span>
+                <b>Swap your card for a random opponents card.</b>
+            </span>
+            <span>
+                You must have a card besides this one in the deck. Your
+                opponent has to have at least 1 card.
+            </span>`,
         use: ({ currentGame, socket, move }) => {
             let enemySocket = currentGame.playerSockets.filter(e => {
                 return e.socketId != move.playerSocketId
@@ -160,6 +175,27 @@ const Cards = {
             }
 
             return currentGame
+        },
+        doesMeetConditions: (game, player) => {
+            let cards = game.cards
+            let mySocketId = player.socketId
+            let myCards = cards[mySocketId]
+            let enemySocketId = game.playerSockets.filter(x => {
+                return x.socketId !== player.socketId
+            })[0].socketId
+            let enemyCards = cards[enemySocketId]
+
+            let doOtherCardsExist = false
+            for (let i = 0; i < myCards.length; i++) {
+                if (myCards[i].id !== Cards.SWAP_RANDOM_CARDS.id) {
+                    doOtherCardsExist = true
+                    break
+                }
+            }
+
+            if (doOtherCardsExist === false) return false
+            if (enemyCards.length === 0) return false
+            return true
         }
     },
     RANDOMIZE_YOURSELF_CARD: {
@@ -177,6 +213,9 @@ const Cards = {
             }
             currentGame.cards[move.playerSocketId].push(getRandomCard())
             return currentGame
+        },
+        doesMeetConditions: game => {
+            return true
         }
     },
     RANDOMIZE_ENEMY_CARD: {
@@ -204,6 +243,9 @@ const Cards = {
                 currentGame.cards[enemySocket][randomIndex] = getRandomCard()
             }
             return currentGame
+        },
+        doesMeetConditions: game => {
+            return true
         }
     }
 }
@@ -228,7 +270,8 @@ const generateCards = amount => {
 
 const resupplyCards = game => {
     let { cards } = game
-    for (player of Object.keys(cards)) {
+    for (let i = 0; i < Object.keys(cards).length; i++) {
+        let player = Object.keys(cards)[i]
         let newCards = cards[player]
         if (newCards.length < 3) {
             newCards.push(getRandomCard())
