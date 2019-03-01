@@ -108,7 +108,7 @@
     display: flex;
     flex-direction: row;
     position: absolute;
-    top:6.6vh;
+    top: 6.6vh;
     flex-wrap: wrap;
     background-color: rgb(53, 53, 53);
     padding: 1vh;
@@ -116,33 +116,31 @@
     width: 40vw;
     justify-content: center;
 }
-.walkthrough{
+.walkthrough {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     position: absolute;
-    background-color:#353535;
-    width:100%;
-    height:100%;
+    background-color: #353535;
+    width: 100%;
+    height: 100%;
     z-index: 10000;
 }
-.walkthrough-disabled{
-    visibility: hidden;
-    position: absolute;
-    z-index: -1000;
-}
-.ok-btn-wrapper{
+.ok-btn-wrapper {
     display: flex;
     justify-content: center;
 }
-.ok-btn{
+.ok-btn {
     margin-bottom: 20vh;
     cursor: pointer;
-    font-size: 30px;
+    font-size: 3vh;
     width: 15vh;
     height: 8vh;
 }
-
+.ok-btn-pressed {
+    background-color: #68ac1a;
+    font-size: 2vh;
+}
 .key {
     display: block;
     cursor: pointer;

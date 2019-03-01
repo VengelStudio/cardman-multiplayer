@@ -143,7 +143,15 @@ const Cards = {
                 Math.random() * enemyCards.length
             )
 
-            if (enemyCards.length >= 1 && myCards.length >= 2) {
+            let doOtherCardsExist = false
+            for (let i = 0; i < myCards.length; i++) {
+                if (myCards[i].id !== Cards.SWAP_RANDOM_CARDS.id) {
+                    doOtherCardsExist = true
+                    break
+                }
+            }
+
+            if (enemyCards.length >= 1 && !doOtherCardsExist) {
                 let a = myCards[randomIndexOfMine]
                 enemyCards[randomIndexOfOpponent] = a
                 myCards[randomIndexOfMine] = enemyCards[randomIndexOfOpponent]

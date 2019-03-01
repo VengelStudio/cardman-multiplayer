@@ -1,22 +1,39 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
-import "./Walkthrough.css"
+import { WALKTHROUGH_READY } from '../../Shared/Events'
+import './Walkthrough.css'
 
 class Walkthrough extends Component {
-    state = { walkthroughVisibility: true, }
-    closeWalkthrough = () => {
-        this.setState({ walkthroughVisibility: false })
+    state = { buttonVisibility: true }
+
+    onReady = () => {
+        const { socket } = this.props
+        socket.emit(WALKTHROUGH_READY, { gameId: this.props.gameId })
+        this.setState({ buttonVisibility: false })
     }
+
+    componentDidMount() {
+        this.props.setTitle({ title: 'Walkthrough' })
+    }
+
     render() {
-        let walkthroughClass = this.state.walkthroughVisibility ? "walkthrough" : "walkthrough-disabled"
+        let buttonClass = this.state.buttonVisibility
+            ? 'ok-btn border-neon border-neon-orange'
+            : 'ok-btn-pressed ok-btn border-neon border-neon-orange'
+        let content = this.state.buttonVisibility
+            ? 'READY'
+            : 'Waiting for opponent...'
         return (
-            <div className={walkthroughClass}>
-                <div className="ok-btn-wrapper" >
-                    <button className="ok-btn border-neon border-neon-orange" onClick={this.closeWalkthrough}>OK</button>
+            <div className='gameWrapper'>
+                <div className='walkthrough'>
+                    <div className='ok-btn-wrapper'>
+                        <button className={buttonClass} onClick={this.onReady}>
+                            {content}
+                        </button>
+                    </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default Walkthrough;
+export default Walkthrough

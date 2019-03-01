@@ -7,12 +7,17 @@ import ReactAudioPlayer from 'react-audio-player'
 import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
-import Walkthrough from './Walkthrough';
+import Walkthrough from './Walkthrough'
 
 const { isMove } = require('../../Shared/Functions')
 const { winHandler } = require('./Functions')
 const { setScore } = require('../../Shared/Functions')
-const { GAME_MOVE, WIN } = require('../../Shared/Events')
+const {
+    GAME_MOVE,
+    WIN,
+    GAME_CREATED,
+    WALKTHROUGH_READY
+} = require('../../Shared/Events')
 const { Result } = require('../../Shared/Enums')
 class Game extends Component {
     state = {
@@ -134,9 +139,6 @@ class Game extends Component {
         }
         return (
             <div className='gameWrapper'>
-                <Walkthrough>
-
-                </Walkthrough>
                 <ReactAudioPlayer
                     volume={this.props.soundVolume}
                     src={this.state.soundSrc}
@@ -176,7 +178,7 @@ class Game extends Component {
                     setCardTargetHighlight={this.setCardTargetHighlight}
                     playSound={this.playSound}
                 />
-            </div >
+            </div>
         )
     }
 }

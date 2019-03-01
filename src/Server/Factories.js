@@ -16,6 +16,7 @@ const createGame = ({
     guessed = []
 }) => ({
     id: uuidv4(),
+    readyCounter: 0,
     word,
     displayWord,
     guessed,

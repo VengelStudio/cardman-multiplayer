@@ -18,7 +18,8 @@ import {
     INVITATION,
     GAME_STARTED,
     REFRESH_PLAYERS,
-    INVITATION_ACCEPTED
+    INVITATION_ACCEPTED,
+    GAME_CREATED
 } from './Shared/Events'
 import { isMove } from './Shared/Functions'
 
@@ -26,6 +27,7 @@ import { Route, withRouter, Switch } from 'react-router-dom'
 
 import ReactAudioPlayer from 'react-audio-player'
 import bgMusic from './Resources/Sounds/bg-lower.mp3'
+import Walkthrough from './Components/Game/Walkthrough'
 
 const uuidv4 = require('uuid/v4')
 const socketUrl = 'http://localhost:3231'
@@ -48,7 +50,8 @@ class App extends React.Component {
                 soundVol: 0.5,
                 muted: false
             },
-            isDisconnected: false
+            isDisconnected: false,
+            gameId: null
         }
     }
 
@@ -141,7 +144,6 @@ class App extends React.Component {
                 this.setState({ connectedPlayers })
             })
         })
-
         socket.on(INVITATION, ({ nickname, socketId }) => {
             const { socket } = this.state
             this.addPopup({
@@ -154,11 +156,15 @@ class App extends React.Component {
                             to: this.state.player
                         })
                     },
-                    onDecline: () => { }
+                    onDecline: () => {}
                 }
             })
         })
-
+        socket.on(GAME_CREATED, ({ gameId }) => {
+            this.setState({ gameId }, () => {
+                this.props.history.push('/walkthrough')
+            })
+        })
         socket.on(GAME_STARTED, ({ game }) => {
             this.setGame({ game })
             this.setMove(isMove({ game, player: this.state.player }))
@@ -272,6 +278,21 @@ class App extends React.Component {
                                     invitationHandler={this.invitationHandler}
                                     connectedPlayers={
                                         this.state.connectedPlayers
+                                    }
+                                />
+                            )}
+                        />
+                        <Route
+                            path='/walkthrough'
+                            render={() => (
+                                <Walkthrough
+                                    player={this.state.player}
+                                    setTitle={this.setTitle}
+                                    gameId={this.state.gameId}
+                                    muteMusic={this.muteMusic}
+                                    socket={this.state.socket}
+                                    soundVolume={
+                                        this.state.volumeSettings.soundVol
                                     }
                                 />
                             )}

@@ -10,7 +10,9 @@ const {
     GAME_STARTED,
     GAME_MOVE,
     WIN,
-    REFRESH_PLAYERS
+    REFRESH_PLAYERS,
+    WALKTHROUGH_READY,
+    GAME_CREATED
 } = require('../Shared/Events')
 
 const { createPlayer, createGame } = require('../Server/Factories')
@@ -156,12 +158,20 @@ module.exports = function(socket) {
             true,
             game
         )
-        io.emit(REFRESH_PLAYERS, { connectedPlayers })
 
-        io.in(game.id).emit(GAME_STARTED, { game })
+        io.emit(REFRESH_PLAYERS, { connectedPlayers })
+        io.in(game.id).emit(GAME_CREATED, { gameId: game.id })
+
         console.log(
             `[GAME] ${fromSocketId} vs ${to.socketId}, gameID: ${game.id}.`
         )
+    })
+
+    socket.on(WALKTHROUGH_READY, ({ gameId }) => {
+        if (games[gameId].readyCounter === 1) {
+            io.in(gameId).emit(GAME_STARTED, { game: games[gameId] })
+        }
+        games[gameId].readyCounter = 1
     })
 
     socket.on(GAME_MOVE, ({ game, moves }) => {
@@ -169,6 +179,10 @@ module.exports = function(socket) {
         let player = game.playerSockets[game.nextPlayerIndex]
         let enemy = game.playerSockets[1 - game.nextPlayerIndex]
         if (player.id === socket.user.id) {
+            moves = moves.sort((a, b) => {
+                if (a.type === 'key') return -1
+                else return 1
+            })
             moves.forEach(move => {
                 if (move.type === 'key') {
                     currentGame.guessed.push({

@@ -102,7 +102,7 @@ PlayersBrowser.propTypes = {
     addPopup: PropTypes.func.isRequired,
     connectedPlayers: PropTypes.object.isRequired,
     invitationHandler: PropTypes.func.isRequired,
-    player: PropTypes.object.isRequired,
+    player: PropTypes.object,
     playersInBrowser: PropTypes.array,
     setTitle: PropTypes.func.isRequired
 }
