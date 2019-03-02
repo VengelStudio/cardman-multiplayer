@@ -101,6 +101,7 @@ module.exports = function(socket) {
 
                 games = removeGame(playersGame, games)
                 io.in(socket.user.gameId).emit(WIN, winObject)
+                io.sockets.connected[socket.user.socketId].leaveAll()
                 io.emit(REFRESH_PLAYERS, { connectedPlayers })
             }
         }
@@ -144,6 +145,7 @@ module.exports = function(socket) {
 
         for (let i = 0; i <= 1; i++) {
             game.score[playerSockets[i].socketId] = 0
+            game.blockCounters[playerSockets[i].socketId] = 0
             game.cards[playerSockets[i].socketId] = generateCards(3)
         }
 
@@ -178,6 +180,9 @@ module.exports = function(socket) {
         let currentGame = games[game.id]
         let player = game.playerSockets[game.nextPlayerIndex]
         let enemy = game.playerSockets[1 - game.nextPlayerIndex]
+
+        let blockCounter = currentGame.blockCounters[player.socketId]
+        console.log(currentGame)
         if (player.id === socket.user.id) {
             moves = moves.sort((a, b) => {
                 if (a.type === 'key') return -1
@@ -197,7 +202,7 @@ module.exports = function(socket) {
                         key: move.key,
                         playerSocketId: enemy.socketId
                     })
-                } else if (move.type === 'card') {
+                } else if (move.type === 'card' && blockCounter === 0) {
                     let cardName = move.card
                     let card = getCard(cardName)
                     currentGame = card.use({ currentGame, socket, move })
@@ -208,6 +213,9 @@ module.exports = function(socket) {
                     )
                 }
             })
+            if (blockCounter > 0)
+                currentGame.blockCounters[player.socketId] = blockCounter - 1
+            console.log(player.socketId + ': ' + blockCounter)
 
             currentGame.displayWord = displayWord(currentGame)
 
@@ -235,6 +243,10 @@ module.exports = function(socket) {
                     currentGame.cards = resupplyCards(currentGame)
                 }
                 io.in(game.id).emit(WIN, win.winObject)
+                if (winType === Result.GAME_WIN) {
+                    io.sockets.connected[player.socketId].leave(game.id)
+                    io.sockets.connected[enemy.socketId].leave(game.id)
+                }
                 io.emit(REFRESH_PLAYERS, { connectedPlayers })
                 return
             }

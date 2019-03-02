@@ -22,6 +22,7 @@ const createGame = ({
     guessed,
     playerSockets,
     nextPlayerIndex,
+    blockCounters: {},
     score: {},
     cards: {},
     keys: [],
