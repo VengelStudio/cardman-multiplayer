@@ -7,9 +7,10 @@ import './Content.css'
 import cardDropSound from '../../Resources/Sounds/card_drop.mp3'
 import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
 import buttonClick from '../../Resources/Sounds/button_click.mp3'
+const { Cards: CardsData } = require('../../Game/Cards/Cards')
 
 class Content extends Component {
-    state = { keyMove: null, cardMoves: [], clickedIndex: null }
+    state = { keyMove: null, cardMoves: [], clickedIndex: null, showDefinition: false }
 
     static getDerivedStateFromProps(props, state) {
         let newCardMoves = state.cardMoves
@@ -109,6 +110,20 @@ class Content extends Component {
                     cardMoves: []
                 })
                 this.props.playSound(flipSound3)
+                cardMoves.forEach(e => {
+                    if (e.card === CardsData.DEFINITION_CARD.id) {
+                        let definitions = this.props.game.word.definitions
+                        let randomIndex = Math.floor(Math.random() * definitions.length)
+
+                        this.props.addPopup({
+                            popupData: {
+                                title: 'Word definition',
+                                content: definitions[randomIndex]
+                            }
+                        })
+
+                    }
+                });
             }
         } else {
             this.props.addPopup({

@@ -1,12 +1,17 @@
 const Cards = {
-    // DEFINITION_CARD: {
-    //     id: 'DEFINITION_CARD',
-    //     title: 'Definition card',
-    //     description: 'Shows you a definition of the word.',
-    //     use: () => {
-    //         console.log('DEFINITION_CARD card used')
-    //     }
-    // },
+    DEFINITION_CARD: {
+        id: 'DEFINITION_CARD',
+        title: 'Definition card',
+        description: 'Shows you a definition of the word.',
+        use: ({ currentGame, socket, move }) => {
+            console.log('DEFINITION_CARD card used')
+            return currentGame
+
+        },
+        doesMeetConditions: game => {
+            return true
+        }
+    },
     RANDOM_CORRECT_LETTER_CARD: {
         id: 'RANDOM_CORRECT_LETTER_CARD',
         title: 'Random correct letter',
@@ -48,16 +53,19 @@ const Cards = {
             return true
         }
     },
-    // ADDITIONAL_LETTER_CARD: {
-    //     id: 'ADDITIONAL_LETTER_CARD',
-    //     title: 'Additional letter',
-    //     description: 'You can choose two letters in a turn.',
-    //     use: ({ currentGame, socket, move }) => {
-    //         console.log('ADDITIONAL_LETTER_CARD card used')
-    //         currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
-    //         return currentGame
-    //     }
-    // },
+    ADDITIONAL_TURN_CARD: {
+        id: 'ADDITIONAL_TURN_CARD',
+        title: 'Additional letter',
+        description: 'You can choose two letters in a turn.',
+        use: ({ currentGame, socket, move }) => {
+            console.log('ADDITIONAL_TURN_CARD card used')
+            currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
+            return currentGame
+        },
+        doesMeetConditions: game => {
+            return true
+        }
+    },
     REMOVE_ONE_UNFITTING_CARD: {
         id: 'REMOVE_ONE_UNFITTING_CARD',
         title: 'Remove one unfitting letter.',
@@ -154,9 +162,16 @@ const Cards = {
             let myCards = currentGame.cards[move.playerSocketId]
 
             let randomIndexOfMine = Math.floor(Math.random() * myCards.length)
-            let randomIndexOfOpponent = Math.floor(
-                Math.random() * enemyCards.length
-            )
+            let randomIndexOfOpponent = null
+            let isSwap = true
+            while (isSwap) {
+                randomIndexOfOpponent = Math.floor(
+                    Math.random() * enemyCards.length
+                )
+                if (enemyCards[randomIndexOfOpponent].id !== Cards.SWAP_RANDOM_CARDS.id) {
+                    isSwap = false
+                }
+            }
 
             let doOtherCardsExist = false
             for (let i = 0; i < myCards.length; i++) {

@@ -35,7 +35,7 @@ class Game extends Component {
         const { socket } = this.props
         socket.on(GAME_MOVE, ({ game }) => {
             this.setState({ game: game }, () => {
-                console.log(game.keys)
+                console.log(game.word)
                 this.props.setMove(
                     isMove({ game: this.state.game, player: this.props.player })
                 )
