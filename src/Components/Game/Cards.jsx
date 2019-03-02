@@ -25,13 +25,14 @@ class Cards extends Component {
         return null
     }
 
-    GenerateCard = ({ card, isMine, index, isDisabled }) => {
+    GenerateCard = ({ card, isMine, index, isDisabled, blockCounter }) => {
         if (isMine) {
             let isUsed = this.props.usedCardIndexes[index]
             let data = JSON.stringify({ cardId: card.id, index })
+            let isBlocked = blockCounter > 0
             return (
                 <Draggable
-                    enabled={isMine && !isUsed && !isDisabled}
+                    enabled={isMine && !isUsed && !isDisabled && !isBlocked}
                     onDragStart={() => {
                         this.setState({ displayTooltip: false })
                         this.props.playSound(flipSound1)
@@ -48,6 +49,7 @@ class Cards extends Component {
                     <li>
                         <Card
                             isDisabled={isDisabled}
+                            isBlocked={isBlocked}
                             index={index}
                             card={card}
                             displayTooltip={this.state.displayTooltip}
@@ -74,7 +76,9 @@ class Cards extends Component {
     }
 
     CardsSpawner = () => {
-        let { cards } = this.props
+        let { cards, areMine, player, game } = this.props
+        let blockCounter = 0
+        if (game !== null) blockCounter = game.blockCounters[player.socketId]
         if (cards !== null) {
             return cards.map((card, i) => {
                 let cardData = CardsData[card.id]
@@ -83,13 +87,9 @@ class Cards extends Component {
                         card={card}
                         index={i}
                         key={i}
-                        isMine={this.props.areMine}
-                        isDisabled={
-                            !cardData.doesMeetConditions(
-                                this.props.game,
-                                this.props.player
-                            )
-                        }
+                        isMine={areMine}
+                        isDisabled={!cardData.doesMeetConditions(game, player)}
+                        blockCounter={blockCounter}
                     />
                 )
             })

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import './Cards.css'
 
-const CardImage = ({ id, isMine, isUsed, isDisabled }) => {
+const CardImage = ({ id, isMine, isUsed, isDisabled, isBlocked }) => {
     let classes = 'card-image '
-    if (isUsed || isDisabled) classes += 'card-image-used '
+    if (isUsed || isDisabled || isBlocked) classes += 'card-image-used '
 
     if (isMine) {
         return (
@@ -45,7 +45,7 @@ const CardDescription = ({ description, displayTooltip }) => {
     return null
 }
 
-const CardOverlay = ({ isUsed, isDisabled, onClick }) => {
+const CardOverlay = ({ isUsed, isDisabled, isBlocked, onClick }) => {
     if (isUsed) {
         return (
             <button className='card-use-abort-button' onClick={onClick}>
@@ -61,6 +61,12 @@ const CardOverlay = ({ isUsed, isDisabled, onClick }) => {
                     This card doesn't meet the conditions. Check the
                     description.
                 </span>
+            </div>
+        )
+    } else if (isBlocked) {
+        return (
+            <div className='card-disabled'>
+                <span>This card is disabled.</span>
             </div>
         )
     }
@@ -82,10 +88,12 @@ class Card extends Component {
                     isDisabled={this.props.isDisabled}
                     isMine={this.props.isMine}
                     isUsed={this.props.isUsed}
+                    isBlocked={this.props.isBlocked}
                 />
                 <CardOverlay
                     isDisabled={this.props.isDisabled}
                     isUsed={this.props.isUsed}
+                    isBlocked={this.props.isBlocked}
                     onClick={() => {
                         this.props.onUseAbort()
                     }}
