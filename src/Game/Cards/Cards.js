@@ -125,8 +125,7 @@ const Cards = {
             let enemySocket = currentGame.playerSockets.filter(e => {
                 return e.socketId != move.playerSocketId
             })[0].socketId
-            currentGame.blockCounters[enemySocket] =
-                currentGame.blockCounters[enemySocket] + 2
+            currentGame.blockCounters[enemySocket] = 2
             return currentGame
         },
         doesMeetConditions: game => {

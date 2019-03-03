@@ -29,7 +29,11 @@ class Cards extends Component {
         if (isMine) {
             let isUsed = this.props.usedCardIndexes[index]
             let data = JSON.stringify({ cardId: card.id, index })
-            let isBlocked = blockCounter > 0
+            let isBlocked = false
+            if (blockCounter > 0 && blockCounter <= 2) {
+                isBlocked = true
+            }
+
             return (
                 <Draggable
                     enabled={isMine && !isUsed && !isDisabled && !isBlocked}
