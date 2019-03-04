@@ -33,7 +33,7 @@ class PlayerState extends Component {
             return this.getIcon(game.blockCounters[player.socketId], 'left-1vh')
         } else {
             let socketId = game.playerSockets.filter(e => {
-                return e.socketId != player.socketId
+                return e.socketId !== player.socketId
             })[0].socketId
             return this.getIcon(game.blockCounters[socketId], 'right-1vh')
         }
