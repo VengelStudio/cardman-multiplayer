@@ -3,7 +3,7 @@ import { Droppable } from 'react-drag-and-drop'
 import Keyboard from './Keyboard'
 import Timer from './Timer'
 import PlayerState from './PlayerState'
-import { POPUP_CONFIRMATION } from '../Popup/Types'
+import { POPUP_CONFIRMATION, POPUP_CARD } from '../Popup/Types'
 import './Content.css'
 import cardDropSound from '../../Resources/Sounds/card_drop.mp3'
 import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
@@ -122,6 +122,21 @@ class Content extends Component {
                             popupData: {
                                 title: 'Word definition',
                                 content: definitions[randomIndex]
+                            }
+                        })
+                    }
+                    if (e.card === CardsData.LOOK_UP_CARD.id) {
+                        let enemySocket = Object.keys(this.props.game.cards).filter(s => { return s !== this.props.move.playerSocketId })[0]
+                        let enemyCards = this.props.game.cards[enemySocket]
+                        console.log(enemySocket)
+                        console.log(enemyCards)
+                        let randomIndex = Math.floor(
+                            Math.random() * enemyCards.length
+                        )
+                        this.props.addPopup({
+                            type: POPUP_CARD,
+                            popupData: {
+                                content: 'xd'
                             }
                         })
                     }

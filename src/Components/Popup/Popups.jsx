@@ -3,6 +3,7 @@ import GenericPopup from './Popups/GenericPopup'
 import ConfirmationPopup from './Popups/ConfirmationPopup'
 import InvitationPopup from './Popups/InvitationPopup'
 import DisconnectedPopup from './Popups/DisconnectedPopup'
+import CardPopup from './Popups/CardPopup'
 import {
     // eslint-disable-next-line
     POPUP_GENERIC,
@@ -11,7 +12,9 @@ import {
     // eslint-disable-next-line
     POPUP_INVITATION,
     // eslint-disable-next-line
-    POPUP_DISCONNECTED
+    POPUP_DISCONNECTED,
+    // eslint-disable-next-line
+    POPUP_CARD
 } from './Types'
 import './Popup.css'
 
@@ -36,7 +39,8 @@ class Popups extends Component {
         POPUP_GENERIC: GenericPopup,
         POPUP_CONFIRMATION: ConfirmationPopup,
         POPUP_INVITATION: InvitationPopup,
-        POPUP_DISCONNECTED: DisconnectedPopup
+        POPUP_DISCONNECTED: DisconnectedPopup,
+        POPUP_CARD: CardPopup
     }
 
     onClose = id => {

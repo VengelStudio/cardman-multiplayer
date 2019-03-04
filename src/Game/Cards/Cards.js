@@ -160,18 +160,20 @@ const Cards = {
         doesMeetConditions: game => {
             return true
         }
-    }
-    // LOOK_UP_CARD: {
-    //     id: 'LOOK_UP_CARD',
-    //     title: 'Look up enemy card',
-    //     description: 'You can look up one of the enemies cards.',
-    //     use: ({ currentGame, socket, move }) => {
-    //         console.log('LOOK_UP_CARD card used')
-    //         let myCards = currentGame.cards[move.playerSocketId]
-    //         let enemySocket = Object.keys(currentGame.cards).filter(s => { s != move.playerSocketId })
-    //         let enemyCards = currentGame.cards[enemySocket]
-    //     }
-    // },
+    },
+    LOOK_UP_CARD: {
+        id: 'LOOK_UP_CARD',
+        title: 'Look up enemy card',
+        description: 'You can look up one of the enemies cards.',
+        use: ({ currentGame, socket, move }) => {
+            console.log('LOOK_UP_CARD card used')
+            return currentGame
+
+        },
+        doesMeetConditions: game => {
+            return true
+        }
+    },
     // SWAP_RANDOM_CARDS: {
     //     id: 'SWAP_RANDOM_CARDS',
     //     title: 'Swap with opponent.',
