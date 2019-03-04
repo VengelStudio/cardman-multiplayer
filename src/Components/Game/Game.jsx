@@ -7,17 +7,11 @@ import ReactAudioPlayer from 'react-audio-player'
 import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
-import Walkthrough from './Walkthrough'
 
 const { isMove } = require('../../Shared/Functions')
 const { winHandler } = require('./Functions')
 const { setScore } = require('../../Shared/Functions')
-const {
-    GAME_MOVE,
-    WIN,
-    GAME_CREATED,
-    WALKTHROUGH_READY
-} = require('../../Shared/Events')
+const { GAME_MOVE, WIN } = require('../../Shared/Events')
 const { Result } = require('../../Shared/Enums')
 class Game extends Component {
     state = {
@@ -35,7 +29,6 @@ class Game extends Component {
         const { socket } = this.props
         socket.on(GAME_MOVE, ({ game }) => {
             this.setState({ game: game }, () => {
-                console.log(game.word)
                 this.props.setMove(
                     isMove({ game: this.state.game, player: this.props.player })
                 )

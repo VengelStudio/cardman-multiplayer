@@ -128,7 +128,7 @@ const Cards = {
             </span>`,
         use: ({ currentGame, socket, move }) => {
             let enemySocket = currentGame.playerSockets.filter(e => {
-                return e.socketId != move.playerSocketId
+                return e.socketId !== move.playerSocketId
             })[0].socketId
             if (currentGame.blockCounters[enemySocket] === 0)
                 currentGame.blockCounters[enemySocket] = 2
@@ -136,7 +136,7 @@ const Cards = {
         },
         doesMeetConditions: (game, player) => {
             let enemySocket = game.playerSockets.filter(e => {
-                return e.socketId != player.socketId
+                return e.socketId !== player.socketId
             })[0].socketId
             if (game.blockCounters[enemySocket] === 0) return true
             return false
