@@ -1,3 +1,3 @@
 # Cardman
 
-Simple hangman multiplayer game using react
+Simple Hangman multiplayer game built with React.

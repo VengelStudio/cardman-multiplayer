@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Droppable } from 'react-drag-and-drop'
 import Keyboard from './Keyboard'
 import Timer from './Timer'
+import PlayerState from './PlayerState'
 import { POPUP_CONFIRMATION } from '../Popup/Types'
 import './Content.css'
 import cardDropSound from '../../Resources/Sounds/card_drop.mp3'
@@ -154,6 +155,20 @@ class Content extends Component {
         )
     }
 
+    getPlayerState = me => {
+        let socketId = null
+        let { game, player } = this.props
+        if (player === null || game === null) return 0
+        if (me) {
+            return game.blockCounters[player.socketId]
+        } else {
+            let socketId = game.playerSockets.filter(e => {
+                return e.socketId != player.socketId
+            })[0].socketId
+            return game.blockCounters[socketId]
+        }
+    }
+
     render() {
         let displayWord = []
         if (this.props.game !== null) {
@@ -166,6 +181,8 @@ class Content extends Component {
 
         return (
             <div className='content'>
+                <PlayerState me={true} state={this.getPlayerState(true)} />
+                <PlayerState me={false} state={this.getPlayerState(false)} />
                 <div className='timer-wrapper'>
                     {this.props.move && (
                         <Timer time={30} onEnd={this.props.onMoveTimeout} />

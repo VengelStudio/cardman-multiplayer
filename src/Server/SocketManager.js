@@ -182,7 +182,6 @@ module.exports = function(socket) {
         let enemy = game.playerSockets[1 - game.nextPlayerIndex]
 
         let blockCounter = currentGame.blockCounters[player.socketId]
-        console.log(currentGame)
         if (player.id === socket.user.id) {
             moves = moves.sort((a, b) => {
                 if (a.type === 'key') return -1
@@ -215,7 +214,8 @@ module.exports = function(socket) {
             })
             if (blockCounter > 0)
                 currentGame.blockCounters[player.socketId] = blockCounter - 1
-            console.log(player.socketId + ': ' + blockCounter)
+            if (blockCounter < 0)
+                currentGame.blockCounters[player.socketId] = blockCounter + 1
 
             currentGame.displayWord = displayWord(currentGame)
 
@@ -241,6 +241,8 @@ module.exports = function(socket) {
                     winType === Result.TURN_TIE
                 ) {
                     currentGame.cards = resupplyCards(currentGame)
+                    currentGame.blockCounters[player.socketId] = 0
+                    currentGame.blockCounters[enemy.socketId] = 0
                 }
                 io.in(game.id).emit(WIN, win.winObject)
                 if (winType === Result.GAME_WIN) {

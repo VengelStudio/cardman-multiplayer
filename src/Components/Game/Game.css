@@ -240,3 +240,15 @@ svg.timer-svg {
         margin-left: 18.5vh;
     }
 }
+
+.state-chains {
+    position: absolute;
+    top: 6vh;
+    left: 1vh;
+}
+
+.state-shield {
+    position: absolute;
+    top: 6vh;
+    right: 1vh;
+}
