@@ -241,14 +241,25 @@ svg.timer-svg {
     }
 }
 
-.state-chains {
+.player-state {
     position: absolute;
     top: 6vh;
+    left: 0;
+    right: 0;
+}
+
+.left-1vh {
     left: 1vh;
+}
+
+.right-1vh {
+    right: 1vh;
+}
+
+.state-chains {
+    position: absolute;
 }
 
 .state-shield {
     position: absolute;
-    top: 6vh;
-    right: 1vh;
 }
