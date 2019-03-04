@@ -132,6 +132,15 @@
     text-align: center;
     display: flex;
 }
+lookup-card-display{
+    width: 4vh;
+    height: 6vh;
+}
+lookup-card-wrapper{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
 /*
 todo
 */

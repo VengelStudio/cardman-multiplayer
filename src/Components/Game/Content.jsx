@@ -121,22 +121,26 @@ class Content extends Component {
                         this.props.addPopup({
                             popupData: {
                                 title: 'Word definition',
-                                content: definitions[randomIndex]
+                                card: definitions[randomIndex]
                             }
                         })
                     }
                     if (e.card === CardsData.LOOK_UP_CARD.id) {
-                        let enemySocket = Object.keys(this.props.game.cards).filter(s => { return s !== this.props.move.playerSocketId })[0]
+                        let enemySocket = this.props.game.playerSockets.filter(x => {
+                            return x.socketId !== this.props.player.socketId
+                        })[0].socketId
                         let enemyCards = this.props.game.cards[enemySocket]
                         console.log(enemySocket)
                         console.log(enemyCards)
                         let randomIndex = Math.floor(
                             Math.random() * enemyCards.length
                         )
+                        let randomEnemyCard = enemyCards[randomIndex].id
+                        console.log(randomEnemyCard)
                         this.props.addPopup({
                             type: POPUP_CARD,
                             popupData: {
-                                content: 'xd'
+                                cardId: randomEnemyCard
                             }
                         })
                     }

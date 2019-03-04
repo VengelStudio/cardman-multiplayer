@@ -14,8 +14,10 @@ const CardPopup = props => {
                     <Icon icon={ic_close} size='28' className='close-icon' />
                 </button>
             </div>
-            <div>
-                <p>{props.content}</p>
+            <div className="lookup-card-wrapper">
+                <img className="lookup-card-display"
+                    src={`images/cards/${props.popupData.cardId}.svg`}
+                />
             </div>
         </div>
     )
