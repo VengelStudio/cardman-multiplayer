@@ -116,51 +116,51 @@ const Cards = {
     //         return true
     //     }
     // },
-    BLOCK_CARD: {
-        id: 'BLOCK_CARD',
-        title: 'Block enemy cards for 2 turns.',
-        description: `<span>
-                <b>Blocks enemy cards for 2 turns.</b>
-            </span>
-            <span>
-                You can't block an already blocked player.<u>don't</u> add up.<br>
-                These values <u>don't</u> add up.
-            </span>`,
-        use: ({ currentGame, socket, move }) => {
-            let enemySocket = currentGame.playerSockets.filter(e => {
-                return e.socketId !== move.playerSocketId
-            })[0].socketId
-            if (currentGame.blockCounters[enemySocket] === 0)
-                currentGame.blockCounters[enemySocket] = 2
-            return currentGame
-        },
-        doesMeetConditions: (game, player) => {
-            let enemySocket = game.playerSockets.filter(e => {
-                return e.socketId !== player.socketId
-            })[0].socketId
-            if (game.blockCounters[enemySocket] === 0) return true
-            return false
-        }
-    },
-    IMMUNE_TO_BLOCK_CARD: {
-        id: 'IMMUNE_TO_BLOCK_CARD',
-        title: 'Immune to block.',
-        description: `<span>
-                <b>Immune to blocking cards for 2 turns.</b>
-            </span>
-            <span>
-                These values <u>do</u> add up.
-            </span>`,
-        use: ({ currentGame, socket, move }) => {
-            let mySocket = move.playerSocketId
-            let blockCounters = currentGame.blockCounters[mySocket]
-            currentGame.blockCounters[mySocket] = blockCounters - 2
-            return currentGame
-        },
-        doesMeetConditions: game => {
-            return true
-        }
-    },
+    // BLOCK_CARD: {
+    //     id: 'BLOCK_CARD',
+    //     title: 'Block enemy cards for 2 turns.',
+    //     description: `<span>
+    //             <b>Blocks enemy cards for 2 turns.</b>
+    //         </span>
+    //         <span>
+    //             You can't block an already blocked player.<u>don't</u> add up.<br>
+    //             These values <u>don't</u> add up.
+    //         </span>`,
+    //     use: ({ currentGame, socket, move }) => {
+    //         let enemySocket = currentGame.playerSockets.filter(e => {
+    //             return e.socketId !== move.playerSocketId
+    //         })[0].socketId
+    //         if (currentGame.blockCounters[enemySocket] === 0)
+    //             currentGame.blockCounters[enemySocket] = 2
+    //         return currentGame
+    //     },
+    //     doesMeetConditions: (game, player) => {
+    //         let enemySocket = game.playerSockets.filter(e => {
+    //             return e.socketId !== player.socketId
+    //         })[0].socketId
+    //         if (game.blockCounters[enemySocket] === 0) return true
+    //         return false
+    //     }
+    // },
+    // IMMUNE_TO_BLOCK_CARD: {
+    //     id: 'IMMUNE_TO_BLOCK_CARD',
+    //     title: 'Immune to block.',
+    //     description: `<span>
+    //             <b>Immune to blocking cards for 2 turns.</b>
+    //         </span>
+    //         <span>
+    //             These values <u>do</u> add up.
+    //         </span>`,
+    //     use: ({ currentGame, socket, move }) => {
+    //         let mySocket = move.playerSocketId
+    //         let blockCounters = currentGame.blockCounters[mySocket]
+    //         currentGame.blockCounters[mySocket] = blockCounters - 2
+    //         return currentGame
+    //     },
+    //     doesMeetConditions: game => {
+    //         return true
+    //     }
+    // },
     LOOK_UP_CARD: {
         id: 'LOOK_UP_CARD',
         title: 'Look up enemy card',
@@ -174,128 +174,128 @@ const Cards = {
             return true
         }
     },
-    // SWAP_RANDOM_CARDS: {
-    //     id: 'SWAP_RANDOM_CARDS',
-    //     title: 'Swap with opponent.',
-    //     description: `<span>
-    //             <b>Swap your card for a random opponents card.</b>
-    //         </span>
-    //         <span>
-    //             You must have a card besides this one in the deck. Your
-    //             opponent has to have at least 1 card.
-    //         </span>`,
-    //     use: ({ currentGame, socket, move }) => {
-    //         let enemySocket = currentGame.playerSockets.filter(e => {
-    //             return e.socketId != move.playerSocketId
-    //         })[0].socketId
-    //         let enemyCards = currentGame.cards[enemySocket]
-    //         let myCards = currentGame.cards[move.playerSocketId]
+    SWAP_RANDOM_CARDS: {
+        id: 'SWAP_RANDOM_CARDS',
+        title: 'Swap with opponent.',
+        description: `<span>
+                <b>Swap your card for a random opponents card.</b>
+            </span>
+            <span>
+                You must have a card besides this one in the deck. Your
+                opponent has to have at least 1 card.
+            </span>`,
+        use: ({ currentGame, socket, move }) => {
+            let enemySocket = currentGame.playerSockets.filter(e => {
+                return e.socketId != move.playerSocketId
+            })[0].socketId
+            let enemyCards = currentGame.cards[enemySocket]
+            let myCards = currentGame.cards[move.playerSocketId]
 
-    //         let randomIndexOfMine = Math.floor(Math.random() * myCards.length)
-    //         let randomIndexOfOpponent = null
-    //         let isSwap = true
-    //         while (isSwap) {
-    //             randomIndexOfOpponent = Math.floor(
-    //                 Math.random() * enemyCards.length
-    //             )
-    //             if (
-    //                 enemyCards[randomIndexOfOpponent].id !==
-    //                 Cards.SWAP_RANDOM_CARDS.id
-    //             ) {
-    //                 isSwap = false
-    //             }
-    //         }
+            let randomIndexOfMine = Math.floor(Math.random() * myCards.length)
+            let randomIndexOfOpponent = null
+            let isSwap = true
+            while (isSwap) {
+                randomIndexOfOpponent = Math.floor(
+                    Math.random() * enemyCards.length
+                )
+                if (
+                    enemyCards[randomIndexOfOpponent].id !==
+                    Cards.SWAP_RANDOM_CARDS.id
+                ) {
+                    isSwap = false
+                }
+            }
 
-    //         let doOtherCardsExist = false
-    //         for (let i = 0; i < myCards.length; i++) {
-    //             if (myCards[i].id !== Cards.SWAP_RANDOM_CARDS.id) {
-    //                 doOtherCardsExist = true
-    //                 break
-    //             }
-    //         }
+            let doOtherCardsExist = false
+            for (let i = 0; i < myCards.length; i++) {
+                if (myCards[i].id !== Cards.SWAP_RANDOM_CARDS.id) {
+                    doOtherCardsExist = true
+                    break
+                }
+            }
 
-    //         if (enemyCards.length >= 1 && !doOtherCardsExist) {
-    //             let a = myCards[randomIndexOfMine]
-    //             enemyCards[randomIndexOfOpponent] = a
-    //             myCards[randomIndexOfMine] = enemyCards[randomIndexOfOpponent]
-    //             currentGame.cards[enemySocket] = enemyCards
-    //             currentGame.cards[move.playerSocketId] = myCards
-    //         }
+            if (enemyCards.length >= 1 && !doOtherCardsExist) {
+                let a = myCards[randomIndexOfMine]
+                enemyCards[randomIndexOfOpponent] = a
+                myCards[randomIndexOfMine] = enemyCards[randomIndexOfOpponent]
+                currentGame.cards[enemySocket] = enemyCards
+                currentGame.cards[move.playerSocketId] = myCards
+            }
 
-    //         return currentGame
-    //     },
-    //     doesMeetConditions: (game, player) => {
-    //         let cards = game.cards
-    //         let mySocketId = player.socketId
-    //         let myCards = cards[mySocketId]
-    //         let enemySocketId = game.playerSockets.filter(x => {
-    //             return x.socketId !== player.socketId
-    //         })[0].socketId
-    //         let enemyCards = cards[enemySocketId]
+            return currentGame
+        },
+        doesMeetConditions: (game, player) => {
+            let cards = game.cards
+            let mySocketId = player.socketId
+            let myCards = cards[mySocketId]
+            let enemySocketId = game.playerSockets.filter(x => {
+                return x.socketId !== player.socketId
+            })[0].socketId
+            let enemyCards = cards[enemySocketId]
 
-    //         let doOtherCardsExist = false
-    //         for (let i = 0; i < myCards.length; i++) {
-    //             if (myCards[i].id !== Cards.SWAP_RANDOM_CARDS.id) {
-    //                 doOtherCardsExist = true
-    //                 break
-    //             }
-    //         }
+            let doOtherCardsExist = false
+            for (let i = 0; i < myCards.length; i++) {
+                if (myCards[i].id !== Cards.SWAP_RANDOM_CARDS.id) {
+                    doOtherCardsExist = true
+                    break
+                }
+            }
 
-    //         if (doOtherCardsExist === false) return false
-    //         if (enemyCards.length === 0) return false
-    //         return true
-    //     }
-    // },
-    // RANDOMIZE_YOURSELF_CARD: {
-    //     id: 'RANDOMIZE_YOURSELF_CARD',
-    //     title: 'Randomize a card',
-    //     description: 'A random card of yours gets changed.',
-    //     use: ({ currentGame, socket, move }) => {
-    //         let getRandomCard = (exception = null) => {
-    //             let excluded = ['RANDOMIZE_YOURSELF_CARD', exception]
-    //             let included = Object.values(Cards).filter(
-    //                 card => !excluded.includes(card.id)
-    //             )
-    //             let randomIndex = Math.floor(Math.random() * included.length)
-    //             return included[randomIndex]
-    //         }
-    //         currentGame.cards[move.playerSocketId].push(getRandomCard())
-    //         return currentGame
-    //     },
-    //     doesMeetConditions: game => {
-    //         return true
-    //     }
-    // },
-    // RANDOMIZE_ENEMY_CARD: {
-    //     id: 'RANDOMIZE_ENEMY_CARD',
-    //     title: 'Randomize an enemies card',
-    //     description: 'A random card of your opponent gets changed.',
-    //     use: ({ currentGame, socket, move }) => {
-    //         console.log('RANDOMIZE_ENEMY_CARD card used')
+            if (doOtherCardsExist === false) return false
+            if (enemyCards.length === 0) return false
+            return true
+        }
+    },
+    RANDOMIZE_YOURSELF_CARD: {
+        id: 'RANDOMIZE_YOURSELF_CARD',
+        title: 'Randomize a card',
+        description: 'A random card of yours gets changed.',
+        use: ({ currentGame, socket, move }) => {
+            let getRandomCard = (exception = null) => {
+                let excluded = ['RANDOMIZE_YOURSELF_CARD', exception]
+                let included = Object.values(Cards).filter(
+                    card => !excluded.includes(card.id)
+                )
+                let randomIndex = Math.floor(Math.random() * included.length)
+                return included[randomIndex]
+            }
+            currentGame.cards[move.playerSocketId].push(getRandomCard())
+            return currentGame
+        },
+        doesMeetConditions: game => {
+            return true
+        }
+    },
+    RANDOMIZE_ENEMY_CARD: {
+        id: 'RANDOMIZE_ENEMY_CARD',
+        title: 'Randomize an enemies card',
+        description: 'A random card of your opponent gets changed.',
+        use: ({ currentGame, socket, move }) => {
+            console.log('RANDOMIZE_ENEMY_CARD card used')
 
-    //         let enemySocket = currentGame.playerSockets.filter(e => {
-    //             return e.socketId != move.playerSocketId
-    //         })[0].socketId
+            let enemySocket = currentGame.playerSockets.filter(e => {
+                return e.socketId != move.playerSocketId
+            })[0].socketId
 
-    //         let getRandomCard = (exception = null) => {
-    //             let excluded = ['RANDOMIZE_YOURSELF_CARD', exception]
-    //             let included = Object.values(Cards).filter(
-    //                 card => !excluded.includes(card.id)
-    //             )
-    //             let randomIndex = Math.floor(Math.random() * included.length)
-    //             return included[randomIndex]
-    //         }
-    //         let enemyCardAmount = currentGame.cards[enemySocket].length
-    //         let randomIndex = Math.floor(Math.random() * enemyCardAmount)
-    //         if (enemyCardAmount > 0) {
-    //             currentGame.cards[enemySocket][randomIndex] = getRandomCard()
-    //         }
-    //         return currentGame
-    //     },
-    //     doesMeetConditions: game => {
-    //         return true
-    //     }
-    // }
+            let getRandomCard = (exception = null) => {
+                let excluded = ['RANDOMIZE_YOURSELF_CARD', exception]
+                let included = Object.values(Cards).filter(
+                    card => !excluded.includes(card.id)
+                )
+                let randomIndex = Math.floor(Math.random() * included.length)
+                return included[randomIndex]
+            }
+            let enemyCardAmount = currentGame.cards[enemySocket].length
+            let randomIndex = Math.floor(Math.random() * enemyCardAmount)
+            if (enemyCardAmount > 0) {
+                currentGame.cards[enemySocket][randomIndex] = getRandomCard()
+            }
+            return currentGame
+        },
+        doesMeetConditions: game => {
+            return true
+        }
+    }
 }
 
 const getCard = card => {

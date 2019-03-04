@@ -3,7 +3,7 @@ import { Droppable } from 'react-drag-and-drop'
 import Keyboard from './Keyboard'
 import Timer from './Timer'
 import PlayerState from './PlayerState'
-import { POPUP_CONFIRMATION, POPUP_CARD } from '../Popup/Types'
+import { POPUP_GENERIC, POPUP_CARD } from '../Popup/Types'
 import './Content.css'
 import cardDropSound from '../../Resources/Sounds/card_drop.mp3'
 import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
@@ -117,25 +117,22 @@ class Content extends Component {
                         let randomIndex = Math.floor(
                             Math.random() * definitions.length
                         )
-
                         this.props.addPopup({
                             popupData: {
                                 title: 'Word definition',
-                                card: definitions[randomIndex]
+                                content: definitions[randomIndex]
                             }
                         })
                     }
-                    if (e.card === CardsData.LOOK_UP_CARD.id) {
+                    else if (e.card === CardsData.LOOK_UP_CARD.id) {
                         let enemySocket = this.props.game.playerSockets.filter(x => {
                             return x.socketId !== this.props.player.socketId
                         })[0].socketId
                         let enemyCards = this.props.game.cards[enemySocket]
-                        console.log(enemySocket)
-                        console.log(enemyCards)
-                        let randomIndex = Math.floor(
+                        let randomIndexOfCard = Math.floor(
                             Math.random() * enemyCards.length
                         )
-                        let randomEnemyCard = enemyCards[randomIndex].id
+                        let randomEnemyCard = enemyCards[randomIndexOfCard].id
                         console.log(randomEnemyCard)
                         this.props.addPopup({
                             type: POPUP_CARD,
