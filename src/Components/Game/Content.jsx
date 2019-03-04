@@ -3,10 +3,7 @@ import { Droppable } from 'react-drag-and-drop'
 import Keyboard from './Keyboard'
 import Timer from './Timer'
 import PlayerState from './PlayerState'
-<<<<<<< HEAD
 import { POPUP_CONFIRMATION, POPUP_CARD } from '../Popup/Types'
-=======
->>>>>>> origin/develop
 import './Content.css'
 import cardDropSound from '../../Resources/Sounds/card_drop.mp3'
 import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
