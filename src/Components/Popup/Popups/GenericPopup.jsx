@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icon } from 'react-icons-kit'
-import { ic_close } from 'react-icons-kit/md/ic_close'
+import { cross } from 'react-icons-kit/icomoon/cross'
 
 const GenericPopup = props => {
     const onClose = () => {
@@ -13,7 +13,7 @@ const GenericPopup = props => {
             <div className='generic-popup-title'>
                 <span>{props.popupData.title}</span>
                 <button onClick={onClose} className='btn-popup-close'>
-                    <Icon icon={ic_close} size='28' className='close-icon' />
+                    <Icon icon={cross} size='1.6vh' className='close-icon' />
                 </button>
             </div>
             <div

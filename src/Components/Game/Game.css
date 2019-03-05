@@ -208,6 +208,10 @@ svg.timer-svg {
     }
 }
 
+.invitation-popup-content > .timer {
+    margin: auto;
+}
+
 .card-info {
     display: flex;
     visibility: hidden;

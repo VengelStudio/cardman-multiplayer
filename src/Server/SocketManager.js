@@ -101,6 +101,7 @@ module.exports = function(socket) {
 
                 games = removeGame(playersGame, games)
                 io.in(socket.user.gameId).emit(WIN, winObject)
+                //todo TypeError: Cannot read property 'leaveAll' of undefined
                 io.sockets.connected[socket.user.socketId].leaveAll()
                 io.emit(REFRESH_PLAYERS, { connectedPlayers })
             }

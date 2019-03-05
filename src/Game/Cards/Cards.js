@@ -164,18 +164,17 @@ const Cards = {
     LOOK_UP_CARD: {
         id: 'LOOK_UP_CARD',
         title: 'Look up enemy card',
-        description: 'You can look up one of the enemies cards only if they have any.',
+        description:
+            'You can look up one of the enemies cards only if they have any.',
         use: ({ currentGame, socket, move }) => {
             console.log('LOOK_UP_CARD card used')
             return currentGame
-
         },
         doesMeetConditions: (game, player) => {
             let enemySocket = game.playerSockets.filter(e => {
                 return e.socketId !== player.socketId
             })[0].socketId
-            if (game.cards[enemySocket].length === 0)
-                return false
+            if (game.cards[enemySocket].length === 0) return false
             return true
         }
     },
@@ -191,7 +190,7 @@ const Cards = {
             </span>`,
         use: ({ currentGame, socket, move }) => {
             let enemySocket = currentGame.playerSockets.filter(e => {
-                return e.socketId != move.playerSocketId
+                return e.socketId !== move.playerSocketId
             })[0].socketId
             let enemyCards = currentGame.cards[enemySocket]
             let myCards = currentGame.cards[move.playerSocketId]
@@ -279,7 +278,7 @@ const Cards = {
             console.log('RANDOMIZE_ENEMY_CARD card used')
 
             let enemySocket = currentGame.playerSockets.filter(e => {
-                return e.socketId != move.playerSocketId
+                return e.socketId !== move.playerSocketId
             })[0].socketId
 
             let getRandomCard = (exception = null) => {

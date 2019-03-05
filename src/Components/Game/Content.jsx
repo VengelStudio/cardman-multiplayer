@@ -3,7 +3,7 @@ import { Droppable } from 'react-drag-and-drop'
 import Keyboard from './Keyboard'
 import Timer from './Timer'
 import PlayerState from './PlayerState'
-import { POPUP_GENERIC, POPUP_CARD } from '../Popup/Types'
+import { POPUP_CARD } from '../Popup/Types'
 import './Content.css'
 import cardDropSound from '../../Resources/Sounds/card_drop.mp3'
 import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
@@ -123,21 +123,23 @@ class Content extends Component {
                                 content: definitions[randomIndex]
                             }
                         })
-                    }
-                    else if (e.card === CardsData.LOOK_UP_CARD.id) {
-                        let enemySocket = this.props.game.playerSockets.filter(x => {
-                            return x.socketId !== this.props.player.socketId
-                        })[0].socketId
+                    } else if (e.card === CardsData.LOOK_UP_CARD.id) {
+                        let enemySocket = this.props.game.playerSockets.filter(
+                            x => {
+                                return x.socketId !== this.props.player.socketId
+                            }
+                        )[0].socketId
                         let enemyCards = this.props.game.cards[enemySocket]
                         let randomIndexOfCard = Math.floor(
                             Math.random() * enemyCards.length
                         )
                         let randomEnemyCard = enemyCards[randomIndexOfCard].id
-                        console.log(randomEnemyCard)
+                        let { description } = CardsData[randomEnemyCard]
                         this.props.addPopup({
                             type: POPUP_CARD,
                             popupData: {
-                                cardId: randomEnemyCard
+                                cardId: randomEnemyCard,
+                                description
                             }
                         })
                     }

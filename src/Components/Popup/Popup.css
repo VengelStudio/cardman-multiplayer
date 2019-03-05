@@ -16,7 +16,7 @@
     max-height: 80vh;
     min-width: 30vw;
     max-width: 80vw;
-    box-shadow: 0.1vw 0.1vw 0.2vw rgba(0, 0, 0, 0.479);
+    box-shadow: 0.8vw 0.8vw 0.7vw rgba(0, 0, 0, 0.7);
     border-top-left-radius: 0.5vw;
     border-top-right-radius: 0.5vw;
     border-bottom-left-radius: 0.5vw;
@@ -63,12 +63,7 @@
 }
 
 .close-icon {
-    border-color: rgb(255, 35, 83);
-    border-width: 0 0 0.3vh 0.3vh;
-    border-style: solid;
-    border-top: none;
-    border-right: none;
-    border-bottom-left-radius: 1vh;
+    margin: 0.4vh;
 }
 
 .btn-popup-close > div,
@@ -130,16 +125,24 @@
 
 .invitation-popup-content .msg {
     text-align: center;
-    display: flex;
+    display: block;
+    width: 100%;
 }
-lookup-card-display{
-    width: 4vh;
-    height: 6vh;
+
+.lookup-card-display {
+    object-fit: scale-down;
+    width: 10vw;
+    margin-bottom: 2vh;
 }
-lookup-card-wrapper{
+
+.lookup-card-wrapper {
     display: flex;
+    width: 30vw;
+    padding: 2vh;
+    flex-direction: column;
     justify-content: center;
-    align-content: center;
+    align-items: center;
+    font-size: 2vh;
 }
 /*
 todo
