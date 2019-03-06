@@ -29,15 +29,32 @@ import ReactAudioPlayer from 'react-audio-player'
 import bgMusic from './Resources/Sounds/bg-lower.mp3'
 import Walkthrough from './Components/Game/Walkthrough'
 
+import posed from 'react-pose'
+
 const uuidv4 = require('uuid/v4')
 const socketUrl = 'http://localhost:3231'
 const { setScore } = require('./Shared/Functions')
+
+const Logo = posed.div({
+    visible: {
+        opacity: 1,
+        scaleY: 1,
+        transition: {
+            opacity: { ease: 'easeOut', duration: 300 },
+            default: { ease: 'linear', duration: 500 }
+        }
+    },
+    hidden: {
+        opacity: 0
+    }
+})
 
 class App extends React.Component {
     constructor(props) {
         super(props)
         this.popupsRef = React.createRef()
         this.state = {
+            isLogoVisible: false,
             title: 'Cardman Multiplayer',
             score: null,
             player: null,
@@ -79,6 +96,9 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        setInterval(() => {
+            this.setState({ isLogoVisible: !this.state.isLogoVisible })
+        }, 1000)
         if (this.isInCache('cachedVolumeSettings')) {
             let cachedVolumeSettings = JSON.parse(
                 localStorage.getItem('cachedVolumeSettings')
@@ -108,7 +128,7 @@ class App extends React.Component {
     }
 
     invitationHandler = ({ id = null, socketId = null }) => {
-        //Prevent players fron inviting themselves
+        //Prevent players from inviting themselves
         if (id === this.state.player.id) {
             this.addPopup({
                 title: 'Error!',
@@ -237,11 +257,24 @@ class App extends React.Component {
     }
 
     render() {
+        const {
+            socket,
+            player,
+            game,
+            gameId,
+            isMove,
+            connectedPlayers,
+            isDisconnected
+        } = this.state
+        const { volumeSettings } = this.state
         return (
             <div className='container of-rows width-full height-full text-nunito '>
-                <Logo />
+                {/* <Logo
+                    className='intro-logo'
+                    pose={this.state.isLogoVisible ? 'visible' : 'hidden'}
+                /> */}
                 <Header
-                    volumeSettings={this.state.volumeSettings}
+                    volumeSettings={volumeSettings}
                     title={this.state.title}
                     score={this.state.score}
                     setSettings={this.setSettings}
@@ -249,20 +282,20 @@ class App extends React.Component {
                 <ReactAudioPlayer
                     src={bgMusic}
                     autoPlay
-                    volume={this.state.volumeSettings.musicVol}
+                    volume={volumeSettings.musicVol}
                     loop={true}
-                    muted={this.state.volumeSettings.muted}
+                    muted={volumeSettings.muted}
                 />
                 <div className='row height-full width-full bg-lightgrey'>
                     <Popups
                         newPopup={this.state.newPopup}
-                        isDisconnected={this.state.isDisconnected}
-                        soundVolume={this.state.volumeSettings.soundVol}
+                        isDisconnected={isDisconnected}
+                        soundVolume={volumeSettings.soundVol}
                     />
                     <Switch>
                         <Route exact path='/'>
                             <LoginPage
-                                socket={this.state.socket}
+                                socket={socket}
                                 loginPlayer={this.loginPlayer}
                                 setTitle={this.setTitle}
                                 addPopup={this.addPopup}
@@ -277,13 +310,11 @@ class App extends React.Component {
                             path='/browser'
                             render={() => (
                                 <PlayersBrowser
-                                    player={this.state.player}
+                                    player={player}
                                     setTitle={this.setTitle}
                                     addPopup={this.addPopup}
                                     invitationHandler={this.invitationHandler}
-                                    connectedPlayers={
-                                        this.state.connectedPlayers
-                                    }
+                                    connectedPlayers={connectedPlayers}
                                 />
                             )}
                         />
@@ -291,14 +322,12 @@ class App extends React.Component {
                             path='/walkthrough'
                             render={() => (
                                 <Walkthrough
-                                    player={this.state.player}
+                                    player={player}
                                     setTitle={this.setTitle}
-                                    gameId={this.state.gameId}
+                                    gameId={gameId}
                                     muteMusic={this.muteMusic}
-                                    socket={this.state.socket}
-                                    soundVolume={
-                                        this.state.volumeSettings.soundVol
-                                    }
+                                    socket={socket}
+                                    soundVolume={volumeSettings.soundVol}
                                 />
                             )}
                         />
@@ -306,17 +335,15 @@ class App extends React.Component {
                             path='/game'
                             render={() => (
                                 <Game
-                                    player={this.state.player}
-                                    game={this.state.game}
+                                    player={player}
+                                    game={game}
                                     muteMusic={this.muteMusic}
-                                    socket={this.state.socket}
+                                    socket={socket}
                                     setTitle={this.setTitle}
                                     addPopup={this.addPopup}
                                     setMove={this.setMove}
-                                    isMove={this.state.isMove}
-                                    soundVolume={
-                                        this.state.volumeSettings.soundVol
-                                    }
+                                    isMove={isMove}
+                                    soundVolume={volumeSettings.soundVol}
                                 />
                             )}
                         />

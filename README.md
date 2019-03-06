@@ -1,3 +1,5 @@
-# Cardman
+# Cardman - a simple hangman game with cards!
 
-Simple Hangman multiplayer game built with React.
+### Our first serious project.
+
+![](https://media.giphy.com/media/2cdY6yZRsSDtEglYXg/giphy.gif)

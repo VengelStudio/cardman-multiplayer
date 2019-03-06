@@ -215,3 +215,12 @@ body,
 .border-rounded {
     border-radius: 25%;
 }
+
+.intro-logo {
+    position: absolute;
+    display: block;
+    margin: auto;
+    height: 100px;
+    width: 100px;
+    background-color: #bbb193;
+}

@@ -68,6 +68,7 @@ module.exports = function(socket) {
     })
 
     socket.on('disconnect', () => {
+        console.log('disconnect')
         if ('user' in socket) {
             connectedPlayers = removePlayer(
                 socket.user.nickname,
@@ -77,36 +78,37 @@ module.exports = function(socket) {
                 `[DISCONNECTED] Player ${socket.user.nickname} (${socket.id}).`
             )
             try {
-                let { gameId, socketId } = socket.user
-                let disconnectedSocketId = socketId
+                let isGameActive = socket.user.gameId !== null
+                if (isGameActive) {
+                    let disconnectedSocketId = socket.user.socketId
 
-                let playersGame = games[gameId]
-                let remainingPlayer = playersGame.playerSockets.filter(
-                    s => s.socketId !== disconnectedSocketId
-                )[0]
-                playersGame.score[remainingPlayer.socketId] += 1
+                    let { gameId } = socket.user
+                    let playersGame = games[gameId]
+                    let remainingPlayer = playersGame.playerSockets.filter(
+                        s => s.socketId !== disconnectedSocketId
+                    )[0]
+                    playersGame.score[remainingPlayer.socketId] += 1
 
-                let winObject = {
-                    winner: remainingPlayer,
-                    score: playersGame.score,
-                    game: playersGame,
-                    type: Result.GAME_WIN
+                    let winObject = {
+                        winner: remainingPlayer,
+                        score: playersGame.score,
+                        game: playersGame,
+                        type: Result.GAME_WIN
+                    }
+
+                    games = removeGame(playersGame, games)
+                    io.in(gameId).emit(WIN, winObject)
+
+                    let remainingSocket =
+                        io.sockets.connected[remainingPlayer.socketId]
+                    remainingSocket.leave(gameId)
+
+                    connectedPlayers = setPlayersInGameStatus(
+                        connectedPlayers,
+                        playersGame.playerSockets,
+                        false
+                    )
                 }
-
-                console.log(connectedPlayers)
-                connectedPlayers = setPlayersInGameStatus(
-                    connectedPlayers,
-                    playersGame.playerSockets,
-                    false
-                )
-                console.log(connectedPlayers)
-
-                games = removeGame(playersGame, games)
-                io.in(gameId).emit(WIN, winObject)
-
-                let remainingSocket =
-                    io.sockets.connected[remainingPlayer.socketId]
-                remainingSocket.leave(gameId)
 
                 io.emit(PLAYER_DISCONNECTED, { connectedPlayers })
                 io.emit(REFRESH_PLAYERS, { connectedPlayers })
