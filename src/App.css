@@ -220,7 +220,41 @@ body,
     position: absolute;
     display: block;
     margin: auto;
-    height: 100px;
-    width: 100px;
-    background-color: #bbb193;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    background-color: #d3c5b5;
+    animation: logo-bg-slide 1s linear 1s 1 normal;
+}
+
+.intro-logo img {
+    display: block;
+    margin: auto auto;
+    height: 40vw;
+    width: 40vw;
+    animation: logo-rotate 1s linear 0s 1 normal;
+}
+
+@keyframes logo-rotate {
+    from {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes logo-bg-slide {
+    0% {
+        transform: scaleY(1);
+    }
+    95% {
+        transform: scaleY(0);
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

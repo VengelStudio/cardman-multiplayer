@@ -29,25 +29,30 @@ import ReactAudioPlayer from 'react-audio-player'
 import bgMusic from './Resources/Sounds/bg-lower.mp3'
 import Walkthrough from './Components/Game/Walkthrough'
 
-import posed from 'react-pose'
+//todo remove posed
 
 const uuidv4 = require('uuid/v4')
 const socketUrl = 'http://localhost:3231'
 const { setScore } = require('./Shared/Functions')
 
-const Logo = posed.div({
-    visible: {
-        opacity: 1,
-        scaleY: 1,
-        transition: {
-            opacity: { ease: 'easeOut', duration: 300 },
-            default: { ease: 'linear', duration: 500 }
-        }
-    },
-    hidden: {
-        opacity: 0
+class Logo extends React.Component {
+    state = { display: true }
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ display: false })
+        }, 2000)
     }
-})
+    render() {
+        if (this.state.display) {
+            return (
+                <div className='intro-logo'>
+                    <img src={`logo.svg`} alt='Logo.' />
+                </div>
+            )
+        }
+        return null
+    }
+}
 
 class App extends React.Component {
     constructor(props) {
@@ -269,10 +274,7 @@ class App extends React.Component {
         const { volumeSettings } = this.state
         return (
             <div className='container of-rows width-full height-full text-nunito '>
-                {/* <Logo
-                    className='intro-logo'
-                    pose={this.state.isLogoVisible ? 'visible' : 'hidden'}
-                /> */}
+                <Logo />
                 <Header
                     volumeSettings={volumeSettings}
                     title={this.state.title}
