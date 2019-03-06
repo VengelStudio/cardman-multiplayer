@@ -1,6 +1,29 @@
-.walkthrough-image{
-    display: block;
-    margin: auto;
-    width: 40vw;
+.walkthrough-image {
+    display: flex;
+    width: 60%;
     height: auto;
+    border: 0.4vh solid rgba(204, 204, 204, 0.589);
+    border-radius: 0.6vh;
+    box-shadow: 1vw 1vw 0.8vw rgba(0, 0, 0, 0.3);
+}
+
+.walkthrough ol,
+.walkthrough ul {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0;
+}
+
+.walkthrough li {
+    font-size: 3vh;
+    font-weight: bold;
+}
+
+.walkthrough li span {
+    font-size: 2vh;
+    font-weight: normal;
+    height: 100%;
+    vertical-align: middle;
+    display: inline-block;
 }
