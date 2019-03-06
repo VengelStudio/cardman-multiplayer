@@ -103,6 +103,10 @@ class App extends React.Component {
         this.initializeSocket()
     }
 
+    componentWillUnmount() {
+        this.logoutPlayer()
+    }
+
     invitationHandler = ({ id = null, socketId = null }) => {
         //Prevent players fron inviting themselves
         if (id === this.state.player.id) {
@@ -235,6 +239,7 @@ class App extends React.Component {
     render() {
         return (
             <div className='container of-rows width-full height-full text-nunito '>
+                <Logo />
                 <Header
                     volumeSettings={this.state.volumeSettings}
                     title={this.state.title}

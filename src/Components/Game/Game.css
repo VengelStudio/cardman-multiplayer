@@ -53,11 +53,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 1vw;
-    margin-right: calc(1vw + 3px);
     border: 0;
     cursor: grab;
-    width: 17.5vh;
+    width: 80%;
+    margin: 1vh auto 1vh auto;
 }
 
 .card-title {

@@ -5,17 +5,15 @@ import { extractBrowserPlayers } from './Functions'
 import PropTypes from 'prop-types'
 
 class PlayersBrowser extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            playersInBrowser: extractBrowserPlayers({
-                player: this.props.player,
-                connectedPlayers: this.props.connectedPlayers,
-                invitationHandler: this.props.invitationHandler,
-                addPopup: this.props.addPopup
-            }),
-            searchedPlayer: null
-        }
+    state = {
+        connectedPlayers: this.props.connectedPlayers,
+        playersInBrowser: extractBrowserPlayers({
+            player: this.props.player,
+            connectedPlayers: this.props.connectedPlayers,
+            invitationHandler: this.props.invitationHandler,
+            addPopup: this.props.addPopup
+        }),
+        searchedPlayer: null
     }
 
     componentDidMount() {
@@ -23,14 +21,15 @@ class PlayersBrowser extends React.Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if (state.playersInBrowser !== props.playersInBrowser) {
+        if (state.connectedPlayers !== props.connectedPlayers) {
             return {
                 playersInBrowser: extractBrowserPlayers({
                     player: props.player,
                     connectedPlayers: props.connectedPlayers,
                     invitationHandler: props.invitationHandler,
                     addPopup: props.addPopup
-                })
+                }),
+                connectedPlayers: props.connectedPlayers
             }
         }
         return null

@@ -23,7 +23,4 @@
 .walkthrough li span {
     font-size: 2vh;
     font-weight: normal;
-    height: 100%;
-    vertical-align: middle;
-    display: inline-block;
 }

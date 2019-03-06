@@ -71,7 +71,7 @@ class Walkthrough extends Component {
                     <img
                         className='walkthrough-image'
                         src='images/walkthrough/walkthrough.png'
-                        alt='Walkthrough image'
+                        alt='Walkthrough screenshot'
                     />
                     <Description />
                     <div className='ok-btn-wrapper'>

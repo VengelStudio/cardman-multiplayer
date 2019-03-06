@@ -1,7 +1,6 @@
 import React from 'react'
 import { Icon } from 'react-icons-kit'
 import { cross } from 'react-icons-kit/icomoon/cross'
-const { Cards: CardsData } = require('../../../Game/Cards/Cards')
 
 const CardPopup = props => {
     const onClose = () => {
@@ -20,7 +19,7 @@ const CardPopup = props => {
                 <img
                     className='lookup-card-display'
                     src={`images/cards/${props.popupData.cardId}.svg`}
-                    alt='Card image'
+                    alt='Card'
                 />
                 <span
                     dangerouslySetInnerHTML={{

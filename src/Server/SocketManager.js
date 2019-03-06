@@ -73,45 +73,59 @@ module.exports = function(socket) {
                 socket.user.nickname,
                 connectedPlayers
             )
-            io.emit(PLAYER_DISCONNECTED, { connectedPlayers })
             console.log(
                 `[DISCONNECTED] Player ${socket.user.nickname} (${socket.id}).`
             )
+            try {
+                let { gameId, socketId } = socket.user
+                let disconnectedSocketId = socketId
 
-            let { gameId } = socket.user
-            if (gameId !== null && games[gameId] !== undefined) {
-                let playersGame = games[socket.user.gameId]
-                //* switch to opponent and let him win
-                let playerIndex = playersGame.nextPlayerIndex === 0 ? 1 : 0
-                let player = playersGame.playerSockets[playerIndex]
-                playersGame.score[player.socketId] += 1
+                let playersGame = games[gameId]
+                let remainingPlayer = playersGame.playerSockets.filter(
+                    s => s.socketId !== disconnectedSocketId
+                )[0]
+                playersGame.score[remainingPlayer.socketId] += 1
 
                 let winObject = {
-                    winner: player,
+                    winner: remainingPlayer,
                     score: playersGame.score,
                     game: playersGame,
                     type: Result.GAME_WIN
                 }
 
+                console.log(connectedPlayers)
                 connectedPlayers = setPlayersInGameStatus(
                     connectedPlayers,
                     playersGame.playerSockets,
                     false
                 )
+                console.log(connectedPlayers)
 
                 games = removeGame(playersGame, games)
-                io.in(socket.user.gameId).emit(WIN, winObject)
-                //todo TypeError: Cannot read property 'leaveAll' of undefined
-                io.sockets.connected[socket.user.socketId].leaveAll()
+                io.in(gameId).emit(WIN, winObject)
+
+                let remainingSocket =
+                    io.sockets.connected[remainingPlayer.socketId]
+                remainingSocket.leave(gameId)
+
+                io.emit(PLAYER_DISCONNECTED, { connectedPlayers })
                 io.emit(REFRESH_PLAYERS, { connectedPlayers })
+            } catch (e) {
+                console.log(e)
             }
         }
     })
 
     socket.on(LOGOUT, () => {
-        connectedPlayers = removePlayer(socket.user.nickname, connectedPlayers)
+        console.log('LOGOUT')
+        try {
+            let { nickname } = socket.user
+            connectedPlayers = removePlayer(nickname, connectedPlayers)
+            console.log(`[LOGOUT] Player ${nickname}.`)
+        } catch (e) {
+            console.log(e)
+        }
         io.emit(PLAYER_DISCONNECTED, { connectedPlayers })
-        console.log(`[LOGOUT] Player ${socket.user.username}.`)
     })
 
     socket.on(INVITATION, ({ id = null, socketId = null }) => {
