@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { WALKTHROUGH_READY } from '../../Shared/Events'
 import './Walkthrough.css'
+// import image from '../../../public/images/walkthrough/walkthrough.png'
 
 class Walkthrough extends Component {
     state = { buttonVisibility: true }
@@ -25,6 +26,7 @@ class Walkthrough extends Component {
         return (
             <div className='gameWrapper'>
                 <div className='walkthrough'>
+                    <img className='walkthrough-image' src='images/walkthrough/walkthrough.png'></img>
                     <div className='ok-btn-wrapper'>
                         <button className={buttonClass} onClick={this.onReady}>
                             {content}
