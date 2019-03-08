@@ -4,6 +4,8 @@
     "private": true,
     "dependencies": {
         "@babel/core": "^7.2.2",
+        "express": "^4.16.4",
+        "path": "^0.12.7",
         "pm2": "^3.2.9",
         "react": "^16.6.3",
         "react-audio-player": "^0.11.0",
