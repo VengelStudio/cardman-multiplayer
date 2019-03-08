@@ -221,7 +221,11 @@ module.exports = function(socket) {
                 } else if (move.type === 'card' && blockCounter === 0) {
                     let cardName = move.card
                     let card = getCard(cardName)
-                    currentGame = card.use({ currentGame, socket, move })
+                    if (move.discarded === false) {
+                        currentGame = card.use({ currentGame, socket, move })
+                    } else {
+                        console.log('discarded')
+                    }
                     currentGame.cards = removeUsedCard(
                         currentGame,
                         card,

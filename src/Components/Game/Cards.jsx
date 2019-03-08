@@ -57,10 +57,16 @@ class Cards extends Component {
                             index={index}
                             card={card}
                             displayTooltip={this.state.displayTooltip}
+                            isDiscardEnabled={this.props.isDiscardEnabled}
                             isMine={isMine}
                             isUsed={isUsed}
                             onUseAbort={() => {
                                 this.props.onUseAbort(index)
+                            }}
+                            onDiscard={index => {
+                                if (this.props.move) {
+                                    this.props.onDiscard(index, card.id)
+                                }
                             }}
                         />
                     </li>

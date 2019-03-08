@@ -22,7 +22,9 @@ class Game extends Component {
         enemyCards: null,
         cardTargetHighlight: false,
         usedCardIndexes: { 0: false, 1: false, 2: false },
-        soundSrc: ''
+        soundSrc: '',
+        isDiscardEnabled: false,
+        discardMoves: []
     }
 
     initializeSocket = () => {
@@ -77,15 +79,54 @@ class Game extends Component {
         return null
     }
 
+    ctrlPressHandler(event, isDown) {
+        if (event.keyCode === 17) {
+            this.setState({ isDiscardEnabled: isDown })
+        }
+    }
     componentDidMount() {
         this.props.socket && this.initializeSocket()
         this.props.muteMusic(true)
+        document.addEventListener(
+            'keydown',
+            e => {
+                this.ctrlPressHandler(e, true)
+            },
+            false
+        )
+        document.addEventListener(
+            'keyup',
+            e => {
+                this.ctrlPressHandler(e, false)
+            },
+            false
+        )
+    }
+    componentWillUnmount() {
+        document.removeEventListener(
+            'keydown',
+            e => {
+                this.ctrlPressHandler(e, false)
+            },
+            false
+        )
+        document.removeEventListener(
+            'keyup',
+            e => {
+                this.ctrlPressHandler(e, false)
+            },
+            false
+        )
     }
 
     moveHandler = ({ moves = null }) => {
         if (this.state.allowMove === true) {
             const { socket } = this.props
-            socket.emit(GAME_MOVE, { game: this.state.game, moves })
+            console.log(moves)
+            console.log(this.state.discardMoves)
+            let allMoves = [...moves, ...this.state.discardMoves]
+            console.log(allMoves)
+            socket.emit(GAME_MOVE, { game: this.state.game, moves: allMoves })
         }
     }
 
@@ -117,6 +158,30 @@ class Game extends Component {
 
     playSound = src => {
         this.setState({ soundSrc: src })
+    }
+
+    onDiscard = (index, cardId) => {
+        let move = {
+            type: 'card',
+            card: cardId,
+            playerSocketId: this.props.player.socketId,
+            discarded: true
+        }
+        let newGame = this.state.game
+        let mySocketId = this.props.player.socketId
+        console.log(newGame.cards)
+        newGame.cards[mySocketId] = newGame.cards[mySocketId].filter(
+            (val, i) => {
+                return i !== index
+            }
+        )
+        console.log(newGame.cards)
+        let newDiscardMoves = this.state.discardMoves
+        newDiscardMoves.push(move)
+        this.setState({
+            discardMoves: newDiscardMoves,
+            game: newGame
+        })
     }
 
     render() {
@@ -151,6 +216,8 @@ class Game extends Component {
                     playSound={this.playSound}
                     game={this.state.game}
                     player={this.props.player}
+                    isDiscardEnabled={this.state.isDiscardEnabled}
+                    onDiscard={this.onDiscard}
                 />
                 <Content
                     player={this.props.player}
