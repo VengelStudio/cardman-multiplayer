@@ -23,7 +23,8 @@
         "concurrently": "^4.1.0"
     },
     "scripts": {
-        "start": "concurrently \"npm run react\" \"npm run server\"",
+        "postinstall": "npm run build",
+        "start": "npm run server",
         "react": "react-scripts start",
         "server": "node ./src/Server/index.js",
         "build": "react-scripts build",
