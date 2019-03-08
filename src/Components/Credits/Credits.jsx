@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import './Credits.css'
 import Logo from '../../Resources/Images/logo-small.png'
-import { GoMarkGithub, GoMail } from 'react-icons/go'
-import { IconContext } from 'react-icons'
+//*react icons is removed
+// import { GoMarkGithub, GoMail } from 'react-icons/go'
+// import { IconContext } from 'react-icons'
 
 class Credits extends Component {
     state = {}

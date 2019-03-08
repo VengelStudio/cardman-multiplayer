@@ -1,34 +1,29 @@
 {
-    "name": "cardman",
-    "version": "0.1.0",
+    "name": "cardman-multiplayer",
+    "version": "0.9.0",
     "private": true,
     "dependencies": {
         "@babel/core": "^7.2.2",
-        "color-log": "0.0.2",
-        "normalize.css": "^8.0.1",
         "pm2": "^3.2.9",
         "react": "^16.6.3",
         "react-audio-player": "^0.11.0",
-        "react-dnd-html5-backend": "^7.0.2",
         "react-dom": "^16.6.3",
         "react-drag-and-drop": "^3.0.0",
-        "react-icons": "^3.3.0",
         "react-icons-kit": "^1.2.1",
-        "react-pose": "^4.0.8",
         "react-router-dom": "^4.3.1",
-        "react-scripts": "^2.1.5",
+        "react-scripts": "^2.1.8",
         "react-scrollbars-custom": "^3.1.3",
         "socket.io": "^2.2.0",
-        "uuid": "^3.3.2",
+        "uuid": "^3.3.2"
+    },
+    "devDependencies": {
         "concurrently": "^4.1.0"
     },
     "scripts": {
-        "dev": "concurrently \"npm run client\" \"npm run server\"",
-        "start": "npm start server",
+        "start": "concurrently \"npm run client\" \"npm run server\"",
         "client": "react-scripts start",
         "server": "node ./src/Server/index.js",
-        "build": "react-scripts build",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
+        "build": "react-scripts build"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -38,5 +33,8 @@
         "not dead",
         "not ie <= 11",
         "not op_mini all"
-    ]
+    ],
+    "engines": {
+        "node": "8.11.3"
+    }
 }
