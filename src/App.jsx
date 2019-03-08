@@ -32,7 +32,7 @@ import Walkthrough from './Components/Game/Walkthrough'
 //todo remove posed
 
 const uuidv4 = require('uuid/v4')
-const socketUrl = 'http://localhost:3231'
+const socketUrl = 'ws://cardman-multiplayer.herokuapp.com:80'
 const { setScore } = require('./Shared/Functions')
 
 class Logo extends React.Component {

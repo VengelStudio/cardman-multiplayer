@@ -1,4 +1,4 @@
-const io = require('./index.js').io
+const io = require('../../server.js').io
 
 const {
     VERIFY_USERNAME,

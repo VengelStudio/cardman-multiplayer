@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+/*import React, { Component } from 'react'
 import './Credits.css'
 import Logo from '../../Resources/Images/logo-small.png'
 //*react icons is removed
@@ -44,3 +44,4 @@ class Credits extends Component {
 }
 
 export default Credits
+*/

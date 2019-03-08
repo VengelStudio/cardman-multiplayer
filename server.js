@@ -6,16 +6,12 @@ const io = (module.exports.io = require('socket.io')(server, {
     pingInterval: 2000
 }))
 const port = process.env.PORT || 3231
-const SocketManager = require('./SocketManager')
+const SocketManager = require('./src/Server/SocketManager')
 
-app.use(express.static(path.join(__dirname, '../../public')))
+app.use(express.static(__dirname + '/build'))
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../public/index.html'), err => {
-        if (err) {
-            res.status(500).send(err)
-        }
-    })
+app.get('*', (request, response) => {
+    response.sendFile(__dirname + '/build/index.html')
 })
 
 io.on('connection', SocketManager)
