@@ -23,13 +23,12 @@
         "concurrently": "^4.1.0"
     },
     "scripts": {
-        "postinstall": "npm run build",
-        "start": "npm run server",
-        "react": "react-scripts start",
-        "server": "node ./src/Server/index.js",
+        "dev": "concurrently \"npm run client\" \"npm run server\"",
+        "start": "npm start server",
+        "client": "react-scripts start",
+        "server": "node ./src/Server/pm2.config.js",
         "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject"
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
     },
     "eslintConfig": {
         "extends": "react-app"
