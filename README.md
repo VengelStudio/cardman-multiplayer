@@ -31,4 +31,4 @@ The primary goal is to guess the letters of a random word, but during your turn 
 ### Authors
 
 -   Bartosz Kępka
--   ŝukasz Blachnicki
+-   Łukasz Blachnicki
