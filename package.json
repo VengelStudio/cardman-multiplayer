@@ -25,7 +25,7 @@
     "scripts": {
         "start": "concurrently \"npm run react\" \"npm run server\"",
         "react": "react-scripts start",
-        "server": "pm2 start ./src/Server/pm2.config.js",
+        "server": "node ./src/Server/index.js",
         "build": "react-scripts build",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject"
