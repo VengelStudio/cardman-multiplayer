@@ -26,7 +26,7 @@
         "dev": "concurrently \"npm run client\" \"npm run server\"",
         "start": "npm start server",
         "client": "react-scripts start",
-        "server": "node ./src/Server/pm2.config.js",
+        "server": "node ./src/Server/index.js",
         "build": "react-scripts build",
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
     },
