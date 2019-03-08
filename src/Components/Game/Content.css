@@ -1,0 +1,54 @@
+.card-drop {
+    display: block;
+    height: 100px;
+    width: 200px;
+    background-color: gray;
+}
+
+.end-turn-btn {
+    position: absolute;
+    top: 0;
+    height: 7vh;
+    width: 25vh;
+    padding: 1vh;
+    color: grey;
+    margin-bottom: -0.3vh;
+    border-bottom: 0;
+    border-top-left-radius: 1vh;
+    border-top-left-radius: 1vh;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: 30px;
+    z-index: 1000;
+    cursor: default;
+}
+
+.end-turn-btn-hover:hover {
+    cursor: pointer;
+    color: white;
+}
+
+.keyboard-wrapper {
+    position: relative;
+    height: 57.5vh;
+    display: flex;
+    margin-top: 10vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@keyframes glowing {
+    from {
+        box-shadow: 0 0 10px 0px rgba(247, 217, 22, 1);
+    }
+    to {
+        box-shadow: 0 0 10px 10px rgba(247, 217, 22, 1);
+    }
+}
+
+.word-glow {
+    animation: glowing 650ms infinite alternate;
+    animation-timing-function: ease-in-out;
+}

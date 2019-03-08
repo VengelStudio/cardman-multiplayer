@@ -16,12 +16,16 @@ const createGame = ({
     guessed = []
 }) => ({
     id: uuidv4(),
+    readyCounter: 0,
     word,
     displayWord,
     guessed,
     playerSockets,
     nextPlayerIndex,
+    blockCounters: {},
     score: {},
+    cards: {},
+    keys: [],
     dateTime: new Date().toJSON
 })
 

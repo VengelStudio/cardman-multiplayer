@@ -32,6 +32,19 @@ function getRandomWord(words) {
     return randomWord
 }
 
+function removeUsedCard(game, card, id) {
+    let cards = game.cards[id]
+    let usedIndex = cards.findIndex(gameCard => gameCard.id === card.id)
+    let newCards = []
+    for (let i = 0; i < cards.length; i++) {
+        if (i !== usedIndex) {
+            newCards.push(cards[i])
+        }
+    }
+    game.cards[id] = newCards
+    return game.cards
+}
+
 function setPlayersInGameStatus(
     connectedPlayers,
     players,
@@ -55,5 +68,6 @@ module.exports = {
     isPlayer,
     getRandomWord,
     setPlayersInGameStatus,
+    removeUsedCard,
     removeGame
 }

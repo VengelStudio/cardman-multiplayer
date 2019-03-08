@@ -22,3 +22,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+src/Server/logs/err.log
+src/Server/logs/out.log

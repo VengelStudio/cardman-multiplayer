@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Timer from '../../Game/Timer'
 const InvitationPopup = props => {
     const onClose = accepted => {
         if (accepted) {
@@ -12,6 +12,11 @@ const InvitationPopup = props => {
 
     const message = `You have been invited by ${props.popupData.nickname}.`
 
+    const onTimeout = () => {
+        props.popupData.onDecline()
+        props.popupData.onClose(props.popupData.id)
+    }
+
     return (
         <div className='generic-popup border-neon border-neon-red text-nunito bg-khaki'>
             <div className='generic-popup-title'>
@@ -19,6 +24,7 @@ const InvitationPopup = props => {
             </div>
             <div className='invitation-popup-content'>
                 <div className='msg'>{message}</div>
+                <Timer time={10} onEnd={onTimeout} />
                 <div className='popup-buttons'>
                     <button
                         className='border-neon border-neon-lime'

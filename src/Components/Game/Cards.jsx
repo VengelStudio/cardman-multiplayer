@@ -1,71 +1,123 @@
 import React, { Component } from 'react'
-import CardPlaceholder from '../../Resources/Images/img.jpg'
+import Card from './Card'
+import './Cards.css'
 
-const getBorder = type => {
-    let classes = 'card border-neon '
-    switch (type) {
-        case 1:
-            classes += 'border-neon-blue'
-            break
-        case -1:
-            classes += 'border-neon-red'
-            break
-        default:
-            classes += 'border-neon-violet'
-            break
-    }
-    return classes
-}
+import { Draggable } from 'react-drag-and-drop'
 
-class Card extends Component {
-    render() {
-        return (
-            <div className={getBorder(this.props.type)}>
-                <div className='card-title'>Card</div>
-                <img
-                    className='card-image border-neon border-light-translucent'
-                    src={CardPlaceholder}
-                    alt='Playing card.'
-                />
-            </div>
-        )
-    }
-}
+import flipSound1 from '../../Resources/Sounds/card_flip.mp3'
+import flipSound2 from '../../Resources/Sounds/card_flip2.mp3'
+const { Cards: CardsData } = require('../../Game/Cards/Cards')
 
 class Cards extends Component {
-    state = { move: this.props.move }
+    state = { displayTooltip: this.props.areMine }
 
-    static getDerivedStateFromProps(props, state) {
-        if (props.move !== state.move) {
+    getBg = () => {
+        if (this.props.move) {
             return {
-                move: props.move
+                animationName: 'moveFlashing',
+                animationDuration: '400ms',
+                animationIterationCount: 'infinite',
+                animationTimingFunction: 'linear',
+                animationDirection: 'alternate-reverse',
+                animationFillMode: 'forwards'
             }
         }
         return null
     }
 
-    getBg = () => {
-        let animationStyle = {
-            animationName: 'moveFlashing',
-            animationDuration: '400ms',
-            animationIterationCount: 'infinite',
-            animationTimingFunction: 'linear',
-            animationDirection: 'alternate-reverse',
-            animationFillMode: 'forwards'
+    GenerateCard = ({ card, isMine, index, isDisabled, blockCounter }) => {
+        if (isMine) {
+            let isUsed = this.props.usedCardIndexes[index]
+            let data = JSON.stringify({ cardId: card.id, index })
+            let isBlocked = false
+            if (blockCounter > 0 && blockCounter <= 2) {
+                isBlocked = true
+            }
+
+            return (
+                <Draggable
+                    enabled={isMine && !isUsed && !isDisabled && !isBlocked}
+                    onDragStart={() => {
+                        this.setState({ displayTooltip: false })
+                        this.props.playSound(flipSound1)
+                        this.props.setCardTargetHighlight(true)
+                    }}
+                    onDragEnd={() => {
+                        this.setState({ displayTooltip: true })
+                        this.props.playSound(flipSound2)
+                        this.props.setCardTargetHighlight(false)
+                    }}
+                    type='card'
+                    data={data}
+                >
+                    <li>
+                        <Card
+                            isDisabled={isDisabled}
+                            isBlocked={isBlocked}
+                            index={index}
+                            card={card}
+                            displayTooltip={this.state.displayTooltip}
+                            isDiscardEnabled={this.props.isDiscardEnabled}
+                            isMine={isMine}
+                            isUsed={isUsed}
+                            onUseAbort={() => {
+                                this.props.onUseAbort(index)
+                            }}
+                            onDiscard={index => {
+                                if (this.props.move) {
+                                    this.props.onDiscard(index, card.id)
+                                }
+                            }}
+                        />
+                    </li>
+                </Draggable>
+            )
+        } else {
+            return (
+                <li>
+                    <Card
+                        card={card}
+                        displayTooltip={this.state.displayTooltip}
+                        isMine={isMine}
+                    />
+                </li>
+            )
         }
-        return this.state.move ? animationStyle : {}
+    }
+
+    CardsSpawner = () => {
+        let { cards, areMine, player, game } = this.props
+        let blockCounter = 0
+        if (game !== null) blockCounter = game.blockCounters[player.socketId]
+        if (cards !== null) {
+            return cards.map((card, i) => {
+                let cardData = CardsData[card.id]
+                return (
+                    <this.GenerateCard
+                        card={card}
+                        index={i}
+                        key={i}
+                        isMine={areMine}
+                        isDisabled={!cardData.doesMeetConditions(game, player)}
+                        blockCounter={blockCounter}
+                    />
+                )
+            })
+        } else {
+            return null
+        }
     }
 
     render() {
         return (
             <div className='cards' style={this.getBg()}>
                 <span className='cards-title'>
-                    {this.props.title ? this.props.title : ''}
+                    {this.props.title && this.props.title}
                 </span>
                 <div className='cards-wrapper'>
-                    <Card type={this.props.type} />
-                    <Card type={this.props.type} />
-                    <Card type={this.props.type} />
+                    <ul>
+                        <this.CardsSpawner />
+                    </ul>
                 </div>
             </div>
         )

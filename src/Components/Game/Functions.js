@@ -3,25 +3,23 @@ const {
     POPUP_CONFIRMATION,
     POPUP_GENERIC
 } = require('../../Components/Popup/Types')
+const { Result } = require('../../Shared/Enums')
 
 const winHandler = ({
     type,
-    setMove = null,
+    props,
     setScore = null,
-    setTitle = null,
     score = null,
     game = null,
-    addPopup = null,
     winner = null,
-    player = null,
-    muteMusic = null,
     returnToMenu = null
 }) => {
+    const { addPopup, setMove, setTitle, player, muteMusic } = props
     let returnState = null
-    if (type === 'turn') {
+    if (type === Result.TURN_WIN) {
         returnState = { gameFromProps: false, game }
         setMove(isMove({ game, player }))
-    } else if (type === 'turn_tie') {
+    } else if (type === Result.TURN_TIE) {
         returnState = { gameFromProps: false, game }
         setMove(isMove({ game, player }))
         addPopup({
@@ -31,7 +29,7 @@ const winHandler = ({
                 content: `Turn is tied. None of the players won.`
             }
         })
-    } else if (type === 'game') {
+    } else if (type === Result.GAME_WIN) {
         //* win
         returnState = { allowMove: false }
         addPopup({
@@ -42,7 +40,6 @@ const winHandler = ({
                 onConfirm: () => {
                     muteMusic(false)
                     returnToMenu()
-                    console.log('confirmed')
                 }
             }
         })

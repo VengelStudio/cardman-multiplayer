@@ -2,13 +2,11 @@ import React from 'react'
 import './App.css'
 
 import Header from './Components/Header/Header'
-import PopupManager from './Components/Popup/Popups'
+import Popups from './Components/Popup/Popups'
 import Game from './Components/Game/Game'
-import Credits from './Components/Menu/Credits/Credits'
-import Help from './Components/Menu/Help/Help'
-import Menu from './Components/Menu/Menu'
+import Credits from './Components/Credits/Credits'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
-import LoginPage from './Components/Menu/LoginPage/LoginPage'
+import LoginPage from './Components/LoginPage/LoginPage'
 
 import { POPUP_GENERIC, POPUP_INVITATION } from './Components/Popup/Types'
 
@@ -20,7 +18,8 @@ import {
     INVITATION,
     GAME_STARTED,
     REFRESH_PLAYERS,
-    INVITATION_ACCEPTED
+    INVITATION_ACCEPTED,
+    GAME_CREATED
 } from './Shared/Events'
 import { isMove } from './Shared/Functions'
 
@@ -28,17 +27,43 @@ import { Route, withRouter, Switch } from 'react-router-dom'
 
 import ReactAudioPlayer from 'react-audio-player'
 import bgMusic from './Resources/Sounds/bg-lower.mp3'
+import Walkthrough from './Components/Game/Walkthrough'
+
+//todo remove posed
 
 const uuidv4 = require('uuid/v4')
 const socketUrl = 'http://localhost:3231'
 const { setScore } = require('./Shared/Functions')
+
+class Logo extends React.Component {
+    state = { display: true }
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ display: false })
+        }, 2500)
+    }
+    render() {
+        if (this.state.display) {
+            return (
+                <React.Fragment>
+                    <div className='intro-logo'>
+                        <div className='text-nunito intro-1'>Cardman&nbsp;</div>
+                        <div className='text-nunito intro-2'>Multiplayer</div>
+                    </div>
+                </React.Fragment>
+            )
+        }
+        return null
+    }
+}
 
 class App extends React.Component {
     constructor(props) {
         super(props)
         this.popupsRef = React.createRef()
         this.state = {
-            title: 'Hangman Multiplayer',
+            isLogoVisible: false,
+            title: 'Cardman Multiplayer',
             score: null,
             player: null,
             socket: null,
@@ -50,7 +75,8 @@ class App extends React.Component {
                 soundVol: 0.5,
                 muted: false
             },
-            isDisconnected: false
+            isDisconnected: false,
+            gameId: null
         }
     }
 
@@ -78,6 +104,9 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        setInterval(() => {
+            this.setState({ isLogoVisible: !this.state.isLogoVisible })
+        }, 1000)
         if (this.isInCache('cachedVolumeSettings')) {
             let cachedVolumeSettings = JSON.parse(
                 localStorage.getItem('cachedVolumeSettings')
@@ -102,8 +131,12 @@ class App extends React.Component {
         this.initializeSocket()
     }
 
+    componentWillUnmount() {
+        this.logoutPlayer()
+    }
+
     invitationHandler = ({ id = null, socketId = null }) => {
-        //Prevent players fron inviting themselves
+        //Prevent players from inviting themselves
         if (id === this.state.player.id) {
             this.addPopup({
                 title: 'Error!',
@@ -117,10 +150,11 @@ class App extends React.Component {
 
     initializeSocket = () => {
         const socket = io(socketUrl)
+        this.setState({ socket })
+
         socket.on('connect', () => {
             console.log('Connected to server.')
         })
-        this.setState({ socket })
 
         socket.on('pong', ms => {
             if (ms > this.config.disconnectedTimeoutMs) {
@@ -130,21 +164,18 @@ class App extends React.Component {
             }
         })
 
-        socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
-            console.log('Player connected!')
-            this.setState({ connectedPlayers })
-        })
+        let refreshingPlayersSockets = [
+            PLAYER_CONNECTED,
+            PLAYER_DISCONNECTED,
+            REFRESH_PLAYERS
+        ]
 
-        socket.on(PLAYER_DISCONNECTED, ({ connectedPlayers }) => {
-            this.setState({ connectedPlayers })
-            console.log('Player disconnected!')
+        refreshingPlayersSockets.forEach(s => {
+            socket.on(s, ({ connectedPlayers }) => {
+                console.log(s)
+                this.setState({ connectedPlayers })
+            })
         })
-
-        socket.on(REFRESH_PLAYERS, ({ connectedPlayers }) => {
-            console.log('Refreshing players!')
-            this.setState({ connectedPlayers })
-        })
-
         socket.on(INVITATION, ({ nickname, socketId }) => {
             const { socket } = this.state
             this.addPopup({
@@ -157,13 +188,15 @@ class App extends React.Component {
                             to: this.state.player
                         })
                     },
-                    onDecline: () => {
-                        console.log('declined, todo here')
-                    }
+                    onDecline: () => {}
                 }
             })
         })
-
+        socket.on(GAME_CREATED, ({ gameId }) => {
+            this.setState({ gameId }, () => {
+                this.props.history.push('/walkthrough')
+            })
+        })
         socket.on(GAME_STARTED, ({ game }) => {
             this.setGame({ game })
             this.setMove(isMove({ game, player: this.state.player }))
@@ -184,8 +217,7 @@ class App extends React.Component {
         //Wait for server response, then get the player list
         socket.on(PLAYER_CONNECTED, ({ connectedPlayers }) => {
             this.setState({ connectedPlayers })
-            console.log('PLAYER CONNECTED')
-            this.props.history.push('/menu')
+            this.props.history.push('/browser')
         })
     }
 
@@ -208,11 +240,6 @@ class App extends React.Component {
     setMove = isMove => {
         this.setState({ isMove })
     }
-    muteMusic = state => {
-        this.setState({
-            volumeSettings: { ...this.state.volumeSettings, muted: state }
-        })
-    }
 
     setSettings = ({ soundVol, musicVol }) => {
         this.setState({
@@ -225,6 +252,12 @@ class App extends React.Component {
         )
     }
 
+    muteMusic = state => {
+        this.setState({
+            volumeSettings: { ...this.state.volumeSettings, muted: state }
+        })
+    }
+
     addPopup = ({ type = POPUP_GENERIC, popupData }) => {
         this.setState({
             newPopup: { type, popupData: { ...popupData, id: uuidv4() } }
@@ -232,10 +265,21 @@ class App extends React.Component {
     }
 
     render() {
+        const {
+            socket,
+            player,
+            game,
+            gameId,
+            isMove,
+            connectedPlayers,
+            isDisconnected
+        } = this.state
+        const { volumeSettings } = this.state
         return (
             <div className='container of-rows width-full height-full text-nunito '>
+                <Logo />
                 <Header
-                    volumeSettings={this.state.volumeSettings}
+                    volumeSettings={volumeSettings}
                     title={this.state.title}
                     score={this.state.score}
                     setSettings={this.setSettings}
@@ -243,48 +287,52 @@ class App extends React.Component {
                 <ReactAudioPlayer
                     src={bgMusic}
                     autoPlay
-                    volume={this.state.volumeSettings.musicVol}
+                    volume={volumeSettings.musicVol}
                     loop={true}
-                    muted={this.state.volumeSettings.muted}
+                    muted={volumeSettings.muted}
                 />
                 <div className='row height-full width-full bg-lightgrey'>
-                    <PopupManager
+                    <Popups
                         newPopup={this.state.newPopup}
-                        isDisconnected={this.state.isDisconnected}
+                        isDisconnected={isDisconnected}
+                        soundVolume={volumeSettings.soundVol}
                     />
                     <Switch>
                         <Route exact path='/'>
                             <LoginPage
-                                socket={this.state.socket}
+                                socket={socket}
                                 loginPlayer={this.loginPlayer}
                                 setTitle={this.setTitle}
                                 addPopup={this.addPopup}
                             />
                         </Route>
                         <Route
-                            path='/menu'
-                            render={() => <Menu setTitle={this.setTitle} />}
-                        />
-                        <Route
                             path='/credits'
                             setTitle={this.setTitle}
                             component={Credits}
                         />
                         <Route
-                            path='/help'
-                            setTitle={this.setTitle}
-                            component={Help}
-                        />
-                        <Route
                             path='/browser'
                             render={() => (
                                 <PlayersBrowser
-                                    player={this.state.player}
+                                    player={player}
                                     setTitle={this.setTitle}
+                                    addPopup={this.addPopup}
                                     invitationHandler={this.invitationHandler}
-                                    connectedPlayers={
-                                        this.state.connectedPlayers
-                                    }
+                                    connectedPlayers={connectedPlayers}
+                                />
+                            )}
+                        />
+                        <Route
+                            path='/walkthrough'
+                            render={() => (
+                                <Walkthrough
+                                    player={player}
+                                    setTitle={this.setTitle}
+                                    gameId={gameId}
+                                    muteMusic={this.muteMusic}
+                                    socket={socket}
+                                    soundVolume={volumeSettings.soundVol}
                                 />
                             )}
                         />
@@ -292,14 +340,15 @@ class App extends React.Component {
                             path='/game'
                             render={() => (
                                 <Game
-                                    player={this.state.player}
-                                    game={this.state.game}
+                                    player={player}
+                                    game={game}
                                     muteMusic={this.muteMusic}
-                                    socket={this.state.socket}
+                                    socket={socket}
                                     setTitle={this.setTitle}
                                     addPopup={this.addPopup}
                                     setMove={this.setMove}
-                                    isMove={this.state.isMove}
+                                    isMove={isMove}
+                                    soundVolume={volumeSettings.soundVol}
                                 />
                             )}
                         />

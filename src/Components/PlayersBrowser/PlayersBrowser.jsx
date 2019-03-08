@@ -2,17 +2,18 @@ import React from 'react'
 import './PlayersBrowser.css'
 import Scrollbar from 'react-scrollbars-custom'
 import { extractBrowserPlayers } from './Functions'
+import PropTypes from 'prop-types'
 
 class PlayersBrowser extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            playersInBrowser: extractBrowserPlayers({
-                player: this.props.player,
-                connectedPlayers: this.props.connectedPlayers,
-                invitationHandler: this.props.invitationHandler
-            })
-        }
+    state = {
+        connectedPlayers: this.props.connectedPlayers,
+        playersInBrowser: extractBrowserPlayers({
+            player: this.props.player,
+            connectedPlayers: this.props.connectedPlayers,
+            invitationHandler: this.props.invitationHandler,
+            addPopup: this.props.addPopup
+        }),
+        searchedPlayer: null
     }
 
     componentDidMount() {
@@ -20,16 +21,46 @@ class PlayersBrowser extends React.Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if (state.playersInBrowser !== props.playersInBrowser) {
+        if (state.connectedPlayers !== props.connectedPlayers) {
             return {
                 playersInBrowser: extractBrowserPlayers({
                     player: props.player,
                     connectedPlayers: props.connectedPlayers,
-                    invitationHandler: props.invitationHandler
-                })
+                    invitationHandler: props.invitationHandler,
+                    addPopup: props.addPopup
+                }),
+                connectedPlayers: props.connectedPlayers
             }
         }
         return null
+    }
+
+    searchPlayer = e => {
+        let input = e.target.value
+        if (input === '') {
+            this.setState({ searchedPlayer: null })
+        } else {
+            let players = Object.keys(this.props.connectedPlayers)
+            players = players.filter(
+                item => item !== this.props.player.nickname
+            )
+            for (let i = 0; i < players.length; i++) {
+                if (players[i].toLowerCase().includes(input.toLowerCase())) {
+                    this.setState({
+                        searchedPlayer: this.props.connectedPlayers[players[i]]
+                    })
+                }
+            }
+        }
+    }
+
+    SearchedPlayer = () => {
+        return extractBrowserPlayers({
+            player: this.props.player,
+            connectedPlayers: [this.state.searchedPlayer],
+            invitationHandler: this.props.invitationHandler,
+            addPopup: this.props.addPopup
+        })
     }
 
     render() {
@@ -45,14 +76,34 @@ class PlayersBrowser extends React.Component {
                         )}
                     </p>
                 </div>
+                <div className='search-player'>
+                    <input
+                        placeholder='Search player'
+                        onChange={this.searchPlayer}
+                        className='border-neon border-neon-blue'
+                    />
+                </div>
                 <Scrollbar style={{ width: '100%', height: '100%' }}>
-                    {this.state.playersInBrowser.map(entry => {
-                        return entry
-                    })}
+                    {!this.state.searchedPlayer ? (
+                        this.state.playersInBrowser.map(entry => {
+                            return entry
+                        })
+                    ) : (
+                        <this.SearchedPlayer />
+                    )}
                 </Scrollbar>
             </div>
         )
     }
+}
+
+PlayersBrowser.propTypes = {
+    addPopup: PropTypes.func.isRequired,
+    connectedPlayers: PropTypes.object.isRequired,
+    invitationHandler: PropTypes.func.isRequired,
+    player: PropTypes.object,
+    playersInBrowser: PropTypes.array,
+    setTitle: PropTypes.func.isRequired
 }
 
 export default PlayersBrowser

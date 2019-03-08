@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import './LoginPage.css'
-import { VERIFY_USERNAME } from '../../../Shared/Events'
-import { POPUP_GENERIC } from '../../Popup/Types'
+import { VERIFY_USERNAME } from '../../Shared/Events'
+import { POPUP_GENERIC } from '../Popup/Types'
 import { withRouter } from 'react-router-dom'
 
 class LoginPage extends Component {
     constructor(props) {
         super(props)
         this.inputRef = React.createRef()
+    }
+
+    componentDidMount() {
+        this.props.setTitle({ title: 'Login page' })
     }
 
     loginHandler = () => {
@@ -23,6 +27,16 @@ class LoginPage extends Component {
             })
             return
         }
+        else if (nickname.includes(' ')) {
+            this.props.addPopup({
+                type: POPUP_GENERIC,
+                popupData: {
+                    title: 'Error!',
+                    content: '<p>Your nickname cannot have spaces.</p>'
+                }
+            })
+            return
+        }
         socket.emit(VERIFY_USERNAME, nickname, ({ player, isTaken }) => {
             if (isTaken) {
                 this.props.addPopup({
@@ -33,7 +47,6 @@ class LoginPage extends Component {
                     }
                 })
             } else {
-                this.props.setTitle({ title: 'Menu' })
                 this.props.loginPlayer(player)
             }
         })
@@ -48,7 +61,7 @@ class LoginPage extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className='menu'>
+                <div className='login-page-content'>
                     <div className='infoNickname border-neon border-neon-violet'>
                         <p>Please enter your nickname</p>
                     </div>

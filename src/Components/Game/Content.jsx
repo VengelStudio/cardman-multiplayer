@@ -1,89 +1,224 @@
 import React, { Component } from 'react'
+import { Droppable } from 'react-drag-and-drop'
 import Keyboard from './Keyboard'
 import Timer from './Timer'
+import PlayerState from './PlayerState'
+import { POPUP_CARD } from '../Popup/Types'
+import './Content.css'
+import cardDropSound from '../../Resources/Sounds/card_drop.mp3'
+import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
+import buttonClick from '../../Resources/Sounds/button_click.mp3'
+const { Cards: CardsData } = require('../../Game/Cards/Cards')
 
 class Content extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { game: this.props.game }
+    state = {
+        keyMove: null,
+        cardMoves: [],
+        clickedIndex: null,
+        isDiscardEnabled: false
     }
 
     static getDerivedStateFromProps(props, state) {
-        if (props.game !== state.game) {
-            return {
-                game: props.game
+        let newCardMoves = state.cardMoves
+        Object.keys(props.usedCardIndexes).forEach(index => {
+            index = parseInt(index)
+            let val = props.usedCardIndexes[index]
+            if (val === false) {
+                newCardMoves = newCardMoves.filter(move => {
+                    return move.index !== index
+                })
             }
+        })
+        return {
+            cardMoves: newCardMoves
         }
-        return null
+    }
+
+    setSelectedKey = state => {
+        this.props.playSound(buttonClick)
+        this.setState({ clickedIndex: state })
     }
 
     colorDisplayWord = word => {
         word = word.toUpperCase()
         let result = []
-        let guessed = this.props.game.guessed
-        //word = "_ _ _ _ _ _ _ _"
-        //guessed = [
-        //    {key: "A", socketId: "aasdasdasdasdasdasd"}
-        //]
-        let key = 0
-        Array.from(word).forEach(letter => {
-            let newLetter = null
-            if (letter === '_') {
-                newLetter = <span key={key}>{letter}</span>
-            } else if (letter === ' ') {
-                newLetter = <span key={key}>{letter}</span>
-            } else {
-                let guessedKeyData = guessed.filter(g => {
+        let { guessed } = this.props.game
+        let { socketId } = this.props.player
+        Array.from(word).forEach((letter, i) => {
+            let style = null
+            if (letter !== '_' && letter !== ' ') {
+                let key = guessed.filter(g => {
                     return g.key === letter
                 })[0]
-                let guessedKeyByMe =
-                    guessedKeyData.playerSocketId === this.props.player.socketId
-                if (guessedKeyByMe) {
-                    newLetter = (
-                        <span key={key} style={{ color: '#0900ff' }}>
-                            {letter}
-                        </span>
-                    )
+                if (key.playerSocketId === socketId) {
+                    style = { color: '#0900ff' }
                 } else {
-                    newLetter = (
-                        <span key={key} style={{ color: '#b92e34' }}>
-                            {letter}
-                        </span>
-                    )
+                    style = { color: '#b92e34' }
                 }
             }
-            result.push(newLetter)
-            key = key + 1
+            result.push(
+                <span key={i} style={style}>
+                    {letter}
+                </span>
+            )
         })
         return result
     }
 
+    onDrop = data => {
+        if (this.props.move) {
+            let card = JSON.parse(data.card)
+            let move = {
+                index: card.index,
+                type: 'card',
+                card: card.cardId,
+                playerSocketId: this.props.player.socketId
+            }
+
+            let { usedCardIndexes } = this.props
+            usedCardIndexes[card.index] = true
+            this.props.updateUsedCardIndexes(usedCardIndexes)
+
+            let isDuplicate = this.state.cardMoves.some(
+                cardMove => cardMove.index === card.index
+            )
+            if (isDuplicate === false) {
+                setTimeout(() => {
+                    this.props.playSound(cardDropSound)
+                }, 100)
+                this.setState({ cardMoves: [...this.state.cardMoves, move] })
+            }
+        }
+    }
+
+    onMove = ({ move }) => {
+        if (this.props.move) {
+            this.setState({ keyMove: move })
+        }
+    }
+
+    onEndTurn = () => {
+        if (this.state.keyMove !== null || this.state.cardMoves.length > 0) {
+            if (this.props.move) {
+                let moves = []
+                let { keyMove, cardMoves } = this.state
+                if (keyMove !== null) moves.push(keyMove)
+                if (cardMoves !== []) moves = [...moves, ...cardMoves]
+                this.props.moveHandler({ moves })
+                this.setSelectedKey(null)
+                this.props.updateUsedCardIndexes({
+                    0: false,
+                    1: false,
+                    2: false
+                })
+                this.setState({
+                    keyMove: null,
+                    cardMoves: []
+                })
+                this.props.playSound(flipSound3)
+                cardMoves.forEach(e => {
+                    if (e.card === CardsData.DEFINITION_CARD.id) {
+                        let definitions = this.props.game.word.definitions
+                        let randomIndex = Math.floor(
+                            Math.random() * definitions.length
+                        )
+                        this.props.addPopup({
+                            popupData: {
+                                title: 'Word definition',
+                                content: definitions[randomIndex]
+                            }
+                        })
+                    } else if (e.card === CardsData.LOOK_UP_CARD.id) {
+                        let enemySocket = this.props.game.playerSockets.filter(
+                            x => {
+                                return x.socketId !== this.props.player.socketId
+                            }
+                        )[0].socketId
+                        let enemyCards = this.props.game.cards[enemySocket]
+                        let randomIndexOfCard = Math.floor(
+                            Math.random() * enemyCards.length
+                        )
+                        let randomEnemyCard = enemyCards[randomIndexOfCard].id
+                        let { description } = CardsData[randomEnemyCard]
+                        this.props.addPopup({
+                            type: POPUP_CARD,
+                            popupData: {
+                                cardId: randomEnemyCard,
+                                description
+                            }
+                        })
+                    }
+                })
+            }
+        } else {
+            this.props.addPopup({
+                popupData: {
+                    title: 'You need to move',
+                    content: "You can't move without making any choice."
+                }
+            })
+        }
+    }
+
+    endTurnButton = () => {
+        let text = 'Waiting...'
+        if (this.props.move) text = 'End turn'
+        let classes =
+            'end-turn-btn button-pointer border-neon border-light-translucent '
+        if (this.props.move) classes += 'end-turn-btn-hover'
+
+        return (
+            <button
+                onClick={this.onEndTurn}
+                disabled={!this.props.move}
+                className={classes}
+            >
+                {text}
+            </button>
+        )
+    }
+
     render() {
         let displayWord = []
-        if (this.state.game !== null) {
-            displayWord = this.colorDisplayWord(this.state.game.displayWord)
+        if (this.props.game !== null) {
+            displayWord = this.colorDisplayWord(this.props.game.displayWord)
         }
-        //todo unmounted timer
+
+        let wordClass = 'word border-neon border-neon-violet '
+        if (this.props.isCardTargetHighlight && this.props.move)
+            wordClass += 'word-glow'
+
         return (
             <div className='content'>
+                <PlayerState
+                    player={this.props.player}
+                    game={this.props.game}
+                />
                 <div className='timer-wrapper'>
                     {this.props.move && (
                         <Timer time={30} onEnd={this.props.onMoveTimeout} />
                     )}
                 </div>
                 <div className='game'>
-                    <div className='word border-neon border-neon-violet'>
-                        {displayWord.map(x => {
-                            return x
-                        })}
+                    <Droppable types={['card']} onDrop={this.onDrop}>
+                        <div className={wordClass}>
+                            {displayWord.map(x => {
+                                return x
+                            })}
+                        </div>
+                    </Droppable>
+                    <div className='keyboard-wrapper'>
+                        <this.endTurnButton />
+                        {this.props.game && (
+                            <Keyboard
+                                player={this.props.player}
+                                moveHandler={this.onMove}
+                                keys={this.props.game.keys}
+                                setSelectedKey={this.setSelectedKey}
+                                clickedIndex={this.state.clickedIndex}
+                            />
+                        )}
                     </div>
-                    {this.state.game && (
-                        <Keyboard
-                            player={this.props.player}
-                            moveHandler={this.props.moveHandler}
-                            guessed={this.props.game.guessed}
-                        />
-                    )}
                 </div>
             </div>
         )

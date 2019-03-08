@@ -3,6 +3,7 @@ import GenericPopup from './Popups/GenericPopup'
 import ConfirmationPopup from './Popups/ConfirmationPopup'
 import InvitationPopup from './Popups/InvitationPopup'
 import DisconnectedPopup from './Popups/DisconnectedPopup'
+import CardPopup from './Popups/CardPopup'
 import {
     // eslint-disable-next-line
     POPUP_GENERIC,
@@ -11,9 +12,14 @@ import {
     // eslint-disable-next-line
     POPUP_INVITATION,
     // eslint-disable-next-line
-    POPUP_DISCONNECTED
+    POPUP_DISCONNECTED,
+    // eslint-disable-next-line
+    POPUP_CARD
 } from './Types'
 import './Popup.css'
+
+import ReactAudioPlayer from 'react-audio-player'
+import popupSound from '../../Resources/Sounds/popup.mp3'
 
 class Popups extends Component {
     state = { popups: [], newPopup: null }
@@ -33,7 +39,8 @@ class Popups extends Component {
         POPUP_GENERIC: GenericPopup,
         POPUP_CONFIRMATION: ConfirmationPopup,
         POPUP_INVITATION: InvitationPopup,
-        POPUP_DISCONNECTED: DisconnectedPopup
+        POPUP_DISCONNECTED: DisconnectedPopup,
+        POPUP_CARD: CardPopup
     }
 
     onClose = id => {
@@ -54,19 +61,27 @@ class Popups extends Component {
     }
 
     render() {
+        let displayStyle = this.state.popups.length === 0 ? 'none' : 'flex'
         return (
-            <div className='popups-wrapper'>
+            <div style={{ display: displayStyle }} className='popups-wrapper'>
                 {this.props.isDisconnected === true ? (
                     <DisconnectedPopup />
                 ) : null}
                 {this.state.popups &&
-                    this.state.popups.map(popup => {
+                    this.state.popups.map((popup, i) => {
                         return (
-                            <this.Popup
-                                key={popup.popupData.id}
-                                type={popup.type}
-                                popupData={popup.popupData}
-                            />
+                            <React.Fragment key={i}>
+                                <this.Popup
+                                    key={i}
+                                    type={popup.type}
+                                    popupData={popup.popupData}
+                                />
+                                <ReactAudioPlayer
+                                    volume={this.props.soundVolume}
+                                    src={popupSound}
+                                    autoPlay
+                                />
+                            </React.Fragment>
                         )
                     })}
             </div>

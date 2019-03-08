@@ -1,24 +1,30 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+
+import PropTypes from 'prop-types'
+import ReactAudioPlayer from 'react-audio-player'
+
 import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
-import { withRouter } from 'react-router-dom'
 
 const { isMove } = require('../../Shared/Functions')
 const { winHandler } = require('./Functions')
 const { setScore } = require('../../Shared/Functions')
 const { GAME_MOVE, WIN } = require('../../Shared/Events')
-
+const { Result } = require('../../Shared/Enums')
 class Game extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            game: this.props.game,
-            gameFromProps: true,
-            allowMove: true
-        }
-
-        this.props.socket && this.initializeSocket()
+    state = {
+        game: this.props.game,
+        gameFromProps: true,
+        allowMove: true,
+        myCards: null,
+        enemyCards: null,
+        cardTargetHighlight: false,
+        usedCardIndexes: { 0: false, 1: false, 2: false },
+        soundSrc: '',
+        isDiscardEnabled: false,
+        discardMoves: []
     }
 
     initializeSocket = () => {
@@ -31,19 +37,26 @@ class Game extends Component {
             })
         })
         socket.on(WIN, ({ winner, score, type, game }) => {
+            if (type === Result.TURN_WIN || type === Result.TURN_TIE) {
+                this.props.addPopup({
+                    popupData: {
+                        title: 'Guessed word',
+                        content: this.state.game.word.word
+                    }
+                })
+            }
             let winObj = winHandler({
                 type,
-                setMove: this.props.setMove,
-                setScore: setScore,
-                setTitle: this.props.setTitle,
+                setScore,
                 score,
                 game,
-                addPopup: this.props.addPopup,
                 winner,
-                player: this.props.player,
-                muteMusic: this.props.muteMusic,
-                returnToMenu: () => { this.props.history.push("/menu") }
+                props: this.props,
+                returnToMenu: () => {
+                    this.props.history.push('/browser')
+                }
             })
+
             this.setState({ ...winObj })
         })
     }
@@ -65,46 +78,185 @@ class Game extends Component {
         }
         return null
     }
-    componentDidMount() {
-        this.props.muteMusic(true)
-        console.log("kurwyjebane")
+
+    ctrlPressHandler(event, isDown) {
+        if (event.keyCode === 17) {
+            this.setState({ isDiscardEnabled: isDown })
+        }
     }
-    moveHandler = ({ move = null }) => {
+    componentDidMount() {
+        this.props.socket && this.initializeSocket()
+        this.props.muteMusic(true)
+        document.addEventListener(
+            'keydown',
+            e => {
+                this.ctrlPressHandler(e, true)
+            },
+            false
+        )
+        document.addEventListener(
+            'keyup',
+            e => {
+                this.ctrlPressHandler(e, false)
+            },
+            false
+        )
+    }
+    componentWillUnmount() {
+        document.removeEventListener(
+            'keydown',
+            e => {
+                this.ctrlPressHandler(e, false)
+            },
+            false
+        )
+        document.removeEventListener(
+            'keyup',
+            e => {
+                this.ctrlPressHandler(e, false)
+            },
+            false
+        )
+    }
+
+    moveHandler = ({ moves = null }) => {
         if (this.state.allowMove === true) {
             const { socket } = this.props
-            socket.emit(GAME_MOVE, { game: this.state.game, move })
+            console.log(moves)
+            console.log(this.state.discardMoves)
+            let allMoves = [...moves, ...this.state.discardMoves]
+            console.log(allMoves)
+            socket.emit(GAME_MOVE, { game: this.state.game, moves: allMoves })
         }
     }
 
     onMoveTimeout = () => {
         this.moveHandler({
-            move: {
-                type: 'key',
-                key: '',
-                playerSocketId: this.props.player.socketId
+            moves: [
+                {
+                    type: 'key',
+                    key: '',
+                    playerSocketId: this.props.player.socketId
+                }
+            ]
+        })
+    }
+
+    setCardTargetHighlight = bool => {
+        this.setState({ cardTargetHighlight: bool })
+    }
+
+    updateUsedCardIndexes = newIndexes => {
+        this.setState({ usedCardIndexes: newIndexes })
+    }
+
+    onUseAbort = index => {
+        let newIndexes = this.state.usedCardIndexes
+        newIndexes[index] = false
+        this.updateUsedCardIndexes(newIndexes)
+    }
+
+    playSound = src => {
+        this.setState({ soundSrc: src })
+    }
+
+    onDiscard = (index, cardId) => {
+        let move = {
+            type: 'card',
+            card: cardId,
+            playerSocketId: this.props.player.socketId,
+            discarded: true
+        }
+        let newGame = this.state.game
+        let mySocketId = this.props.player.socketId
+        console.log(newGame.cards)
+        newGame.cards[mySocketId] = newGame.cards[mySocketId].filter(
+            (val, i) => {
+                return i !== index
             }
+        )
+        console.log(newGame.cards)
+        let newDiscardMoves = this.state.discardMoves
+        newDiscardMoves.push(move)
+        this.setState({
+            discardMoves: newDiscardMoves,
+            game: newGame
         })
     }
 
     render() {
+        let cards = { my: null, enemy: null }
+        if (this.state.game !== null) {
+            let gameCards = this.state.game.cards
+            let mySocketId = this.props.player.socketId
+            cards.my = gameCards[mySocketId]
+            let enemySocketId = this.state.game.playerSockets.filter(x => {
+                return x.socketId !== this.props.player.socketId
+            })[0].socketId
+            cards.enemy = gameCards[enemySocketId]
+        }
         return (
             <div className='gameWrapper'>
-                <Cards type={1} move={this.props.isMove} title='Your cards:' />
+                <ReactAudioPlayer
+                    volume={this.props.soundVolume}
+                    src={this.state.soundSrc}
+                    autoPlay
+                    onEnded={() => {
+                        this.setState({ soundSrc: '' })
+                    }}
+                />
+                <Cards
+                    cards={cards.my}
+                    onUseAbort={this.onUseAbort}
+                    usedCardIndexes={this.state.usedCardIndexes}
+                    areMine={true}
+                    move={this.props.isMove}
+                    title='Your cards:'
+                    setCardTargetHighlight={this.setCardTargetHighlight}
+                    playSound={this.playSound}
+                    game={this.state.game}
+                    player={this.props.player}
+                    isDiscardEnabled={this.state.isDiscardEnabled}
+                    onDiscard={this.onDiscard}
+                />
                 <Content
                     player={this.props.player}
+                    updateUsedCardIndexes={this.updateUsedCardIndexes}
+                    usedCardIndexes={this.state.usedCardIndexes}
                     moveHandler={this.moveHandler}
                     onMoveTimeout={this.onMoveTimeout}
                     move={this.props.isMove}
                     game={this.state.game}
+                    addPopup={this.props.addPopup}
+                    isCardTargetHighlight={this.state.cardTargetHighlight}
+                    playSound={this.playSound}
                 />
                 <Cards
-                    type={-1}
+                    cards={cards.enemy}
+                    usedCardIndexes={{ 0: false, 1: false, 2: false }}
+                    areMine={false}
                     move={!this.props.isMove}
                     title='Enemy cards:'
+                    setCardTargetHighlight={this.setCardTargetHighlight}
+                    playSound={this.playSound}
+                    game={this.state.game}
+                    player={this.props.player}
                 />
             </div>
         )
     }
+}
+
+Game.propTypes = {
+    game: PropTypes.object,
+    socket: PropTypes.object,
+    player: PropTypes.object,
+    history: PropTypes.object.isRequired,
+    isMove: PropTypes.bool.isRequired,
+    muteMusic: PropTypes.func.isRequired,
+    setMove: PropTypes.func.isRequired,
+    setTitle: PropTypes.func.isRequired,
+    soundVolume: PropTypes.number.isRequired
 }
 
 export default withRouter(Game)

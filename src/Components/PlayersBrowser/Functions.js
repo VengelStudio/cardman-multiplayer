@@ -4,7 +4,8 @@ import React from 'react'
 export const extractBrowserPlayers = ({
     player,
     connectedPlayers,
-    invitationHandler
+    invitationHandler,
+    addPopup
 }) => {
     connectedPlayers = Object.assign({}, connectedPlayers)
 
@@ -19,6 +20,7 @@ export const extractBrowserPlayers = ({
         if (isInGame === false) {
             result.push(
                 <BrowserEntry
+                    addPopup={addPopup}
                     id={player.id}
                     socketId={player.socketId}
                     invitationHandler={invitationHandler}
