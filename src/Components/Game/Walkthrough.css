@@ -1,10 +1,32 @@
+.walkthrough {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #353535;
+    width: 100%;
+    height: 100%;
+}
+
+.walkthrough-content {
+    display: flex;
+    width: 98vw;
+}
+
 .walkthrough-image {
     display: flex;
-    width: 60%;
-    height: auto;
+    width: auto;
+    height: 60vh;
     border: 0.4vh solid rgba(204, 204, 204, 0.589);
     border-radius: 0.6vh;
     box-shadow: 1vw 1vw 0.8vw rgba(0, 0, 0, 0.3);
+}
+
+.walkthrough-desc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .walkthrough ol,

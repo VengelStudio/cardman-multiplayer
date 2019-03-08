@@ -5,7 +5,7 @@ import './Walkthrough.css'
 
 const Description = () => {
     return (
-        <React.Fragment>
+        <div className='walkthrough-desc'>
             <ol>
                 <li>
                     <span>Your cards which you can use during a turn.</span>
@@ -41,7 +41,7 @@ const Description = () => {
                     </span>
                 </li>
             </ul>
-        </React.Fragment>
+        </div>
     )
 }
 
@@ -68,12 +68,15 @@ class Walkthrough extends Component {
         return (
             <div className='gameWrapper'>
                 <div className='walkthrough'>
-                    <img
-                        className='walkthrough-image'
-                        src='images/walkthrough/walkthrough.png'
-                        alt='Walkthrough screenshot'
-                    />
-                    <Description />
+                    <div className='walkthrough-content'>
+                        <img
+                            className='walkthrough-image'
+                            src='images/walkthrough/walkthrough.png'
+                            alt='Walkthrough screenshot'
+                        />
+                        <Description />
+                    </div>
+
                     <div className='ok-btn-wrapper'>
                         <button className={buttonClass} onClick={this.onReady}>
                             {content}

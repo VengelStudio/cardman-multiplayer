@@ -40,14 +40,17 @@ class Logo extends React.Component {
     componentDidMount() {
         setTimeout(() => {
             this.setState({ display: false })
-        }, 2000)
+        }, 2500)
     }
     render() {
         if (this.state.display) {
             return (
-                <div className='intro-logo'>
-                    <img src={`logo.svg`} alt='Logo.' />
-                </div>
+                <React.Fragment>
+                    <div className='intro-logo'>
+                        <div className='text-nunito intro-1'>Cardman&nbsp;</div>
+                        <div className='text-nunito intro-2'>Multiplayer</div>
+                    </div>
+                </React.Fragment>
             )
         }
         return null

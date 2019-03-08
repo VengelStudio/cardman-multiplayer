@@ -11,7 +11,53 @@ import buttonClick from '../../Resources/Sounds/button_click.mp3'
 const { Cards: CardsData } = require('../../Game/Cards/Cards')
 
 class Content extends Component {
-    state = { keyMove: null, cardMoves: [], clickedIndex: null }
+    state = {
+        keyMove: null,
+        cardMoves: [],
+        clickedIndex: null,
+        isCtrlPressed: false
+    }
+
+    ctrlPressHandler(event, isDown) {
+        if (event.keyCode === 17) {
+            this.setState(
+                { isCtrlPressed: isDown },
+                console.log(this.state.isCtrlPressed)
+            )
+        }
+    }
+    componentDidMount() {
+        document.addEventListener(
+            'keydown',
+            e => {
+                this.ctrlPressHandler(e, true)
+            },
+            false
+        )
+        document.addEventListener(
+            'keyup',
+            e => {
+                this.ctrlPressHandler(e, false)
+            },
+            false
+        )
+    }
+    componentWillUnmount() {
+        document.removeEventListener(
+            'keydown',
+            e => {
+                this.ctrlPressHandler(e, false)
+            },
+            false
+        )
+        document.removeEventListener(
+            'keyup',
+            e => {
+                this.ctrlPressHandler(e, false)
+            },
+            false
+        )
+    }
 
     static getDerivedStateFromProps(props, state) {
         let newCardMoves = state.cardMoves

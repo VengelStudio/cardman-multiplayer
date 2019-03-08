@@ -218,43 +218,64 @@ body,
 
 .intro-logo {
     position: absolute;
-    display: block;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     margin: auto;
     height: 100%;
     width: 100%;
-    z-index: 100;
-    background-color: #d3c5b5;
-    animation: logo-bg-slide 1s linear 1s 1 normal;
+    z-index: 10;
+    background-color: #353535;
 }
-
-.intro-logo img {
+.intro-1,
+.intro-2 {
     display: block;
-    margin: auto auto;
-    height: 40vw;
-    width: 40vw;
-    animation: logo-rotate 1s linear 0s 1 normal;
+    font-size: 10vw;
+    font-family: 'Ostrich Sans';
+    color: rgb(255, 35, 83);
 }
 
-@keyframes logo-rotate {
-    from {
-        transform: rotate(0deg);
+.intro-1 {
+    animation: intro-1 2.5s ease-in-out 0s forwards 1;
+    transform: translateY(-200vh);
+}
+
+.intro-2 {
+    animation: intro-2 2.5s ease-in-out 0s forwards 1;
+    transform: translateY(200vh);
+}
+
+@keyframes intro-1 {
+    0% {
+        transform: translateY(-200vh);
+    }
+    50% {
+        transform: translateY(0);
         opacity: 1;
     }
-    to {
-        transform: rotate(360deg);
+    99% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
         opacity: 0;
     }
 }
 
-@keyframes logo-bg-slide {
+@keyframes intro-2 {
     0% {
-        transform: scaleY(1);
+        transform: translateY(200vh);
     }
-    95% {
-        transform: scaleY(0);
+    50% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    99% {
         opacity: 1;
     }
     100% {
+        transform: translateY(0);
         opacity: 0;
     }
 }
