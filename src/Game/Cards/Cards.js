@@ -4,7 +4,6 @@ const Cards = {
         title: 'Definition card',
         description: 'Shows you a definition of the word.',
         use: ({ currentGame, socket, move }) => {
-            console.log('DEFINITION_CARD card used')
             return currentGame
         },
         doesMeetConditions: game => {
@@ -57,7 +56,6 @@ const Cards = {
         title: 'Additional letter',
         description: 'You can choose two letters in a turn.',
         use: ({ currentGame, socket, move }) => {
-            console.log('ADDITIONAL_TURN_CARD card used')
             currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
             return currentGame
         },
@@ -167,7 +165,6 @@ const Cards = {
         description:
             'You can look up one of the enemies cards only if they have any.',
         use: ({ currentGame, socket, move }) => {
-            console.log('LOOK_UP_CARD card used')
             return currentGame
         },
         doesMeetConditions: (game, player) => {
@@ -275,8 +272,6 @@ const Cards = {
         title: 'Randomize an enemies card',
         description: 'A random card of your opponent gets changed.',
         use: ({ currentGame, socket, move }) => {
-            console.log('RANDOMIZE_ENEMY_CARD card used')
-
             let enemySocket = currentGame.playerSockets.filter(e => {
                 return e.socketId !== move.playerSocketId
             })[0].socketId

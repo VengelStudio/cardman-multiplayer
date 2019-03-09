@@ -6,7 +6,6 @@ const GenericPopup = props => {
     const onClose = () => {
         props.popupData.onClose(props.popupData.id)
     }
-    console.log(props.popupData.content)
 
     return (
         <div className='generic-popup border-neon border-neon-red text-nunito'>

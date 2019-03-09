@@ -172,13 +172,11 @@ class Game extends Component {
         }
         let newGame = this.state.game
         let mySocketId = this.props.player.socketId
-        console.log(newGame.cards)
         newGame.cards[mySocketId] = newGame.cards[mySocketId].filter(
             (val, i) => {
                 return i !== index
             }
         )
-        console.log(newGame.cards)
         let newDiscardMoves = this.state.discardMoves
         newDiscardMoves.push(move)
         this.setState({
