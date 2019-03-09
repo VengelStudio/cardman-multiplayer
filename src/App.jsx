@@ -31,7 +31,7 @@ import Walkthrough from './Components/Game/Walkthrough'
 //todo remove posed
 
 const uuidv4 = require('uuid/v4')
-let developmentMode = true
+let developmentMode = false
 const socketUrl = developmentMode
     ? 'localhost:3231'
     : 'ws://cardman-multiplayer.herokuapp.com:80'
