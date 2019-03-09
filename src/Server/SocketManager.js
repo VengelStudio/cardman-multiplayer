@@ -81,12 +81,13 @@ module.exports = function(socket) {
             console.log(
                 `[DISCONNECTED] Player ${socket.user.nickname} (${socket.id}).`
             )
+
             try {
+                let { gameId } = socket.user
                 let isGameActive = socket.user.gameId !== null
-                if (isGameActive) {
+                if (isGameActive && gameId in games) {
                     let disconnectedSocketId = socket.user.socketId
 
-                    let { gameId } = socket.user
                     let playersGame = games[gameId]
                     let remainingPlayer = playersGame.playerSockets.filter(
                         s => s.socketId !== disconnectedSocketId
@@ -234,6 +235,7 @@ module.exports = function(socket) {
                     } else if (move.type === 'card' && blockCounter === 0) {
                         let cardName = move.card
                         let card = getCard(cardName)
+                        console.log(move.discarded)
                         if (move.discarded === false) {
                             currentGame = card.use({
                                 currentGame,

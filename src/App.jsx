@@ -32,7 +32,10 @@ import Walkthrough from './Components/Game/Walkthrough'
 //todo remove posed
 
 const uuidv4 = require('uuid/v4')
-const socketUrl = 'ws://cardman-multiplayer.herokuapp.com:80'
+let developmentMode = true
+const socketUrl = developmentMode
+    ? 'localhost:3231'
+    : 'ws://cardman-multiplayer.herokuapp.com:80'
 const { setScore } = require('./Shared/Functions')
 
 class Logo extends React.Component {
@@ -81,7 +84,7 @@ class App extends React.Component {
     }
 
     config = {
-        disconnectedTimeoutMs: 20,
+        disconnectedTimeoutMs: 5000,
         defaultVolumeSettings: {
             musicVol: 0.5,
             soundVol: 0.5
@@ -306,11 +309,6 @@ class App extends React.Component {
                                 addPopup={this.addPopup}
                             />
                         </Route>
-                        <Route
-                            path='/credits'
-                            setTitle={this.setTitle}
-                            component={Credits}
-                        />
                         <Route
                             path='/browser'
                             render={() => (

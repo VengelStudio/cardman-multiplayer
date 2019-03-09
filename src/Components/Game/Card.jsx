@@ -61,7 +61,15 @@ const CardOverlay = ({
     isDiscardEnabled,
     onDiscard
 }) => {
-    if (isUsed) {
+    if (isDiscardEnabled) {
+        return (
+            <button className='card-discard-button' onClick={onDiscard}>
+                <div>
+                    <span>Click to discard</span>
+                </div>
+            </button>
+        )
+    } else if (isUsed) {
         return (
             <button className='card-use-abort-button' onClick={onClick}>
                 <div>
@@ -83,14 +91,6 @@ const CardOverlay = ({
             <div className='card-disabled'>
                 <span>This card is disabled.</span>
             </div>
-        )
-    } else if (isDiscardEnabled) {
-        return (
-            <button className='card-discard-button' onClick={onDiscard}>
-                <div>
-                    <span>Click to discard</span>
-                </div>
-            </button>
         )
     }
     return null

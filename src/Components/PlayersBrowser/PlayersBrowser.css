@@ -95,3 +95,7 @@
     width: 30vw;
     height: 5vh;
 }
+
+.play {
+    cursor: pointer;
+}

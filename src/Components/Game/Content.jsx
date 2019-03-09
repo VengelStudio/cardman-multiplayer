@@ -104,6 +104,10 @@ class Content extends Component {
                 let { keyMove, cardMoves } = this.state
                 if (keyMove !== null) moves.push(keyMove)
                 if (cardMoves !== []) moves = [...moves, ...cardMoves]
+                moves = moves.map(move => {
+                    return { ...move, discarded: false }
+                })
+                console.log(moves)
                 this.props.moveHandler({ moves })
                 this.setSelectedKey(null)
                 this.props.updateUsedCardIndexes({

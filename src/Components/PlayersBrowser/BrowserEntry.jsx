@@ -29,7 +29,6 @@ class BrowserEntry extends Component {
     clickHandler = event => {
         event.preventDefault()
         if (this.state.isButtonDisabled === true) {
-            console.log('pipup')
             this.props.addPopup({
                 type: POPUP_GENERIC,
                 popupData: {
@@ -56,7 +55,6 @@ class BrowserEntry extends Component {
                     <span className='nickname'>{this.props.nickname}</span>
                 </span>
                 <button
-                    id='inviteButton'
                     onClick={e => {
                         this.clickHandler(e)
                     }}
