@@ -17,9 +17,11 @@ class Keyboard extends Component {
             let isUsed = myKeys.includes(letter)
 
             let isClicked = this.props.clickedIndex === i
+
             let onClick = index => {
                 if (this.props.clickedIndex === index) {
                     this.props.setSelectedKey(null)
+                    this.props.clearKeyMove()
                 } else {
                     this.props.setSelectedKey(index)
                 }

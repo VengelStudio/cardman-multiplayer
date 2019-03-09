@@ -97,6 +97,13 @@ class Content extends Component {
         }
     }
 
+    clearKeyMove = () => {
+        this.setState({
+            keyMove: null,
+            clickedIndex: null
+        })
+    }
+
     onEndTurn = () => {
         if (this.state.keyMove !== null || this.state.cardMoves.length > 0) {
             if (this.props.move) {
@@ -107,7 +114,6 @@ class Content extends Component {
                 moves = moves.map(move => {
                     return { ...move, discarded: false }
                 })
-                console.log(moves)
                 this.props.moveHandler({ moves })
                 this.setSelectedKey(null)
                 this.props.updateUsedCardIndexes({
@@ -117,7 +123,8 @@ class Content extends Component {
                 })
                 this.setState({
                     keyMove: null,
-                    cardMoves: []
+                    cardMoves: [],
+                    clickedIndex: null
                 })
                 this.props.playSound(flipSound3)
                 cardMoves.forEach(e => {
@@ -220,6 +227,7 @@ class Content extends Component {
                                 keys={this.props.game.keys}
                                 setSelectedKey={this.setSelectedKey}
                                 clickedIndex={this.state.clickedIndex}
+                                clearKeyMove={this.clearKeyMove}
                             />
                         )}
                     </div>

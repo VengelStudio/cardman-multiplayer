@@ -4,7 +4,6 @@ import './App.css'
 import Header from './Components/Header/Header'
 import Popups from './Components/Popup/Popups'
 import Game from './Components/Game/Game'
-import Credits from './Components/Credits/Credits'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
 import LoginPage from './Components/LoginPage/LoginPage'
 
@@ -32,7 +31,7 @@ import Walkthrough from './Components/Game/Walkthrough'
 //todo remove posed
 
 const uuidv4 = require('uuid/v4')
-let developmentMode = false
+let developmentMode = true
 const socketUrl = developmentMode
     ? 'localhost:3231'
     : 'ws://cardman-multiplayer.herokuapp.com:80'
@@ -245,6 +244,9 @@ class App extends React.Component {
     }
 
     setSettings = ({ soundVol, musicVol }) => {
+        if (this.props.location.pathname === '/game') {
+            musicVol = 0
+        }
         this.setState({
             volumeSettings: { soundVol: soundVol, musicVol: musicVol }
         })

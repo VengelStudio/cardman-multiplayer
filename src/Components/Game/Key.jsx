@@ -3,13 +3,15 @@ import React, { Component } from 'react'
 class Key extends Component {
     clickHandler = () => {
         this.props.onClick()
-        this.props.moveHandler({
-            move: {
-                type: 'key',
-                key: this.props.letter,
-                playerSocketId: this.props.player.socketId
-            }
-        })
+        if (this.props.isClicked === false) {
+            this.props.moveHandler({
+                move: {
+                    type: 'key',
+                    key: this.props.letter,
+                    playerSocketId: this.props.player.socketId
+                }
+            })
+        }
     }
 
     getStyle = () => {

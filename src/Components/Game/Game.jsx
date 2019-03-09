@@ -80,8 +80,14 @@ class Game extends Component {
     }
 
     ctrlPressHandler(event, isDown) {
-        if (event.keyCode === 17) {
-            this.setState({ isDiscardEnabled: isDown })
+        let { player } = this.props
+        let { game } = this.state
+        if (player !== null && game !== null) {
+            let mySocketId = player.socketId
+            let myBlocked = game.blockCounters[mySocketId]
+            if (event.keyCode === 17 && myBlocked <= 0) {
+                this.setState({ isDiscardEnabled: isDown })
+            }
         }
     }
     componentDidMount() {
@@ -122,10 +128,7 @@ class Game extends Component {
     moveHandler = ({ moves = null }) => {
         if (this.state.allowMove === true) {
             const { socket } = this.props
-            console.log(moves)
-            console.log(this.state.discardMoves)
             let allMoves = [...moves, ...this.state.discardMoves]
-            console.log(allMoves)
             socket.emit(GAME_MOVE, { game: this.state.game, moves: allMoves })
         }
     }
