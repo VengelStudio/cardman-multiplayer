@@ -31,7 +31,7 @@ import Walkthrough from './Components/Game/Walkthrough'
 //todo remove posed
 
 const uuidv4 = require('uuid/v4')
-let developmentMode = false
+let developmentMode = true
 const socketUrl = developmentMode
     ? 'localhost:3231'
     : 'ws://cardman-multiplayer.herokuapp.com:80'
@@ -190,7 +190,7 @@ class App extends React.Component {
                             to: this.state.player
                         })
                     },
-                    onDecline: () => {}
+                    onDecline: () => { }
                 }
             })
         })

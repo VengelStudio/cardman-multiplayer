@@ -314,8 +314,19 @@ const getRandomCard = () => {
 
 const generateCards = amount => {
     let result = []
+    let isAdditionalTurnGenerated = false
     for (let i = 0; i < amount; i++) {
-        result.push(getRandomCard())
+        let card = getRandomCard()
+        if (card.id === Cards.ADDITIONAL_TURN_CARD.id) {
+            if (isAdditionalTurnGenerated) {
+                i = i - 1
+            } else {
+                isAdditionalTurnGenerated = true
+                result.push(card)
+            }
+        } else {
+            result.push(card)
+        }
     }
     return result
 }

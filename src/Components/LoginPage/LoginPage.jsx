@@ -72,9 +72,10 @@ class LoginPage extends Component {
                             maxLength='15'
                             className='inputNickname border-neon border-neon-red'
                             onKeyDown={this.submitOnEnter}
+                            placeholder="Your nickname..."
                         />
                         <button
-                            className='button-pointer border-neon border-neon-orange'
+                            className='submit-btn button-pointer border-neon border-neon-orange'
                             onClick={this.loginHandler}
                         >
                             SUBMIT

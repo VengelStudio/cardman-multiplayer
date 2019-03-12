@@ -37,7 +37,7 @@ class Game extends Component {
             })
         })
         socket.on(WIN, ({ winner, score, type, game }) => {
-            if (type === Result.TURN_WIN || type === Result.TURN_TIE) {
+            if (type === Result.TURN_WIN || type === Result.TURN_TIE || type === Result.GAME_WIN) {
                 this.props.addPopup({
                     popupData: {
                         title: 'Guessed word',
