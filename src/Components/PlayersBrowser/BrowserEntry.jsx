@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './PlayersBrowser.css'
-import GenericModal from '../../Components/Popup/Popups/GenericModal'
+import GenericModal from '../../Components/Modals/GenericModal'
 
 class BrowserEntry extends Component {
     state = {

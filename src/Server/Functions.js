@@ -25,6 +25,10 @@ function removeGame(game, games) {
 function isPlayer(username, connectedPlayers) {
     return username in connectedPlayers
 }
+function isIpFree(ip, connectedPlayers) {
+    let ipAddresses = Object.values(connectedPlayers).map(e => { return e.ip })
+    return !ipAddresses.includes(ip)
+}
 
 function getRandomWord(words) {
     let index = Math.floor(Math.random() * words.length)
@@ -66,6 +70,7 @@ module.exports = {
     addGame,
     removePlayer,
     isPlayer,
+    isIpFree,
     getRandomWord,
     setPlayersInGameStatus,
     removeUsedCard,

@@ -7,8 +7,8 @@ import './Content.css'
 import cardDropSound from '../../Resources/Sounds/card_drop.mp3'
 import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
 import buttonClick from '../../Resources/Sounds/button_click.mp3'
-import GenericModal from '../Popup/Popups/GenericModal'
-import CardModal from '../Popup/Popups/CardModal'
+import GenericModal from '../Modals/GenericModal'
+import CardModal from '../Modals/CardModal'
 const { Cards: CardsData } = require('../../Game/Cards/Cards')
 
 const EndTurnButton = props => {
@@ -17,8 +17,10 @@ const EndTurnButton = props => {
     let classes =
         'end-turn-btn button-pointer border-neon border-light-translucent '
     if (move) {
-        if (move) classes += 'end-turn-btn-hover'
+        classes += 'end-turn-btn-hover'
         text = 'End turn'
+    } else {
+        classes += 'end-turn-btn-waiting '
     }
 
     return (
@@ -249,8 +251,8 @@ class Content extends Component {
                             })}
                         </div>
                     </Droppable>
+                    <EndTurnButton move={move} onClick={this.onEndTurn} />
                     <div className='keyboard-wrapper'>
-                        <EndTurnButton move={move} onClick={this.onEndTurn} />
                         {game && (
                             <Keyboard
                                 player={player}

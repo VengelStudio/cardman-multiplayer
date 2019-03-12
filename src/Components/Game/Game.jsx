@@ -7,10 +7,9 @@ import ReactAudioPlayer from 'react-audio-player'
 import './Game.css'
 import Cards from './Cards'
 import Content from './Content'
+import GenericModal from '../Modals/GenericModal'
 
-const { isMove } = require('../../Shared/Functions')
-const { winHandler } = require('./Functions')
-const { setScore } = require('../../Shared/Functions')
+const { setScore, isMove } = require('../../Shared/Functions')
 const { GAME_MOVE, WIN } = require('../../Shared/Events')
 const { Result } = require('../../Shared/Enums')
 class Game extends Component {
@@ -24,7 +23,10 @@ class Game extends Component {
         usedCardIndexes: { 0: false, 1: false, 2: false },
         soundSrc: '',
         isDiscardEnabled: false,
-        discardMoves: []
+        discardMoves: [],
+        guessedWordModal: null,
+        isTieModal: false,
+        gameEndWinnerModal: null
     }
 
     initializeSocket = () => {
@@ -37,27 +39,36 @@ class Game extends Component {
             })
         })
         socket.on(WIN, ({ winner, score, type, game }) => {
-            if (type === Result.TURN_WIN || type === Result.TURN_TIE) {
-                this.props.addPopup({
-                    popupData: {
-                        title: 'Guessed word',
-                        content: this.state.game.word.word
-                    }
-                })
+            const { setMove, setTitle, player } = this.props
+            let returnState = null
+            if (type === Result.TURN_WIN) {
+                returnState = { gameFromProps: false, game }
+                setMove(isMove({ game, player }))
+            } else if (type === Result.TURN_TIE) {
+                returnState = { gameFromProps: false, game }
+                setMove(isMove({ game, player }))
+                this.setState({ isTieModal: true })
+            } else if (type === Result.GAME_WIN) {
+                returnState = { allowMove: false }
+                this.setState({ gameEndWinnerModal: winner.nickname })
             }
-            let winObj = winHandler({
-                type,
-                setScore,
-                score,
+
+            if (
+                type === Result.TURN_WIN ||
+                type === Result.TURN_TIE ||
+                type === Result.GAME_WIN
+            ) {
+                this.setState({ guessedWordModal: this.state.game.word.word })
+            }
+
+            setScore({
+                player,
                 game,
-                winner,
-                props: this.props,
-                returnToMenu: () => {
-                    this.props.history.push('/browser')
-                }
+                setTitle,
+                score
             })
 
-            this.setState({ ...winObj })
+            this.setState({ ...returnState })
         })
     }
 
@@ -198,6 +209,40 @@ class Game extends Component {
         }
         return (
             <div className='gameWrapper'>
+                {this.state.guessedWordModal && (
+                    <GenericModal
+                        title='Guessed word:'
+                        content={this.state.guessedWordModal}
+                        volumeSettings={this.props.volumeSettings}
+                        onClose={() => {
+                            this.setState({ guessedWordModal: null })
+                        }}
+                    />
+                )}
+                {this.state.isTieModal && (
+                    <GenericModal
+                        title='TIE.'
+                        content='Turn is tied. None of the players won.'
+                        volumeSettings={this.props.volumeSettings}
+                        onClose={() => {
+                            this.setState({ isTieModal: null })
+                        }}
+                    />
+                )}
+                {this.state.gameEndWinnerModal && (
+                    <GenericModal
+                        title='GAME ENDED.'
+                        content={`Player ${
+                            this.state.gameEndWinnerModal
+                        } has won the game.`}
+                        volumeSettings={this.props.volumeSettings}
+                        onClose={() => {
+                            this.setState({ gameEndWinnerModal: null })
+                            this.props.history.push('/browser')
+                            this.setState({ game: null })
+                        }}
+                    />
+                )}
                 <ReactAudioPlayer
                     volume={this.props.volumeSettings.soundVol}
                     src={this.state.soundSrc}
