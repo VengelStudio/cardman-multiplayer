@@ -4,16 +4,16 @@ self.__precacheManifest = [
     "url": "/static/media/card_flip2.e1b8fb14.mp3"
   },
   {
-    "revision": "40c119e0901f1fefcb96",
-    "url": "/static/css/main.866d7723.chunk.css"
+    "revision": "9db02f902ae01aa3c561",
+    "url": "/static/css/main.634f7e57.chunk.css"
   },
   {
     "revision": "fdfcfda2d9b1bf31db52",
     "url": "/static/js/runtime~main.c5541365.js"
   },
   {
-    "revision": "9749a0c459ada62524e7",
-    "url": "/static/js/2.efab019e.chunk.js"
+    "revision": "2b4ee28607ddedd9d11a",
+    "url": "/static/js/2.795a89b1.chunk.js"
   },
   {
     "revision": "6f214beaa7801dd71b9da08b28c7bf92",
@@ -24,8 +24,8 @@ self.__precacheManifest = [
     "url": "/static/media/card_flip.63e37b8e.mp3"
   },
   {
-    "revision": "40c119e0901f1fefcb96",
-    "url": "/static/js/main.de12c427.chunk.js"
+    "revision": "9db02f902ae01aa3c561",
+    "url": "/static/js/main.23d4c0b1.chunk.js"
   },
   {
     "revision": "f8713f772e69e9306f2ea6639b49b05e",
@@ -48,7 +48,7 @@ self.__precacheManifest = [
     "url": "/static/media/OstrichSansInline-Regular.72e250dd.otf"
   },
   {
-    "revision": "7adc74602c4120209e6a15d34624966a",
+    "revision": "c6cbbffe0a4039cde1bee4d4ac124bff",
     "url": "/index.html"
   }
 ];
