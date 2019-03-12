@@ -214,6 +214,7 @@ class App extends React.Component {
         const { socket } = this.state
         //Sending login socket with freshly generated, previosly verified player
         socket.emit(PLAYER_CONNECTED, player)
+        console.log(player);
         this.setState({ player })
 
         //Wait for server response, then get the player list

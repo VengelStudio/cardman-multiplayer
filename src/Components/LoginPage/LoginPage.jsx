@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './LoginPage.css'
-import { VERIFY_USERNAME } from '../../Shared/Events'
+import { VERIFY_USER } from '../../Shared/Events'
 import { POPUP_GENERIC } from '../Popup/Types'
 import { withRouter } from 'react-router-dom'
 
@@ -37,8 +37,17 @@ class LoginPage extends Component {
             })
             return
         }
-        socket.emit(VERIFY_USERNAME, nickname, ({ player, isTaken }) => {
-            if (isTaken) {
+        socket.emit(VERIFY_USER, nickname, ({ player, isTaken, isIpFree }) => {
+            if (!isIpFree) {
+                this.props.addPopup({
+                    type: POPUP_GENERIC,
+                    popupData: {
+                        title: 'Error!',
+                        content: '<p>You are already logged in.</p>'
+                    }
+                })
+            }
+            else if (isTaken) {
                 this.props.addPopup({
                     type: POPUP_GENERIC,
                     popupData: {
