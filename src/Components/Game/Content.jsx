@@ -180,7 +180,6 @@ class Content extends Component {
         } else {
             classes += 'end-turn-btn-waiting '
         }
-        if (this.props.move) classes += 'end-turn-btn-hover'
 
         return (
             <button

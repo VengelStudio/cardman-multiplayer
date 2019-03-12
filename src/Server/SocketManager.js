@@ -43,7 +43,7 @@ const { generateCards, getCard, resupplyCards } = require('../Game/Cards/Cards')
 
 module.exports = function (socket) {
     //console.log('Connected, socket id: ' + socket.id)
-    let developmentMode = true
+    let developmentMode = false
 
 
     socket.on(VERIFY_USER, (nickname, callback) => {

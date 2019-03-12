@@ -6,23 +6,20 @@
 }
 
 .end-turn-btn {
+    cursor: pointer;
     height: 8.5vh;
     width: 25vh;
-    color: #519c3f;
+    color: white;
+    background-color: rgb(21, 197, 21);
     margin-top: 8vh;
     border:solid;
     font-size: 30px;
-    cursor: default;
 }
 .end-turn-btn-waiting{
     color: grey;
+    background-color:#353535;
 }
 
-.end-turn-btn-hover:hover {
-    cursor: pointer;
-    color: white;
-    background-color: rgb(21, 197, 21)
-}
 
 .keyboard-wrapper {
     position: relative;
