@@ -1,7 +1,7 @@
 const io = require('../../server.js').io
 
 const {
-    VERIFY_USERNAME,
+    VERIFY_USER,
     PLAYER_CONNECTED,
     PLAYER_DISCONNECTED,
     LOGOUT,
@@ -21,6 +21,7 @@ const {
     addGame,
     removePlayer,
     isPlayer,
+    isIpFree,
     getRandomWord,
     setPlayersInGameStatus,
     removeUsedCard,
@@ -42,19 +43,28 @@ const { generateCards, getCard, resupplyCards } = require('../Game/Cards/Cards')
 
 module.exports = function(socket) {
     //console.log('Connected, socket id: ' + socket.id)
+    let developmentMode = false
 
-    socket.on(VERIFY_USERNAME, (nickname, callback) => {
-        if (isPlayer(nickname, connectedPlayers)) {
-            callback({ isTaken: true, player: null })
-        } else {
+    socket.on(VERIFY_USER, (nickname, callback) => {
+        let ip = socket.request.connection.remoteAddress
+        let isIpFreeChecker = developmentMode
+            ? true
+            : isIpFree(ip, connectedPlayers)
+        if (isIpFreeChecker && !isPlayer(nickname, connectedPlayers)) {
             callback({
                 isTaken: false,
+                isIpFree: true,
                 player: createPlayer({
+                    ip,
                     nickname: nickname,
                     socketId: socket.id
                 })
             })
-            console.log(`[CONNECTED] Player ${nickname} (${socket.id}).`)
+            console.log(`[CONNECTED] Player ${nickname} (${socket.id}) ${ip}.`)
+        } else if (!isIpFree(ip, connectedPlayers)) {
+            callback({ isTaken: false, isIpFree: false, player: null })
+        } else {
+            callback({ isTaken: true, isIpFree: true, player: null })
         }
     })
 

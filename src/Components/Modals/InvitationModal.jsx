@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Timer from '../../Game/Timer'
+import Timer from '../Game/Timer'
 
 import ReactAudioPlayer from 'react-audio-player'
-import popupSound from '../../../Resources/Sounds/popup.mp3'
+import popupSound from '../../Resources/Sounds/popup.mp3'
 
-import '../Popup.css'
+import './Popup.css'
 const InvitationModal = props => {
     let { nickname, onAccept, onClose, soundVolume } = props
 

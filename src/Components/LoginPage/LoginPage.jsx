@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import './LoginPage.css'
-import { VERIFY_USERNAME } from '../../Shared/Events'
-import GenericModal from '../Popup/Popups/GenericModal'
+import GenericModal from '../Modals/GenericModal'
+import { VERIFY_USER } from '../../Shared/Events'
 
 class LoginPage extends Component {
     inputRef = React.createRef()
     state = {
         isNameLengthOpen: false,
         isNameSpaceOpen: false,
-        isNameTakenOpen: false
+        isNameTakenOpen: false,
+        isAlreadyLoggedInOpen: false
     }
 
     componentDidMount() {
@@ -25,8 +26,10 @@ class LoginPage extends Component {
             this.setState({ isNameSpaceOpen: true })
             return
         }
-        socket.emit(VERIFY_USERNAME, value, ({ player, isTaken }) => {
-            if (isTaken) {
+        socket.emit(VERIFY_USER, value, ({ player, isTaken, isIpFree }) => {
+            if (!isIpFree) {
+                this.setState({ isAlreadyLoggedInOpen: true })
+            } else if (isTaken) {
                 this.setState({ isNameTakenOpen: true })
             } else {
                 this.props.loginPlayer(player)
@@ -59,7 +62,7 @@ class LoginPage extends Component {
                         title='Error!'
                         content='Your nickname cannot have spaces.'
                         onClose={() => {
-                            this.setState({ isNameLengthOpen: false })
+                            this.setState({ isNameSpaceOpen: false })
                         }}
                         soundVolume={volumeSettings.soundVol}
                     />
@@ -70,6 +73,16 @@ class LoginPage extends Component {
                         content='This nickname is taken.'
                         onClose={() => {
                             this.setState({ isNameTakenOpen: false })
+                        }}
+                        soundVolume={volumeSettings.soundVol}
+                    />
+                )}
+                {this.state.isAlreadyLoggedInOpen && (
+                    <GenericModal
+                        title='Error!'
+                        content='You are already logged in.'
+                        onClose={() => {
+                            this.setState({ isAlreadyLoggedInOpen: false })
                         }}
                         soundVolume={volumeSettings.soundVol}
                     />
@@ -85,6 +98,7 @@ class LoginPage extends Component {
                         maxLength='15'
                         className='inputNickname border-neon border-neon-red'
                         onKeyDown={this.submitOnEnter}
+                        placeholder='Your nickname...'
                     />
                     <button
                         className='button-pointer border-neon border-neon-orange'

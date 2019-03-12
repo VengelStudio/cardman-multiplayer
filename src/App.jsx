@@ -25,10 +25,10 @@ import ReactAudioPlayer from 'react-audio-player'
 import bgMusic from './Resources/Sounds/bg-lower.mp3'
 import Walkthrough from './Components/Game/Walkthrough'
 
-import InvitationModal from './Components/Popup/Popups/InvitationModal'
-import DisconnectedModal from './Components/Popup/Popups/DisconnectedModal'
+import InvitationModal from './Components/Modals/InvitationModal'
+import DisconnectedModal from './Components/Modals/DisconnectedModal'
 
-let developmentMode = true
+let developmentMode = false
 const socketUrl = developmentMode
     ? 'localhost:3231'
     : 'ws://cardman-multiplayer.herokuapp.com:80'
@@ -211,6 +211,7 @@ class App extends React.Component {
         const { socket } = this.state
         //Sending login socket with freshly generated, previosly verified player
         socket.emit(PLAYER_CONNECTED, player)
+        console.log(player)
         this.setState({ player })
 
         //Wait for server response, then get the player list

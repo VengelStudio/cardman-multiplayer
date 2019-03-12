@@ -1,7 +1,8 @@
 const uuidv4 = require('uuid/v4')
 
-const createPlayer = ({ nickname = '', socketId = null } = {}) => ({
+const createPlayer = ({ nickname = '', socketId = null, ip } = {}) => ({
     id: uuidv4(),
+    ip,
     nickname,
     socketId,
     gameId: null,
