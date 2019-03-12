@@ -1,6 +1,8 @@
 # Cardman - a simple hangman game with cards!
 
-![]()
+![asd](https://s2.gifyu.com/images/SaneCloseHorsechestnutleafminer.gif)
+
+### **Live game:** [http://cardman-multiplayer.herokuapp.com/](http://cardman-multiplayer.herokuapp.com/)
 
 ### We decided to make a combination of traditional hangman game and card game.
 

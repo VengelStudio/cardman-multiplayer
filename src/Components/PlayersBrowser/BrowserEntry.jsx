@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import './PlayersBrowser.css'
-import { POPUP_GENERIC } from '../../Components/Popup/Types'
+import GenericModal from '../../Components/Popup/Popups/GenericModal'
 
 class BrowserEntry extends Component {
     state = {
-        isButtonDisabled: false
+        isButtonDisabled: false,
+        isTimeoutModal: false
     }
 
     componentDidMount() {
@@ -29,13 +30,7 @@ class BrowserEntry extends Component {
     clickHandler = event => {
         event.preventDefault()
         if (this.state.isButtonDisabled === true) {
-            this.props.addPopup({
-                type: POPUP_GENERIC,
-                popupData: {
-                    title: 'Error!',
-                    content: '<p>You are inviting too fast. Wait 5 seconds</p>'
-                }
-            })
+            this.setState({ isTimeoutModal: true })
         } else {
             this.setState({
                 isButtonDisabled: true
@@ -49,20 +44,34 @@ class BrowserEntry extends Component {
     }
 
     render() {
+        let { isTimeoutModal } = this.state
+        let { nickname, volumeSettings } = this.props
         return (
-            <div className='browser-entry width-full'>
-                <span className='player-info'>
-                    <span className='nickname'>{this.props.nickname}</span>
-                </span>
-                <button
-                    onClick={e => {
-                        this.clickHandler(e)
-                    }}
-                    className='play border-neon border-neon-lime'
-                >
-                    Play
-                </button>
-            </div>
+            <React.Fragment>
+                {isTimeoutModal && (
+                    <GenericModal
+                        title='Error!'
+                        content='You are inviting too fast. Wait 5 seconds.'
+                        soundVolume={volumeSettings.soundVol}
+                        onClose={() => {
+                            this.setState({ isTimeoutModal: false })
+                        }}
+                    />
+                )}
+                <div className='browser-entry width-full'>
+                    <span className='player-info'>
+                        <span className='nickname'>{nickname}</span>
+                    </span>
+                    <button
+                        onClick={e => {
+                            this.clickHandler(e)
+                        }}
+                        className='play border-neon border-neon-lime'
+                    >
+                        Play
+                    </button>
+                </div>
+            </React.Fragment>
         )
     }
 }

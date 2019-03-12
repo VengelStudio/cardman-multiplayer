@@ -199,7 +199,7 @@ class Game extends Component {
         return (
             <div className='gameWrapper'>
                 <ReactAudioPlayer
-                    volume={this.props.soundVolume}
+                    volume={this.props.volumeSettings.soundVol}
                     src={this.state.soundSrc}
                     autoPlay
                     onEnded={() => {
@@ -231,6 +231,7 @@ class Game extends Component {
                     addPopup={this.props.addPopup}
                     isCardTargetHighlight={this.state.cardTargetHighlight}
                     playSound={this.playSound}
+                    volumeSettings={this.props.volumeSettings}
                 />
                 <Cards
                     cards={cards.enemy}
@@ -257,7 +258,7 @@ Game.propTypes = {
     muteMusic: PropTypes.func.isRequired,
     setMove: PropTypes.func.isRequired,
     setTitle: PropTypes.func.isRequired,
-    soundVolume: PropTypes.number.isRequired
+    volumeSettings: PropTypes.object.isRequired
 }
 
 export default withRouter(Game)
