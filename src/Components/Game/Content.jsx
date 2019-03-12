@@ -173,9 +173,13 @@ class Content extends Component {
 
     endTurnButton = () => {
         let text = 'Waiting...'
-        if (this.props.move) text = 'End turn'
         let classes =
             'end-turn-btn button-pointer border-neon border-light-translucent '
+        if (this.props.move) {
+            text = 'End turn'
+        } else {
+            classes += 'end-turn-btn-waiting '
+        }
         if (this.props.move) classes += 'end-turn-btn-hover'
 
         return (
@@ -218,8 +222,8 @@ class Content extends Component {
                             })}
                         </div>
                     </Droppable>
+                    <this.endTurnButton />
                     <div className='keyboard-wrapper'>
-                        <this.endTurnButton />
                         {this.props.game && (
                             <Keyboard
                                 player={this.props.player}

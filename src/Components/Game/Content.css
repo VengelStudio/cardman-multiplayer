@@ -6,33 +6,28 @@
 }
 
 .end-turn-btn {
-    position: absolute;
-    top: 0;
-    height: 7vh;
+    height: 8.5vh;
     width: 25vh;
-    padding: 1vh;
-    color: grey;
-    margin-bottom: -0.3vh;
-    border-bottom: 0;
-    border-top-left-radius: 1vh;
-    border-top-left-radius: 1vh;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    color: #519c3f;
+    margin-top: 8vh;
+    border:solid;
     font-size: 30px;
-    z-index: 1000;
     cursor: default;
+}
+.end-turn-btn-waiting{
+    color: grey;
 }
 
 .end-turn-btn-hover:hover {
     cursor: pointer;
     color: white;
+    background-color: rgb(21, 197, 21)
 }
 
 .keyboard-wrapper {
     position: relative;
     height: 57.5vh;
     display: flex;
-    margin-top: 10vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;

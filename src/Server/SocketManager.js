@@ -43,14 +43,13 @@ const { generateCards, getCard, resupplyCards } = require('../Game/Cards/Cards')
 
 module.exports = function (socket) {
     //console.log('Connected, socket id: ' + socket.id)
+    let developmentMode = true
+
 
     socket.on(VERIFY_USER, (nickname, callback) => {
         let ip = socket.request.connection.remoteAddress
-        console.log(ip)
-        console.log(isIpFree(ip, connectedPlayers))
-        console.log(connectedPlayers)
-        console.log(Object.values(connectedPlayers).map(e => { return e.ip }))
-        if (isIpFree(ip, connectedPlayers) && !isPlayer(nickname, connectedPlayers)) {
+        let isIpFreeChecker = developmentMode ? true : isIpFree(ip, connectedPlayers)
+        if (isIpFreeChecker && !isPlayer(nickname, connectedPlayers)) {
             callback({
                 isTaken: false,
                 isIpFree: true,
