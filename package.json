@@ -4,6 +4,7 @@
     "private": true,
     "dependencies": {
         "@babel/core": "^7.2.2",
+        "dotenv": "^7.0.0",
         "express": "^4.16.4",
         "path": "^0.12.7",
         "pm2": "^3.2.9",
@@ -22,11 +23,11 @@
         "concurrently": "^4.1.0"
     },
     "scripts": {
-        "start": "node ./server.js",
+        "start": "SET REACT_APP_STAGE=prod & node ./server.js",
         "dev": "concurrently \"npm run client\" \"npm run server\"",
-        "client": "react-scripts start",
-        "server": "pm2 start ./server.js --watch",
-        "build": "react-scripts build"
+        "client": "SET REACT_APP_STAGE=dev & react-scripts start",
+        "server": "SET REACT_APP_STAGE=dev & pm2 start ./server.js --watch",
+        "build": "SET REACT_APP_STAGE=prod & react-scripts build"
     },
     "eslintConfig": {
         "extends": "react-app"

@@ -15,7 +15,6 @@ app.get('*', (request, response) => {
 })
 
 io.on('connection', SocketManager)
-
 server.listen(port, () => {
     console.log(`Server started on port ${port}.`)
 })
