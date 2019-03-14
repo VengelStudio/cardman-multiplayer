@@ -291,7 +291,14 @@ const Cards = {
             }
             return currentGame
         },
-        doesMeetConditions: game => {
+        doesMeetConditions: (game, player) => {
+            let enemySocketId = game.playerSockets.filter(x => {
+                return x.socketId !== player.socketId
+            })[0].socketId
+
+            if (game.cards[enemySocketId].length === 0) {
+                return false
+            }
             return true
         }
     }

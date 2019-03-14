@@ -25,7 +25,7 @@
         "start": "SET REACT_APP_STAGE=prod & node ./server.js",
         "dev": "concurrently \"npm run client\" \"npm run server\"",
         "client": "SET REACT_APP_STAGE=dev & react-scripts start",
-        "server": "SET REACT_APP_STAGE=dev & pm2 start ./server.js --watch",
+        "server": "SET REACT_APP_STAGE=dev & node ./server.js",
         "build": "SET REACT_APP_STAGE=prod & react-scripts build"
     },
     "eslintConfig": {
