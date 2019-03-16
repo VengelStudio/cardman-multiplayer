@@ -62,7 +62,6 @@ class Content extends Component {
         } = this.props
 
         let wordClass = 'word border-neon border-neon-violet '
-        if (isMove) wordClass += 'word-glow'
         return (
             <div className='content'>
                 <PlayerState player={player} game={game} />

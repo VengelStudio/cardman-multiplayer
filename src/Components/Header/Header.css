@@ -1,4 +1,5 @@
 .header {
+    font-weight: 300;
     border: 0;
     border-bottom-width: 0.3vh;
     border-style: solid;
@@ -7,6 +8,10 @@
 
 .header > div {
     border: 0;
+}
+
+.title {
+    font-size: 3.5vh;
 }
 
 .title,
@@ -48,7 +53,7 @@
 }
 
 .flex-item.score {
-    font-size: 5.8vh;
+    font-size: 4.5vh;
     color: orange;
 }
 .options-btn {

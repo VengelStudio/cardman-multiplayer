@@ -419,6 +419,7 @@ class Game extends Component {
                 <Cards
                     cards={cards.enemy}
                     areMyCards={false}
+                    isMove={this.props.isMove}
                     game={this.state.game}
                     player={this.props.player}
                 />

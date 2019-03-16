@@ -72,7 +72,7 @@ const CardsSpawner = props => {
             }
         })
     }
-    return resultCards
+    return <ul>{resultCards}</ul>
 }
 
 class Cards extends Component {
@@ -84,13 +84,13 @@ class Cards extends Component {
 
     render() {
         let { areMyCards, isMove } = this.props
+
         let cardStyle = null
-        if (isMove) {
+        if ((areMyCards && isMove) || (!areMyCards && !isMove))
             cardStyle = {
                 animation:
                     'moveFlashing 400ms linear infinite alternate-reverse forwards'
             }
-        }
 
         let wrapperTitle = areMyCards ? 'Your cards:' : 'Enemy cards:'
 

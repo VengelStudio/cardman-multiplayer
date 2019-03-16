@@ -12,14 +12,13 @@
     color: white;
     background-color: rgb(21, 197, 21);
     margin-top: 8vh;
-    border:solid;
+    border: solid;
     font-size: 30px;
 }
-.end-turn-btn-waiting{
+.end-turn-btn-waiting {
     color: grey;
-    background-color:#353535;
+    background-color: #353535;
 }
-
 
 .keyboard-wrapper {
     position: relative;
@@ -28,19 +27,4 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-
-@keyframes glowing {
-    from {
-        box-shadow: 0 0 10px 0px rgba(247, 217, 22, 1);
-    }
-    to {
-        box-shadow: 0 0 10px 10px rgba(247, 217, 22, 1);
-    }
-}
-
-.word-glow {
-    animation: glowing 650ms infinite alternate;
-    animation-timing-function: ease-in-out;
 }

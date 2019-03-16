@@ -20,7 +20,7 @@ const HeaderBar = ({ title = null, score = null }) => {
                     </div>
                 </div>
             )}
-            {title && <h1 className='title has-text-white-ter'>{title}</h1>}
+            {title && <div className='title has-text-white-ter'>{title}</div>}
         </div>
     )
 }
