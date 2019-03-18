@@ -156,70 +156,61 @@ class Game extends Component {
     }
 
     onMove = () => {
-        if (this.state.allowMove === true) {
-            if (
-                this.state.keyMove !== null ||
-                this.state.cardMoves.length > 0
-            ) {
-                if (this.props.isMove) {
-                    let moves = []
-                    let { keyMove, cardMoves } = this.state
-                    if (keyMove !== null) moves.push(keyMove)
-                    if (cardMoves !== []) moves = [...moves, ...cardMoves]
-                    this.setState({
-                        keyMove: null,
-                        cardMoves: []
-                    })
-                    this.playSound(flipSound3)
-                    cardMoves.forEach(e => {
-                        if (e.discarded === false) {
-                            if (e.card === CardsData.DEFINITION_CARD.id) {
-                                let definitions = this.props.game.word
-                                    .definitions
-                                let randomIndex = Math.floor(
-                                    Math.random() * definitions.length
-                                )
-                                this.setState({
-                                    wordDefinition: definitions[randomIndex]
-                                })
-                            } else if (e.card === CardsData.LOOK_UP_CARD.id) {
-                                let enemySocket = this.props.game.playerSockets.filter(
-                                    x => {
-                                        return (
-                                            x.socketId !==
-                                            this.props.player.socketId
-                                        )
-                                    }
-                                )[0].socketId
-                                let enemyCards = this.props.game.cards[
-                                    enemySocket
-                                ]
-                                let randomIndexOfCard = Math.floor(
-                                    Math.random() * enemyCards.length
-                                )
-                                let randomEnemyCard =
-                                    enemyCards[randomIndexOfCard].id
-                                let { description } = CardsData[randomEnemyCard]
-                                this.setState({
-                                    isPeekModal: true,
-                                    peekCardId:
-                                        enemyCards[randomIndexOfCard].id,
-                                    peekDescription: description
-                                })
-                            }
+        if (this.state.keyMove !== null || this.state.cardMoves.length > 0) {
+            if (this.props.isMove && this.state.allowMove) {
+                let moves = []
+                let { keyMove, cardMoves } = this.state
+                if (keyMove !== null) moves.push(keyMove)
+                if (cardMoves !== []) moves = [...moves, ...cardMoves]
+                this.playSound(flipSound3)
+                cardMoves.forEach(e => {
+                    if (e.discarded === false) {
+                        if (e.card === CardsData.DEFINITION_CARD.id) {
+                            let { definitions } = this.props.game.word
+                            let randomIndex = Math.floor(
+                                Math.random() * definitions.length
+                            )
+                            this.setState({
+                                wordDefinition: definitions[randomIndex]
+                            })
+                        } else if (e.card === CardsData.LOOK_UP_CARD.id) {
+                            let enemySocket = this.props.game.playerSockets.filter(
+                                x => {
+                                    return (
+                                        x.socketId !==
+                                        this.props.player.socketId
+                                    )
+                                }
+                            )[0].socketId
+                            let enemyCards = this.props.game.cards[enemySocket]
+                            let randomIndexOfCard = Math.floor(
+                                Math.random() * enemyCards.length
+                            )
+                            let randomEnemyCard =
+                                enemyCards[randomIndexOfCard].id
+                            let { description } = CardsData[randomEnemyCard]
+                            this.setState({
+                                isPeekModal: true,
+                                peekCardId: enemyCards[randomIndexOfCard].id,
+                                peekDescription: description
+                            })
                         }
-                    })
-                }
-            } else {
-                this.setState({
-                    isMoveModal: true
+                    }
                 })
             }
-
-            const { socket } = this.props
-            let moves = [this.state.keyMove, ...this.state.cardMoves]
-            socket.emit(GAME_MOVE, { game: this.state.game, moves })
+        } else {
+            this.setState({
+                isMoveModal: true
+            })
         }
+
+        const { socket } = this.props
+        let moves = [this.state.keyMove, ...this.state.cardMoves]
+        this.setState({
+            keyMove: null,
+            cardMoves: []
+        })
+        socket.emit(GAME_MOVE, { game: this.state.game, moves })
     }
 
     onMoveTimeout = () => {
