@@ -86,7 +86,7 @@
     border-radius: 1vh;
     z-index: 100;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 2vh;
+    font-size: 1.4vw;
     color: whitesmoke;
     text-align: center;
 }
@@ -121,19 +121,6 @@
     height: 100%;
     background-color: transparent;
     z-index: 150;
-}
-
-.card-use-abort-button {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    background-color: transparent;
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0;
 }
 
 .card-discard-button {
@@ -174,6 +161,19 @@
     text-align: center;
 }
 
+.card-use-abort-button {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    border: 0;
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+}
+
 .card-use-abort-button > div:hover {
     background-color: #cf8e8eb9;
 }
@@ -184,8 +184,10 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 6vh;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 2vh;
+    font-size: 1.5vw;
     background-color: #bd94949a;
+    border-bottom-left-radius: 0.5vh;
+    border-bottom-right-radius: 0.5vh;
+    padding-bottom: 0.5vh;
 }
