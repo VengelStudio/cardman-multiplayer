@@ -42,7 +42,11 @@ const CardsSpawner = props => {
                     isUsed,
                     isDiscardEnabled,
                     isBlocked,
-                    isDisabled: !cardData.doesMeetConditions(game, player)
+                    isDisabled: !cardData.doesMeetConditions({
+                        game,
+                        player,
+                        index
+                    })
                 }
 
                 return (

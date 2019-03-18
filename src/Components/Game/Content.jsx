@@ -66,7 +66,7 @@ class Content extends Component {
             <div className='content'>
                 <PlayerState player={player} game={game} />
                 <div className='timer-wrapper'>
-                    {isMove && <Timer time={300000} onEnd={onMoveTimeout} />}
+                    {isMove && <Timer time={30} onEnd={onMoveTimeout} />}
                 </div>
                 <div className='game'>
                     <div className={wordClass}>

@@ -6,12 +6,12 @@ const Cards = {
         use: ({ currentGame, socket, move }) => {
             return currentGame
         },
-        doesMeetConditions: (game, player) => {
+        doesMeetConditions: ({ game, player, index }) => {
             let { socketId } = player
-            game.cards[socketId].forEach((card, i) => {
-                console.log(card.id)
+            let firstCardIndex = game.cards[socketId].findIndex(card => {
+                return card.id === Cards.DEFINITION_CARD.id
             })
-            return true
+            if (index !== firstCardIndex) return true
         }
     },
     // RANDOM_CORRECT_LETTER_CARD: {
@@ -51,7 +51,7 @@ const Cards = {
     //         })
     //         return currentGame
     //     },
-    //     doesMeetConditions: game => {
+    //     doesMeetConditions: ({game}) => {
     //         return true
     //     }
     // },
@@ -63,7 +63,7 @@ const Cards = {
             currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
             return currentGame
         },
-        doesMeetConditions: game => {
+        doesMeetConditions: ({ game }) => {
             return true
         }
     },
@@ -93,7 +93,7 @@ const Cards = {
     //         })
     //         return currentGame
     //     },
-    //     doesMeetConditions: game => {
+    //     doesMeetConditions: ({game}) => {
     //         return true
     //     }
     // },
@@ -114,7 +114,7 @@ const Cards = {
     //         })
     //         return currentGame
     //     },
-    //     doesMeetConditions: game => {
+    //     doesMeetConditions: ({game}) => {
     //         return true
     //     }
     // },
@@ -136,7 +136,7 @@ const Cards = {
     //             currentGame.blockCounters[enemySocket] = 2
     //         return currentGame
     //     },
-    //     doesMeetConditions: (game, player) => {
+    //     doesMeetConditions: ({game, player}) => {
     //         let enemySocket = game.playerSockets.filter(e => {
     //             return e.socketId !== player.socketId
     //         })[0].socketId
@@ -159,7 +159,7 @@ const Cards = {
     //         currentGame.blockCounters[mySocket] = blockCounters - 2
     //         return currentGame
     //     },
-    //     doesMeetConditions: game => {
+    //     doesMeetConditions: ({game}) => {
     //         return true
     //     }
     // },
@@ -171,7 +171,7 @@ const Cards = {
         use: ({ currentGame, socket, move }) => {
             return currentGame
         },
-        doesMeetConditions: (game, player) => {
+        doesMeetConditions: ({ game, player }) => {
             let enemySocket = game.playerSockets.filter(e => {
                 return e.socketId !== player.socketId
             })[0].socketId
@@ -229,7 +229,7 @@ const Cards = {
 
     //         return currentGame
     //     },
-    //     doesMeetConditions: (game, player) => {
+    //     doesMeetConditions: ({game, player}) => {
     //         let cards = game.cards
     //         let mySocketId = player.socketId
     //         let myCards = cards[mySocketId]
@@ -267,7 +267,7 @@ const Cards = {
     //         currentGame.cards[move.playerSocketId].push(getRandomCard())
     //         return currentGame
     //     },
-    //     doesMeetConditions: game => {
+    //     doesMeetConditions: ({game}) => {
     //         return true
     //     }
     // },
@@ -295,7 +295,7 @@ const Cards = {
     //         }
     //         return currentGame
     //     },
-    //     doesMeetConditions: (game, player) => {
+    //     doesMeetConditions: ({game, player}) => {
     //         let enemySocketId = game.playerSockets.filter(x => {
     //             return x.socketId !== player.socketId
     //         })[0].socketId

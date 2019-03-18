@@ -143,21 +143,19 @@
     background-color: transparent;
 }
 
-.card-disabled {
+.card-disabled-info {
     position: absolute;
+    top: 1vh;
+    bottom: 1vh;
+    left: 1vh;
+    right: 1vh;
     display: flex;
-    align-items: center;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-.card-disabled span {
-    display: block;
-    width: 90%;
-    margin: auto;
+    -webkit-user-drag: none;
+    border-radius: 1vh;
+    z-index: 100;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.4vw;
+    color: whitesmoke;
     text-align: center;
 }
 
