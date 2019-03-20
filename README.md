@@ -1,6 +1,6 @@
 # Cardman - a simple hangman game with cards!
 
-![]()
+![](rec.gif)
 
 
 http://cardman-multiplayer.herokuapp.com/
