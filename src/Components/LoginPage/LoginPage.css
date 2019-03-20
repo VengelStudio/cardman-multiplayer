@@ -19,6 +19,13 @@
     text-align: center;
     display: inline-block;
 }
+.submit-btn{
+    background-color: rgb(52, 133, 52)
+}
+.submit-btn:hover{
+    background-color: rgb(58, 151, 58)
+}
+
 
 .nickname-input {
     display: flex;

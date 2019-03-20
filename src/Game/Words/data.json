@@ -3,9 +3,7 @@
         {
             "word": "boulevard",
             "definitions": [
-                "A broad city street, often tree-lined and landscaped.",
-                "Upper Midwest   See parking. See Regional Note at parking.",
-                "Chiefly Midwestern U.S.   See median strip. See Regional Note at neutral ground."
+                "A broad city street, often tree-lined and landscaped."
             ]
         },
         {
@@ -24,11 +22,7 @@
         },
         {
             "word": "mails",
-            "definitions": [
-                "Third-person singular simple present indicative form of mail.",
-                "Plural form of mail.",
-                "The mail delivery system."
-            ]
+            "definitions": ["The mail delivery system."]
         },
         {
             "word": "vibration",
@@ -39,12 +33,6 @@
             ]
         },
         {
-            "word": "outscored",
-            "definitions": [
-                "Simple past tense and past participle of outscore."
-            ]
-        },
-        {
             "word": "sterile",
             "definitions": [
                 "Not producing or incapable of producing offspring.",
@@ -52,7 +40,6 @@
                 "Producing little or no vegetation; unfruitful:  sterile land. "
             ]
         },
-        { "word": "correlates", "definitions": ["Plural form of correlate."] },
         {
             "word": "freelance",
             "definitions": [
@@ -76,13 +63,12 @@
             "definitions": [
                 "To bring into actuality; effect:  fulfilled their promises. ",
                 "To carry out (an order, for example).",
-                "To measure up to; satisfy. See Synonyms at perform, satisfy."
+                "To measure up to; satisfy."
             ]
         },
         {
             "word": "spat",
             "definitions": [
-                "A past tense and a past participle of spit1.",
                 "An oyster or similar bivalve mollusk in the larval stage, especially when it settles to the bottom and begins to develop a shell.",
                 "The spawn of an oyster or a similar mollusk."
             ]
@@ -113,51 +99,26 @@
         },
         {
             "word": "inline",
-            "definitions": [
-                "Alternative spelling of in-line.",
-                "(computing) To optimize using in-line expansion."
-            ]
+            "definitions": ["(computing) To optimize using in-line expansion."]
         },
-        { "word": "variations", "definitions": ["Plural form of variation."] },
         {
             "word": "terrifying",
             "definitions": [
                 "Frightening or intimidating.",
-                "Of a formidable nature; terrific",
-                "Present participle of terrify."
+                "Of a formidable nature; terrific"
             ]
         },
         {
             "word": "generation",
             "definitions": [
                 "All of the offspring that are at the same stage of descent from a common ancestor:  Mother and daughters represent two generations. ",
-                "Biology   A form or stage in the life cycle of an organism:  asexual generation of a fern. ",
                 "The average interval of time between the birth of parents and the birth of their offspring."
             ]
         },
-        { "word": "attorneys", "definitions": ["Plural form of attorney."] },
         {
             "word": "seater",
             "definitions": [
                 "A vehicle or item of furniture that has a specified seating capacity"
-            ]
-        },
-        {
-            "word": "complements",
-            "definitions": [
-                "Plural form of complement.",
-                "Third-person singular simple present indicative form of complement."
-            ]
-        },
-        {
-            "word": "bogged",
-            "definitions": ["Simple past tense and past participle of bog."]
-        },
-        { "word": "iBooks", "definitions": ["Plural form of iBook."] },
-        {
-            "word": "Gary",
-            "definitions": [
-                "A city of northwest Indiana on Lake Michigan near the Illinois border. Founded on land purchased by the U.S. Steel Corporation in 1905, it is a highly industrialized port of entry. Population: 97,700."
             ]
         },
         {
@@ -168,12 +129,10 @@
                 "The chief executive of the United States, serving as both chief of state and chief political executive."
             ]
         },
-        { "word": "decades", "definitions": ["Plural form of decade."] },
         {
             "word": "stretching",
             "definitions": [
-                "A form of physical exercise in which a specific skeletal muscle (or muscle group) is deliberately elongated to its fullest length in order to improve the muscle's felt elasticity and reaffirm comfortable muscle tone.",
-                "Present participle of stretch."
+                "A form of physical exercise in which a specific skeletal muscle (or muscle group) is deliberately elongated to its fullest length in order to improve the muscle's felt elasticity and reaffirm comfortable muscle tone."
             ]
         },
         {
@@ -184,7 +143,6 @@
                 "A pattern of this kind."
             ]
         },
-        { "word": "Mohammed", "definitions": ["See Muhammad."] },
         {
             "word": "bolster",
             "definitions": [
@@ -194,16 +152,8 @@
             ]
         },
         {
-            "word": "thrived",
-            "definitions": ["Simple past tense and past participle of thrive."]
-        },
-        {
             "word": "renowned",
-            "definitions": ["Having renown; famous. See Synonyms at noted."]
-        },
-        {
-            "word": "grasped",
-            "definitions": ["Simple past tense and past participle of grasp."]
+            "definitions": ["Having renown; famous."]
         },
         {
             "word": "Salam",
@@ -230,7 +180,7 @@
             "word": "pomp",
             "definitions": [
                 "Dignified or magnificent display; splendor:  the solemn pomp of a military funeral. ",
-                "Vain or ostentatious display. See Synonyms at display."
+                "Vain or ostentatious display."
             ]
         },
         {
@@ -245,33 +195,17 @@
             "word": "inquisitive",
             "definitions": [
                 "Inclined to investigate; eager for knowledge.",
-                "Unduly curious and inquiring. See Synonyms at curious."
+                "Unduly curious and inquiring."
             ]
         },
-        { "word": "roles", "definitions": ["Plural form of role."] },
         {
             "word": "anarchist",
             "definitions": ["An advocate of or a participant in anarchism."]
         },
         {
-            "word": "wandered",
-            "definitions": ["Simple past tense and past participle of wander."]
-        },
-        {
             "word": "uncensored",
             "definitions": [
                 "Not examined, expurgated, or given a rating for inclusion of improper or inappropriate material:  received uncensored correspondence from a theater of military operations; sells uncensored movies and novels. "
-            ]
-        },
-        {
-            "word": "changing",
-            "definitions": ["Present participle of change."]
-        },
-        {
-            "word": "pets",
-            "definitions": [
-                "Plural form of pet.",
-                "Third-person singular simple present indicative form of pet."
             ]
         },
         {
@@ -284,36 +218,12 @@
         },
         { "word": "secondly", "definitions": ["In the second place; second."] },
         {
-            "word": "Kelso",
-            "definitions": ["A town in the Scottish Borders region."]
-        },
-        {
             "word": "frightened",
-            "definitions": [
-                "afraid; suffering from fear.",
-                "Simple past tense and past participle of frighten."
-            ]
-        },
-        {
-            "word": "festering",
-            "definitions": ["Present participle of fester."]
+            "definitions": ["afraid; suffering from fear."]
         },
         {
             "word": "frankness",
             "definitions": ["The state of being frank; candour; honesty."]
-        },
-        {
-            "word": "Bilbao",
-            "definitions": [
-                "A city of northern Spain near the Bay of Biscay. Founded c. 1300, it is a major port and industrial center. Population: 353,000."
-            ]
-        },
-        {
-            "word": "Nassau",
-            "definitions": [
-                "A region and former duchy of central Germany north and east of the Main and Rhine rivers. The region became a duchy in 1806 and was absorbed by Prussia in 1866.",
-                "The capital and largest city of the Bahamas, on the northeast coast of New Providence Island in the Atlantic Ocean east of Miami, Florida. Settled in the 17th century, it was a haven for pirates in the 18th century. Population: 210,000."
-            ]
         },
         {
             "word": "wasteland",
@@ -321,10 +231,6 @@
                 "Land that is desolate, barren, or ravaged.",
                 "A place, era, or aspect of life considered as lacking in spiritual, aesthetic, or other humanizing qualities; a vacuum:  a cultural wasteland. "
             ]
-        },
-        {
-            "word": "glimpsed",
-            "definitions": ["Simple past tense and past participle of glimpse."]
         },
         {
             "word": "staggering",
@@ -346,15 +252,12 @@
                 "learning conducted via electronic media, especially via the Internet"
             ]
         },
-        { "word": "lesbians", "definitions": ["Plural form of lesbian."] },
         {
             "word": "lodged",
             "definitions": [
-                "Simple past tense and past participle of lodge.",
                 "lying down; used of beasts of the chase, as couchant is used of beasts of prey."
             ]
         },
-        { "word": "truckers", "definitions": ["Plural form of trucker."] },
         {
             "word": "referendum",
             "definitions": [
@@ -365,14 +268,7 @@
         },
         {
             "word": "Saturday",
-            "definitions": [
-                "The seventh day of the week.",
-                "The Jewish Sabbath."
-            ]
-        },
-        {
-            "word": "outed",
-            "definitions": ["Simple past tense and past participle of out."]
+            "definitions": ["The seventh day of the week."]
         },
         {
             "word": "force",
@@ -410,15 +306,9 @@
         {
             "word": "initiate",
             "definitions": [
-                "To set going by taking the first step; begin:  initiated trade with developing nations.  See Synonyms at begin.",
+                "To set going by taking the first step; begin:  initiated trade with developing nations.",
                 "To introduce to a new field, interest, skill, or activity.",
                 "To admit into membership, as with ceremonies or ritual."
-            ]
-        },
-        {
-            "word": "harbors",
-            "definitions": [
-                "Third-person singular simple present indicative form of harbor."
             ]
         },
         {
@@ -437,13 +327,6 @@
             ]
         },
         {
-            "word": "skips",
-            "definitions": [
-                "Plural form of skip.",
-                "Third-person singular simple present indicative form of skip."
-            ]
-        },
-        {
             "word": "pleasantly",
             "definitions": [
                 "In a pleasant manner; so as to achieve a pleasant result.",
@@ -457,7 +340,6 @@
                 "On the condition; if:  will pay the bonus provided the job is completed on time. "
             ]
         },
-        { "word": "vowels", "definitions": ["Plural form of vowel."] },
         {
             "word": "diva",
             "definitions": [
@@ -467,31 +349,17 @@
         },
         {
             "word": "funded",
-            "definitions": [
-                "Simple past tense and past participle of fund.",
-                "Having financial support. Paid for."
-            ]
+            "definitions": ["Having financial support. Paid for."]
         },
         {
             "word": "fronted",
-            "definitions": [
-                "Simple past tense and past participle of front.",
-                "Formed with a front; drawn up in line."
-            ]
+            "definitions": ["Formed with a front; drawn up in line."]
         },
         {
             "word": "Boer",
             "definitions": [
                 "A Dutch colonist or descendant of a Dutch colonist in South Africa."
             ]
-        },
-        {
-            "word": "unleashed",
-            "definitions": ["Simple past tense and past participle of unleash."]
-        },
-        {
-            "word": "counterfeiting",
-            "definitions": ["Present participle of counterfeit."]
         },
         {
             "word": "shop",
@@ -509,13 +377,8 @@
             ]
         },
         {
-            "word": "waited",
-            "definitions": ["Simple past tense and past participle of wait."]
-        },
-        {
             "word": "presiding",
             "definitions": [
-                "Present participle of preside.",
                 "Having authority over; vested with the authority to preside over."
             ]
         },
@@ -544,17 +407,12 @@
             ]
         },
         {
-            "word": "attaching",
-            "definitions": ["Present participle of to attach."]
-        },
-        {
             "word": "remedial",
             "definitions": [
                 "Supplying a remedy.",
                 "Intended to correct or improve deficient skills in a specific subject:  remedial reading. "
             ]
         },
-        { "word": "veins", "definitions": ["Plural form of vein."] },
         {
             "word": "subtract",
             "definitions": [
@@ -562,11 +420,10 @@
                 "To perform the arithmetic operation of subtraction."
             ]
         },
-        { "word": "racers", "definitions": ["Plural form of racer."] },
         {
             "word": "infirm",
             "definitions": [
-                "Weak in body, especially from old age or disease; feeble. See Synonyms at weak.",
+                "Weak in body, especially from old age or disease; feeble.",
                 "Lacking firmness of will, character, or purpose; irresolute.",
                 "Not strong or stable; shaky:  an infirm support. "
             ]
@@ -578,11 +435,10 @@
                 "Being such as to warrant impeachment:  an impeachable offense. "
             ]
         },
-        { "word": "talents", "definitions": ["Plural form of talent."] },
         {
             "word": "contention",
             "definitions": [
-                "The act or an instance of striving in controversy or debate. See Synonyms at discord.",
+                "The act or an instance of striving in controversy or debate.",
                 "A striving to win in competition; rivalry:  The teams met in fierce contention for first place. ",
                 "An assertion put forward in argument."
             ]
@@ -593,7 +449,6 @@
                 "Complete cessation of activity or progress:  Work came to a standstill. "
             ]
         },
-        { "word": "Haitians", "definitions": ["Plural form of Haitian."] },
         {
             "word": "unyielding",
             "definitions": [
@@ -607,18 +462,10 @@
                 "In a liberal manner, generously or in accordance with political views associated with the liberals."
             ]
         },
-        { "word": "guilds", "definitions": ["Plural form of guild."] },
         {
             "word": "biopharmaceutical",
             "definitions": ["Any drug produced using biotechnology"]
         },
-        {
-            "word": "Leesburg",
-            "definitions": [
-                "A city in the northern part of the state of Virginia in the United States"
-            ]
-        },
-        { "word": "heroines", "definitions": ["Plural form of heroine."] },
         {
             "word": "church",
             "definitions": [
@@ -635,9 +482,6 @@
                 "The fact or act of becoming less or less intense."
             ]
         },
-        { "word": "summaries", "definitions": ["Plural form of summary."] },
-        { "word": "protectors", "definitions": ["Plural form of protector."] },
-        { "word": "racists", "definitions": ["Plural form of racist."] },
         {
             "word": "agility",
             "definitions": ["The state or quality of being agile; nimbleness."]
@@ -657,7 +501,7 @@
             "word": "transcend",
             "definitions": [
                 "To pass beyond the limits of:  emotions that transcend understanding. ",
-                "To be greater than, as in intensity or power; surpass:  love that transcends infatuation.  See Synonyms at excel.",
+                "To be greater than, as in intensity or power; surpass:  love that transcends infatuation.",
                 "To exist above and independent of (material experience or the universe): \"One never can see the thing in itself, because the mind does not transcend phenomena”  ( Hilaire Belloc). "
             ]
         },
@@ -724,23 +568,13 @@
             "word": "topper",
             "definitions": [
                 "One that removes tops or puts tops on.",
-                "One that is exceedingly or surpassingly good of its kind.",
-                "Slang   Something, such as a witticism, that surpasses all that has gone before."
-            ]
-        },
-        {
-            "word": "colouring",
-            "definitions": [
-                "Alternative spelling of coloring.",
-                "Present participle of colour.",
-                "Alternative spelling of coloring."
+                "One that is exceedingly or surpassingly good of its kind."
             ]
         },
         {
             "word": "squatting",
             "definitions": [
-                "The act or general practice of occupying a building or land illegally.",
-                "Present participle of squat."
+                "The act or general practice of occupying a building or land illegally."
             ]
         },
         {
@@ -758,7 +592,7 @@
         {
             "word": "amass",
             "definitions": [
-                "To gather for oneself, as for one's pleasure or profit:  amassed a fortune.  See Synonyms at gather.",
+                "To gather for oneself, as for one's pleasure or profit:  amassed a fortune.",
                 "To accumulate or assemble a large quantity of: \"The astronomers had amassed compelling evidence that the galaxies indeed were speeding away from the earth and from each other”  ( George Johnson). ",
                 "To come together; collect."
             ]
@@ -766,13 +600,8 @@
         {
             "word": "classics",
             "definitions": [
-                "Plural form of classic.",
                 "The branch of the humanities comprising the languages, literature, philosophy, history, art, archaeology and other culture of the ancient Mediterranean World; especially Ancient Greece and Ancient Rome during the classical era."
             ]
-        },
-        {
-            "word": "opened",
-            "definitions": ["Simple past tense and past participle of open."]
         },
         {
             "word": "disaster",
@@ -791,18 +620,6 @@
             ]
         },
         {
-            "word": "resolving",
-            "definitions": ["Present participle of resolve."]
-        },
-        { "word": "crawling", "definitions": ["Present participle of crawl."] },
-        { "word": "offenders", "definitions": ["Plural form of offender."] },
-        {
-            "word": "mars",
-            "definitions": [
-                "Third-person singular simple present indicative form of mar."
-            ]
-        },
-        {
             "word": "trickle",
             "definitions": [
                 "To flow or fall in drops or in a thin stream.",
@@ -810,7 +627,6 @@
                 "To cause to trickle."
             ]
         },
-        { "word": "freebies", "definitions": ["Plural form of freebie."] },
         {
             "word": "thinly",
             "definitions": [
@@ -834,20 +650,11 @@
             ]
         },
         {
-            "word": "cordoned",
-            "definitions": ["Simple past tense and past participle of cordon."]
-        },
-        {
             "word": "Puck",
             "definitions": [
                 "A mischievous sprite in English folklore.",
                 "The satellite of Uranus that is tenth in distance from the planet."
             ]
-        },
-        { "word": "Islanders", "definitions": ["Plural form of Islander."] },
-        {
-            "word": "matched",
-            "definitions": ["Simple past tense and past participle of match."]
         },
         {
             "word": "estimation",
@@ -860,7 +667,7 @@
         {
             "word": "rendezvous",
             "definitions": [
-                "A meeting at a prearranged time and place. See Synonyms at engagement.",
+                "A meeting at a prearranged time and place.",
                 "A prearranged meeting place, especially an assembly point for troops or ships.",
                 "A popular gathering place:  The café is a favorite rendezvous for artists. "
             ]
@@ -874,16 +681,6 @@
             ]
         },
         {
-            "word": "interactions",
-            "definitions": ["Plural form of interaction."]
-        },
-        {
-            "word": "guaranteed",
-            "definitions": [
-                "Simple past tense and past participle of guarantee."
-            ]
-        },
-        {
             "word": "refrigeration",
             "definitions": [
                 "The process of transferring heat from an object in order to cool it.",
@@ -893,11 +690,7 @@
         },
         {
             "word": "trimmed",
-            "definitions": [
-                "Simple past tense and past participle of trim.",
-                "that has been trimmed",
-                "furnished with trimmings"
-            ]
+            "definitions": ["that has been trimmed", "furnished with trimmings"]
         },
         {
             "word": "backpack",
@@ -909,20 +702,11 @@
         },
         {
             "word": "disoriented",
-            "definitions": [
-                "Simple past tense and past participle of disorient.",
-                "Having lost one's direction; confused."
-            ]
-        },
-        {
-            "word": "cooperate",
-            "definitions": ["Alternative spelling of cooperate."]
+            "definitions": ["Having lost one's direction; confused."]
         },
         {
             "word": "waxing",
             "definitions": [
-                "Present participle of wax.",
-                "this sense?) (uncountable) the action of the verb to wax.",
                 "A cosmetic procedure in which hair is removed from the body by the application and removal of wax."
             ]
         },
@@ -930,21 +714,9 @@
             "word": "guinea",
             "definitions": [
                 "A gold coin issued in England from 1663 to 1813 and worth one pound and one shilling.",
-                "The sum of one pound and one shilling.",
-                "Offensive Slang   Used as a disparaging term for a person of Italian birth or descent."
+                "The sum of one pound and one shilling."
             ]
         },
-        {
-            "word": "underscoring",
-            "definitions": ["Present participle of underscore."]
-        },
-        { "word": "recessions", "definitions": ["Plural form of recession."] },
-        {
-            "word": "reconsidering",
-            "definitions": ["Present participle of reconsider."]
-        },
-        { "word": "debuting", "definitions": ["Present participle of debut."] },
-        { "word": "Bogota", "definitions": ["The capital of Colombia."] },
         {
             "word": "sham",
             "definitions": [
@@ -955,15 +727,12 @@
         },
         {
             "word": "downed",
-            "definitions": [
-                "Simple past tense and past participle of down.",
-                "That has been brought down"
-            ]
+            "definitions": ["That has been brought down"]
         },
         {
             "word": "animated",
             "definitions": [
-                "Having life; alive. See Synonyms at living.",
+                "Having life; alive.",
                 "Filled with activity, vigor, or spirit; lively.",
                 "Designed or constructed in the form of an animated cartoon."
             ]
@@ -996,18 +765,10 @@
                 "A promiscuous man; a philanderer."
             ]
         },
-        {
-            "word": "mistakes",
-            "definitions": [
-                "Plural form of mistake.",
-                "Third-person singular simple present indicative form of mistake."
-            ]
-        },
         { "word": "unhappily", "definitions": ["In an unhappy manner."] },
         {
             "word": "contrasted",
             "definitions": [
-                "Simple past tense and past participle of contrast.",
                 "Set in contrast (of two or more things).",
                 "Displaying or marked by contrast; contrasty."
             ]
@@ -1020,21 +781,8 @@
             ]
         },
         {
-            "word": "discusses",
-            "definitions": [
-                "Third-person singular simple present indicative form of discuss."
-            ]
-        },
-        {
             "word": "overjoyed",
-            "definitions": [
-                "Very happy",
-                "Simple past tense and past participle of overjoy."
-            ]
-        },
-        {
-            "word": "occurred",
-            "definitions": ["Simple past tense and past participle of occur."]
+            "definitions": ["Very happy"]
         },
         {
             "word": "westerly",
@@ -1043,10 +791,6 @@
                 "Coming or being from the west:  westerly winds. ",
                 "A storm or wind coming from the west."
             ]
-        },
-        {
-            "word": "grunted",
-            "definitions": ["Simple past tense and past participle of grunt."]
         },
         {
             "word": "incomparable",
@@ -1073,7 +817,6 @@
         {
             "word": "gone",
             "definitions": [
-                "Past participle of go1.",
                 "Being away from a place; absent or having departed.",
                 "Past; bygone."
             ]
@@ -1123,7 +866,6 @@
                 "Not infected:  a clean wound. "
             ]
         },
-        { "word": "superstars", "definitions": ["Plural form of superstar."] },
         {
             "word": "Word",
             "definitions": [
@@ -1162,8 +904,7 @@
         {
             "word": "throwback",
             "definitions": [
-                "A reversion to a former type or ancestral characteristic.",
-                "See atavism."
+                "A reversion to a former type or ancestral characteristic."
             ]
         },
         {
@@ -1203,12 +944,6 @@
             ]
         },
         {
-            "word": "redirected",
-            "definitions": [
-                "Simple past tense and past participle of redirect."
-            ]
-        },
-        {
             "word": "shameless",
             "definitions": [
                 "Feeling no shame; impervious to disgrace.",
@@ -1222,20 +957,12 @@
             ]
         },
         {
-            "word": "dwarfs",
-            "definitions": [
-                "Plural form of dwarf.",
-                "Third-person singular simple present indicative form of dwarf."
-            ]
-        },
-        {
             "word": "Cynical",
             "definitions": [
                 "Of or relating to the Cynics, a sect of ancient Greek philosophers who believed virtue to be the only good and self-control to be the only means of achieving virtue.",
                 "Concerned only with one's own interests and disregarding accepted standards to achieve them: A cynical fool"
             ]
         },
-        { "word": "electrodes", "definitions": ["Plural form of electrode."] },
         {
             "word": "touchy",
             "definitions": [
@@ -1247,17 +974,13 @@
         {
             "word": "rushes",
             "definitions": [
-                "Plural form of rush.",
                 "Unedited footage; film material as recorded to tape etc."
             ]
         },
-        { "word": "bombings", "definitions": ["Plural form of bombing."] },
-        { "word": "developers", "definitions": ["Plural form of developer."] },
         { "word": "eternally", "definitions": ["For eternity; forever."] },
         {
             "word": "passed",
             "definitions": [
-                "Simple past tense and past participle of pass.",
                 "That has passed beyond a certain point (chiefly in set collocations).",
                 "That has passed a given qualification or examination; qualified."
             ]
@@ -1268,7 +991,6 @@
                 "Capable of being decomposed by biological agents, especially bacteria:  a biodegradable detergent. "
             ]
         },
-        { "word": "throats", "definitions": ["Plural form of throat."] },
         {
             "word": "intoxication",
             "definitions": [
@@ -1281,7 +1003,7 @@
             "word": "fearful",
             "definitions": [
                 "Causing or capable of causing fear; frightening:  a fearful howling. ",
-                "Experiencing fear; frightened. See Synonyms at afraid.",
+                "Experiencing fear; frightened.",
                 "Feeling or inclined to feel anxiety or apprehension; timid; nervous."
             ]
         },
@@ -1295,24 +1017,13 @@
         },
         {
             "word": "quotes",
-            "definitions": [
-                "Plural form of quote.",
-                "Quotation marks.",
-                "Third-person singular simple present indicative form of quote."
-            ]
+            "definitions": ["Quotation marks."]
         },
-        { "word": "overlords", "definitions": ["Plural form of overlord."] },
         {
             "word": "scrupulous",
             "definitions": [
-                "Conscientious and exact; painstaking. See Synonyms at meticulous.",
+                "Conscientious and exact; painstaking.",
                 "Having scruples; principled."
-            ]
-        },
-        {
-            "word": "calibrated",
-            "definitions": [
-                "Simple past tense and past participle of calibrate."
             ]
         },
         {
@@ -1332,13 +1043,9 @@
             ]
         },
         {
-            "word": "hostilities",
-            "definitions": ["Plural form of hostility.", "acts of war"]
-        },
-        {
             "word": "brazen",
             "definitions": [
-                "Marked by flagrant and insolent audacity. See Synonyms at shameless.",
+                "Marked by flagrant and insolent audacity.",
                 "Having a loud, usually harsh, resonant sound: \"sudden brazen clashes of the soldiers' band”  ( James Joyce). ",
                 "Made of brass."
             ]
@@ -1350,22 +1057,14 @@
                 "A huge animal, possibly the hippopotamus, described in the Bible."
             ]
         },
-        { "word": "tricks", "definitions": ["Plural form of trick."] },
-        { "word": "oversaw", "definitions": ["Past tense of oversee."] },
-        {
-            "word": "skimmed",
-            "definitions": ["Simple past tense and past participle of skim."]
-        },
         {
             "word": "cozy",
             "definitions": [
                 "Snug, comfortable, and warm.",
-                "Marked by friendly intimacy. See Synonyms at comfortable.",
+                "Marked by friendly intimacy.",
                 "Informal   Marked by close association for devious purposes:  a cozy agreement with the competition. "
             ]
         },
-        { "word": "Kurds", "definitions": ["Plural form of Kurd."] },
-        { "word": "forearms", "definitions": ["Plural form of forearm."] },
         {
             "word": "developmental",
             "definitions": [
@@ -1375,7 +1074,7 @@
         },
         {
             "word": "Terra",
-            "definitions": ["The planet Earth.", "a female given name"]
+            "definitions": ["The planet Earth."]
         },
         {
             "word": "chapter",
@@ -1387,29 +1086,11 @@
         },
         {
             "word": "plumber",
-            "definitions": [
-                "One that installs and repairs pipes and plumbing.",
-                "Slang   An employee assigned to investigate and stop leaks of sensitive information."
-            ]
+            "definitions": ["One that installs and repairs pipes and plumbing."]
         },
-        {
-            "word": "fascinated",
-            "definitions": [
-                "Simple past tense and past participle of fascinate."
-            ]
-        },
-        {
-            "word": "implored",
-            "definitions": ["Simple past tense and past participle of implore."]
-        },
-        { "word": "applying", "definitions": ["Present participle of apply."] },
         {
             "word": "quickest",
-            "definitions": ["superlative form of quick: most quick."]
-        },
-        {
-            "word": "aficionados",
-            "definitions": ["Plural form of aficionado."]
+            "definitions": ["most quick."]
         },
         {
             "word": "salvo",
@@ -1428,25 +1109,11 @@
             "definitions": ["A person who plays the violin"]
         },
         {
-            "word": "distanced",
-            "definitions": [
-                "Simple past tense and past participle of distance."
-            ]
-        },
-        {
             "word": "cleanly",
             "definitions": [
-                "Habitually and carefully neat and clean. See Synonyms at clean.",
+                "Habitually and carefully neat and clean.",
                 "In a clean manner."
             ]
-        },
-        {
-            "word": "justifying",
-            "definitions": ["Present participle of justify."]
-        },
-        {
-            "word": "conservatives",
-            "definitions": ["Plural form of conservative."]
         },
         {
             "word": "lottery",
@@ -1457,13 +1124,9 @@
             ]
         },
         {
-            "word": "bloodied",
-            "definitions": ["Simple past tense and past participle of bloody."]
-        },
-        {
             "word": "amorphous",
             "definitions": [
-                "Lacking definite form; shapeless. See Synonyms at shapeless.",
+                "Lacking definite form; shapeless.",
                 "Of no particular type; anomalous.",
                 "Lacking organization; formless."
             ]
@@ -1487,10 +1150,6 @@
             "definitions": ["coronary artery bypass graft"]
         },
         {
-            "word": "gazed",
-            "definitions": ["Simple past tense and past participle of gaze."]
-        },
-        {
             "word": "substantive",
             "definitions": [
                 "Substantial; considerable.",
@@ -1498,13 +1157,11 @@
                 "Not imaginary; actual; real."
             ]
         },
-        { "word": "homers", "definitions": ["Plural form of homer."] },
         {
             "word": "hammering",
             "definitions": [
                 "A period of being beaten or hammered.",
-                "A heavy defeat",
-                "Present participle of hammer."
+                "A heavy defeat"
             ]
         },
         { "word": "meticulously", "definitions": ["In a meticulous manner."] },
@@ -1545,22 +1202,6 @@
             ]
         },
         {
-            "word": "Tanzania",
-            "definitions": [
-                "A country of east-central Africa on the Indian Ocean. Inhabited since prehistoric times and settled by Bantu peoples by the tenth century, most of the region became a German protectorate in 1891 and passed to the British in 1920 as Tanganyika. Zanzibar, a narrow strip along the coast, was a British protectorate after 1890. Tanganyika achieved independence in 1961 and joined with Zanzibar in 1964 to form Tanzania. Dar es Salaam is the capital (until 2005) and the largest city; Dodoma is the designated capital. Population: 39,400,000."
-            ]
-        },
-        {
-            "word": "creating",
-            "definitions": ["Present participle of create."]
-        },
-        {
-            "word": "Britain",
-            "definitions": [
-                "The island of Great Britain during pre-Roman, Roman, and early Anglo-Saxon times before the reign of Alfred the Great (871-899). The name is derived from Brittania, which the Romans used for the portion of the island that they occupied."
-            ]
-        },
-        {
             "word": "rumor",
             "definitions": [
                 "A piece of unverified information of uncertain origin usually spread by word of mouth.",
@@ -1568,26 +1209,10 @@
             ]
         },
         {
-            "word": "modeled",
-            "definitions": ["Simple past tense and past participle of model."]
-        },
-        {
-            "word": "Narrows",
-            "definitions": [
-                "A strait of southeast New York between Brooklyn and Staten Island in New York City and connecting Upper and Lower New York Bay. The Narrows is spanned by the Verrazano-Narrows Bridge, one of the longest suspension bridges in the world."
-            ]
-        },
-        {
             "word": "impetuous",
             "definitions": [
                 "Characterized by sudden and forceful energy or emotion; impulsive and passionate.",
                 "Having or marked by violent force:  impetuous, heaving waves. "
-            ]
-        },
-        {
-            "word": "acknowledges",
-            "definitions": [
-                "Third-person singular simple present indicative form of acknowledge."
             ]
         },
         {
@@ -1603,29 +1228,11 @@
         },
         {
             "word": "shoutout",
-            "definitions": [
-                "Slang   A public expression of gratitude or recognition."
-            ]
-        },
-        {
-            "word": "seasons",
-            "definitions": [
-                "Plural form of season.",
-                "Third-person singular simple present indicative form of season."
-            ]
+            "definitions": ["A public expression of gratitude or recognition."]
         },
         {
             "word": "sizzling",
-            "definitions": [
-                "Present participle of sizzle.",
-                "Hot enough to make a hissing sound."
-            ]
-        },
-        {
-            "word": "Rotterdam",
-            "definitions": [
-                "A city of southwest Netherlands on the Rhine-Meuse delta south-southeast of The Hague. Chartered in 1328, it was a major commercial power during the 16th and 17th centuries and is today a thriving port accessible via canal to oceangoing vessels. The city was heavily bombed during World War II. Population: 584,000."
-            ]
+            "definitions": ["Hot enough to make a hissing sound."]
         },
         {
             "word": "scoreless",
@@ -1639,36 +1246,11 @@
             ]
         },
         {
-            "word": "Algeria",
-            "definitions": [
-                "A country of northwest Africa bordering on the Mediterranean Sea. The region was settled c. 2000 B.C. by Berber-speaking people and later formed a part of the Roman, Byzantine, and Ottoman empires. Arab invaders in the seventh and eighth centuries introduced Islam and the Arabic language and culture. A French territory from 1848, Algeria gained its independence in 1962 after more than seven years of fighting. Algiers is the capital and the largest city. Population: 33,300,000."
-            ]
-        },
-        {
-            "word": "capturing",
-            "definitions": ["Present participle of capture."]
-        },
-        {
-            "word": "redesigning",
-            "definitions": ["Present participle of redesign."]
-        },
-        {
             "word": "eminent",
             "definitions": [
                 "Of high rank, station, or quality; noteworthy:  eminent members of the community. ",
-                "Outstanding, as in character or performance; distinguished:  an eminent historian.  See Synonyms at noted."
+                "Outstanding, as in character or performance; distinguished:  an eminent historian."
             ]
-        },
-        {
-            "word": "leads",
-            "definitions": [
-                "Plural form of lead.",
-                "Third-person singular simple present indicative form of lead."
-            ]
-        },
-        {
-            "word": "secured",
-            "definitions": ["Simple past tense and past participle of secure."]
         },
         {
             "word": "bristling",
@@ -1676,7 +1258,7 @@
         },
         {
             "word": "brighter",
-            "definitions": ["comparative form of bright: more bright"]
+            "definitions": ["more bright"]
         },
         {
             "word": "parse",
@@ -1707,17 +1289,9 @@
             ]
         },
         {
-            "word": "sawed",
-            "definitions": ["Simple past tense and past participle of saw."]
-        },
-        {
-            "word": "witnessed",
-            "definitions": ["Simple past tense and past participle of witness."]
-        },
-        {
             "word": "conducive",
             "definitions": [
-                "Tending to cause or bring about; contributive:  working conditions not conducive to productivity.  See Synonyms at favorable."
+                "Tending to cause or bring about; contributive:  working conditions not conducive to productivity."
             ]
         },
         {
@@ -1735,18 +1309,10 @@
             ]
         },
         {
-            "word": "welled",
-            "definitions": ["Simple past tense and past participle of well."]
-        },
-        {
             "word": "incessantly",
             "definitions": [
                 "In a manner without pause or stop, especially to the point of annoyance; not ceasing."
             ]
-        },
-        {
-            "word": "renewals",
-            "definitions": ["Plural form of renewal."]
         },
         {
             "word": "namely",
@@ -1755,43 +1321,15 @@
         {
             "word": "bevy",
             "definitions": [
-                "A group of animals or birds, especially larks or quail. See Synonyms at flock1.",
+                "A group of animals or birds, especially larks or quail.",
                 "A group or an assemblage:  a bevy of beauties. "
             ]
-        },
-        {
-            "word": "Mexico",
-            "definitions": [
-                "A country of south-central North America. Southern Mexico was the site of various advanced civilizations beginning with the Olmec and including the Maya, Zapotec, Toltec, Mixtec, and Aztec cultures. Mexico was conquered by Cortés in 1521 and held by the Spanish until 1821. The Treaty of Guadalupe Hidalgo that ended the Mexican War (1846-1848) awarded all lands north of the Rio Grande to the United States. Mexico City is the capital and the largest city. Population: 109,000,000.",
-                "Gulf ofMexico  An arm of the Atlantic Ocean in southeast North America bordering on eastern Mexico, the southeast United States, and Cuba. It connects with the Atlantic Ocean through the Straits of Florida and with the Caribbean Sea through the Yucatán Channel."
-            ]
-        },
-        {
-            "word": "bedrooms",
-            "definitions": ["Plural form of bedroom."]
-        },
-        {
-            "word": "Australia",
-            "definitions": [
-                "The world's smallest continent, southeast of Asia between the Pacific and Indian oceans.",
-                "A commonwealth comprising the continent of Australia, the island state of Tasmania, two external territories, and several dependencies. The first British settlement, a penal colony at Port Jackson (now part of Sydney), was established in 1788. The present-day states grew as separate colonies; six of them formed a federation in 1901. In 1911 Northern Territory joined the commonwealth and the Capital Territory, site of Canberra, was created. Canberra is the capital and Sydney is the largest city. Population: 20,400,000."
-            ]
-        },
-        {
-            "word": "residues",
-            "definitions": ["Plural form of residue."]
         },
         {
             "word": "diverge",
             "definitions": [
                 "To go or extend in different directions from a common point; branch out.",
                 "To differ, as in opinion or manner."
-            ]
-        },
-        {
-            "word": "recaptured",
-            "definitions": [
-                "Simple past tense and past participle of recapture."
             ]
         },
         {
@@ -1836,22 +1374,11 @@
             ]
         },
         {
-            "word": "emailing",
-            "definitions": ["Present participle of e-mail."]
-        },
-        {
             "word": "chin",
             "definitions": [
                 "The central forward portion of the lower jaw.",
                 "To pull (oneself) up with the arms while grasping an overhead horizontal bar until the chin is level with the bar.",
                 "Music   To place (a violin) under the chin in preparation to play it."
-            ]
-        },
-        {
-            "word": "screws",
-            "definitions": [
-                "Plural form of screw.",
-                "Third-person singular simple present indicative form of screw."
             ]
         },
         {
@@ -1873,7 +1400,6 @@
         {
             "word": "screaming",
             "definitions": [
-                "Present participle of scream.",
                 "Loud, sharp, and piercing to the ear.",
                 "Obvious; distinct."
             ]
@@ -1895,20 +1421,12 @@
             ]
         },
         {
-            "word": "oats",
-            "definitions": ["Plural form of oat.", "Seeds of an oat plant."]
-        },
-        {
             "word": "seeding",
-            "definitions": [
-                "Present participle of seed.",
-                "The arrangement of positions in a tournament"
-            ]
+            "definitions": ["The arrangement of positions in a tournament"]
         },
         {
             "word": "lost",
             "definitions": [
-                "Past tense and past participle of lose.",
                 "Unable to find one's way:  a lost child. ",
                 "No longer in the possession, care, or control of someone or something:  a lost pen. "
             ]
@@ -1923,22 +1441,13 @@
         },
         {
             "word": "subsidized",
-            "definitions": [
-                "Simple past tense and past participle of subsidize.",
-                "that receives a subsidy"
-            ]
+            "definitions": ["that receives a subsidy"]
         },
         {
             "word": "Janus",
             "definitions": [
                 "Roman Mythology   The god of gates and doorways, depicted with two faces looking in opposite directions.",
                 "The satellite of Saturn that is sometimes the fifth and sometimes the sixth in distance from the planet. Periodically, Janus and another of Saturn's moons, Epimetheus, exchange orbits."
-            ]
-        },
-        {
-            "word": "Graf",
-            "definitions": [
-                "Graf, Stephanie Maria  Known as \"Steffi.”  Born 1969.  German tennis player who in 1988 won the Grand Slam (Wimbledon, French, U.S., and Australian titles) and an Olympic gold medal."
             ]
         },
         {
@@ -1949,36 +1458,22 @@
             ]
         },
         {
-            "word": "consoles",
-            "definitions": [
-                "Plural form of console.",
-                "Third-person singular simple present indicative form of console."
-            ]
-        },
-        {
             "word": "filling",
             "definitions": [
                 "An act or instance of filling.",
                 "Something used to fill a space, cavity, or container:  a gold filling in a tooth. ",
-                "An edible mixture used to fill pastries, sandwiches, or cakes:  a pie filling.  See Regional Note at frosting."
+                "An edible mixture used to fill pastries, sandwiches, or cakes:  a pie filling."
             ]
         },
         {
             "word": "toasted",
-            "definitions": [
-                "Very hot.",
-                "Simple past tense and past participle of toast."
-            ]
+            "definitions": ["Very hot."]
         },
         {
             "word": "encoder",
             "definitions": [
                 "A device used to encode a signal either for cryptography or compression."
             ]
-        },
-        {
-            "word": "telescopes",
-            "definitions": ["Plural form of telescope."]
         },
         {
             "word": "machinery",
@@ -1997,16 +1492,6 @@
             ]
         },
         {
-            "word": "hotels",
-            "definitions": ["Plural form of hotel."]
-        },
-        {
-            "word": "Acre",
-            "definitions": [
-                "A port city of northern Israel on the Bay of Haifa. During the Crusades it changed hands many times between Christians and Muslims. Acre was ceded to the Arabs in the United Nations partition of Palestine in 1948 but was captured by Israel shortly thereafter. Population: 45,900."
-            ]
-        },
-        {
             "word": "maternal",
             "definitions": [
                 "Relating to or characteristic of a mother or motherhood; motherly:  maternal instinct. ",
@@ -2019,22 +1504,6 @@
             "definitions": ["At once; immediately."]
         },
         {
-            "word": "Muses",
-            "definitions": ["Plural form of Muse."]
-        },
-        {
-            "word": "develops",
-            "definitions": [
-                "Third-person singular simple present indicative form of develop."
-            ]
-        },
-        {
-            "word": "celebrates",
-            "definitions": [
-                "Third-person singular simple present indicative form of celebrate."
-            ]
-        },
-        {
             "word": "protective",
             "definitions": [
                 "Adapted or intended to afford protection.",
@@ -2042,33 +1511,8 @@
             ]
         },
         {
-            "word": "networks",
-            "definitions": ["Plural form of network."]
-        },
-        {
-            "word": "sofas",
-            "definitions": ["Plural form of sofa."]
-        },
-        {
-            "word": "freebie",
-            "definitions": [
-                "Slang   An article or service given free: \"such freebies as subway and bus maps”  ( New York). "
-            ]
-        },
-        {
             "word": "sobbing",
-            "definitions": [
-                "Present participle of sob.",
-                "Action of the verb to sob.",
-                "That or who sobs."
-            ]
-        },
-        {
-            "word": "bugs",
-            "definitions": [
-                "Plural form of bug.",
-                "Third-person singular simple present indicative form of bug."
-            ]
+            "definitions": ["That or who sobs."]
         },
         {
             "word": "execution",
@@ -2081,28 +1525,9 @@
         {
             "word": "antagonism",
             "definitions": [
-                "Hostility that results in active resistance, opposition, or contentiousness. See Synonyms at enmity.",
+                "Hostility that results in active resistance, opposition, or contentiousness.",
                 "The condition of being an opposing principle, force, or factor:  the inherent antagonism of capitalism and socialism. ",
                 "Biochemistry   Interference in the physiological action of a chemical substance by another having a similar structure."
-            ]
-        },
-        {
-            "word": "cont",
-            "definitions": ["continue", "continued"]
-        },
-        {
-            "word": "awarding",
-            "definitions": ["Present participle of award."]
-        },
-        {
-            "word": "Porte",
-            "definitions": ["The government of the Ottoman Empire."]
-        },
-        {
-            "word": "harms",
-            "definitions": [
-                "Plural form of harm.",
-                "Third-person singular simple present indicative form of harm."
             ]
         },
         {
@@ -2116,51 +1541,18 @@
             "word": "scrubs",
             "definitions": [
                 "A protective plastic gown worn by a surgeon when performing surgery.",
-                "Any medical uniform consisting of a short-sleeve shirt and pants.",
-                "Plural form of scrub."
+                "Any medical uniform consisting of a short-sleeve shirt and pants."
             ]
         },
         {
             "word": "orphaned",
-            "definitions": [
-                "Abandoned",
-                "Simple past tense and past participle of orphan."
-            ]
+            "definitions": ["Abandoned"]
         },
         {
             "word": "kindergarten",
             "definitions": [
                 "A program or class for four-year-old to six-year-old children that serves as an introduction to school."
             ]
-        },
-        {
-            "word": "provocations",
-            "definitions": ["Plural form of provocation."]
-        },
-        {
-            "word": "stitches",
-            "definitions": [
-                "Plural form of stitch.",
-                "Third-person singular simple present indicative form of stitch."
-            ]
-        },
-        {
-            "word": "renders",
-            "definitions": [
-                "Plural form of render.",
-                "Third-person singular simple present indicative form of render."
-            ]
-        },
-        {
-            "word": "bites",
-            "definitions": [
-                "Plural form of bite.",
-                "Third-person singular simple present indicative form of bite."
-            ]
-        },
-        {
-            "word": "doubted",
-            "definitions": ["Simple past tense and past participle of doubt."]
         },
         {
             "word": "mountaintop",
@@ -2237,7 +1629,7 @@
             "word": "inert",
             "definitions": [
                 "Unable to move or act.",
-                "Sluggish in action or motion; lethargic. See Synonyms at inactive.",
+                "Sluggish in action or motion; lethargic.",
                 "Chemistry   Not readily reactive with other elements; forming few or no chemical compounds."
             ]
         },

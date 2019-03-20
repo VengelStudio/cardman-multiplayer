@@ -104,9 +104,6 @@ let displayWord = game => {
 
     let result = ''
     console.log('[DEBUG]: ' + word)
-    if (word === undefined) {
-        console.log(game)
-    }
     let wordArray = word.toUpperCase().split('')
 
     let guessedKeys = []

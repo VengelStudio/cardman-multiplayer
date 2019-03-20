@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import './LoginPage.css'
-import { VERIFY_USERNAME } from '../../Shared/Events'
-import { POPUP_GENERIC } from '../Popup/Types'
-import { withRouter } from 'react-router-dom'
+import GenericModal from '../Modals/GenericModal'
+import { VERIFY_USER } from '../../Shared/Events'
 
 class LoginPage extends Component {
-    constructor(props) {
-        super(props)
-        this.inputRef = React.createRef()
+    inputRef = React.createRef()
+    state = {
+        isNameLengthOpen: false,
+        isNameSpaceOpen: false,
+        isNameTakenOpen: false,
+        isAlreadyLoggedInOpen: false
     }
 
     componentDidMount() {
@@ -15,37 +17,20 @@ class LoginPage extends Component {
     }
 
     loginHandler = () => {
-        let nickname = this.inputRef.current.value
+        let { value } = this.inputRef.current
         const { socket } = this.props
-        if (nickname.length <= 1) {
-            this.props.addPopup({
-                type: POPUP_GENERIC,
-                popupData: {
-                    title: 'Error!',
-                    content: '<p>Your nickname has to be longer.</p>'
-                }
-            })
+        if (value.length <= 1) {
+            this.setState({ isNameLengthOpen: true })
+            return
+        } else if (value.includes(' ')) {
+            this.setState({ isNameSpaceOpen: true })
             return
         }
-        else if (nickname.includes(' ')) {
-            this.props.addPopup({
-                type: POPUP_GENERIC,
-                popupData: {
-                    title: 'Error!',
-                    content: '<p>Your nickname cannot have spaces.</p>'
-                }
-            })
-            return
-        }
-        socket.emit(VERIFY_USERNAME, nickname, ({ player, isTaken }) => {
-            if (isTaken) {
-                this.props.addPopup({
-                    type: POPUP_GENERIC,
-                    popupData: {
-                        title: 'Error!',
-                        content: '<p>This nickname is taken.</p>'
-                    }
-                })
+        socket.emit(VERIFY_USER, value, ({ player, isTaken, isIpFree }) => {
+            if (!isIpFree) {
+                this.setState({ isAlreadyLoggedInOpen: true })
+            } else if (isTaken) {
+                this.setState({ isNameTakenOpen: true })
             } else {
                 this.props.loginPlayer(player)
             }
@@ -59,31 +44,72 @@ class LoginPage extends Component {
     }
 
     render() {
+        let { volumeSettings } = this.props
         return (
-            <React.Fragment>
-                <div className='login-page-content'>
-                    <div className='infoNickname border-neon border-neon-violet'>
-                        <p>Please enter your nickname</p>
-                    </div>
-                    <div className='nickname-input'>
-                        <input
-                            ref={this.inputRef}
-                            type='text'
-                            maxLength='15'
-                            className='inputNickname border-neon border-neon-red'
-                            onKeyDown={this.submitOnEnter}
-                        />
-                        <button
-                            className='button-pointer border-neon border-neon-orange'
-                            onClick={this.loginHandler}
-                        >
-                            SUBMIT
-                        </button>
-                    </div>
+            <div className='login-page-content'>
+                {this.state.isNameLengthOpen && (
+                    <GenericModal
+                        title='Error!'
+                        content='Your nickname has to be longer.'
+                        onClose={() => {
+                            this.setState({ isNameLengthOpen: false })
+                        }}
+                        soundVolume={volumeSettings.soundVol}
+                    />
+                )}
+                {this.state.isNameSpaceOpen && (
+                    <GenericModal
+                        title='Error!'
+                        content='Your nickname cannot have spaces.'
+                        onClose={() => {
+                            this.setState({ isNameSpaceOpen: false })
+                        }}
+                        soundVolume={volumeSettings.soundVol}
+                    />
+                )}
+                {this.state.isNameTakenOpen && (
+                    <GenericModal
+                        title='Error!'
+                        content='This nickname is taken.'
+                        onClose={() => {
+                            this.setState({ isNameTakenOpen: false })
+                        }}
+                        soundVolume={volumeSettings.soundVol}
+                    />
+                )}
+                {this.state.isAlreadyLoggedInOpen && (
+                    <GenericModal
+                        title='Error!'
+                        content='You are already logged in.'
+                        onClose={() => {
+                            this.setState({ isAlreadyLoggedInOpen: false })
+                        }}
+                        soundVolume={volumeSettings.soundVol}
+                    />
+                )}
+
+                <div className='infoNickname border-neon border-neon-violet'>
+                    <p>Please enter your nickname</p>
                 </div>
-            </React.Fragment>
+                <div className='nickname-input'>
+                    <input
+                        ref={this.inputRef}
+                        type='text'
+                        maxLength='15'
+                        className='inputNickname border-neon border-neon-red'
+                        onKeyDown={this.submitOnEnter}
+                        placeholder='Your nickname...'
+                    />
+                    <button
+                        className='button-pointer border-neon border-neon-orange'
+                        onClick={this.loginHandler}
+                    >
+                        SUBMIT
+                    </button>
+                </div>
+            </div>
         )
     }
 }
 
-export default withRouter(LoginPage)
+export default LoginPage

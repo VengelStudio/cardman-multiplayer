@@ -11,7 +11,7 @@ class PlayersBrowser extends React.Component {
             player: this.props.player,
             connectedPlayers: this.props.connectedPlayers,
             invitationHandler: this.props.invitationHandler,
-            addPopup: this.props.addPopup
+            volumeSettings: this.props.volumeSettings
         }),
         searchedPlayer: null
     }
@@ -27,7 +27,7 @@ class PlayersBrowser extends React.Component {
                     player: props.player,
                     connectedPlayers: props.connectedPlayers,
                     invitationHandler: props.invitationHandler,
-                    addPopup: props.addPopup
+                    volumeSettings: props.volumeSettings
                 }),
                 connectedPlayers: props.connectedPlayers
             }
@@ -59,19 +59,20 @@ class PlayersBrowser extends React.Component {
             player: this.props.player,
             connectedPlayers: [this.state.searchedPlayer],
             invitationHandler: this.props.invitationHandler,
-            addPopup: this.props.addPopup
+            volumeSettings: this.props.volumeSettings
         })
     }
 
     render() {
+        let { player } = this.props
+        let { searchedPlayer, playersInBrowser } = this.state
         return (
             <div className='players-browser container content-vcenter border-neon border-neon-orange'>
                 <div className='players-browser-title bg-lightgrey width-full text-xlg text-center'>
                     <p>
-                        {this.props.player && (
+                        {player && (
                             <span>
-                                You are logged in as{' '}
-                                <b>{this.props.player.nickname}</b>.
+                                You are logged in as <b>{player.nickname}</b>.
                             </span>
                         )}
                     </p>
@@ -84,8 +85,8 @@ class PlayersBrowser extends React.Component {
                     />
                 </div>
                 <Scrollbar style={{ width: '100%', height: '100%' }}>
-                    {!this.state.searchedPlayer ? (
-                        this.state.playersInBrowser.map(entry => {
+                    {!searchedPlayer ? (
+                        playersInBrowser.map(entry => {
                             return entry
                         })
                     ) : (
@@ -98,7 +99,6 @@ class PlayersBrowser extends React.Component {
 }
 
 PlayersBrowser.propTypes = {
-    addPopup: PropTypes.func.isRequired,
     connectedPlayers: PropTypes.object.isRequired,
     invitationHandler: PropTypes.func.isRequired,
     player: PropTypes.object,

@@ -5,7 +5,7 @@ export const extractBrowserPlayers = ({
     player,
     connectedPlayers,
     invitationHandler,
-    addPopup
+    volumeSettings
 }) => {
     connectedPlayers = Object.assign({}, connectedPlayers)
 
@@ -20,11 +20,11 @@ export const extractBrowserPlayers = ({
         if (isInGame === false) {
             result.push(
                 <BrowserEntry
-                    addPopup={addPopup}
                     id={player.id}
                     socketId={player.socketId}
                     invitationHandler={invitationHandler}
                     nickname={player.nickname}
+                    volumeSettings={volumeSettings}
                     key={player.id}
                     index={Object.values(connectedPlayers).indexOf(player)}
                 />

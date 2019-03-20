@@ -4,6 +4,12 @@
         url(./Fonts/OstrichSansInline-Regular.otf) format('opentype');
 }
 
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .bg-dark {
     background-color: #353535;
 }
@@ -44,7 +50,7 @@
 
 .border-neon {
     outline: 0;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     background-color: #353535;
     color: whitesmoke;
     border-width: 0.3vh;
@@ -168,12 +174,12 @@ body,
 }
 
 .text-xlg {
-    font-size: 4.2vh;
+    font-size: 3.5vh;
     margin: 0;
 }
 
 .text-nunito {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
 }
 
 .semi-bold {
