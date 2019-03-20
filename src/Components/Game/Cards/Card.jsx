@@ -38,7 +38,13 @@ const CardContent = ({ id, description, cardBehaviour }) => {
     }
 }
 
-const CardOverlay = ({ cardBehaviour, onUseAbort, onDiscard, onUse }) => {
+const CardOverlay = ({
+    cardBehaviour,
+    onUseAbort,
+    onDiscard,
+    onUse,
+    disabledText
+}) => {
     let { isUsed, isDisabled, isBlocked, isDiscardEnabled } = cardBehaviour
     let overlay = null
     if (isDiscardEnabled) {
@@ -64,14 +70,10 @@ const CardOverlay = ({ cardBehaviour, onUseAbort, onDiscard, onUse }) => {
             </button>
         )
     } else if (isDisabled) {
-        overlay = (
-            <div className='card-disabled-info'>
-                This card doesn't meet the conditions. Check the description.
-            </div>
-        )
+        overlay = <div className='card-disabled-info'>{disabledText}</div>
     } else if (isBlocked) {
         overlay = (
-            <div className='card-disabled-info'>This card is disabled.</div>
+            <div className='card-disabled-info'>Your cards are blocked.</div>
         )
     } else {
         overlay = <button className='card-use-button' onClick={onUse} />
@@ -104,6 +106,7 @@ class Card extends Component {
                     onUse={onUse}
                     onUseAbort={onUseAbort}
                     onDiscard={onDiscard}
+                    disabledText={card.disabledText}
                 />
             </div>
         )

@@ -3,6 +3,7 @@ const Cards = {
         id: 'DEFINITION_CARD',
         title: 'Definition card',
         description: 'Shows you a definition of the word.',
+        disabledText: '',
         use: ({ currentGame, socket, move }) => {
             return currentGame
         },
@@ -11,7 +12,8 @@ const Cards = {
             let firstCardIndex = game.cards[socketId].findIndex(card => {
                 return card.id === Cards.DEFINITION_CARD.id
             })
-            if (index !== firstCardIndex) return true
+            if (index === firstCardIndex) return true
+            return false
         }
     },
     // RANDOM_CORRECT_LETTER_CARD: {
@@ -59,14 +61,21 @@ const Cards = {
         id: 'ADDITIONAL_TURN_CARD',
         title: 'Additional letter',
         description: 'You can choose two letters in a turn.',
+        disabledText: 'diseblyd',
         use: ({ currentGame, socket, move }) => {
             currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
             return currentGame
         },
-        doesMeetConditions: ({ game }) => {
-            return true
+        doesMeetConditions: ({ game, player, index }) => {
+            let { socketId } = player
+            let firstCardIndex = game.cards[socketId].findIndex(card => {
+                return card.id === Cards.ADDITIONAL_TURN_CARD.id
+            })
+            if (index === firstCardIndex) return true
+            console.log(index, firstCardIndex)
+            return false
         }
-    },
+    }
     // REMOVE_ONE_UNFITTING_CARD: {
     //     id: 'REMOVE_ONE_UNFITTING_CARD',
     //     title: 'Remove one unfitting letter.',
@@ -163,22 +172,23 @@ const Cards = {
     //         return true
     //     }
     // },
-    LOOK_UP_CARD: {
-        id: 'LOOK_UP_CARD',
-        title: 'Look up enemy card',
-        description:
-            'You can look up one of the enemies cards only if they have any.',
-        use: ({ currentGame, socket, move }) => {
-            return currentGame
-        },
-        doesMeetConditions: ({ game, player }) => {
-            let enemySocket = game.playerSockets.filter(e => {
-                return e.socketId !== player.socketId
-            })[0].socketId
-            if (game.cards[enemySocket].length === 0) return false
-            return true
-        }
-    }
+    // LOOK_UP_CARD: {
+    //     id: 'LOOK_UP_CARD',
+    //     title: 'Look up enemy card',
+    //     description:
+    //         'You can look up one of the enemies cards only if they have any.',
+    //     disabledText: '',
+    //     use: ({ currentGame, socket, move }) => {
+    //         return currentGame
+    //     },
+    //     doesMeetConditions: ({ game, player }) => {
+    //         let enemySocket = game.playerSockets.filter(e => {
+    //             return e.socketId !== player.socketId
+    //         })[0].socketId
+    //         if (game.cards[enemySocket].length === 0) return false
+    //         return true
+    //     }
+    // }
     // SWAP_RANDOM_CARDS: {
     //     id: 'SWAP_RANDOM_CARDS',
     //     title: 'Swap with opponent.',
