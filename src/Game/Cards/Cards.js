@@ -75,7 +75,7 @@ const Cards = {
             console.log(index, firstCardIndex)
             return false
         }
-    }
+    },
     // REMOVE_ONE_UNFITTING_CARD: {
     //     id: 'REMOVE_ONE_UNFITTING_CARD',
     //     title: 'Remove one unfitting letter.',
@@ -172,95 +172,65 @@ const Cards = {
     //         return true
     //     }
     // },
-    // LOOK_UP_CARD: {
-    //     id: 'LOOK_UP_CARD',
-    //     title: 'Look up enemy card',
-    //     description:
-    //         'You can look up one of the enemies cards only if they have any.',
-    //     disabledText: '',
-    //     use: ({ currentGame, socket, move }) => {
-    //         return currentGame
-    //     },
-    //     doesMeetConditions: ({ game, player }) => {
-    //         let enemySocket = game.playerSockets.filter(e => {
-    //             return e.socketId !== player.socketId
-    //         })[0].socketId
-    //         if (game.cards[enemySocket].length === 0) return false
-    //         return true
-    //     }
-    // }
-    // SWAP_RANDOM_CARDS: {
-    //     id: 'SWAP_RANDOM_CARDS',
-    //     title: 'Swap with opponent.',
-    //     description: `<span>
-    //             <b>Swap your card for a random opponents card.</b>
-    //         </span>
-    //         <span>
-    //             You must have a card besides this one in the deck. Your
-    //             opponent has to have at least 1 card.
-    //         </span>`,
-    //     use: ({ currentGame, socket, move }) => {
-    //         let enemySocket = currentGame.playerSockets.filter(e => {
-    //             return e.socketId !== move.playerSocketId
-    //         })[0].socketId
-    //         let enemyCards = currentGame.cards[enemySocket]
-    //         let myCards = currentGame.cards[move.playerSocketId]
+    LOOK_UP_CARD: {
+        id: 'LOOK_UP_CARD',
+        title: 'Look up enemy card',
+        description:
+            'You can look up one of the enemies cards only if they have any.',
+        disabledText: '',
+        use: ({ currentGame, socket, move }) => {
+            return currentGame
+        },
+        doesMeetConditions: ({ game, player }) => {
+            let enemySocket = game.playerSockets.filter(e => {
+                return e.socketId !== player.socketId
+            })[0].socketId
+            if (game.cards[enemySocket].length === 0) return false
+            return true
+        }
+    },
+    SWAP_RANDOM_CARDS: {
+        id: 'SWAP_RANDOM_CARDS',
+        title: 'Swap with opponent.',
+        description: 'Swap your card for a random opponents card.',
+        disabledText:
+            'You must have a card besides this one in the deck. Your opponent has to have at least 1 card.',
+        use: ({ currentGame, socket, move }) => {
+            let enemySocket = currentGame.playerSockets.filter(e => {
+                return e.socketId !== move.playerSocketId
+            })[0].socketId
+            let enemyCards = currentGame.cards[enemySocket]
+            let myCards = currentGame.cards[move.playerSocketId]
 
-    //         let randomIndexOfMine = Math.floor(Math.random() * myCards.length)
-    //         let randomIndexOfOpponent = null
-    //         let isSwap = true
-    //         while (isSwap) {
-    //             randomIndexOfOpponent = Math.floor(
-    //                 Math.random() * enemyCards.length
-    //             )
-    //             if (
-    //                 enemyCards[randomIndexOfOpponent].id !==
-    //                 Cards.SWAP_RANDOM_CARDS.id
-    //             ) {
-    //                 isSwap = false
-    //             }
-    //         }
+            let randomIndexOfMine = Math.floor(Math.random() * myCards.length)
+            let randomIndexOfOpponent = null
 
-    //         let doOtherCardsExist = false
-    //         for (let i = 0; i < myCards.length; i++) {
-    //             if (myCards[i].id !== Cards.SWAP_RANDOM_CARDS.id) {
-    //                 doOtherCardsExist = true
-    //                 break
-    //             }
-    //         }
+            //todo here
 
-    //         if (enemyCards.length >= 1 && !doOtherCardsExist) {
-    //             let a = myCards[randomIndexOfMine]
-    //             enemyCards[randomIndexOfOpponent] = a
-    //             myCards[randomIndexOfMine] = enemyCards[randomIndexOfOpponent]
-    //             currentGame.cards[enemySocket] = enemyCards
-    //             currentGame.cards[move.playerSocketId] = myCards
-    //         }
+            return currentGame
+        },
+        doesMeetConditions: ({ game, player }) => {
+            let cards = game.cards
+            let mySocketId = player.socketId
+            let myCards = cards[mySocketId]
+            let enemySocketId = game.playerSockets.filter(x => {
+                return x.socketId !== player.socketId
+            })[0].socketId
+            let enemyCards = cards[enemySocketId]
+            if (enemyCards.length === 0) return false
 
-    //         return currentGame
-    //     },
-    //     doesMeetConditions: ({game, player}) => {
-    //         let cards = game.cards
-    //         let mySocketId = player.socketId
-    //         let myCards = cards[mySocketId]
-    //         let enemySocketId = game.playerSockets.filter(x => {
-    //             return x.socketId !== player.socketId
-    //         })[0].socketId
-    //         let enemyCards = cards[enemySocketId]
+            let doOtherCardsExist = false
+            for (let i = 0; i < myCards.length; i++) {
+                if (myCards[i].id !== Cards.SWAP_RANDOM_CARDS.id) {
+                    doOtherCardsExist = true
+                    break
+                }
+            }
 
-    //         let doOtherCardsExist = false
-    //         for (let i = 0; i < myCards.length; i++) {
-    //             if (myCards[i].id !== Cards.SWAP_RANDOM_CARDS.id) {
-    //                 doOtherCardsExist = true
-    //                 break
-    //             }
-    //         }
-
-    //         if (doOtherCardsExist === false) return false
-    //         if (enemyCards.length === 0) return false
-    //         return true
-    //     }
-    // },
+            if (doOtherCardsExist === false) return false
+            return true
+        }
+    }
     // RANDOMIZE_YOURSELF_CARD: {
     //     id: 'RANDOMIZE_YOURSELF_CARD',
     //     title: 'Randomize a card',
