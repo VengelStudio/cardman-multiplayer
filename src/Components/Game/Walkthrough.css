@@ -10,16 +10,16 @@
 
 .walkthrough-content {
     display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     width: 98vw;
+    height: 100%;
 }
 
 .walkthrough-image {
     display: flex;
     width: auto;
     height: 60vh;
-    border: 0.4vh solid rgba(204, 204, 204, 0.589);
-    border-radius: 0.6vh;
-    box-shadow: 1vw 1vw 0.8vw rgba(0, 0, 0, 0.3);
 }
 
 .walkthrough-desc {
@@ -27,14 +27,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    text-align: center;
 }
 
-.walkthrough ol,
 .walkthrough ul {
     display: flex;
     flex-direction: column;
     width: 80%;
     margin: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .walkthrough li {

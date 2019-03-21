@@ -8,6 +8,7 @@ import flipSound1 from '../../Resources/Sounds/card_flip.mp3'
 import flipSound2 from '../../Resources/Sounds/card_flip2.mp3'
 import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
 import buttonClick from '../../Resources/Sounds/button_click.mp3'
+import turnEndSound from '../../Resources/Sounds/turn_end.mp3'
 
 import './Game.css'
 import Cards from './Cards/Cards'
@@ -46,9 +47,12 @@ class Game extends Component {
         const { socket } = this.props
         socket.on(GAME_MOVE, ({ game }) => {
             this.setState({ game: game }, () => {
-                this.props.setMove(
-                    isMove({ game: this.state.game, player: this.props.player })
-                )
+                let moveBool = isMove({
+                    game: this.state.game,
+                    player: this.props.player
+                })
+                this.props.setMove(moveBool)
+                if (moveBool) this.playSound(turnEndSound)
             })
         })
         socket.on(WIN, ({ winner, score, type, game }) => {
@@ -158,11 +162,9 @@ class Game extends Component {
     onMove = () => {
         if (this.state.keyMove !== null || this.state.cardMoves.length > 0) {
             if (this.props.isMove && this.state.allowMove) {
-                let moves = []
-                let { keyMove, cardMoves } = this.state
-                if (keyMove !== null) moves.push(keyMove)
-                if (cardMoves !== []) moves = [...moves, ...cardMoves]
                 this.playSound(flipSound3)
+
+                let { keyMove, cardMoves } = this.state
                 cardMoves.forEach(e => {
                     if (e.discarded === false) {
                         if (e.card === CardsData.DEFINITION_CARD.id) {
@@ -197,20 +199,23 @@ class Game extends Component {
                         }
                     }
                 })
+
+                const { socket } = this.props
+                let moves = []
+                if (keyMove !== null) moves.push(keyMove)
+                if (cardMoves !== []) moves = [...moves, ...cardMoves]
+
+                this.setState({
+                    keyMove: null,
+                    cardMoves: []
+                })
+                socket.emit(GAME_MOVE, { game: this.state.game, moves })
             }
         } else {
             this.setState({
                 isMoveModal: true
             })
         }
-
-        const { socket } = this.props
-        let moves = [this.state.keyMove, ...this.state.cardMoves]
-        this.setState({
-            keyMove: null,
-            cardMoves: []
-        })
-        socket.emit(GAME_MOVE, { game: this.state.game, moves })
     }
 
     onMoveTimeout = () => {

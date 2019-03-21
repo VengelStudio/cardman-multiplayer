@@ -70,7 +70,13 @@ const CardOverlay = ({
             </button>
         )
     } else if (isDisabled) {
-        overlay = <div className='card-disabled-info'>{disabledText}</div>
+        let fontSize = '1.4vw'
+        if (disabledText.length > 76) fontSize = '1.2vw'
+        overlay = (
+            <div className='card-disabled-info' style={{ fontSize }}>
+                {disabledText}
+            </div>
+        )
     } else if (isBlocked) {
         overlay = (
             <div className='card-disabled-info'>Your cards are blocked.</div>
@@ -93,7 +99,6 @@ class Card extends Component {
         } = this.props
         let classes = 'card '
         if (isMine) classes += 'hover-pointer'
-
         return (
             <div className={classes}>
                 <CardContent

@@ -1,28 +1,10 @@
 import React, { Component } from 'react'
 import { WALKTHROUGH_READY } from '../../Shared/Events'
 import './Walkthrough.css'
-// import image from '../../../public/images/walkthrough/walkthrough.png'
 
 const Description = () => {
     return (
         <div className='walkthrough-desc'>
-            <ol>
-                <li>
-                    <span>Your cards which you can use during a turn.</span>
-                </li>
-                <li>
-                    <span>
-                        Keyboard where you can guess a letter by clicking it and
-                        end turn.
-                    </span>
-                </li>
-                <li>
-                    <span>
-                        Place for a random word. Your guessed letters are
-                        colored by blue and opponent's are red.
-                    </span>
-                </li>
-            </ol>
             <ul>
                 <li>
                     <span>
@@ -30,10 +12,7 @@ const Description = () => {
                     </span>
                 </li>
                 <li>
-                    <span>
-                        To use a card drag it on the random word (number 3) and
-                        drop.
-                    </span>
+                    <span>To use a card just click it.</span>
                 </li>
                 <li>
                     <span>
@@ -46,12 +25,15 @@ const Description = () => {
 }
 
 class Walkthrough extends Component {
-    state = { buttonVisibility: true }
+    state = { isClicked: false }
 
     onReady = () => {
         const { socket } = this.props
-        socket.emit(WALKTHROUGH_READY, { gameId: this.props.gameId })
-        this.setState({ buttonVisibility: false })
+        if (!this.state.isClicked) {
+            socket.emit(WALKTHROUGH_READY, { gameId: this.props.gameId })
+        }
+
+        this.setState({ isClicked: true })
     }
 
     componentDidMount() {
@@ -59,28 +41,28 @@ class Walkthrough extends Component {
     }
 
     render() {
-        let buttonClass = this.state.buttonVisibility
-            ? 'ok-btn border-neon border-neon-orange'
-            : 'ok-btn-pressed ok-btn border-neon border-neon-orange'
-        let content = this.state.buttonVisibility
-            ? 'READY'
-            : 'Waiting for opponent...'
+        let buttonClass = this.state.isClicked
+            ? 'ok-btn-pressed ok-btn border-neon border-neon-orange'
+            : 'ok-btn border-neon border-neon-orange'
+        let content = this.state.isClicked ? 'Waiting for opponent...' : 'READY'
         return (
             <div className='gameWrapper'>
                 <div className='walkthrough'>
                     <div className='walkthrough-content'>
                         <img
                             className='walkthrough-image'
-                            src='images/walkthrough/walkthrough.png'
+                            src='images/walkthrough/Walkthrough.svg'
                             alt='Walkthrough screenshot'
                         />
                         <Description />
-                    </div>
-
-                    <div className='ok-btn-wrapper'>
-                        <button className={buttonClass} onClick={this.onReady}>
-                            {content}
-                        </button>
+                        <div className='ok-btn-wrapper'>
+                            <button
+                                className={buttonClass}
+                                onClick={this.onReady}
+                            >
+                                {content}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
