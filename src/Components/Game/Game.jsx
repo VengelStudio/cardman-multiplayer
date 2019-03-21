@@ -8,6 +8,7 @@ import flipSound1 from '../../Resources/Sounds/card_flip.mp3'
 import flipSound2 from '../../Resources/Sounds/card_flip2.mp3'
 import flipSound3 from '../../Resources/Sounds/card_flip3.mp3'
 import buttonClick from '../../Resources/Sounds/button_click.mp3'
+import turnEndSound from '../../Resources/Sounds/turn_end.mp3'
 
 import './Game.css'
 import Cards from './Cards/Cards'
@@ -46,9 +47,12 @@ class Game extends Component {
         const { socket } = this.props
         socket.on(GAME_MOVE, ({ game }) => {
             this.setState({ game: game }, () => {
-                this.props.setMove(
-                    isMove({ game: this.state.game, player: this.props.player })
-                )
+                let moveBool = isMove({
+                    game: this.state.game,
+                    player: this.props.player
+                })
+                this.props.setMove(moveBool)
+                if (moveBool) this.playSound(turnEndSound)
             })
         })
         socket.on(WIN, ({ winner, score, type, game }) => {

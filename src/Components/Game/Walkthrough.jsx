@@ -29,7 +29,7 @@ class Walkthrough extends Component {
 
     onReady = () => {
         const { socket } = this.props
-        if (this.state.isClicked) {
+        if (!this.state.isClicked) {
             socket.emit(WALKTHROUGH_READY, { gameId: this.props.gameId })
         }
 

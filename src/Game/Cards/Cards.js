@@ -133,7 +133,7 @@ const Cards = {
         id: 'BLOCK_CARD',
         title: 'Block enemy cards for 2 turns.',
         description: 'Blocks enemy cards for 2 turns.',
-        disabledText: 'You cannot block an aleready blocked player',
+        disabledText: 'You cannot block an already blocked player',
         use: ({ currentGame, socket, move }) => {
             let enemySocket = currentGame.playerSockets.filter(e => {
                 return e.socketId !== move.playerSocketId
@@ -168,8 +168,7 @@ const Cards = {
     LOOK_UP_CARD: {
         id: 'LOOK_UP_CARD',
         title: 'Look up enemy card',
-        description:
-            'You can look up one of the enemies cards',
+        description: 'You can look up one of the enemies cards',
         disabledText: 'You cannot use it when enemy does not have cards',
         use: ({ currentGame, socket, move }) => {
             return currentGame

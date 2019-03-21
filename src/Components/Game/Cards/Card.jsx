@@ -99,7 +99,6 @@ class Card extends Component {
         } = this.props
         let classes = 'card '
         if (isMine) classes += 'hover-pointer'
-
         return (
             <div className={classes}>
                 <CardContent
