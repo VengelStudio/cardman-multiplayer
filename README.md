@@ -1,10 +1,10 @@
 # Cardman - a simple hangman game with cards!
 
-![Recording](./rec.gif)
+![](rec.gif)
 
-### **Live game:** [http://cardman-multiplayer.herokuapp.com/](http://cardman-multiplayer.herokuapp.com/)
+http://cardman-multiplayer.herokuapp.com/
 
-### We decided to make a combination of traditional hangman game and card game.
+### We decided to make a combination of traditional hangman game and a card game.
 
 The primary goal is to guess the letters of a random word, but during your turn you can also use awesome cards from your deck to help yourself. These cards can give you some serious advantage over your opponent.
 
@@ -32,5 +32,5 @@ The primary goal is to guess the letters of a random word, but during your turn 
 
 ### Authors
 
--   Bartosz Kępka
--   Łukasz Blachnicki
+-   Bartosz KÄpka
+-   Ĺukasz Blachnicki

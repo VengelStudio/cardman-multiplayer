@@ -72,7 +72,6 @@ const Cards = {
                 return card.id === Cards.ADDITIONAL_TURN_CARD.id
             })
             if (index === firstCardIndex) return true
-            console.log(index, firstCardIndex)
             return false
         }
     },
@@ -196,17 +195,23 @@ const Cards = {
         disabledText:
             'You must have a card besides this one in the deck. Your opponent has to have at least 1 card.',
         use: ({ currentGame, socket, move }) => {
-            let enemySocket = currentGame.playerSockets.filter(e => {
-                return e.socketId !== move.playerSocketId
-            })[0].socketId
-            let enemyCards = currentGame.cards[enemySocket]
+            let enemySocketId = getEnemySocketId(
+                currentGame,
+                move.playerSocketId
+            )
             let myCards = currentGame.cards[move.playerSocketId]
+            let enemyCards = currentGame.cards[enemySocketId]
 
-            let randomIndexOfMine = Math.floor(Math.random() * myCards.length)
-            let randomIndexOfOpponent = null
+            let myRandomIndex = Math.floor(Math.random() * myCards.length)
+            let enemyRandomIndex = Math.floor(Math.random() * enemyCards.length)
 
-            //todo here
+            let randomMyCard = myCards[myRandomIndex]
+            let randomEnemyCard = enemyCards[enemyRandomIndex]
 
+            currentGame.cards[move.playerSocketId][
+                myRandomIndex
+            ] = randomEnemyCard
+            currentGame.cards[enemySocketId][enemyRandomIndex] = randomMyCard
             return currentGame
         },
         doesMeetConditions: ({ game, player }) => {
@@ -219,13 +224,9 @@ const Cards = {
             let enemyCards = cards[enemySocketId]
             if (enemyCards.length === 0) return false
 
-            let doOtherCardsExist = false
-            for (let i = 0; i < myCards.length; i++) {
-                if (myCards[i].id !== Cards.SWAP_RANDOM_CARDS.id) {
-                    doOtherCardsExist = true
-                    break
-                }
-            }
+            let doOtherCardsExist = myCards.some(c => {
+                return c.id !== Cards.SWAP_RANDOM_CARDS.id
+            })
 
             if (doOtherCardsExist === false) return false
             return true
@@ -286,6 +287,12 @@ const Cards = {
     //         return true
     //     }
     // }
+}
+
+const getEnemySocketId = (game, playerSocketId) => {
+    return game.playerSockets.filter(e => {
+        return e.socketId !== playerSocketId
+    })[0].socketId
 }
 
 const getCard = card => {
