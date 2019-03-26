@@ -102,12 +102,12 @@ let displayWord = game => {
     let { word } = game.word
     let { guessed } = game
 
-    let result = ''
     console.log('[DEBUG]: ' + word)
     let wordArray = word.toUpperCase().split('')
 
     const guessedKeys = guessed.map(e => e.key)
 
+    let result = ''
     for (let i = 0; i < wordArray.length; i++) {
         if (guessedKeys.includes(wordArray[i])) {
             result += wordArray[i] + ' '
