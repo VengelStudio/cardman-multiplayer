@@ -19,7 +19,7 @@ const Shield = props => {
     )
 }
 
-class PlayerState extends Component {
+class GameInfo extends Component {
     getIcon = (state, side) => {
         if (state > 0) return <Chains state={state} side={side} />
         else if (state < 0) return <Shield state={state} side={side} />
@@ -39,14 +39,35 @@ class PlayerState extends Component {
         }
     }
 
+    getGuessedCounter = () => {
+        let { game, player } = this.props
+        let counter = 0
+
+        if (player !== null && game !== null) {
+            let { socketId } = player
+            let myGuessed = game.guessed.filter(e => { return (e.playerSocketId === socketId && e.key !== "") })
+            console.log(myGuessed)
+            myGuessed.forEach(letter => {
+                if (game.word.word.includes(letter.key.toLowerCase())) counter++
+            });
+        }
+        return counter
+    }
+
+
     render() {
         return (
-            <div className='player-state'>
-                {this.getPlayerState(true)}
-                {this.getPlayerState(false)}
-            </div>
+            <React.Fragment>
+                <div className='player-state'>
+                    {this.getPlayerState(true)}
+                    {this.getPlayerState(false)}
+                </div>
+                <div style={{ fontSize: '4vh', marginBottom: '-4vh' }}>
+                    <p>{`Guessed letters: ${this.getGuessedCounter()}`}</p>
+                </div>
+            </React.Fragment >
         )
     }
 }
 
-export default PlayerState
+export default GameInfo
