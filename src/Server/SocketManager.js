@@ -47,10 +47,18 @@ module.exports = function(socket) {
 
     socket.on(VERIFY_USER, (nickname, callback) => {
         let ip = socket.request.connection.remoteAddress
-        let isIpFreeChecker =
-            process.env.REACT_APP_STAGE.trim() === 'dev'
-                ? true
-                : isIpFree(ip, connectedPlayers)
+        // let isIpFreeChecker =
+        //     process.env.REACT_APP_STAGE.trim() === 'dev'
+        //         ? true
+        //         : isIpFree(ip, connectedPlayers)
+
+        let isIpFreeChecker = isIpFree(ip, connectedPlayers)
+        if (process.env.REACT_APP_STAGE) {
+            if (process.env.REACT_APP_STAGE.trim() === 'dev') {
+                isIpFreeChecker = true
+            }
+        }
+
         if (isIpFreeChecker && !isPlayer(nickname, connectedPlayers)) {
             callback({
                 isTaken: false,

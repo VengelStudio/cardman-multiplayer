@@ -28,10 +28,16 @@ import Walkthrough from './Components/Game/Walkthrough'
 import InvitationModal from './Components/Modals/InvitationModal'
 import DisconnectedModal from './Components/Modals/DisconnectedModal'
 
-const socketUrl =
-    process.env.REACT_APP_STAGE.trim() === 'dev'
-        ? 'localhost:3231'
-        : 'ws://cardman-multiplayer.herokuapp.com:80'
+// const socketUrl =
+//     process.env.REACT_APP_STAGE.trim() === 'dev'
+//         ? 'localhost:3231'
+//         : 'ws://cardman-multiplayer.herokuapp.com:80'
+
+let socketUrl = 'ws://cardman-multiplayer.herokuapp.com:80'
+if (process.env.REACT_APP_STAGE) {
+    if (process.env.REACT_APP_STAGE.trim() === 'dev')
+        socketUrl = 'localhost:3231'
+}
 const { setScore } = require('./Shared/Functions')
 
 class Logo extends React.Component {
