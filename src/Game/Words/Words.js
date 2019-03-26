@@ -106,11 +106,8 @@ let displayWord = game => {
     console.log('[DEBUG]: ' + word)
     let wordArray = word.toUpperCase().split('')
 
-    let guessedKeys = []
+    const guessedKeys = guessed.map(e => e.key)
 
-    for (let j = 0; j < guessed.length; j++) {
-        guessedKeys.push(guessed[j].key)
-    }
     for (let i = 0; i < wordArray.length; i++) {
         if (guessedKeys.includes(wordArray[i])) {
             result += wordArray[i] + ' '

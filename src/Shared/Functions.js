@@ -3,14 +3,18 @@ const isMove = ({ game, player }) => {
     return game.playerSockets[nextPlayerIndex].id === player.id
 }
 
-const setScore = ({ player, game = null, setTitle }) => {
-    let me = game.playerSockets.filter(p => {
-        return p.socketId === player.socketId
-    })[0]
+const setScore = ({ player, game, setTitle }) => {
+    let { socketId } = player
+    let { playerSockets } = game
+    let me =
+        playerSockets.find(p => {
+            return p.socketId === socketId
+        }) || []
 
-    let enemy = game.playerSockets.filter(p => {
-        return p.socketId !== player.socketId
-    })[0]
+    let enemy =
+        playerSockets.find(p => {
+            return p.socketId !== socketId
+        }) || []
 
     let score = game.score
 

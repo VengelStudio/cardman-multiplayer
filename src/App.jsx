@@ -56,29 +56,55 @@ class Logo extends React.Component {
     }
 }
 
-class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.popupsRef = React.createRef()
-        this.state = {
-            title: 'Cardman Multiplayer',
-            score: null,
-            player: null,
-            socket: null,
-            connectedPlayers: {},
-            game: null,
-            isMove: false,
-            volumeSettings: {
-                musicVol: 0.5,
-                soundVol: 0.5,
-                muted: false
-            },
-            isDisconnected: false,
-            gameId: null,
-            isInvitationModal: false,
-            invitationNickname: null,
-            onInvitationAccept: null
+const isInCache = key => {
+    return (
+        localStorage.getItem(key) !== null &&
+        localStorage.getItem(key) !== undefined
+    )
+}
+
+const getSavedVolume = state => {
+    if (isInCache('cachedVolumeSettings')) {
+        let cachedVolumeSettings = JSON.parse(
+            localStorage.getItem('cachedVolumeSettings')
+        )
+        return {
+            musicVol: cachedVolumeSettings.musicVol,
+            soundVol: cachedVolumeSettings.soundVol
         }
+    } else {
+        let cachedVolumeSettings = {
+            musicVol: state.config.defaultVolumeSettings.musicVol,
+            soundVol: state.config.defaultVolumeSettings.soundVol
+        }
+        localStorage.setItem(
+            'cachedVolumeSettings',
+            JSON.stringify(cachedVolumeSettings)
+        )
+        return cachedVolumeSettings
+    }
+}
+
+class App extends React.Component {
+    popupsRef = React.createRef()
+    state = {
+        title: 'Cardman Multiplayer',
+        score: null,
+        player: null,
+        socket: null,
+        connectedPlayers: {},
+        game: null,
+        isMove: false,
+        volumeSettings: {
+            musicVol: 0.5,
+            soundVol: 0.5,
+            muted: false
+        },
+        isDisconnected: false,
+        gameId: null,
+        isInvitationModal: false,
+        invitationNickname: null,
+        onInvitationAccept: null
     }
 
     config = {
@@ -87,13 +113,6 @@ class App extends React.Component {
             musicVol: 0.5,
             soundVol: 0.5
         }
-    }
-
-    isInCache = key => {
-        return (
-            localStorage.getItem(key) !== null &&
-            localStorage.getItem(key) !== undefined
-        )
     }
 
     componentDidUpdate() {
@@ -105,27 +124,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        if (this.isInCache('cachedVolumeSettings')) {
-            let cachedVolumeSettings = JSON.parse(
-                localStorage.getItem('cachedVolumeSettings')
-            )
-            this.setState({
-                volumeSettings: {
-                    musicVol: cachedVolumeSettings.musicVol,
-                    soundVol: cachedVolumeSettings.soundVol
-                }
-            })
-        } else {
-            let cachedVolumeSettings = {
-                musicVol: this.config.defaultVolumeSettings.musicVol,
-                soundVol: this.config.defaultVolumeSettings.soundVol
-            }
-            localStorage.setItem(
-                'cachedVolumeSettings',
-                JSON.stringify(cachedVolumeSettings)
-            )
-        }
-
+        this.setState({ volumeSettings: getSavedVolume(this.state) })
         this.initializeSocket()
     }
 
@@ -267,9 +266,7 @@ class App extends React.Component {
             game,
             gameId,
             isMove,
-            connectedPlayers
-        } = this.state
-        const {
+            connectedPlayers,
             volumeSettings,
             isInvitationModal,
             invitationNickname,
