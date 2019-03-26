@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Keyboard from './Keyboard'
 import Timer from './Timer'
-import PlayerState from './PlayerState'
+import GameInfo from './GameInfo'
 import './Content.css'
 
 const EndTurnButton = props => {
@@ -64,7 +64,7 @@ class Content extends Component {
         let wordClass = 'word border-neon border-neon-violet '
         return (
             <div className='content'>
-                <PlayerState player={player} game={game} />
+                <GameInfo player={player} game={game} />
                 <div className='timer-wrapper'>
                     {isMove && <Timer time={30} onEnd={onMoveTimeout} />}
                 </div>
