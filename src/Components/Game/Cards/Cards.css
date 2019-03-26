@@ -8,7 +8,7 @@
 }
 
 .cards-title {
-    font-size: x-large;
+    font-size: 3vh;
     font-weight: 900;
     text-align: center;
     width: 100%;
@@ -20,8 +20,8 @@
     align-items: center;
     flex-direction: column;
     background-color: rgba(255, 255, 255, 0.2);
-    width: 11vw;
     z-index: 1000;
+    flex: 1;
 }
 
 .cards-wrapper {
@@ -30,7 +30,6 @@
     align-items: center;
     flex-direction: column;
     width: 12vw;
-    padding: 1vh;
     flex: 1;
 }
 
@@ -46,7 +45,8 @@
     align-items: center;
     border: 0;
     cursor: grab;
-    width: 80%;
+    height: 25vh;
+    width: auto;
     margin: 1vh auto 1vh auto;
 }
 

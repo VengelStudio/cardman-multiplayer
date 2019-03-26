@@ -30,7 +30,7 @@ class Settings extends Component {
         return (
             <div className='options-btn'>
                 <div className='gear-icon-wrapper'>
-                    <Icon icon={cog} size={32} className='gear-icon' />
+                    <Icon icon={cog} size={'5.5vh'} className='gear-icon' />
                 </div>
                 <div className='dropdown-options border-neon border-neon-translucent'>
                     <div className='settings-wrapper'>

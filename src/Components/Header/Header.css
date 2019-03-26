@@ -178,7 +178,7 @@
     -webkit-appearance: none;
     appearance: none;
     border-radius: 1vh;
-    width: 25px;
-    height: 55px;
+    width: 2vw;
+    height: 6 vh;
     cursor: pointer;
 }
