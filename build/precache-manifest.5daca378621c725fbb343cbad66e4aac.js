@@ -1,35 +1,39 @@
 self.__precacheManifest = [
   {
-    "revision": "e1b8fb145feb1e371f875cf448c74ebd",
-    "url": "/static/media/card_flip2.e1b8fb14.mp3"
+    "revision": "63e37b8e55f0c796506e952e75190179",
+    "url": "/static/media/card_flip.63e37b8e.mp3"
   },
   {
-    "revision": "bc82b8b5ed90b9ba74f2",
-    "url": "/static/css/main.275f20bd.chunk.css"
+    "revision": "5724fd2f24f8701a3b93",
+    "url": "/static/css/main.49b64b04.chunk.css"
   },
   {
     "revision": "fdfcfda2d9b1bf31db52",
     "url": "/static/js/runtime~main.c5541365.js"
   },
   {
-    "revision": "9f9918af0712203a2d7e",
-    "url": "/static/js/2.31f143aa.chunk.js"
+    "revision": "bcf09757ab1d041429a5",
+    "url": "/static/js/2.136f2ebd.chunk.js"
   },
   {
     "revision": "6f214beaa7801dd71b9da08b28c7bf92",
     "url": "/static/media/popup.6f214bea.mp3"
   },
   {
+    "revision": "72e250ddcdca23dc37b3d50fef05ee1e",
+    "url": "/static/media/OstrichSansInline-Regular.72e250dd.otf"
+  },
+  {
     "revision": "f8713f772e69e9306f2ea6639b49b05e",
     "url": "/static/media/card_drop.f8713f77.mp3"
   },
   {
-    "revision": "63e37b8e55f0c796506e952e75190179",
-    "url": "/static/media/card_flip.63e37b8e.mp3"
+    "revision": "5724fd2f24f8701a3b93",
+    "url": "/static/js/main.0da9aff3.chunk.js"
   },
   {
-    "revision": "bc82b8b5ed90b9ba74f2",
-    "url": "/static/js/main.b784ffe4.chunk.js"
+    "revision": "e1b8fb145feb1e371f875cf448c74ebd",
+    "url": "/static/media/card_flip2.e1b8fb14.mp3"
   },
   {
     "revision": "dff27e09f16a924b1afef50a419edad5",
@@ -48,11 +52,7 @@ self.__precacheManifest = [
     "url": "/static/media/bg-lower.b0652969.mp3"
   },
   {
-    "revision": "72e250ddcdca23dc37b3d50fef05ee1e",
-    "url": "/static/media/OstrichSansInline-Regular.72e250dd.otf"
-  },
-  {
-    "revision": "22ad3fae8d8713faf771888d0cb8b7c9",
+    "revision": "3039c2361a5a1ce68299ef3c7776142e",
     "url": "/index.html"
   }
 ];

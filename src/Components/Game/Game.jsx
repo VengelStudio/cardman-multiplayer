@@ -168,7 +168,7 @@ class Game extends Component {
                 cardMoves.forEach(e => {
                     if (e.discarded === false) {
                         if (e.card === CardsData.DEFINITION_CARD.id) {
-                            let { definitions } = this.props.game.word
+                            let { definitions } = this.state.game.word
                             let randomIndex = Math.floor(
                                 Math.random() * definitions.length
                             )
