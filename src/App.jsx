@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 
+import Intro from './Components/Intro/Intro'
 import Header from './Components/Header/Header'
 import Game from './Components/Game/Game'
 import PlayersBrowser from './Components/PlayersBrowser/PlayersBrowser'
@@ -28,39 +29,13 @@ import Walkthrough from './Components/Game/Walkthrough'
 import InvitationModal from './Components/Modals/InvitationModal'
 import DisconnectedModal from './Components/Modals/DisconnectedModal'
 
-// const socketUrl =
-//     process.env.REACT_APP_STAGE.trim() === 'dev'
-//         ? 'localhost:3231'
-//         : 'ws://cardman-multiplayer.herokuapp.com:80'
-
 let socketUrl = 'ws://cardman-multiplayer.herokuapp.com:80'
 if (process.env.REACT_APP_STAGE) {
     if (process.env.REACT_APP_STAGE.trim() === 'dev')
         socketUrl = 'localhost:3231'
 }
 const { setScore } = require('./Shared/Functions')
-
-class Logo extends React.Component {
-    state = { display: true }
-    componentDidMount() {
-        setTimeout(() => {
-            this.setState({ display: false })
-        }, 2500)
-    }
-    render() {
-        if (this.state.display) {
-            return (
-                <React.Fragment>
-                    <div className='intro-logo'>
-                        <div className='text-nunito intro-1'>Cardman&nbsp;</div>
-                        <div className='text-nunito intro-2'>Multiplayer</div>
-                    </div>
-                </React.Fragment>
-            )
-        }
-        return null
-    }
-}
+const { defaultVolumeSettings, disconnectedTimeoutMs } = require('./config')
 
 const isInCache = key => {
     return (
@@ -80,8 +55,8 @@ const getSavedVolume = state => {
         }
     } else {
         let cachedVolumeSettings = {
-            musicVol: state.config.defaultVolumeSettings.musicVol,
-            soundVol: state.config.defaultVolumeSettings.soundVol
+            musicVol: defaultVolumeSettings.musicVol,
+            soundVol: defaultVolumeSettings.soundVol
         }
         localStorage.setItem(
             'cachedVolumeSettings',
@@ -111,14 +86,6 @@ class App extends React.Component {
         isInvitationModal: false,
         invitationNickname: null,
         onInvitationAccept: null
-    }
-
-    config = {
-        disconnectedTimeoutMs: 5000,
-        defaultVolumeSettings: {
-            musicVol: 0.5,
-            soundVol: 0.5
-        }
     }
 
     componentDidUpdate() {
@@ -160,7 +127,7 @@ class App extends React.Component {
         })
 
         socket.on('pong', ms => {
-            if (ms > this.config.disconnectedTimeoutMs) {
+            if (ms > disconnectedTimeoutMs) {
                 this.setState({ isDisconnected: true })
             } else {
                 this.setState({ isDisconnected: false })
@@ -296,7 +263,7 @@ class App extends React.Component {
                 {isDisconnected && (
                     <DisconnectedModal soundVolume={volumeSettings.soundVol} />
                 )}
-                <Logo />
+                <Intro />
                 <Header
                     volumeSettings={volumeSettings}
                     title={title}
