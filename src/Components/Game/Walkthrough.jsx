@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { WALKTHROUGH_READY } from '../../Shared/Events'
 import './Walkthrough.css'
 
-const Description = () => {
+const Description = ({ data }) => {
     return (
-        <div className='walkthrough-desc'>
+        <section className='walkthrough-desc'>
             <ul>
                 <li>
                     <span>
@@ -20,7 +20,12 @@ const Description = () => {
                     </span>
                 </li>
             </ul>
-        </div>
+            <div className='ok-btn-wrapper'>
+                <button className={data.buttonClass} onClick={data.onReady}>
+                    {data.content}
+                </button>
+            </div>
+        </section>
     )
 }
 
@@ -54,15 +59,13 @@ class Walkthrough extends Component {
                             src='images/walkthrough/Walkthrough.svg'
                             alt='Walkthrough screenshot'
                         />
-                        <Description />
-                        <div className='ok-btn-wrapper'>
-                            <button
-                                className={buttonClass}
-                                onClick={this.onReady}
-                            >
-                                {content}
-                            </button>
-                        </div>
+                        <Description
+                            data={{
+                                buttonClass,
+                                content,
+                                onReady: this.onReady
+                            }}
+                        />
                     </div>
                 </div>
             </div>

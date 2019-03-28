@@ -11,32 +11,27 @@
 .walkthrough-content {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    width: 98vw;
-    height: 100%;
 }
 
 .walkthrough-image {
     display: flex;
-    width: auto;
-    height: 60vh;
+    max-height: 60%;
 }
 
 .walkthrough-desc {
     display: flex;
+    flex: 2;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
     text-align: center;
 }
 
 .walkthrough ul {
     display: flex;
+    flex: 1;
     flex-direction: column;
-    width: 80%;
     margin: 0;
     list-style-type: none;
-    margin: 0;
     padding: 0;
 }
 

@@ -1,6 +1,6 @@
 {
-    "short_name": "Hangman Multipayer",
-    "name": "Hangman Multiplayer",
+    "short_name": "Cardman Multipayer",
+    "name": "Cardman Multiplayer",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

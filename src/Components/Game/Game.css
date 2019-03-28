@@ -49,6 +49,7 @@
 
 .ok-btn-wrapper {
     display: flex;
+    flex: 1;
     justify-content: center;
 }
 .ok-btn {
