@@ -20,10 +20,10 @@
 .game {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 1 1;
     align-items: center;
     justify-content: space-evenly;
-    margin-top: -8vh;
+    padding-bottom: 10vh;
 }
 
 .word {

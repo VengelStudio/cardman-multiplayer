@@ -45,15 +45,16 @@ class GameInfo extends Component {
 
         if (player !== null && game !== null) {
             let { socketId } = player
-            let myGuessed = game.guessed.filter(e => { return (e.playerSocketId === socketId && e.key !== "") })
+            let myGuessed = game.guessed.filter(e => {
+                return e.playerSocketId === socketId && e.key !== ''
+            })
             console.log(myGuessed)
             myGuessed.forEach(letter => {
                 if (game.word.word.includes(letter.key.toLowerCase())) counter++
-            });
+            })
         }
         return counter
     }
-
 
     render() {
         return (
@@ -62,10 +63,10 @@ class GameInfo extends Component {
                     {this.getPlayerState(true)}
                     {this.getPlayerState(false)}
                 </div>
-                <div style={{ fontSize: '4vh', marginBottom: '-4vh' }}>
+                <div style={{ fontSize: '4vh', position: 'absolute' }}>
                     <p>{`Guessed letters: ${this.getGuessedCounter()}`}</p>
                 </div>
-            </React.Fragment >
+            </React.Fragment>
         )
     }
 }
