@@ -11,24 +11,23 @@
  * See https://goo.gl/2aRDsh
  */
 
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
-
 importScripts(
-  "/precache-manifest.44893541f4739f6b3455c1c1dc38745f.js"
-);
+    'https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js'
+)
 
-workbox.clientsClaim();
+importScripts('/precache-manifest.44893541f4739f6b3455c1c1dc38745f.js')
+
+workbox.clientsClaim()
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
  * requests for URLs in the manifest.
  * See https://goo.gl/S9QRab
  */
-self.__precacheManifest = [].concat(self.__precacheManifest || []);
-workbox.precaching.suppressWarnings();
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+self.__precacheManifest = [].concat(self.__precacheManifest || [])
+workbox.precaching.suppressWarnings()
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
 
-workbox.routing.registerNavigationRoute("/index.html", {
-  
-  blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
-});
+workbox.routing.registerNavigationRoute('/index.html', {
+    blacklist: [/^\/_/, /\/[^\/]+\.[^\/]+$/]
+})
