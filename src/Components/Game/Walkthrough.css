@@ -15,7 +15,7 @@
 
 .walkthrough-image {
     display: flex;
-    max-height: 60%;
+    height: 60%;
 }
 
 .walkthrough-desc {
