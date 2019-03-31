@@ -42,15 +42,8 @@ const { Result } = require('../Shared/Enums')
 const { generateCards, getCard, resupplyCards } = require('../Game/Cards/Cards')
 
 module.exports = function(socket) {
-    //console.log('Connected, socket id: ' + socket.id)
-    let developmentMode = false
-
     socket.on(VERIFY_USER, (nickname, callback) => {
         let ip = socket.request.connection.remoteAddress
-        // let isIpFreeChecker =
-        //     process.env.REACT_APP_STAGE.trim() === 'dev'
-        //         ? true
-        //         : isIpFree(ip, connectedPlayers)
 
         let isIpFreeChecker = isIpFree(ip, connectedPlayers)
         if (process.env.REACT_APP_STAGE) {
@@ -204,96 +197,106 @@ module.exports = function(socket) {
     })
 
     socket.on(GAME_MOVE, ({ game, moves }) => {
-        let currentGame = games[game.id]
-        let player = game.playerSockets[game.nextPlayerIndex]
-        let enemy = game.playerSockets[1 - game.nextPlayerIndex]
+        if (game.id in games) {
+            let currentGame = games[game.id]
+            let player = game.playerSockets[game.nextPlayerIndex]
+            let enemy = game.playerSockets[1 - game.nextPlayerIndex]
 
-        let blockCounter = currentGame.blockCounters[player.socketId]
-        if (player.id === socket.user.id) {
-            if (moves.length > 1) {
-                moves = moves.sort((a, b) => {
-                    if (a.type === 'key') return -1
-                    else return 1
-                })
-            }
-
-            moves.forEach(move => {
-                if (move.type === 'key') {
-                    currentGame.guessed.push({
-                        key: move.key,
-                        playerSocketId: move.playerSocketId
+            //! this code crashes the game if it doesn't exist (in result of restart after another crash)
+            //*Cannot read property 'blockCounters' of undefined
+            let blockCounter = currentGame.blockCounters[player.socketId]
+            if (player.id === socket.user.id) {
+                if (moves.length > 1) {
+                    moves = moves.sort((a, b) => {
+                        if (a.type === 'key') return -1
+                        else return 1
                     })
-                    currentGame.keys.push({
-                        key: move.key,
-                        playerSocketId: move.playerSocketId
-                    })
-                    currentGame.keys.push({
-                        key: move.key,
-                        playerSocketId: enemy.socketId
-                    })
-                } else if (move.type === 'card' && blockCounter === 0) {
-                    let cardName = move.card
-                    let card = getCard(cardName)
+                }
 
-                    currentGame.cards = removeUsedCard(
-                        currentGame,
-                        card,
-                        move.playerSocketId
-                    )
-
-                    if (move.discarded === false) {
-                        currentGame = card.use({
-                            currentGame,
-                            socket,
-                            move
+                moves.forEach(move => {
+                    if (move.type === 'key') {
+                        currentGame.guessed.push({
+                            key: move.key,
+                            playerSocketId: move.playerSocketId
                         })
-                    } else {
-                        console.log('discarded')
+                        currentGame.keys.push({
+                            key: move.key,
+                            playerSocketId: move.playerSocketId
+                        })
+                        currentGame.keys.push({
+                            key: move.key,
+                            playerSocketId: enemy.socketId
+                        })
+                    } else if (move.type === 'card' && blockCounter === 0) {
+                        let cardName = move.card
+                        let card = getCard(cardName)
+
+                        currentGame.cards = removeUsedCard(
+                            currentGame,
+                            card,
+                            move.playerSocketId
+                        )
+
+                        if (move.discarded === false) {
+                            currentGame = card.use({
+                                currentGame,
+                                socket,
+                                move
+                            })
+                        } else {
+                            console.log('discarded')
+                        }
                     }
+                })
+                if (blockCounter > 0)
+                    currentGame.blockCounters[player.socketId] =
+                        blockCounter - 1
+                if (blockCounter < 0)
+                    currentGame.blockCounters[player.socketId] =
+                        blockCounter + 1
+
+                currentGame.displayWord = displayWord(currentGame)
+
+                const debugMode = false
+
+                let result = checkWin(currentGame, socket)
+                if (debugMode) result = Result.TURN_WIN
+                currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
+
+                if (result !== Result.NOTHING) {
+                    let win = handleWin(currentGame, result)
+                    currentGame = win.game
+                    let winType = win.winObject.type
+                    if (winType === Result.GAME_WIN) {
+                        connectedPlayers = setPlayersInGameStatus(
+                            connectedPlayers,
+                            currentGame.playerSockets,
+                            false
+                        )
+                        games = removeGame(game, games)
+                    } else if (
+                        winType === Result.TURN_WIN ||
+                        winType === Result.TURN_TIE
+                    ) {
+                        currentGame.cards = resupplyCards(currentGame)
+                        currentGame.blockCounters[player.socketId] = 0
+                        currentGame.blockCounters[enemy.socketId] = 0
+                    }
+                    io.in(game.id).emit(WIN, win.winObject)
+                    if (winType === Result.GAME_WIN) {
+                        io.sockets.connected[player.socketId].leave(game.id)
+                        io.sockets.connected[enemy.socketId].leave(game.id)
+                    }
+                    io.emit(REFRESH_PLAYERS, { connectedPlayers })
+                    return
                 }
-            })
-            if (blockCounter > 0)
-                currentGame.blockCounters[player.socketId] = blockCounter - 1
-            if (blockCounter < 0)
-                currentGame.blockCounters[player.socketId] = blockCounter + 1
-
-            currentGame.displayWord = displayWord(currentGame)
-
-            const debugMode = false
-
-            let result = checkWin(currentGame, socket)
-            if (debugMode) result = Result.TURN_WIN
-            currentGame.nextPlayerIndex = 1 - currentGame.nextPlayerIndex
-
-            if (result !== Result.NOTHING) {
-                let win = handleWin(currentGame, result)
-                currentGame = win.game
-                let winType = win.winObject.type
-                if (winType === Result.GAME_WIN) {
-                    connectedPlayers = setPlayersInGameStatus(
-                        connectedPlayers,
-                        currentGame.playerSockets,
-                        false
-                    )
-                    games = removeGame(game, games)
-                } else if (
-                    winType === Result.TURN_WIN ||
-                    winType === Result.TURN_TIE
-                ) {
-                    currentGame.cards = resupplyCards(currentGame)
-                    currentGame.blockCounters[player.socketId] = 0
-                    currentGame.blockCounters[enemy.socketId] = 0
-                }
-                io.in(game.id).emit(WIN, win.winObject)
-                if (winType === Result.GAME_WIN) {
-                    io.sockets.connected[player.socketId].leave(game.id)
-                    io.sockets.connected[enemy.socketId].leave(game.id)
-                }
-                io.emit(REFRESH_PLAYERS, { connectedPlayers })
-                return
+                games[game.id] = currentGame
+                io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
             }
-            games[game.id] = currentGame
-            io.in(game.id).emit(GAME_MOVE, { game: games[game.id] })
+        } else {
+            console.log(
+                `Tried to move without a game running! ${socket.user.id}`
+            )
         }
     })
 }

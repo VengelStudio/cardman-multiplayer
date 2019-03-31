@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/card_flip.63e37b8e.mp3"
   },
   {
-    "revision": "5724fd2f24f8701a3b93",
+    "revision": "3915a985eb5a6c845ff8",
     "url": "/static/css/main.49b64b04.chunk.css"
   },
   {
@@ -28,8 +28,8 @@ self.__precacheManifest = [
     "url": "/static/media/card_drop.f8713f77.mp3"
   },
   {
-    "revision": "5724fd2f24f8701a3b93",
-    "url": "/static/js/main.0da9aff3.chunk.js"
+    "revision": "3915a985eb5a6c845ff8",
+    "url": "/static/js/main.4f463ccc.chunk.js"
   },
   {
     "revision": "e1b8fb145feb1e371f875cf448c74ebd",
@@ -48,11 +48,11 @@ self.__precacheManifest = [
     "url": "/static/media/turn_end.e1720e84.mp3"
   },
   {
-    "revision": "b0652969e4f1b0324802f79ff867d564",
-    "url": "/static/media/bg-lower.b0652969.mp3"
+    "revision": "376875901f8747109c31dcbcc1d5c9e2",
+    "url": "/static/media/bg-lower.37687590.mp3"
   },
   {
-    "revision": "3039c2361a5a1ce68299ef3c7776142e",
+    "revision": "36346e8bae280f3af655ad80dbe49c62",
     "url": "/index.html"
   }
 ];
