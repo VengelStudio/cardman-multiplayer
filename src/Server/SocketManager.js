@@ -135,6 +135,8 @@ module.exports = function(socket) {
     })
 
     socket.on(INVITATION, ({ id = null, socketId = null }) => {
+        //todo fix this
+        //! TypeError: Cannot read property 'nickname' of undefined
         let nickname = socket.user.nickname
         let fromSocketId = socket.user.socketId
         if (socket.user.id === id) {
@@ -190,6 +192,8 @@ module.exports = function(socket) {
     })
 
     socket.on(WALKTHROUGH_READY, ({ gameId }) => {
+        //todo fix this as well
+        //!TypeError: Cannot read property 'readyCounter' of undefined
         if (games[gameId].readyCounter === 1) {
             io.in(gameId).emit(GAME_STARTED, { game: games[gameId] })
         }
@@ -202,8 +206,8 @@ module.exports = function(socket) {
             let player = game.playerSockets[game.nextPlayerIndex]
             let enemy = game.playerSockets[1 - game.nextPlayerIndex]
 
-            //! this code crashes the game if it doesn't exist (in result of restart after another crash)
-            //*Cannot read property 'blockCounters' of undefined
+            //todo this code crashes the game if it doesn't exist (in result of restart after another crash)
+            //!Cannot read property 'blockCounters' of undefined
             let blockCounter = currentGame.blockCounters[player.socketId]
             if (player.id === socket.user.id) {
                 if (moves.length > 1) {
