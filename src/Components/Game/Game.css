@@ -1,174 +1,174 @@
 .gameWrapper {
-    font-family: 'IBM Plex Sans', sans-serif;
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    color: whitesmoke;
+  font-family: "IBM Plex Sans", sans-serif;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  color: whitesmoke;
 }
 
 .content {
-    display: flex;
-    position: relative;
-    flex: 6;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
+  display: flex;
+  position: relative;
+  flex: 6;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
 }
 
 .game {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1;
-    align-items: center;
-    justify-content: space-evenly;
-    padding-bottom: 10vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-bottom: 10vh;
 }
 
 .word {
-    margin-top: 15vh;
-    font-size: 3vw;
-    border-radius: 2vw;
-    background-color: #7ea8be;
-    padding: 2vw;
+  margin-top: 15vh;
+  font-size: 3vw;
+  border-radius: 2vw;
+  background-color: #7ea8be;
+  padding: 2vw;
 }
 
 .keyboard {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    top: 6.6vh;
-    flex-wrap: wrap;
-    background-color: rgb(53, 53, 53);
-    padding: 1vh;
-    border-radius: 1vh;
-    width: 60vw;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 6.6vh;
+  flex-wrap: wrap;
+  background-color: rgb(53, 53, 53);
+  padding: 1vh;
+  border-radius: 1vh;
+  width: 60vw;
+  justify-content: center;
 }
 
 .ok-btn-wrapper {
-    display: flex;
-    flex: 1;
-    justify-content: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
 }
 .ok-btn {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    font-size: 3vh;
-    width: 15vh;
-    height: 8vh;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  font-size: 3vh;
+  width: 15vh;
+  height: 8vh;
 }
 .ok-btn-pressed {
-    background-color: #68ac1a;
-    font-size: 2vh;
+  background-color: #68ac1a;
+  font-size: 2vh;
 }
 
 .key {
-    display: block;
-    cursor: pointer;
-    font-size: 2vw;
-    font-weight: bold;
-    text-align: center;
-    line-height: normal;
-    padding: 0;
-    height: 8vh;
-    width: 8vh;
-    margin: 1vh;
-    border: 0;
-    outline: 0;
-    border-radius: 0.5vh;
-    color: whitesmoke;
-    background-color: rgb(81, 156, 63);
+  display: block;
+  cursor: pointer;
+  font-size: 2vw;
+  font-weight: bold;
+  text-align: center;
+  line-height: normal;
+  padding: 0;
+  height: 8vh;
+  width: 8vh;
+  margin: 1vh;
+  border: 0;
+  outline: 0;
+  border-radius: 0.5vh;
+  color: whitesmoke;
+  background-color: rgb(81, 156, 63);
 }
 
 @media only screen and (min-width: 961px) {
-    .key {
-        height: 5vh;
-        width: 5vh;
-    }
-    .keyboard {
-        width: 40vw;
-    }
+  .key {
+    height: 5vh;
+    width: 5vh;
+  }
+  .keyboard {
+    width: 40vw;
+  }
 }
 
 .timer-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 1vh 0 0 1vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 1vh 0 0 1vh;
 }
 
 .timer {
-    height: 40px;
-    width: 40px;
-    position: relative;
-    text-align: center;
+  height: 40px;
+  width: 40px;
+  position: relative;
+  text-align: center;
 }
 
 #timer-number {
-    color: white;
-    display: block;
-    margin: auto;
-    line-height: 40px;
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    z-index: 1;
+  color: white;
+  display: block;
+  margin: auto;
+  line-height: 40px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  z-index: 1;
 }
 
 svg.timer-svg {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    transform: rotateY(-180deg) rotateZ(-90deg);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  transform: rotateY(-180deg) rotateZ(-90deg);
 }
 
 .timer-svg circle {
-    stroke-dasharray: 113px;
-    stroke-dashoffset: 0px;
-    stroke-linecap: round;
-    stroke-width: 5px;
-    stroke: rgb(130, 204, 33);
-    fill: none;
-    animation: countdown 30s linear 1 forwards;
+  stroke-dasharray: 113px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 5px;
+  stroke: rgb(130, 204, 33);
+  fill: none;
+  animation: countdown 30s linear 1 forwards;
 }
 
 @keyframes countdown {
-    from {
-        stroke-dashoffset: 0px;
-    }
-    to {
-        stroke-dashoffset: 113px;
-    }
+  from {
+    stroke-dashoffset: 0px;
+  }
+  to {
+    stroke-dashoffset: 112px;
+  }
 }
 
 .invitation-popup-content > .timer {
-    margin: auto;
+  margin: auto;
 }
 
 .player-state {
-    position: absolute;
-    top: 6vh;
-    left: 0;
-    right: 0;
+  position: absolute;
+  top: 6vh;
+  left: 0;
+  right: 0;
 }
 
 .left-1vh {
-    left: 1vh;
+  left: 1vh;
 }
 
 .right-1vh {
-    right: 1vh;
+  right: 1vh;
 }
 
 .state-chains {
-    position: absolute;
+  position: absolute;
 }
 
 .state-shield {
-    position: absolute;
+  position: absolute;
 }
